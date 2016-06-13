@@ -81,6 +81,7 @@ theme: next
 #touxiang
 avatar: /images/avatar.png
 
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -92,7 +93,18 @@ deploy:
    repo: https://ff120:g120406191@github.com/FF120/ff120.github.io.git
    branch: master
    message:
+   
 
+#Security
+##
+encrypt:
+- enable: false
+  blogs:
+     -title:Hello World
+     password:123456
 
+duoshuo_hotartical: true
 
-  
+search:
+  path: search.xml
+  field: post

@@ -2,8 +2,9 @@
 title: Hexo博客同时在coding.net和gitHub.com同步
 toc: true
 categories:
-  - PHP
+  - 工具
 tags:
+  - Hexo
   - git
 date: 2016-06-12 20:02:43
 ---

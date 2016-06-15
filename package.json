@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "hexo": "^3.1.1",
+    "hexo-admin": "^2.0.1",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
     "hexo-blog-encrypt": "0.0.*",
     "hexo-deployer-git": "^0.1.0",

@@ -130,13 +130,16 @@ haxby_dataset的结构是这样的
 ``` python
 from nilearn.input_data import NiftiMasker
 #模版文件的路径
-mask_filename = haxby_dataset.mask_vt[0]
+mask_vt_filename = haxby_dataset.mask_vt[0]
 #加载模版并标准化
-nifti_masker = NiftiMasker(mask_img=mask_filename, standardize=True)
-//功能像4D文件
+nifti_masker = NiftiMasker(mask_img=mask_vt_filename, standardize=True)
+#功能像4D文件
 func_filename = haxby_dataset.func[0]
-//应用mask，并将数据合适转换成（n_sample,n_features）的形式
-fmri_masked = nifti_masker.fit_transform(func_filename)
+#应用mask，并将数据合适转换成（n_sample,n_features）的形式
+fmri_vt_masked = nifti_masker.fit_transform(func_filename)
+
+>>>fmri_vt_masked
+>>>(1452L, 577L)
 ```
 
 >功能像文件本来是`40*64*64*1452`的，如果不做特征选择，直接转换成(n_samples,n_features)的形式,应该是`1452*163840`的规模，显然特征数量太大了。
@@ -152,12 +155,33 @@ print np.sum(mask_v4data)
 >>输出` 577.0`,所以经过mask之后的特征变成了577维。
 
 ##### 使用F检验
+这里我们使用数据提供的一个比较大的mask先选择一个比较大的感兴趣的区域`hsxby2001\mask.nii.gz`，然后使用F检验找出影响程度最大的前577个特征，与上面直接使用一个小的mask的分类结果做对比。
+``` python
+from nilearn.input_data import NiftiMasker
+#模版文件的路径
+mask_filename = haxby_dataset.mask
+#加载模版并标准化
+nifti_masker = NiftiMasker(mask_img=mask_filename, standardize=True)
+#功能像4D文件
+func_filename = haxby_dataset.func[0]
+#应用mask，并将数据合适转换成（n_sample,n_features）的形式
+fmri_masked = nifti_masker.fit_transform(func_filename)
+
+>>>fmri_masked
+>>>(1452L, 39912L)
+```
+
+
 ```python
 from sklearn.svm import SVC
 svc = SVC(kernel='linear')
 from sklearn.feature_selection import SelectKBest, f_classif
-feature_selection = SelectKBest(f_classif, k=500) #选择排名前500的特征
+feature_selection = SelectKBest(f_classif, k=577) #选择排名前577的特征
+
+from sklearn.pipeline import Pipeline
+anova_svc = Pipeline([('anova', feature_selection), ('svc', svc)])
 ```
+>此处的`anova_svc`相当于下面的`svc`,只不过`anova_svc`会首先执行特征选择过程，再把特征选择的结果送入SVM分类器，`anova_svc`和`svc`的使用在形式上完全一样，都是`.fit(X,y)`,`.predict(X)`的形式。
 
 #### 数据准备
 在这一步，我们要对数据的组织格式进行处理，使之符合`scikit-learn`的输入格式。
@@ -171,7 +195,10 @@ target = labels['labels']
 condition_mask = np.logical_or(labels['labels'] == b'face',
                                labels['labels'] == b'cat')
 target_data = target[condition_mask]
-train_data = fmri_masked[condition_mask]
+#使用mask的特征
+train_data = fmri_vt_masked[condition_mask]
+#使用F检验的特征
+train_f_data = fmri_masked[condition_mask]
 
 ```
 >现在我们准备好了数据，`train_data`是`216*577`的，`target_data`是`216*1`的，正好能对应上。
@@ -186,14 +213,45 @@ svc = SVC(kernel='linear')
 
 from sklearn.cross_validation import KFold
 cv = KFold(n=len(train_data), n_folds=5)
+#使用mask
 cv_scores = [] #存储每次测试的准确率
-
 for train, test in cv:
     svc.fit(train_data[train], target_data[train])
     prediction = svc.predict(train_data[test])
     cv_scores.append( np.sum(prediction == target_data[test]) / float(np.size(target_data[test])) )
 	
 classification_accuracy = np.mean(cv_scores) #计算平均的分类准确率
+
+>>>cv_scores
+>>>
+[0.72727272727272729,
+ 0.46511627906976744,
+ 0.72093023255813948,
+ 0.58139534883720934,
+ 0.7441860465116279]
+ 
+>>>classification_accuracy
+>>>0.64778012684989428
+
+#使用F检验
+cv_f_scores = []
+for train, test in cv:
+    anova_svc.fit(train_f_data[train], target_data[train])
+    y_pred = anova_svc.predict(train_f_data[test])
+    cv_f_scores.append(np.sum(y_pred == target_data[test]) / float(np.size(target_data[test])))
+
+classification_f_accuracy = np.mean(cv_f_scores) #计算平均的分类准确率
+
+>>>cv_f_scores
+>>>Out[133]: 
+[0.59090909090909094,
+ 0.39534883720930231,
+ 0.76744186046511631,
+ 0.65116279069767447,
+ 0.55813953488372092]
+ 
+>>>classification_f_accuracy
+>>>0.59260042283298098
 
 #计算change level
 from sklearn.dummy import DummyClassifier
@@ -202,20 +260,20 @@ from sklearn.cross_validation import cross_val_score
 null_cv_scores = cross_val_score(DummyClassifier(), train_data, target_data, cv=cv)  
 null_accuracy = np.mean(null_cv_scores)
 
->>> classification_accuracy   
-0.64778012684989428
->>> cv_scores
-[0.72727272727272729,
- 0.46511627906976744,
- 0.72093023255813948,
- 0.58139534883720934,
- 0.7441860465116279]
->>> null_accuracy   
-0.48583509513742074
->>> null_cv_scores
-array([ 0.54545455,  0.34883721,  0.69767442,  0.37209302,  0.46511628])
-```
+>>>null_cv_scores
+>>>array([ 0.54545455,  0.48837209,  0.48837209,  0.34883721,  0.55813953])
 
+>>>null_accuracy
+>>>0.48583509513742068
+
+print cv_scores,classification_accuracy
+
+print cv_f_scores,classification_f_accuracy
+
+print null_cv_scores,null_accuracy
+
+```
+可以看到，简单的使用F检验的结果并没有使用先验的小mask获得的准确率高，但是F检验获得的分类准确率也显著高于chance level.
 #### 结果分析和可视化显示
 获得模型参数
 ``` python

@@ -6,14 +6,6 @@ tags:
   - 英语写作
 date: 2016-06-13 21:09:00
 ---
-title: English Chart Article 2
-toc: true
-categories:
-  - English
-tags:
-  - 
-date: 2016-06-13 21:09:23
----
 Summarize the information by selecting and reporting the main features, and make comparison where relevant.
 <!-- more -->
 ![travel_uk](travel_uk.png)

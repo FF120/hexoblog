@@ -10,6 +10,9 @@ date: 2016-06-14 20:08:11
 # Sample Baseline approach (基础方法)
 特征选择时一个最简单的想法就是 去掉那些对类别区分度不大的特征，例如，所有样本的第一维特征的值都是0，那么这个第一维特征就可以去掉，因为它对区分不同的sample贡献很小。
 `scikit-learn`提供一个方法`VarianceThreshold`, 实现这样一个简单的选择特征的策略：去掉那些方差达不到指定阈值的特征。
+
+<!-- more -->
+
 ```python
 from sklearn.feature_selection import VarianceThreshold
 X = [[0, 0, 1], [0, 1, 0], [1, 0, 0], [0, 1, 1], [0, 1, 0], [0, 1, 1]]

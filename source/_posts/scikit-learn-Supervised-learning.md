@@ -161,7 +161,7 @@ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
 - `decision_function_shape`=None, 'ovo', 'ovr' or None, default=None
 - `degree`=3, 可选参数，类型为int,默认为3，多项式和函数的度，其他类型的和函数自动忽略该参数。
 - `gamma`='auto', 可选参数，类型为float,默认为‘auto’,默认取 1/n_features作为gamma的值。
-- `kernel`='rbf',可选参数，类型为string，默认值为‘rbf’,定义SVM所使用的和函数，可选择的项如下：
+- `kernel`='rbf',可选参数，类型为string，默认值为‘rbf’,定义SVM所使用的核函数，可选择的项如下：
 	- linear
 	- poly
 	- rbf
@@ -178,7 +178,7 @@ SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
 **属性**
 - `support_` : array-like, shape = [n_SV]，支持向量的下标
 - `n_support_` : array-like, dtype=int32, shape = [n_class] 每个类的支持向量的个数。
-- `support_vectors_` ：shape = [n_SV, n_features]，支持向量
+- `support_vectors_` ：shape = [n_SV, n_features]，支持向量(SVM确定了一个分类超平面，支持向量就是平移这个超平面，最先与数据集的交点。)
 - `dual_coef_` : array, shape = [n_class-1, n_SV] 在决策函数（decision function）中支持向量的系数
 - `coef_` : array, shape = [n_class-1, n_features]，特征的权重，只在线性核的时候可用。
 - `intercept_` : array, shape = [n_class * (n_class-1) / 2]，决策函数（decision function）中的常量。
@@ -216,3 +216,88 @@ NuSVC(cache_size=200, class_weight=None, coef0=0.0,
 
 ## 决策函数（decision function）
 
+## 核函数（kernel function）
+
+优先使用‘rbf’调节参数，当特征的数量远远大于样本的数量的时候，考虑使用线性核函数。
+
+---------------------------------
+# 随机梯度下降（Stochastic Gradient Descen）
+分类，回归
+## 简介
+随机梯度下降法适用于特征数据大于10的5次方，样本数量大于10的5次方的大规模数据的处理领域。
+
+### 用途
+可以处理大规模数据和稀疏数据。
+
+### 优点
+- 高效
+- 易于实现
+
+### 缺点
+- 需要很多超参数
+- 对特征的缩放敏感
+
+## 使用方法
+```python
+from sklearn.linear_model import SGDClassifier
+X = [[0., 0.], [1., 1.]]
+y = [0, 1]
+clf = SGDClassifier()
+clf.fit(X, y) #训练
+clf.predict([[2., 2.]])  #预测
+
+print clf
+>>>
+SGDClassifier(alpha=0.0001, average=False, class_weight=None, epsilon=0.1,
+       eta0=0.0, fit_intercept=True, l1_ratio=0.15,
+       learning_rate='optimal', loss='hinge', n_iter=5, n_jobs=1,
+       penalty='l2', power_t=0.5, random_state=None, shuffle=True,
+       verbose=0, warm_start=False)
+
+>>>clf.coef_  #模型系数
+>>>Out[31]: array([[ 9.91080278,  9.91080278]])
+
+>>>clf.intercept_    #截距
+>>>array([-9.99002993])
+```
+
+**参数**
+- `alpha`=0.0001, 
+- `average`=False, 
+- `class_weight`=None, epsilon=0.1,
+- `eta0`=0.0, 
+- `fit_intercept`=True, 
+- `l1_ratio`=0.15,
+- `learning_rate`='optimal', 
+- `loss`='hinge', 
+- `n_iter`=5, n_jobs=1,
+- `penalty`='l2', 
+- `power_t`=0.5, 
+- `random_state`=None, 
+- `shuffle`=True,
+- `verbose`=0, 
+- `warm_start`=False
+
+**属性**
+- coef_ : array, shape (1, n_features) if n_classes == 2 else (n_classes,n_features);Weights assigned to the features.
+
+- intercept_ : array, shape (1,) if n_classes == 2 else (n_classes,);Constants in decision function.
+
+# 最近邻方法（Nearest Neighbors）
+如果一个样本在特征空间中的k个最相 似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别.
+## 简介
+scikit-learn实现了监督的和非监督的最近邻方法，决定最近邻的算法有`ball_tree`,`kd_tree`,`brute`,可以通过指定模型参数`algorithm`的值来指定到底使用哪一个算法。
+主要功能是实现***分类***和***回归***。
+
+## 用法
+
+```python
+import numpy as np
+from sklearn.neighbors import NearestNeighbors
+X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
+nbrs = NearestNeighbors(n_neighbors=2, algorithm='ball_tree').fit(X)
+```
+
+# 决策树（Decision Trees）
+
+# 朴素贝叶斯（Native Bayes）

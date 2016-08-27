@@ -1,5 +1,5 @@
 ﻿---
-title: english
+title: 英语短语
 toc: true
 categories:
   - 英语
@@ -16,5 +16,8 @@ date: 2016-06-23 09:08:11
 5. 相比于传统的方法			-- over conventional method
 6. 外部的|内部的		-- extrinsic|intrinsic
 7. 把...归因为...		-- ascribes
+
+<!-- more -->
+
 8. 变量未知和随机		-- unknown and stochastic
 9. 在括号里的		-- in brackets

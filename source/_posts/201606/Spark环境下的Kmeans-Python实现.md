@@ -7,7 +7,7 @@ tags:
   - spark
 date: 2016-06-23 10:45:57
 ---
-使用Python在Spark下运行K-means算法
+![spark](spark.png)
 <!-- more -->
 ```scala
 #设置应用名称，显示在spark监控页面上

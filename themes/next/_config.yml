@@ -271,7 +271,7 @@ baidu_analytics: 96ab3af3e1554c3b821faa94a0193eb3
 ##  type: button
 
 # Share
-#jiathis:
+jiathis: true
 #add_this_id:
 
 # Share
@@ -345,7 +345,7 @@ busuanzi_count:
 # tencent_analytics:
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 
 
@@ -415,5 +415,9 @@ css: css
 js: js
 images: images
 
+# Local search
+local_search:
+  enable: true
+  
 # Theme version
 version: 5.0.1

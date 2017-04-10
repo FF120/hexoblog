@@ -94,7 +94,12 @@ deploy:
    branch: master
    message:
    
-
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+  
 #Security
 ##
 encrypt:
@@ -105,6 +110,6 @@ encrypt:
 
 duoshuo_hotartical: true
 
-search:
-  path: search.xml
-  field: post
+#search:
+# path: search.xml
+#field: post

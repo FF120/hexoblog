@@ -1,7 +1,7 @@
 title: English Chart Article 2
 toc: true
 categories:
-  - English
+  - 英语
 tags:
   - 英语写作
 date: 2016-06-13 21:09:00

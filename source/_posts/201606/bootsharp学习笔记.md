@@ -2,7 +2,7 @@
 title: Bootsharp学习笔记
 toc: true
 categories:
-  - IT
+  - 前端技术
 tags:
   - bootsharp
 date: 2016-06-30 22:51:32

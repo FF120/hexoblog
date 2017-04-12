@@ -70,9 +70,8 @@ logger: false
 logger_format:
 # Pagination
 ## Set per_page to 0 to disable pagination
-per_page: 5
+per_page: 20
 pagination_dir: page
-
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
@@ -109,7 +108,3 @@ encrypt:
      password:123456
 
 duoshuo_hotartical: true
-
-#search:
-# path: search.xml
-#field: post

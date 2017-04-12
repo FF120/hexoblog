@@ -2,7 +2,7 @@
 title: JQuery EasyUI 学习笔记
 toc: true
 categories:
-  - IT
+  - 前端技术
 tags:
   - jquery
 date: 2016-06-30 22:44:37
@@ -28,18 +28,17 @@ date: 2016-06-30 22:44:37
 1. 网格系统
 	表头：
 ```html
-<thead> 
+<thead>
 <tr>
 <td>第一列</td>  <td>第二列</td>  <td>第三列</td>
-</tr> 
+</tr>
 </thead>
 ```
 	表体:
 ```html
-<tbody>   
+<tbody>
 <tr>
 <td>第一列</td>  <td>第二列</td>  <td>第三列</td>
 </tr>
-</tbody>  
+</tbody>
 ```
-

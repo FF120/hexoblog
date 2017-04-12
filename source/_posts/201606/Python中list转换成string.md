@@ -2,7 +2,7 @@
 title: Python中list转换成string
 toc: true
 categories:
-  - Python
+  - 编程语言
 tags:
   - python
 date: 2016-06-19 12:58:08

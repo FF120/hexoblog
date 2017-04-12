@@ -2,22 +2,22 @@
 title: weijie
 toc: true
 categories:
-  - Ëã·¨
+  - ç®—æ³•
 tags:
   - ACM
 date: 2017-03-30 18:27:02
 ---
 
-## Ã»ÓĞ½â¾öµÄÎÊÌâ
+## æ²¡æœ‰è§£å†³çš„é—®é¢˜
 
-### ÇóÊı×éµÄµ¥µ÷ºÍ
+### æ±‚æ•°ç»„çš„å•è°ƒå’Œ
 ![20170330182803.png](20170330182803.png)
 
-### ¶ş·ÖÍ¼µÄÎÊÌâ
+### äºŒåˆ†å›¾çš„é—®é¢˜
 
-### »ô·òÂü±àÂëµÄÊµÏÖ
+### éœå¤«æ›¼ç¼–ç çš„å®ç°
 
-### C++ Éú³ÉÈ«ÅÅÁĞµÄËã·¨
+### C++ ç”Ÿæˆå…¨æ’åˆ—çš„ç®—æ³•
 ```C++
 #include <iostream>
 #include <algorithm>
@@ -31,7 +31,7 @@ void print(vector<int> v){
 int main() {
     vector<int> v={4,3,2,1,0};
     print(v);
-    //next_permutation(v.begin(),v.end())µÄ×÷ÓÃÊÇÉú³ÉvµÄÏÂÒ»¸öÈ«ÅÅÁĞ
+    //next_permutation(v.begin(),v.end())çš„ä½œç”¨æ˜¯ç”Ÿæˆvçš„ä¸‹ä¸€ä¸ªå…¨æ’åˆ—
     while(next_permutation(v.begin(),v.end())){
         print(v);
     }
@@ -39,4 +39,3 @@ int main() {
     return 0;
 }
 ```
-

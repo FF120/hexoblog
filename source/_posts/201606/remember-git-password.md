@@ -1,7 +1,7 @@
 ---
 title: remember-git-password
 date: 9:36 2016/6/11
-categories: git
+categories: 编程语言
 tags: git
 toc: true
 ---
@@ -15,6 +15,3 @@ url = https://[username]:[password]@github.com/...
 <!-- more -->
 
 ![example for rememner git password](remember_password.png)
-
- 
-

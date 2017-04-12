@@ -2,12 +2,12 @@
 title: sublime Text tricks
 toc: true
 categories:
-  - editor
+  - 工具
 tags:
   - sublimeText
 date: 2016-06-11 15:42:50
 ---
-#  快速注释  
+#  快速注释
 - Ctrl + /     单行注释/取消注释  选中行
 - Ctrl + Shift + /    多行注释/取消注释   选中行
 

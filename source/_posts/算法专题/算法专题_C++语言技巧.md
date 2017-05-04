@@ -1,0 +1,426 @@
+﻿---
+title: 算法专题_C++语言技巧
+toc: true
+categories:
+  - 算法
+tags:
+  - ACM
+date: 2017-04-07 11:29:34
+---
+记录一些C++语言当中的技巧性代码。
+<!--more-->
+## 自定义set的比较函数
+存入set的元素默认是有序的，但是默认的比较可能不能满足我们的要求，这个时候
+就需要自定义比较的函数。 set的排序是使用红黑树的结构，插入删除和取出最小的
+元素都比较高效。
+```C
+struct NumBit{
+    int num;
+    NumBit(int n) : num(n) {}
+    bool operator<(const struct NumBit & right)const   //重载<运算符
+    {
+        vector<int> vtmp1;
+        int n = this->num;
+        int b = 0;
+        while(n){
+            b = n % 10;
+            vtmp1.insert(vtmp1.begin(),b);
+            n /= 10;
+        }
+        vector<int> vtmp2;
+        int n2 = right.num;
+        int b2 = 0;
+        while(n2){
+            b2 = n2 % 10;
+            vtmp2.insert(vtmp2.begin(),b2);
+            n2 /= 10;
+        }
+        int i = 0;
+        int j = 0;
+        int ilen = vtmp1.size();
+        int jlen = vtmp2.size();
+        while( i<ilen || j<jlen ){
+            if(i<ilen && j<jlen && vtmp1[i] > vtmp2[j]){
+                return false;
+            }else if(i<ilen && j<jlen && vtmp1[i] < vtmp2[j]){
+                return true;
+            }else if(i<ilen && j<jlen && vtmp1[i] == vtmp2[j]){
+                i++;
+                j++;
+            }else if(i==ilen){
+                if(vtmp2[j] > vtmp2[0]) return true;
+                else if(vtmp2[j] < vtmp2[0]) return false;
+                else if(j == jlen){
+                    return false;
+                }else{
+                    j++;
+                }
+            }else if(j==jlen){
+                if(vtmp1[i] > vtmp1[0]) return false;
+                else if(vtmp1[i] < vtmp1[0]) return  true;
+                else if(i == ilen){
+                    return true;
+                }else{
+                    i++;
+                }
+            }else{
+                break;
+            }
+        }
+        return false;
+    }
+};
+
+
+```
+
+使用的时候直接使用上面定义的结构体作为set的类型
+```c
+multiset<NumBit> s; //
+```
+
+## 整数转换成字符串
+```c
+#include <sstream>
+#include <string>
+string Int_to_String(int n)
+{
+    ostringstream stream;
+    stream<<n;  //n为int类型
+    return stream.str();
+}
+```
+
+## 十进制数字转换成K进制
+deque<int> Kin(int n,int k){
+    deque<int> result;
+    while(n/k != 0){
+        result.push_front(n%k);
+        n = n / k;
+    }
+    result.push_front(n);
+    return result;
+}
+
+## K进制数字转换成十进制
+```c
+/**
+ * 将K进制的deque转换成10进制
+ * @param v
+ * @return
+ */
+int Kinverse(deque<int> v,int k){
+    int s = 0;
+    int i = 0;
+    while(!v.empty()){
+        s += v.back() * std::pow(float(k),i);
+        ++i;
+    }
+    return s;
+}
+```
+
+## 输入输出重定向
+有的算法题是从接收的是从控制台的输入，而且输入还很多，这个时候如果每次调试都从控制台一次一次的输入测试数据，就会很麻烦。我们可以把要输入的数据保存在一个文本文件中，然后使用输入重定向[`freopen`](http://www.cplusplus.com/reference/cstdio/freopen/)把标准输入重定向到该文件。以输入一个m行n列的矩阵来说，首先把输入数据存储在文本文件`d:/A.in`中。
+```
+4 4
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+```
+然后执行下面的代码：
+```c
+    freopen("d:\\A.in","r",stdin);// 输入重定向
+    int m,n;
+    cin>>m>>n;
+    vector<vector<int>> v(m,vector<int>(n));
+    //读取数据
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cin>>v[i][j];
+        }
+    }
+    //输出读取的数据门这里输出到控制台
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cout<<v[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+```
+同样，输出也可以重定向到文件，当有大量的输出或者需要保存输出结果的时候，重定向到文件是一个不错的方法。只需要在输出之前加上下面这段代码，输出就会重定向到文件，这个时候运行程序，控制台就看不到输出了。
+```c
+freopen("d:\\A.out","w",stdout);
+```
+## 格式化输入输出
+C++定义了一些操纵符来控制输出流的状态，endl就是一个常用的操纵符。
+
+**控制布尔值的格式**
+
+`boolalpha`使得布尔值输出`true` or `false`;
+`noboolalpha`使得输出变回默认的`0` or `1`.
+```c
+cout<<"default: "<<true<<" "<<false<<endl;
+cout<<boolalpha<<"boolalpha: "<<true<<" "<<false<<noboolalpha<<endl;
+```
+
+**控制整数的输出进制**
+- 八进制： `oct`
+- 十六进制： `hex`
+- 十进制： `dec`
+
+## 数据的表示范围
+以下内容来源于`C++ Premier 第五版`
+
+**整型**
+
+包括整数，字符型，和布尔类型；这类数据在计算机的内部都是以二进制位0和1直接保存的。
+```c
+// 获得整形类型的表示范围， climits
+    cout<<"char: "<<CHAR_MIN<<" to "<<CHAR_MAX<<endl;
+    cout<<"unsinged char: "<<0<<" to "<<UCHAR_MAX<<endl;
+    cout<<"int8: "<<INT8_MIN<<" to "<<INT8_MAX<<endl;
+    cout<<"unsinged int8: "<<0<<" to "<<UINT8_MAX<<endl;
+    cout<<"int16: "<<INT16_MIN<<" to "<<INT16_MAX<<endl;
+    cout<<"unsigned int16: "<<0<<" to "<<UINT16_MAX<<endl;
+    cout<<"int32: "<<INT32_MIN<<" to "<<INT32_MAX<<endl;
+    cout<<"unsigned int32: "<<0<<" to "<<UINT32_MAX<<endl;
+    cout<<"int64: "<<INT64_MIN<<" to "<<INT64_MAX<<endl;
+    cout<<"unsigned int64: "<<0<<" to "<<UINT64_MAX<<endl;
+    cout<<endl;
+```
+**浮点型**
+
+在计算机内部，这种类型是把保存数据的空间分成两部分，一部分存储小数部分，一部分存储指数部分，数的实际大小是通过计算得出来的。
+浮点类型由四部分组成：
+- sign : 符号，正 或 负
+- base(radix) : 基数(2,8,10,16)
+- significand : 尾数
+- exponent ： 指数
+浮点类型的大小可以通过包含[`cfloat`](http://www.cplusplus.com/reference/cfloat/)查看。
+```c
+//获得浮点类型的表示范围  cfloat
+   cout<<"float range: "<<FLT_MIN<<" to "<<FLT_MAX<<endl;
+   cout<<"float significand: "<<FLT_MANT_DIG<<endl;
+   cout<<"float exponent: "<<FLT_MIN_EXP <<" to "<<FLT_MAX_EXP<<endl;
+
+   cout<<"double range: "<<DBL_MIN<<" to "<<DBL_MAX<<endl;
+   cout<<"double significant: "<<DBL_MANT_DIG <<endl;
+   cout<<"double exponent: "<<DBL_MIN_EXP <<" to "<<DBL_MAX_EXP<<endl;
+
+   cout<<"long double range: "<<LDBL_MIN<<" to "<<LDBL_MAX<<endl;
+   cout<<"long double significant: "<<LDBL_MANT_DIG<<endl;
+   cout<<"long double exponent"<<LDBL_MIN_EXP<<" to "<<LDBL_MAX_EXP<<endl;
+
+   cout<<"base: "<<FLT_RADIX<<endl;
+   cout<<endl;
+```
+
+**获得类型所占用的字节数目**
+
+```c
+// 获得类型在内存中占的字节数
+    cout<<"bool: "<<sizeof(bool)<<endl;
+    cout<<"char: "<<sizeof(char)<<endl;
+    cout<<"short: "<<sizeof(short)<<endl;
+    cout<<"int: "<<sizeof(int)<<endl;
+    cout<<"long: "<<sizeof(long)<<endl;
+    cout<<"long long : "<<sizeof(long long)<<endl;
+    cout<<"float: "<<sizeof(float)<<endl;
+    cout<<"long double: "<<sizeof(long double)<<endl;
+    cout<<endl;
+```
+
+**类型的使用准则**
+- 明确知道不可能为负，使用无符号数。
+- 整数运算一般使用`int`, 需要大数的时候考虑`long long`.需要小整数的时候考虑`signed char` or `unsigned char`
+- 浮点运算用`double`
+
+## 快速幂和矩阵快速幂
+
+**整数的快速幂**
+
+求$a^b$一般的做法是用一个循环，将a累乘b次，这样需要做b次乘法。快速幂的思想是利用了 $a^(b1+b2) = a^b1 + a^b2$ 的思想，把b表示成二进制，然后拆分开，分别求幂，再求和。举例来说：
+
+假设要求$5^{12}$,传统的方法是12个5相乘，要做12次乘法运算。快速幂的思想是把12表示成二进制，`1100` = $2^2+2^3$,
+$$
+5^{12} = 5^{(2^2+2^3)} = 5^{2^2} * 5^{2^3}
+$$
+2的幂的计算可以由十分迅速的移位计算得到，所有原来需要12个乘法运算才能解决的计算问题，现在编程了只需要三次计算节能解决。
+```c
+int quickPow(int a,int b){
+    int ans=1,base=a;
+    while(b!=0){
+        if(b&1!=0)
+        　　ans*=base;
+        base*=base;
+        b>>=1;
+　 }
+    return ans;
+}
+```
+按照上面的代码计算出来的实际上是$5^{2^2} * 5^{2^3}$, 因为我们用的是右移，每次都只判断末尾的一个二进制位，如果是1，就乘入当前的结果。每次循环（不管是不是1），base都要翻倍，因为是二进制，每移动一位就意味着乘以2.
+
+另外一个需要注意的问题是，实际使用时需要注意数据的范围，如果int的范围不够，可以使用long long类型。
+
+**矩阵的快速幂**
+
+- 矩阵乘法
+一个$m*n$的矩阵  乘以 一个$n*p$的矩阵，会得到一个$m*p$的矩阵。矩阵相乘的规则是：第一个矩阵的每一行乘以第二个矩阵的每一列，对应的元素相乘再相加，作为新矩阵对应位置上的元素。朴素的矩阵乘法的代码如下：
+```c
+typedef vector<vector<int>> matrix;
+matrix MatricMul(matrix A,matrix B){
+    int m = A.size();
+    int n1 = A[0].size();
+    int n2 = B.size();
+    int p = B[0].size();
+    if(n1 != n2) {cout<<"no cheng of the two matrix."<<endl;return matrix();}
+    int n = n1 = n2;
+    matrix C(m,vector<int>(p,0));
+    for(int i=0;i<m;i++){
+        for(int j=0;j<p;j++){
+            for(int k=0;k<n;k++){
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    return C;
+}
+
+int main(){
+    matrix A = {{1,2,3},{4,5,6}};
+    matrix B = {{1,2},{3,4},{5,6}};
+    matrix C = MatricMul(A,B);
+    return 0;
+}
+```
+
+- $A^n$ 快速求矩阵的n次幂，注意这里A只能是方阵
+矩阵的快速幂和整数的快速幂是一样的，就是重载一下*这个运算符，使得两侧是矩阵的时候，计算的是矩阵乘法。这里我们就不重载运算符了，直接使用上面定义的矩阵乘法函数`MatricMul`:
+```c
+matrix quickPowMatrix(matrix A,int n){
+    matrix base = A;
+    // 初始化成单位矩阵
+    int len = A.size();
+    matrix ans(len,vector<int>(len,0));
+    for(int i=0;i<A.size();i++){
+        ans[i][i] = 1;
+    }
+    while(n!=0){
+        if(n&1!=0)
+            ans = MatricMul(ans,base);
+        base = MatricMul(base,base);
+        n>>=1;
+    }
+    return ans;
+}
+```
+
+快速幂通常用来求很大的数，这个时候虽然就算速度在可以接受的范围内，但是数据的范围早已经超过了能够表示范围，通常的方法就是mod每个大数，得到一个较小的结果。
+
+为了减少计算的开销（计算小数的乘法要比计算大数的乘法开销小），通常利用模运算的法则：
+
+$$
+(a+b) mod c = (a mod c + b mod c) mod c ;
+$$
+
+$$
+(a*b) mod c = (a mod c * b mod c) mod c ;
+$$
+
+上面的代码每一次计算之后就取模，就可以保证数据的范围不溢出，还能保证比较快的计算速度。
+
+**使用C++的模版技术编写通用的快速幂模版**
+```c
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long LL;
+
+template<class T, int MAXN, T MOD=-1>
+class Matrix {
+public:
+    T m[MAXN][MAXN];
+    Matrix(){}
+    // 如果MOD不是-1，把num取模
+    void init(T num[MAXN][MAXN]){
+        for(int i = 0 ; i < MAXN ; i++)
+        {
+            for(int j = 0 ; j < MAXN ; j++)
+            {
+                m[i][j] = num[i][j];
+                if (MOD!=-1)
+                    m[i][j] %= MOD;
+            }
+        }
+    }
+    //矩阵乘法的实现
+    friend Matrix operator*(const Matrix &m1 ,const Matrix &m2)
+    {
+        int i, j, k;
+        Matrix ret;
+        memset(ret.m, 0, sizeof(ret.m));
+        for (i = 0; i < MAXN; i++) {
+            for (j = 0; j < MAXN; j++)
+                if ( m1.m[i][j] )
+                {
+                    for(k = 0 ; k < MAXN ; k++){
+                        ret.m[i][k] += m1.m[i][j] * m2.m[j][k];
+                        if (MOD!=-1) ret.m[i][k] %= MOD;
+                    }
+                }
+        }
+        return ret;
+    }
+    // 矩阵加法的实现
+    friend Matrix operator+(const Matrix &m1 ,const Matrix &m2) {
+        int i, j;
+        Matrix ret;
+        for (i = 0; i < MAXN; i++) {
+            for (j = 0; j < MAXN; j++) {
+                ret.m[i][j] = 0;
+                ret.m[i][j] = m1.m[i][j]+m2.m[i][j];
+                if (MOD!=-1)
+                    ret.m[i][j] %= MOD;
+            }
+        }
+        return ret;
+    }
+    //矩阵快速幂的实现
+    friend Matrix operator^(const Matrix &_M , LL nx){
+        Matrix ret,M(_M);
+        //ret 初始化成单位矩阵
+        for(int i = 0 ; i < MAXN ; i++){
+            for(int j = 0 ; j < MAXN ; j++){
+                if(i == j)
+                    ret.m[i][j] = 1;
+                else ret.m[i][j] = 0;
+            }
+        }
+        while(nx){
+            if(nx & 1)
+                ret = ret * M;
+            nx = nx >> 1;
+            M = M * M;
+        }
+        return ret;
+    }
+};
+
+int main(){
+    int C[2][2] = {{1,2},{3,4}};
+    Matrix<int,2,1000> mm;
+    mm.init(C);
+    auto add = mm + mm;
+    auto cheng = mm * mm;
+    auto mi = mm ^ 2 ;
+    return 0;
+}
+```
+## 包含一切的头文件
+```c
+#include <bits/stdc++.h>
+```
+一个文件包含了所有常用的头文件，你所有使用的函数不再需要引入相应的头文件。该头文件在ACM竞赛中经常被使用，可以减少你包含需要的头文件需要的时间。
+
+需要注意的是，这个头文件并不是标准的，这意味着可能有的编译器不支持它。

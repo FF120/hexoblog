@@ -1,0 +1,78 @@
+
+body{margin:0;padding:0;font-family: tahoma,Helvetica,"Microsoft YaHei", \5FAE\8F6F\96C5\9ED1;}
+.cont{padding:0;margin:0 auto;width:1170px;}
+.bd_bl{border:1px  solid blue;}
+.bd_red{border:1px solid red;}
+.bd_gray{border:1px solid #ddd;}
+.bg_white{background:#fff;}
+.bg_pro{background:#F1F5F9;}
+.bg_hl{background:#F8FAFE;}
+.height150{height:150px;}
+.height120{height:120px;}
+.pad_15{padding:15px;}
+.pad_left0{padding-left:0;}
+.pad_left10{padding-left:10px;}
+.pad_left20{padding-left:20px;}
+.header{line-height:60px;}
+.line-height30{line-height:30px;}
+.line{border-top:1px solid #ddd;}
+.line_dashed{border-top:1px dashed #ddd;}
+.margin0{margin:0;}
+.margin_10{margin:10px;}
+.margin_left20{margin-left:15px;}
+.margin_bt20{margin-bottom:20px;}
+.pad0{padding:0;}
+.pad_btm10{padding-bottom:10px;}
+.pad_btm20{padding-bottom:20px;}
+.margin_left11{margin-left:11px;}
+.marg11{margin:11px 0 0;}
+.margin20{margin:20px 0;}
+.pad_left5{padding-left:5px;}
+.con{margin:8px 0 0;}
+.li_block{width:54px;height:54px;}
+.bg_f4{background:#f4f4f4;}
+.al_center{text-align:center;}
+#bslt{margin-bottom:20px;}
+#bslt .content p{color:#c9c9c9;margin:0;padding:0;}
+#bslt .content p.title{color:#2d78f5;}
+#bslt .content strong.nick{color:black;}
+#fwb_block{display:none;}
+#markdown{height:130px;outline:none;}
+.author{margin:20px 20px 20px 0;width:40px;}
+.author a.photo{display:block;width:40px;height:40px;border:1px solid #ddd;}
+.bd_top_dashed_gray{border-top:1px dashed #ddd;margin-left:12px;margin-right:12px;}
+.tianchi_about{height:225px;}
+.btn-default.page_first:focus,.btn-default.page_previous:focus,.btn-default.page_next:focus,.btn-default.page_last:focus{background-color:#fff;}
+.page_current{color:#333;background-color:#e6e6e6;border-color:#adadad;}
+.crumbs_patch{font-size:14px;}
+.crumbs_patch a{color:#666666;}
+.crumbs_patch span{color:#999999;}
+.color_999{color:#999999;}
+.placeholder{color:#999999;}
+.article_content.fit{min-height:150px;overflow-y:visible;margin:20px 0 5px;}
+.content.fit{min-height:40px;overflow-y:visible;margin:20px 0 5px;}
+#markdown{overflow-y:scroll;}
+.page-container{background:#F1F5F9 !important;}
+.acticleHeade span{line-height:30px;}
+.acticleHeade .title{text-align:center;}
+.acticleHeade h3{margin:0;padding:30px 0 10px 0;}
+.edit{text-align:right;}
+.zan .zan_block{width:60px;height:60px;background:#e6e6e6;color:#fff;margin:0 auto;border-radius:30px;cursor:pointer;}
+.zan .zan_block img{margin:10px 0 0 0;}
+#demo{border-top:1px solid #ddd;}
+#demo a.huifu{margin:3px 0 0;}
+.ht_foot a.edit{float:right;}
+.ht_foot{color:#c9c9c9;}
+#promptInfo{padding-right:20px;}
+#huifu_btn{margin:10px;}
+.acticleHeade{position:relative;}
+.acticleHeade span{color:#c9c9c9;}
+.acticleHeade span.nick{color:#666;}
+#color_tab{width:115px;height:32px;background:#f5a623;border-radius:16px 0 0 16px;
+	position:absolute;top:5px;right:0;font-weight:500;font-size:20px;
+	color:#fff;letter-spacing:2px;line-height:32px;text-align:center;}
+.ht_body{margin-left:60px;}
+.article_content.fit p,.content.fit p{word-wrap:break-word;}
+.article_content.fit h1,h2,h3,h4,h5,h6{word-wrap:break-word;}
+.content.fit h1,h2,h3,h4,h5,h6{word-wrap:break-word;}
+

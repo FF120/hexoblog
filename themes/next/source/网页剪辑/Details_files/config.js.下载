@@ -1,0 +1,16 @@
+KISSY.config({
+    // 开启自动 combo 模式
+    combine: true,
+    tag: '2015',
+    base: '//g.alicdn.com/kissy/k/1.4.8/',
+    packages: {
+        js: {
+            path: '/',
+            //tag: new Date().getTime(),
+            debug: true,
+            combine: false,
+            charset: "utf-8"
+        }
+    },
+    debug: false
+});

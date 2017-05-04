@@ -1,0 +1,79 @@
+var i18n = {
+	"competition" :{
+		"newForum" :{
+			"listLastComment" : "Last comment",
+			"listComments" : "Reply",
+			"listView" : "View",
+			"question" : "Question",
+			"article" : "Article",
+			"hot" : "Hot",
+			"visitor" : "Visitor",
+			"ask" : "Ask a Question",
+			"write" : "Write an Article"
+		},
+		"newDetail" :{
+			"listLastComment" : "Last comment",
+			"listReply" : "Reply",
+			"listView" : "View",
+			"listOtherInfo" : "Other Info",
+			"listPosted" : "Posted",
+			"listEdit" : "Edit",
+			"boxEmptiedPrompt" : "content cannot be empty",
+			"boxDefaultContent" : "Topic Content…",
+			"boxEnterPrompt" : "content cannot be empty",
+			"question" : "Question",
+			"article" : "Article",
+			"ago" : "ago",
+			"myPost" : "My Post",
+			"tcAdmin" : "Forum Moderator"
+		},
+		"newCreateGlobalForum" : {
+			"modalSaveSuccess" : "Save success!",
+			"boxTitlePromptD" : "The title cannot be empty",
+			"boxTitlePromptX" : "The title can not be greater than 100 byte",
+			"boxContentPrompt" : "Content length can not be less than 5",                  
+			"boxDefaultContent" : "Topic Content…",
+			"boxEnterPrompt" : "content cannot be empty",
+			"modalSaving" : "Saving"
+		},
+		"newEditGlobalForum" : {
+			"modalSaveSuccess" : "Save success!",
+			"boxTitlePromptD" : "The title cannot be empty",
+			"boxTitlePromptX" : "The title can not be greater than 100 byte",
+			"boxContentPrompt" : "Content length can not be less than 5",                 
+			"boxDefaultContent" : "Topic Content…",
+			"boxEnterPrompt" : "content cannot be empty",
+			"modalSaving" : "Saving…"
+		},
+		"newGlobalForum" : {
+			"listLastComment" : "Last comment",
+			"listComments" : "Reply",
+			"listView" : "View",
+			"question" : "Question",
+			"article" : "Article"
+		},
+		"myForum" : {
+			"listLastComment" : "Last comment",
+			"listComments" : "Reply",
+			"listView" : "View",
+			"listDraft" : "draft",
+			"question" : "Question",
+			"article" : "Article"
+		},
+		"newArticleDetail" : {
+			"edit" : "Edit",
+			"lou" : "F"
+		},
+		"myForumList" : {
+			"project" : "Project"
+		},
+		"myForumDraft" : {
+			"project" : "Project"
+		},
+		"myGitlab" : {
+			"hide" : "hide",
+			"show" : "show"
+		}   
+
+	}
+}

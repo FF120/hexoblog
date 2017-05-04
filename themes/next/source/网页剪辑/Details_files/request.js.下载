@@ -1,0 +1,26 @@
+(function(namespace) {
+
+  var RequestUtil = {};
+
+  RequestUtil.cbWrap = function(callback) {
+    return function(data) {
+      if (data && data.errCode === 0) {
+        callback(null, data.data);
+      }else{
+        callback(data.errName+ ": " +data.errMsg)
+      }
+    }
+  };
+
+  RequestUtil.getQueryParam = function(param) {
+    var paramValue = null;
+    location.search.substr(1)
+        .split("&")
+        .some(function(item) { // returns first occurence and stops
+          return item.split("=")[0] == param && (paramValue = item.split("=")[1])
+        });
+    return paramValue
+  };
+
+  namespace.RequestUtil = RequestUtil;
+})(window);

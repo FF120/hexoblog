@@ -1,0 +1,10 @@
+<div class="resume">
+    <div class="resume-left">
+      <img src="/assets/img/avatar/psb.jpg" alt="photo">
+          <span>Email:</span>
+          <a href="#">1911986273@qq.com</a>
+    </div>
+    <div class="resume-entry">
+        <%- page.content %>
+    </div>
+</div>

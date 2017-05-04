@@ -33,7 +33,7 @@ menu:
   about: /about
   archives: /archives
   tags: /tags
-  commonweal: /404.html
+  #commonweal: /404.html
 
 
 # Enable/Disable menu icons.
@@ -60,8 +60,8 @@ menu_icons:
 
 # Schemes
 #scheme: Muse
-scheme: Mist
-#scheme: Pisces
+#scheme: Mist
+scheme: Pisces
 
 
 # ---------------------------------------------------------------
@@ -110,7 +110,7 @@ font:
     family:
 
 #da shang
-reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
+reward_comment: #坚持原创技术分享，您的支持将鼓励我继续创作！
 wechatpay: /images/weixin.png
 alipay: /images/alipay.png
 
@@ -248,7 +248,7 @@ auto_excerpt:
 
 # MathJax Support
 mathjax:
-  enable: false
+  enable: true
   cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
 
@@ -262,7 +262,7 @@ baidu_analytics: 96ab3af3e1554c3b821faa94a0193eb3
 #duoshuo_shortname:
 
 # Disqus
-#disqus_shortname:
+disqus_shortname: hexo-blog-ff120
 
 # Baidu Share
 # Available value:
@@ -271,7 +271,7 @@ baidu_analytics: 96ab3af3e1554c3b821faa94a0193eb3
 ##  type: button
 
 # Share
-jiathis: true
+#jiathis: true
 #add_this_id:
 
 # Share
@@ -292,11 +292,11 @@ jiathis: true
 # Make duoshuo show UA
 # user_id must NOT be null when admin_enable is true!
 # you can visit http://dev.duoshuo.com get duoshuo user id.
-duoshuo_info:
-  ua_enable: true
-  admin_enable: false
-  user_id: 6294756968712110849
-  admin_nickname: mengchen
+#duoshuo_info:
+#  ua_enable: true
+#  admin_enable: false
+#  user_id: 6294756968712110849
+#  admin_nickname: mengchen
 
 
 # Facebook SDK Support.
@@ -406,7 +406,7 @@ since: 2013
 
 # Wechat Subscriber
 wechat_subscriber:
-  enabled: true
+  enabled: false
   qcode: /images/wechat-qcode.jpg
   description: 欢迎您扫一扫上面的微信公众号，订阅我的博客！
 

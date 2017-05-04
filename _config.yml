@@ -1,14 +1,14 @@
 # Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
-duoshuo_shortname: ff120
+#duoshuo_shortname: ff120
 # Site
-title: very little helps a mickle
+title: FEI's Blog
 subtitle: Talents come from diligence, and knowledge is gained by accumulation.
 description:
 author: FF120
 language: zh-Hans
-timezone:
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -70,12 +70,23 @@ logger: false
 logger_format:
 # Pagination
 ## Set per_page to 0 to disable pagination
-per_page: 20
+per_page: 15
 pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+#RSS订阅
+plugin:
+- hexo-generator-feed
+
+#Feed Atom
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
 ## Themes: https://hexo.io/themes/
-theme: next
+#theme: maupassant
+#theme: next
+theme : yelee
 
 #touxiang
 avatar: /images/avatar.png
@@ -107,4 +118,4 @@ encrypt:
      -title:Hello World
      password:123456
 
-duoshuo_hotartical: true
+#duoshuo_hotartical: true

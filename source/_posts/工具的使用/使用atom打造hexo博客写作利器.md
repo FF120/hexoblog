@@ -23,9 +23,15 @@ date: 2017-04-12 10:51:29
 ## 安装atom
 下载[atom](https://atom.io/), 安装完成之后默认支持markdown功能，支持实时预览。
 
-## 支持hexo命令的配置
-`Ctrl+,`打开配置页面，在install中搜索hexo相关的扩展，安装之后即可使用。atom的命令窗口与sublimeText一样，是`Ctrl+Shift+P`
+## 安装markdown增强预览工具，支持latex的预览
+`Ctrl+,`打开配置页面，在install中搜索`markdown-preview-plus`，安装。使用文档：https://atom.io/packages/markdown-preview-plus
 
+## 支持hexo命令的配置
+`Ctrl+,`打开配置页面，在install中搜索`atom-hexo`，安装之后即可使用。atom的命令窗口与sublimeText一样，是`Ctrl+Shift+P`.
+
+atom-hexo插件的使用文档：https://atom.io/packages/atom-hexo
+
+为了使生成的文件自带头部标签信息，还需要安装`hexo-front-matter`插件，使用方法：https://atom.io/packages/hexo-front-matter
 ## 增加目录功能
 在扩展安装页面搜索markdown相关的扩展，把需要的都安装上。可以实现添加目录，导出PDF等各种功能扩展。
 
@@ -33,4 +39,7 @@ date: 2017-04-12 10:51:29
 安装git-plus扩展，可以在命令窗口执行相关的操作。
 
 ## 增加miniView插件
-安装miniView扩展，可以看到整个页面的缩略图。
+安装minimap扩展，可以看到整个页面的缩略图。使用教程：https://atom.io/packages/minimap
+
+## 高亮选中的内容
+安装`highlight-selected`插件

@@ -8,10 +8,11 @@ Yelee: "3.5"
 ## Tags Cloud Page: `hexo new page tags`
 menu:
   主页: /
-  所有文章: /archives/
+  #所有文章: /archives/
   #随笔: /tags/随笔
   标签云: /tags/
   留言板: /message/
+  工具包: /tools/
   关于我: /about/
 
 # Link to your avatar | 填写头像地址

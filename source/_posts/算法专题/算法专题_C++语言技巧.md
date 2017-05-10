@@ -424,3 +424,53 @@ int main(){
 一个文件包含了所有常用的头文件，你所有使用的函数不再需要引入相应的头文件。该头文件在ACM竞赛中经常被使用，可以减少你包含需要的头文件需要的时间。
 
 需要注意的是，这个头文件并不是标准的，这意味着可能有的编译器不支持它。
+
+## 暂停和计时
+**暂停**
+如果想要让程序暂停几秒继续执行，可以这样使用：
+```c
+# include <windows.h>
+Sleep(2000);  // 暂停2s, 参数的单位是毫秒
+```
+**计算程序运行的时间**
+有的时候可能要看某段程序运行需要多少时间，可以这样使用：
+- 秒级计时
+```c
+#include <ctime>
+auto start_time = time(nullptr);
+//Sleep(3000);
+// ... 代码块
+auto end_time = time(nullptr);
+cout<<end_time - start_time<<endl;
+// 输出的是程序运行的秒数。
+```
+- 毫秒级计时
+
+
+```c
+// 获取毫秒级别的时间差
+auto start_time = clock();
+//Sleep(3000);
+auto end_time = clock();
+cout<<end_time - start_time<<endl;
+```
+
+## 返回一个无序数组排序之后的下标，不动原来的数组
+例如 a = [3,5,2,4,1] , 从小到大排序之后应该是[1,2,3,4,5], 原来在a中的下标是[4,2,0,3,1],我们的目标就是输入a，返回[4,2,0,3,1]
+```c
+
+const int N=5;
+int a[N];
+int order[N];
+bool Cmp(const int& x, const int& y)
+{
+    return a[x] < a[y];
+}
+for(int i=0;i<N;i++){
+        cin>>a[i];
+        order[i] = i;
+    }
+sort(order, order + N, Cmp);
+
+```
+order中就是我们想要的结果。

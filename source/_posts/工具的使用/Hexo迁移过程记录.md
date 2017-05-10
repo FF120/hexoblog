@@ -32,3 +32,11 @@ hexo目前还没有全自动的一键迁移功能，所以要移动位置的时�
 此时本地的环境就搭建好了，只是还没有和远程的仓库连接起来。
 `hexo g`生成public目录。
 将public部署到远程。
+
+## 解决hexo和latex的冲突问题
+https://github.com/hexojs/hexo/issues/524
+
+使用pandoc会出现其他的问题，因为markdown语法会有少许的不同，这个是最令人头疼的事情。
+http://shomy.top/2016/10/22/hexo-markdown-mathjax/
+
+适用了N中方法，最后发现，还是修改源码的方法最靠谱，不会有格式上的太大的变化。

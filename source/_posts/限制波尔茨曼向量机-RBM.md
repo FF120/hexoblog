@@ -1,14 +1,4 @@
 ---
-<<<<<<< HEAD
-title: 限制波尔茨曼向量机(RBM)
-toc: true
-categories:
-  - null
-tags:
-  - null
-date: 2017-05-09 23:05:25
----
-=======
 title: 限制波尔茨曼机(RBM)
 toc: true
 categories:
@@ -136,4 +126,3 @@ $b = b + \epsilon*(P(h_1=1|v_1)-P(h_2=1|v_2))$
 1. 介绍+Python源代码：<http://blog.echen.me/2011/07/18/introduction-to-restricted-boltzmann-machines/>
 
 2. 介绍+Python源代码：<http://imonad.com/rbm/restricted-boltzmann-machine/>
->>>>>>> c0eeb43e135847c47b198b6b17ce883d9fe1c5e2

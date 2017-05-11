@@ -119,3 +119,8 @@ encrypt:
      password:123456
 
 #duoshuo_hotartical: true
+pandoc:
+  filters:
+  extra:
+  meta:
+  mathEngine:

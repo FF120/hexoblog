@@ -85,35 +85,6 @@ RBM一个基本的训练方法叫做Contrastive Divergence，它的具体过程�
 初始化： 权重$W$,偏置$a$,$b$随机初始化为较小的数值,令可视层的第一个状态$v_1 = x_0$
 
 
-for t=1:T
-&nbsp;&nbsp;&nbsp;&nbsp;计算隐层
-
-&nbsp;&nbsp;&nbsp;&nbsp;for j=1:m
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$P(h_{1j}=1|v_1)=\sigma(b_j+\sum_i v_{1i} W_{ij})$
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从$P(h_{1j}|v_1)$中抽取 $h_{1j} \in {\{0,1\}}$
-
-&nbsp;&nbsp;&nbsp;&nbsp;endfor
-
-&nbsp;&nbsp;&nbsp;&nbsp;计算可视层
-
-&nbsp;&nbsp;&nbsp;&nbsp;for i=1:n
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$P(h_{2i}=1|h_1)=\sigma(a_i+\sum_i  W_{ij} h_{1j})$
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从$P(v_{2i}|h_1)$中抽取 $v_{2i} \in {\{0,1\}}$
-
-&nbsp;&nbsp;&nbsp;&nbsp;endfor
-
-&nbsp;&nbsp;&nbsp;&nbsp;计算隐层
-
-&nbsp;&nbsp;&nbsp;&nbsp;for j=1:m
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$P(h_{1j}=1|v_1)=\sigma(b_j+\sum_i v_{1i} W_{ij})$
-
-&nbsp;&nbsp;&nbsp;&nbsp;endfor
-
 参数更新规则：
 
 $W = W + \epsilon*( P(h_1=1|v_1 )v_1^T - P(h_2=1|v_2)v_2^T))$

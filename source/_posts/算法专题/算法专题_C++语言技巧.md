@@ -474,3 +474,25 @@ sort(order, order + N, Cmp);
 
 ```
 order中就是我们想要的结果。
+
+## 输入挂
+当纯数字的输入规模超过$10^6$时，可以考虑使用输入挂，比系统自带的cin快很多。
+
+```c
+inline void q_read(int &num)
+{
+    char ch; int f = 1;
+    while(true)
+    {
+        ch = getchar();
+        if(ch == '-') f = -1;
+        if(isdigit(ch))
+        {
+            num = ch - '0';
+            break;
+        }
+    }
+    while(ch = getchar(), isdigit(ch)) num = num*10+ch-'0';
+    num *= f;  
+}
+```

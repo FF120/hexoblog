@@ -5,6 +5,7 @@ categories:
   - 机器学习
 tags:
   - ML
+  - theano
 date: 2017-03-22 16:19:50
 ---
 
@@ -28,6 +29,8 @@ Windows平台成功的安装方式，先安装anaconda, 然后执行
 ```python
 from theano import *
 import theano.tensor as T
+## 计算卷积的函数
+from theano.tensor.nnet import conv
 ```
 
 ### 函数的定义和计算
@@ -123,4 +126,56 @@ f = theano.function([x], gy)
 f(4)  # x的平方的导数
 ```
 
-###
+### 卷积操作
+
+#### 2D卷积
+
+theano计算卷积的函数：
+
+```python
+from theano.tensor.nnet import conv2d
+output = conv2d(
+    input, filters, input_shape=(1, 1, 5, 5), filter_shape=(1, 1, 3, 3),
+    border_mode=(1, 1), subsample=(2, 2))
+```
+
+上式计算的是类似下面这样的卷积：
+
+![](2017-05-12_161131.png)
+
+其中各个参数的含义是：
+
+- input(batch size, input channels, input rows, input columns)
+
+>batch size : 一次处理的样本数量
+input channels : input feature map 的数量
+input rows: input feature map 的行
+input columns: input feature map 的列
+
+- filters(output channels, input channels, filter rows, filter columns).
+
+>output channels ： output feature map 的数量
+input channels : input feature map 的数量
+filter rows ：卷积核的行
+filter columns : 卷积核的列
+
+- input_shape(batch size (b), input channels (c), input rows (i1), input columns (i2))
+
+>batch size : 一次处理的样本数量
+input channels : input feature map 的个数
+input rows: input feature map 的行
+input columns : input feature map 的列
+
+- filter_shape(output channels (c1), input channels (c2), filter rows (k1), filter columns (k2))
+
+>output channels ： output feature map 的个数
+input channels : input feature map 的个数
+filter rows & filter columns ： 卷积核的大小
+
+- border_mode:	'valid', 'half', 'full' or (p_1, p_2)
+
+>边缘补0的模式。
+
+ - subsample:	(s1, s2)
+
+ >定义卷积核的步长。

@@ -87,6 +87,7 @@ model.load_weights(filepath, by_name=False)
 ```
 我习惯使用的方法是：
 ```python
+from keras.models import Model
 # 保存模型
 def save_model(model,name):
     ## fit完成之后，保存整个模型的配置

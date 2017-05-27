@@ -200,3 +200,7 @@ BrainNet Viewer is a brain network visualization tool, which can help researcher
 PySurfer is a Python library for visualizing cortical surface representations of neuroimaging data. The package is primarily intended for use with Freesurfer, but it can plot data that are drawn from a variety of sources. PySurfer extends Mayavi’s powerful rendering engine with a high-level interface for working with MRI and MEG data.
 
 ![](QQ截图20170514155026.png)
+
+### 纤维束绘制工具
+
+<http://www.med.unc.edu/psych/research/niral/download>

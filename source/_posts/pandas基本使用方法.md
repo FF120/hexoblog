@@ -78,3 +78,74 @@ df2['insert2'] = [1,2,3]
 df2.insert(0,'between',[1,2,3]) # 指定插入的位置
 df2['aa'] #
 ```
+
+### 对DataFrame的某一列进行one-hot编码
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+
+# name 列的名称
+def one_hot_colum(small_data,name):
+
+    enc = OneHotEncoder()
+    data = small_data[name].reshape(len(small_data[name]),1)
+    enc.fit(data)
+    transformed_data = enc.transform(data).toarray()
+    small_data.pop(name)
+    for i in range(transformed_data.shape[1]):
+        small_data.insert(small_data.shape[1],name+str(i),transformed_data[:,i])
+
+    return small_data
+```
+
+### 对DataFrame行进行切分和过滤
+
+下面划分的数据集是腾讯高校算法大赛第一届比赛的数据，实现了按照天为单位划分数据集。总体的思路是使用`isin()`生成`mask`,使用`mask`筛选数据。
+
+```python
+def split_data(data,train_data,test_data):
+    """
+    按照天划分数据集
+    :data, DataFrame 类型的数据
+    :train_data, 训练数据集，[17,18,19]
+    :test_data,测试数据集,[30]
+    """
+
+    times = np.unique( train['clickTime'] )
+    day = []
+    for i in range(14):
+        day.append(times[24*60*i:24*60*(i+1)])
+    train_data = [i-17 for i in train_data ]
+    test_data = [i-17 for i in test_data ]
+    mask_train = np.array([False]*train.shape[0])
+    for i in train_data:
+        mask = train['clickTime'].isin(day[i])
+        mask_train |= mask
+
+    mask_test = np.array([False]*train.shape[0])
+    for i in test_data:
+        mask = train['clickTime'].isin(day[i])
+        mask_test |= mask
+
+    return data[mask_train],data[mask_test]
+```
+
+### 两个list生成DataFrame并按照某个list排序
+
+```python
+aa = pd.DataFrame({'feature':col,'importance':importance})
+bb=  aa.sort_values(by='importance')
+```
+
+### DataFrame按照某一列的关键字合并
+
+```python
+train = pd.merge(dfTrain, dfAd, on="creativeID")
+data = pd.merge(data, dfCvr, how="left", on="keyid")
+```
+
+### DataFrame随机选择n个样本
+
+```python
+dataframe.sample(n=selected_sample_num)
+```

@@ -9,6 +9,10 @@ tags:
 date: 2017-05-14 18:51:20
 ---
 
+`scikit-learn`是一个很受欢迎的机器学习方面的`python`工具包，它定义的一些范式和处理流程影响深远，所以，认识和了解一些这个工具包对于自己实现一些机器学习算法是很有帮助的。它已经实现了很多方法帮助我们便捷的处理数据，例如，划分数据集为训练集和验证集，交叉验证，数据预处理，归一化等等。
+
+<!-- more -->
+
 ### 预测结果与真实结果的比较
 
 ```python
@@ -297,4 +301,49 @@ plt.xlabel("Number of features selected")
 plt.ylabel("Cross validation score (nb of correct classifications)")
 plt.plot(lsvc_feature_num, lsvc_score)
 plt.show()
+```
+
+### 数据预处理
+
+`scikit-learn`提供了很多数据预处理的方法，使用的时候需要引入的包是`preprocessing`.
+
+**缩放scale**
+
+```python
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
+
+# 根据最大值和最小值缩放到[0,1]范围
+min_max_scaler = MinMaxScaler()
+X_transformed = min_max_scaler.fit_transform(X)
+
+# 数据标准化，使得均值为0，方差为1
+ss = StandardScaler()
+X_transformed = ss.fit_transform(X)
+
+# 考虑离群点的缩放，首先排除离群点再缩放
+from sklearn.preprocessing import RobustScaler
+robust_scaler = RobustScaler()
+X_transformed = robust_scaler.fit_transform(X)
+```
+
+**one-hot编码**
+
+对于离散的类别特征，可以使用`one-hot`编码来处理特征，这样处理之后的特征可以直接被一些学习器使用。该方法默认会根据类别的数量生成能够表示该类别的二进制编码。
+
+```python
+from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder()
+transformed_data = enc.transform(data).toarray()
+```
+
+**特征组合**
+
+特征组合的一个最简单的尝试是生成多项式特征，例如，如果有两个特征x_1,x_2,多项式为2的特征会自动生成1, x1,x2,x1*x2,x1^2,x2^2 这些特征。
+
+```python
+from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(2)
+X_transformed = poly.fit_transform(X)  
 ```

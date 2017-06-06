@@ -38,8 +38,8 @@ g^ : 绿色实心三角
 
 
 ```python
-%matplotlib inline 
-plt.plot([8,2,5,7]) 
+%matplotlib inline
+plt.plot([8,2,5,7])
 plt.plot([1,2,3,4],[2,3,3,2],'go')
 plt.plot([1,2,3,4],[3,3,3,3],'r--',[1,2,3,4],[4,4,4,4],'r^',[1,2,3,4],[5,5,5,5],'rs')
 plt.show()
@@ -55,7 +55,7 @@ plt.show()
    或者使用set方法：`line, = plot(x,y,'-')` `line.set_antialiased(False)`
    `plt.setp(lines, color='r', linewidth=2.0)`
    要查看所有可以设置的属性，可以使用`plt.setp(lines)`
-   
+
 3. 设置坐标标识：
 
 ```python
@@ -430,3 +430,19 @@ plt.show()
 
 ![png](output_25_0.png)
 
+### 一个配色的网站
+
+http://colorbrewer2.org， 有各种颜色可以调节，可以根据需要生成不同类别的颜色。
+
+### 统计绘图包
+
+http://seaborn.pydata.org/
+
+### 牛逼的绘图
+
+http://www.bugman123.com/index.html
+
+### 参考文献
+
+1. https://www.zhihu.com/question/21664179
+2.

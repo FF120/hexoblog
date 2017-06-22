@@ -1,5 +1,5 @@
 ---
-title: 使用Hexo编辑数学公式
+title: Hexo的使用04-数学公式
 toc: true
 categories:
   - 工具

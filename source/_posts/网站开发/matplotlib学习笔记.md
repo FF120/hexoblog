@@ -430,19 +430,77 @@ plt.show()
 
 ![png](output_25_0.png)
 
-### 一个配色的网站
+### 配色
 
-http://colorbrewer2.org， 有各种颜色可以调节，可以根据需要生成不同类别的颜色。
+不同种类的颜色，渐变色等的搭配，可以从[这里](http://colorbrewer2.org)生成。
 
-### 统计绘图包
+## 统计绘图(seaborn)
 
-http://seaborn.pydata.org/
+需要各种带有统计量的图形的时候，一种选择是自己计算各种统计量，然后使用Matplotlib手动绘制，另外一种方法就是使用专门用来绘制统计图形的工具，好处是不需要自己计算各种统计量，只需要传入原始的数据，工具包会自己计算需要的统计量。一个比较流行的统计绘图工具是[seaborn](http://seaborn.pydata.org/).
 
-### 牛逼的绘图
+### 箱线图
+
+反应数据分布规律的一种图形，可以把数据的中位数，四分位数等都显示在一张图上。使用来观察数据分布的较好方法。图形类似下面这样。
+
+![](boxplot.png)
+
+`seaborn`自带的函数支持`pandas.DataFrame`格式的数据，所以使用起来非常方便。但是如果想要把两个DataFrame每一列的数据作为对比，制作成箱线图，`seaborn`并没有提供这样的方法，需要修改DataFrame的格式，使之符合要求。
+
+```python
+def plotBox(self,dflist,palette="Set3",rotation=45):
+       """
+       绘制箱线图
+
+       Parameters
+       ----------
+       dflist : list of pandas.DataFrame, each of the DataFrame as a class and will be plot together
+       pallette : pallette in sns
+       rotation : x_lable rotation to show whole word
+
+       """
+       sdata =pd.Series()
+       sxx = pd.Series()
+       slabel = pd.Series()
+
+       for i in range(len(dflist)):
+           pdd = dflist[i]
+           columns = pdd.columns.values
+           ds = pd.Series([i+1]*(pdd.shape[0]*pdd.shape[1]))
+           slabel = slabel.append(ds)
+           for cc in columns:
+               sdata = sdata.append(pdd[cc])
+               sxx = sxx.append(pd.Series([cc]*len(pdd[cc])))
+
+       snsdata = pd.DataFrame({"y":sdata.values,"x":sxx.values,"label":slabel})
+       sns.set(style="ticks")
+       ax = sns.boxplot(data=snsdata,x='x',y='y',hue='label',palette=palette)
+       ax.set_xticklabels(ax.xaxis.get_ticklabels(), rotation=rotation)
+       sns.despine(offset=10, trim=True)
+
+```
+
+### 矩阵可视化
+
+把矩阵的值作为颜色的取值，可视化的表示出矩阵的情况。图形类似下面这样：
+
+![](heatmap.jpg)
+
+```python
+import seaborn as sns
+
+sns.set(context="paper", font="monospace",palette="Set3")
+f, ax = plt.subplots(figsize=(10, 10))
+# Draw the heatmap using seaborn
+sns.heatmap(matrix, vmax=.8,square=True,annot=True, fmt=".1f",linewidths=.5)
+ax.set_xticklabels(ax.xaxis.get_ticklabels(), rotation=90)
+ax.set_yticklabels(ax.yaxis.get_ticklabels(), rotation=0)
+```
+
+## 牛逼的绘图
 
 http://www.bugman123.com/index.html
 
-### 参考文献
+## 参考文献
 
 1. https://www.zhihu.com/question/21664179
 2.

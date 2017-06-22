@@ -1,5 +1,5 @@
 ---
-title: Hexo博客同时在coding.net和gitHub.com同步
+title: Hexo的使用02-同步
 toc: true
 categories:
   - 工具
@@ -8,11 +8,14 @@ tags:
   - git
 date: 2016-06-12 20:02:43
 ---
+
 Hexo生成的博客在Public文件夹中。我们使用命令`hexo d`部署的时候，是吧该文件夹下的内容上传到了github的以用户名为仓库名的master分支上。
 由于生成之后的文件是HTML格式的，不便于再编辑，所以存一份markdown格式的源代码也是很有必要的。在GitHub新建一个仓库hexoblog,使用这个仓库
 存储Hexo的源代码。Coding.net与GitHub高度相似，不同的是它的Pages读取的是用户名为仓库名的gh-pages分支的代码，而不是master分支的代码，所以master分支正好可以用来
 存储Hexo的源代码。
+
 <!-- more -->
+
 具体配置过程
 ![home](home.png)
 `.git`中的`conf`文件中这样配置

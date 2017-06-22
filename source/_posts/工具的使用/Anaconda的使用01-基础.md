@@ -1,5 +1,5 @@
 ---
-title: anaconda安装和使用
+title: Anaconda的使用01-基础
 toc: true
 categories:
   - 工具

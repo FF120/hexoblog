@@ -9,6 +9,152 @@ date: 2017-04-07 11:29:34
 ---
 记录一些C++语言当中的技巧性代码。
 <!--more-->
+
+## 字符串基本操作
+
+```c
+#include <string>
+
+// 末尾添加一个字符
+s.push_back('a');
+// 末尾追加一个字符串
+s.append("aaa");
+// 任意位置插入字符
+
+//任意位置插入字符串
+
+//任意位置删除字符
+
+//任意位置删除字符串
+
+```
+
+## 判断x是否是素数
+
+```c
+// 判断x是否是素数
+bool isPrime(int x){
+    int xx = (int)sqrt((double)x);
+    for(int i=2;i<=xx;i++){
+        if( x % i == 0) return false;
+    }
+    return true;
+}
+```
+
+## 找出n以内，2，3，5整除的所有数字
+
+```c
+// 返回三个数字中的最小值和最小值的索引
+int minThree(vector<int> v, int &index){
+    if(v.size()!=3) return -1;
+    int minValue = v[0];
+    index = 0;
+    if(minValue > v[1]){
+        minValue = v[1];
+        index = 1;
+    }
+    if(minValue > v[2]){
+        minValue = v[2];
+        index = 2;
+    }
+    return minValue;
+}
+// 找出n以内所有能被2，3，5其中一个或者多个整除的数字
+vector<int> getNumbers(int x){
+    vector<int> results={1};
+    vector<int> index235 = {1,1,1};
+    int index = 0;
+    int minValue = minThree({2*index235[0],3*index235[1],5*index235[2]},index);
+    while(minValue<=x){
+        if(minValue != results[results.size()-1]){
+            results.push_back(minValue);
+        }
+        index235[index]++;
+        minValue = minThree({2*index235[0],3*index235[1],5*index235[2]},index);
+    }
+    return results;
+}
+```
+
+## 找出第1500个只包含2或3或5为因子的数字(从1开始)
+
+```c
+// 返回三个数字中的最小值和最小值的索引
+int minThree(vector<int> v, int &index){
+    if(v.size()!=3) return -1;
+    int minValue = v[0];
+    index = 0;
+    if(minValue > v[1]){
+        minValue = v[1];
+        index = 1;
+    }
+    if(minValue > v[2]){
+        minValue = v[2];
+        index = 2;
+    }
+    return minValue;
+}
+// 找到第K个数字（从1开始）
+int getNumbers(int k){
+    vector<int> index235 = {1,1,1};
+    int index = 0;
+
+    int tmp = 1;
+    int count = 1;
+    int minValue = 1;
+    while(count < k){
+        minValue = minThree({2*index235[0],3*index235[1],5*index235[2]},index);
+        if(minValue != tmp){
+            count++;
+            tmp = minValue;
+        }
+        index235[index]++;
+    }
+    return minValue;
+}
+```
+
+
+## 小于等于n的所有素数
+
+```c
+// 找出x以内的所有素数
+vector<int> getPrimes(int x){
+    vector<int> Primes;
+    // 初始化 0 - x 都是素数
+    vector<bool> isPrime(x+1,true);
+    isPrime[0] = false; // 0 不是素数
+    isPrime[1] = false; // 1 不是素数
+    for(int i=2;i<=x;i++){
+        // 如果i是素数，把所有i的倍数设置成不是素数
+        if(isPrime[i]){
+            Primes.push_back(i);
+            for(int j=i*2;j<=x;j=j+i){
+                isPrime[j] = false;
+            }
+        }
+    }
+    return Primes;
+}
+```
+
+## 最大公约数
+
+```c
+// 最大公约数
+int getY(int x,int y){
+    int tmp = 0;
+
+    while(y){
+        tmp = y;
+        y = x % y;
+        x = tmp;
+    }
+    return x;
+}
+```
+
 ## 自定义set的比较函数
 存入set的元素默认是有序的，但是默认的比较可能不能满足我们的要求，这个时候
 就需要自定义比较的函数。 set的排序是使用红黑树的结构，插入删除和取出最小的
@@ -90,8 +236,23 @@ string Int_to_String(int n)
     return stream.str();
 }
 ```
+## 十进制数字转换成K进制之后数位之和
+
+```c
+// 10进制数字 转换成K进制之后各个数位的数字之和
+int getSum(int n,int k){
+    int sum = 0;
+    while(n){
+        sum += n % k;
+        n = n / k;
+    }
+    return sum;
+}
+```
 
 ## 十进制数字转换成K进制
+
+```c
 deque<int> Kin(int n,int k){
     deque<int> result;
     while(n/k != 0){
@@ -101,7 +262,7 @@ deque<int> Kin(int n,int k){
     result.push_front(n);
     return result;
 }
-
+```
 ## K进制数字转换成十进制
 ```c
 /**
@@ -153,7 +314,9 @@ int Kinverse(deque<int> v,int k){
 ```c
 freopen("d:\\A.out","w",stdout);
 ```
+
 ## 格式化输入输出
+
 C++定义了一些操纵符来控制输出流的状态，endl就是一个常用的操纵符。
 
 **控制布尔值的格式**
@@ -166,11 +329,22 @@ cout<<boolalpha<<"boolalpha: "<<true<<" "<<false<<noboolalpha<<endl;
 ```
 
 **控制整数的输出进制**
+
 - 八进制： `oct`
 - 十六进制： `hex`
 - 十进制： `dec`
 
+**控制固定小数点位数**
+```c
+#include <iomanip>
+
+cout.precision(6);
+cout.setf(ios::fixed);
+
+```
+
 ## 数据的表示范围
+
 以下内容来源于`C++ Premier 第五版`
 
 **整型**
@@ -199,6 +373,7 @@ cout<<boolalpha<<"boolalpha: "<<true<<" "<<false<<noboolalpha<<endl;
 - significand : 尾数
 - exponent ： 指数
 浮点类型的大小可以通过包含[`cfloat`](http://www.cplusplus.com/reference/cfloat/)查看。
+
 ```c
 //获得浮点类型的表示范围  cfloat
    cout<<"float range: "<<FLT_MIN<<" to "<<FLT_MAX<<endl;
@@ -233,6 +408,7 @@ cout<<boolalpha<<"boolalpha: "<<true<<" "<<false<<noboolalpha<<endl;
 ```
 
 **类型的使用准则**
+
 - 明确知道不可能为负，使用无符号数。
 - 整数运算一般使用`int`, 需要大数的时候考虑`long long`.需要小整数的时候考虑`signed char` or `unsigned char`
 - 浮点运算用`double`
@@ -248,6 +424,7 @@ $$
 5^{12} = 5^{(2^2+2^3)} = 5^{2^2} * 5^{2^3}
 $$
 2的幂的计算可以由十分迅速的移位计算得到，所有原来需要12个乘法运算才能解决的计算问题，现在编程了只需要三次计算节能解决。
+
 ```c
 int quickPow(int a,int b){
     int ans=1,base=a;
@@ -458,20 +635,19 @@ cout<<end_time - start_time<<endl;
 ## 返回一个无序数组排序之后的下标，不动原来的数组
 例如 a = [3,5,2,4,1] , 从小到大排序之后应该是[1,2,3,4,5], 原来在a中的下标是[4,2,0,3,1],我们的目标就是输入a，返回[4,2,0,3,1]
 ```c
+#include <iostream>
+#include <algorithm>
 
-const int N=5;
-int a[N];
-int order[N];
-bool Cmp(const int& x, const int& y)
-{
-    return a[x] < a[y];
-}
-for(int i=0;i<N;i++){
-        cin>>a[i];
+using namespace std;
+
+vector<int> getOrderIndex(vector<int> &a){
+    vector<int> order(a.size(),0);
+    for(int i=0;i<a.size();i++){
         order[i] = i;
     }
-sort(order, order + N, Cmp);
-
+    sort(order.begin(), order.begin() + a.size(), [a](const int& x, const int& y)->bool { return a[x] < a[y];});
+    return order;
+}
 ```
 order中就是我们想要的结果。
 
@@ -493,6 +669,6 @@ inline void q_read(int &num)
         }
     }
     while(ch = getchar(), isdigit(ch)) num = num*10+ch-'0';
-    num *= f;  
+    num *= f;
 }
 ```

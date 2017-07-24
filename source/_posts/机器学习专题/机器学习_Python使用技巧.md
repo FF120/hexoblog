@@ -1,5 +1,5 @@
 ---
-title: Python速查手册
+title: Python使用技巧
 toc: true
 categories:
   - 编程语言
@@ -34,7 +34,6 @@ from sklearn.feature_selection import SelectKBest, f_classif,RFECV
 from sklearn import cross_validation
 from sklearn.cross_validation import StratifiedKFold,LeavePOut,LeaveOneOut
 from sklearn.model_selection import train_test_split
-
 ```
 
 ## Python
@@ -80,19 +79,3 @@ dataframe.to_excel(filepath,sheet_name='sheet2',header=False,index=False)
 dataframe.to_csv(filepath,sheet_name='sheet2',header=False,index=False)
 
 ```
-
-## Numpy
-
-**随机打乱数据**
-
-```python
-random_y = np.random.permutation(y)
-```
-
-## Matplotlib
-
-## Scipy
-
-## Scikit-learn
-
-## seaborn

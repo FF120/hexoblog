@@ -8,9 +8,11 @@ tags:
 date: 2017-05-07 16:16:13
 ---
 谷歌codejam:https://codejam.withgoogle.com/codejam/contest/11304486/dashboard.
+
 <!--more-->
 
 ## problem A
+
 ![](2017-05-07_162055.png)
 小规模测试文件：https://drive.google.com/open?id=0B2aHWGYn_JL-WFhaWVMxaXpxWVk
 大规模测试文件：https://drive.google.com/open?id=0B2aHWGYn_JL-X1BoUlUzZFptQzQ
@@ -36,6 +38,7 @@ for(int i=0;i<num;i++){
 cout<<sum<<endl;
 ```
 仔细观察上面的代码，我们发现每次都要计算$2^i$,这是一个耗时的操作，尤其是当i很大的时候。我们可以事先计算出所有需要的值存储在一个数组中，这样只需要计算一次就可以了。那么我们需要计算到2的多少次方呢？我们查看最大的那组的数据规模，发现N最大是10000，所以只要稍微大于10000就可以了。这里设置maxn = 10005;
+
 ```c
 const int maxn = 10005;
 long long p[maxn];
@@ -79,6 +82,7 @@ int main(){
 
 这样的时间复杂度其实已经可以解决这个问题了。
 完整的代码：
+
 ```c
 #include <iostream>
 #include <algorithm>
@@ -124,6 +128,7 @@ int main(){
 ```
 
 这里还有另外一个版本的代码，貌似效率更高一些，但是还不是很明白原理：
+
 ```c
 #include <bits/stdc++.h>
 using namespace std;
@@ -157,6 +162,7 @@ int main()
 ```
 
 ## problem B
+
 ![](2017-05-08_150406.png)
 
 ```c

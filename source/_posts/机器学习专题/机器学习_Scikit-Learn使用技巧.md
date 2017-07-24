@@ -1,5 +1,5 @@
 ---
-title: scikit-learn机器学习算法的使用
+title: 深度学习_Scikit-Learn机器学习算法的使用
 toc: true
 categories:
   - 机器学习
@@ -345,5 +345,5 @@ transformed_data = enc.transform(data).toarray()
 from sklearn.preprocessing import PolynomialFeatures
 
 poly = PolynomialFeatures(2)
-X_transformed = poly.fit_transform(X)  
+X_transformed = poly.fit_transform(X)
 ```

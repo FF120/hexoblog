@@ -1,5 +1,5 @@
 ---
-title: 限制波尔茨曼机(RBM)
+title: 深度学习_限制波尔茨曼向量机(RBM)
 toc: true
 categories:
   - 机器学习

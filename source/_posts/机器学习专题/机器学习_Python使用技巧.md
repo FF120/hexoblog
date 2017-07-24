@@ -1,5 +1,5 @@
 ---
-title: Python使用技巧
+title: 深度学习_Python使用技巧
 toc: true
 categories:
   - 编程语言

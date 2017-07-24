@@ -1,5 +1,5 @@
 ---
-title: Matlab常用技巧总结
+title: 机器学习_Matlab使用技巧
 toc: true
 categories:
   - 认知神经科学

@@ -1,5 +1,5 @@
 ---
-title: 递归神经网络(RNN)
+title: 深度学习_递归神经网络(RNN)
 toc: true
 categories:
   - 机器学习

@@ -1,5 +1,5 @@
 ---
-title: 使用autoencoder自动提取特征
+title: 深度学习_使用autoencoder自动提取特征
 toc: true
 categories:
   - 认知神经科学

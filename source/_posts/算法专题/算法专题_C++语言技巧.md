@@ -652,6 +652,7 @@ vector<int> getOrderIndex(vector<int> &a){
 order中就是我们想要的结果。
 
 ## 输入挂
+
 当纯数字的输入规模超过$10^6$时，可以考虑使用输入挂，比系统自带的cin快很多。
 
 ```c
@@ -672,3 +673,5 @@ inline void q_read(int &num)
     num *= f;
 }
 ```
+
+还可以在开始的时候加入 `ios::sync_with_stdio(false);`, 它的作用是去掉cin额外的检查开销，达到和scanf相似的输入效率；

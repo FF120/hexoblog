@@ -350,6 +350,7 @@ cout.setf(ios::fixed);
 **整型**
 
 包括整数，字符型，和布尔类型；这类数据在计算机的内部都是以二进制位0和1直接保存的。
+
 ```c
 // 获得整形类型的表示范围， climits
     cout<<"char: "<<CHAR_MIN<<" to "<<CHAR_MAX<<endl;
@@ -364,6 +365,7 @@ cout.setf(ios::fixed);
     cout<<"unsigned int64: "<<0<<" to "<<UINT64_MAX<<endl;
     cout<<endl;
 ```
+
 **浮点型**
 
 在计算机内部，这种类型是把保存数据的空间分成两部分，一部分存储小数部分，一部分存储指数部分，数的实际大小是通过计算得出来的。
@@ -372,6 +374,7 @@ cout.setf(ios::fixed);
 - base(radix) : 基数(2,8,10,16)
 - significand : 尾数
 - exponent ： 指数
+
 浮点类型的大小可以通过包含[`cfloat`](http://www.cplusplus.com/reference/cfloat/)查看。
 
 ```c
@@ -651,6 +654,51 @@ vector<int> getOrderIndex(vector<int> &a){
 }
 ```
 order中就是我们想要的结果。
+
+## 读取数量不定的若干个整数
+
+```c
+#include <iostream>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+/**
+ * 读取一行整数，返回数组
+ * @param s
+ * @return
+ */
+vector<int> getInt(string &s)
+{
+    getline(cin,s);
+    istringstream iss(s);
+    vector<int> v;
+    int num;
+    while(iss >> num){
+        v.push_back(num);
+    }
+    return v;
+}
+```
+
+## 字符串转换成整数
+
+```c
+/**
+ * 用空格分割的字符串转换成整数
+ * @param s 
+ * @return 
+ */
+vector<int> string2int(string &s){
+    istringstream in(s);
+    vector<int> v;
+    int num;
+    while(in >> num){
+        v.push_back(num);
+    }
+    return v;
+}
+```
 
 ## 输入挂
 

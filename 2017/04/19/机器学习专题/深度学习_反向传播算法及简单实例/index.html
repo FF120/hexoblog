@@ -1,0 +1,1171 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="BP," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="反向传播算法入门资源索引： http://www.52nlp.cn/tag/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95python%E4%BB%A3%E7%A0%81">
+<meta name="keywords" content="BP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习_反向传播算法及简单实例">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="反向传播算法入门资源索引： http://www.52nlp.cn/tag/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95python%E4%BB%A3%E7%A0%81">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/2017-04-19_191339.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/2017-04-19_102750.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/2017-04-19_213636.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:20.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习_反向传播算法及简单实例">
+<meta name="twitter:description" content="反向传播算法入门资源索引： http://www.52nlp.cn/tag/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95python%E4%BB%A3%E7%A0%81">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/2017-04-19_191339.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/"/>
+
+  <title> 深度学习_反向传播算法及简单实例 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度学习_反向传播算法及简单实例
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-19T10:22:48+08:00" content="2017-04-19">
+              2017-04-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/" class="leancloud_visitors" data-flag-title="深度学习_反向传播算法及简单实例">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>反向传播算法入门资源索引：</p>
+<p><a href="http://www.52nlp.cn/tag/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95python%E4%BB%A3%E7%A0%81" target="_blank" rel="external">http://www.52nlp.cn/tag/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95python%E4%BB%A3%E7%A0%81</a></p>
+<a id="more"></a>
+<p>一个简单的三层网络：</p>
+<div class="figure">
+<img src="2017-04-19_191339.png">
+
+</div>
+<p>下面我们以上面的简单的三层的神经网络说明BP算法的计算过程。</p>
+<p>初始的输入参数是：</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(x_1\)</span></th>
+<th align="center"><span class="math inline">\(x_2\)</span></th>
+<th align="center"><span class="math inline">\(x_3\)</span></th>
+<th align="center"><span class="math inline">\(w_{14}\)</span></th>
+<th align="center"><span class="math inline">\(w_{15}\)</span></th>
+<th align="center"><span class="math inline">\(w_{24}\)</span></th>
+<th align="center"><span class="math inline">\(w_25\)</span></th>
+<th align="center"><span class="math inline">\(w_{34}\)</span></th>
+<th align="center"><span class="math inline">\(w_{35}\)</span></th>
+<th align="center"><span class="math inline">\(w_{46}\)</span></th>
+<th align="center"><span class="math inline">\(w_{56}\)</span></th>
+<th align="center"><span class="math inline">\(b_4\)</span></th>
+<th align="center"><span class="math inline">\(b_5\)</span></th>
+<th align="center"><span class="math inline">\(b_6\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0.2</td>
+<td align="center">-0.3</td>
+<td align="center">0.4</td>
+<td align="center">0.1</td>
+<td align="center">-0.5</td>
+<td align="center">0.2</td>
+<td align="center">-0.3</td>
+<td align="center">-0.2</td>
+<td align="center">-0.4</td>
+<td align="center">0.2</td>
+<td align="center">0.1</td>
+</tr>
+</tbody>
+</table>
+<p>该神经网络接受一个三维的向量作为输入[x1,x2,x3],输出只有一个数字，这里设置为不是0，就是1.示例给出的数据[1,0,1]对应的类别是1.</p>
+<p>定义好了网络的结构，给出了初始的网络参数的值( <span class="math inline">\(w_{14}\)</span>|<span class="math inline">\(w_{15}\)</span>|<span class="math inline">\(w_{24}\)</span>|<span class="math inline">\(w_25\)</span>|<span class="math inline">\(w_{34}\)</span>|<span class="math inline">\(w_{35}\)</span>|<span class="math inline">\(w_{46}\)</span>|<span class="math inline">\(w_{56}\)</span>|<span class="math inline">\(b_4\)</span>|<span class="math inline">\(b_5\)</span>|<span class="math inline">\(b_6\)</span>| ),都是该神经网络的参数。现在的目标是使得该神经网络在输入是[1,0,1]时，输出是1,或者至少是十分接近1.</p>
+<p>首先计算一下在初始化参数的情况下，神经网络的输出是什么。 神经元输出的计算过程。</p>
+<div class="figure">
+<img src="2017-04-19_102750.png">
+
+</div>
+<p>在这里，激活函数我们使用sigmiod函数：</p>
+<p><span class="math display">\[
+f(x) =  \dfrac 1 {1+e^{-x}}
+\]</span></p>
+<p>我们将第i个神经元在激活函数作用之前的输出记作的输出记作 <span class="math inline">\(I_i\)</span> ,在激活函数作用之后的值记 <span class="math inline">\(O_i\)</span> 计算过程如下： <span class="math display">\[
+I_4 = x_1*w_{14}+x_2*w_{24}+x_3*w_{34}+b_4 = 1*0.2+0*0.4+1*(-0.5)+(-0.4) = -0.7
+\]</span></p>
+<p><span class="math display">\[
+I_5 = x_1*w_{15}+x_2*w_{25}+x_3*w_{35}+b_5 = 1*(-0.3)+0*0.1+1*0.2+0.2 = 0.1
+\]</span></p>
+<p><span class="math display">\[
+I_6 = O_4*w_{46}+O_5*w_{56}+b_6 = 0.331812*(-0.3)+0.524979*(-0.2)+0.1 = -0.104539
+\]</span></p>
+<p><span class="math display">\[
+O_4 = f(I_4) = \dfrac 1 {1+e^{-(-0.7)}} = 0.331812
+\]</span></p>
+<p><span class="math display">\[
+O_5 = f(I_5) = \dfrac 1 {1+e^{-0.1}} = 0.524979
+\]</span></p>
+<p><span class="math display">\[
+O_6 = f(I_6) = \dfrac 1 {1+e^{-(-0.104539)}} = 0.473889
+\]</span></p>
+<p>可以看到，初始化的参数对[1,0,1]的输出是0.473899，而我们期望的输出是1。 所以，必须使用某种办法调整参数，才可以达到我们的期望。</p>
+<p>我们定义误差如下：</p>
+<p><span class="math display">\[
+E = \frac12 (target - O_6)^2
+\]</span></p>
+<p>用平方误差来度量输出和期望的输出之间的差距。那么接下来我们希望调整神经网络的参数，使得E尽快的缩小，这样我们就可以使神经网络尽快的达到我们期望的输出。首先考虑如何改变<span class="math inline">\(w_{46}\)</span>才能使得误差减小。这里我求 $ $ , 导数对应的方向函数上升下降的速度是最快的，我们使用偏导数找到最快的下降方向，按照这样的方式更新神经网络的权重参数和偏置参数。</p>
+<p><span class="math display">\[
+\frac {\partial E} {\partial w_{46}} = \frac {\partial E} {\partial O_6} * \frac {\partial O_6} {\partial I_6} * \frac {\partial I_6} {\partial w_{46}}
+\]</span></p>
+<p>上面应用了求导的链式法则，将对<span class="math inline">\(w_{46}\)</span>的偏导数表示成了已知的数据。下面我们一步一步求出这个偏导数的表达式并得出参数的更新规则。</p>
+<p><span class="math display">\[
+E = \frac12 (target - O_6)^2
+\]</span></p>
+<p><span class="math display">\[
+\frac {\partial E} {\partial O_6} = -\frac12*2(target-O_6) = O_6 - target = 0.473889 - 1 = -0.526111
+\]</span></p>
+<p><span class="math display">\[
+O_6 = f(I_6) = \frac {1} {1+e^{-I_6}}
+\]</span> <span class="math display">\[
+\frac {\partial O_6} {\partial I_6} {} = e^{-I_6}*(\frac {1} {1+e^{-I_6}})^{2} = O_6 * (1-O_6) = 0.473889 * (1-0.473889) = 0.249318
+\]</span></p>
+<p><span class="math display">\[
+I_6 = O_4*w_{46}+O_5*w_{56}+b_6
+\]</span></p>
+<p><span class="math display">\[
+\frac {\partial I_6} {\partial w_{46}} = O_4 = 0.331812
+\]</span></p>
+<p>综合上面的所有公式，可以推导出最终的参数更新公式是： <span class="math display">\[
+\frac {\partial E} {\partial w_{46}} = (O_6 - target) * (O_6*(1-O_6))*O_4=(-0.526111)*0.249318*0.331812= -0.043523
+\]</span></p>
+<p>我们定义一个学习率<span class="math inline">\(l\)</span>,表示参数更新的速度，这里设定为0.9；然后定义参数按照下面的方式更新： <span class="math display">\[
+w^+_{46} = w_{46} - l * \frac {\partial E} {\partial w_{46}} = -0.3 - 0.9*(-0.043523) =  -0.260829
+\]</span></p>
+<p>下面总结一下上面提到的公式，需要注意的是，我这里举例的神经网络只有一个输出，所有偏导数和导数是一样的。但是通常的神经网络都有多个输出。在有多个输出的时候，我们定义E等于多个输出节点的E的和。这样，多个节点的输出就和单个节点的输出不太一样。我们定义输出节点的错误率为： <span class="math display">\[
+E_i = O_i*(1-O_i)*(target-O_i)
+\]</span></p>
+<p>我们定义隐藏层的节点的错误率为： <span class="math display">\[
+E_i = O_i*(1-O_i)*( \sum E_k*w_{jk})
+\]</span></p>
+<p>这样，每次参数的更新就可以写成下面的形式： <span class="math display">\[
+\Delta w_{ij} = l * E_j * O_i
+\]</span> 偏置的更新定义如下： <span class="math display">\[
+\Delta b_j = l * E_j
+\]</span></p>
+<p>不断的应用以上的公式更新权重参数和偏置，直到错误率到达一个很小的水平，停止训练。这个时候，神经网络对输入[1,0,1]的输出已经非常接近正确答案1了。</p>
+<p>第一轮权重和偏置的更新是： <img src="2017-04-19_213636.png"></p>
+<p>了解了反向传播算法，就掌握了神经网络参数学习的方法，我们就可以写出自己的神经网络了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="comment"># 全连接层实现类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FullConnectedLayer</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_size, output_size,</span></span></div><div class="line">                 activator):</div><div class="line">        <span class="string">'''</span></div><div class="line">        构造函数</div><div class="line">        input_size: 本层输入向量的维度</div><div class="line">        output_size: 本层输出向量的维度</div><div class="line">        activator: 激活函数</div><div class="line">        '''</div><div class="line">        self.input_size = input_size</div><div class="line">        self.output_size = output_size</div><div class="line">        self.activator = activator</div><div class="line">        <span class="comment"># 权重数组W</span></div><div class="line">        self.W = np.random.uniform(<span class="number">-0.1</span>, <span class="number">0.1</span>,</div><div class="line">            (output_size, input_size))</div><div class="line">        <span class="comment"># 偏置项b</span></div><div class="line">        self.b = np.zeros((output_size, <span class="number">1</span>))</div><div class="line">        <span class="comment"># 输出向量</span></div><div class="line">        self.output = np.zeros((output_size, <span class="number">1</span>))</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input_array)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        前向计算</div><div class="line">        input_array: 输入向量，维度必须等于input_size</div><div class="line">        '''</div><div class="line">        <span class="comment"># 式2</span></div><div class="line">        self.input = input_array</div><div class="line">        self.output = self.activator.forward(</div><div class="line">            np.dot(self.W, input_array) + self.b)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backward</span><span class="params">(self, delta_array)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        反向计算W和b的梯度</div><div class="line">        delta_array: 从上一层传递过来的误差项</div><div class="line">        '''</div><div class="line">        <span class="comment"># 式8</span></div><div class="line">        self.delta = self.activator.backward(self.input) * np.dot(</div><div class="line">            self.W.T, delta_array)</div><div class="line">        self.W_grad = np.dot(delta_array, self.input.T)</div><div class="line">        self.b_grad = delta_array</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, learning_rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        使用梯度下降算法更新权重</div><div class="line">        '''</div><div class="line">        self.W += learning_rate * self.W_grad</div><div class="line">        self.b += learning_rate * self.b_grad</div><div class="line"></div><div class="line"><span class="comment"># Sigmoid激活函数类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SigmoidActivator</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, weighted_input)</span>:</span></div><div class="line">        <span class="keyword">return</span> <span class="number">1.0</span> / (<span class="number">1.0</span> + np.exp(-weighted_input))</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backward</span><span class="params">(self, output)</span>:</span></div><div class="line">        <span class="keyword">return</span> output * (<span class="number">1</span> - output)</div><div class="line"><span class="comment"># 神经网络类</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Network</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, layers)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        构造函数</div><div class="line">        '''</div><div class="line">        self.layers = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(layers) - <span class="number">1</span>):</div><div class="line">            self.layers.append(</div><div class="line">                FullConnectedLayer(</div><div class="line">                    layers[i], layers[i+<span class="number">1</span>],</div><div class="line">                    SigmoidActivator()</div><div class="line">                )</div><div class="line">            )</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, sample)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        使用神经网络实现预测</div><div class="line">        sample: 输入样本</div><div class="line">        '''</div><div class="line">        output = sample</div><div class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.layers:</div><div class="line">            layer.forward(output)</div><div class="line">            output = layer.output</div><div class="line">        <span class="keyword">return</span> output</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, labels, data_set, rate, epoch)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        训练函数</div><div class="line">        labels: 样本标签</div><div class="line">        data_set: 输入样本</div><div class="line">        rate: 学习速率</div><div class="line">        epoch: 训练轮数</div><div class="line">        '''</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(epoch):</div><div class="line">            <span class="keyword">for</span> d <span class="keyword">in</span> range(len(data_set)):</div><div class="line">                self.train_one_sample(labels[d],</div><div class="line">                    data_set[d], rate)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train_one_sample</span><span class="params">(self, label, sample, rate)</span>:</span></div><div class="line">        self.predict(sample)</div><div class="line">        self.calc_gradient(label)</div><div class="line">        self.update_weight(rate)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">calc_gradient</span><span class="params">(self, label)</span>:</span></div><div class="line">        delta = self.layers[<span class="number">-1</span>].activator.backward(</div><div class="line">            self.layers[<span class="number">-1</span>].output</div><div class="line">        ) * (label - self.layers[<span class="number">-1</span>].output)</div><div class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.layers[::<span class="number">-1</span>]:</div><div class="line">            layer.backward(delta)</div><div class="line">            delta = layer.delta</div><div class="line">        <span class="keyword">return</span> delta</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_weight</span><span class="params">(self, rate)</span>:</span></div><div class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.layers:</div><div class="line">            layer.update(rate)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_and_evaluate</span><span class="params">()</span>:</span></div><div class="line">    last_error_ratio = <span class="number">1.0</span></div><div class="line">    epoch = <span class="number">0</span></div><div class="line">    train_data_set, train_labels = get_training_data_set()</div><div class="line">    test_data_set, test_labels = get_test_data_set()</div><div class="line">    network = Network([<span class="number">784</span>, <span class="number">300</span>, <span class="number">10</span>])</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        epoch += <span class="number">1</span></div><div class="line">        network.train(train_labels, train_data_set, <span class="number">0.3</span>, <span class="number">1</span>)</div><div class="line">        print(<span class="string">'%s epoch %d finished'</span> % (now(), epoch) )</div><div class="line">        <span class="keyword">if</span> epoch % <span class="number">10</span> == <span class="number">0</span>:</div><div class="line">            error_ratio = evaluate(network, test_data_set, test_labels)</div><div class="line">            print(<span class="string">'%s after epoch %d, error ratio is %f'</span> % (now(), epoch, error_ratio) )</div><div class="line">            <span class="keyword">if</span> error_ratio &gt; last_error_ratio:</div><div class="line">                <span class="keyword">break</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                last_error_ratio = error_ratio</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    train_and_evaluate()</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/BP/" rel="tag">#BP</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/04/18/工具的使用/Anaconda的使用01-基础/" rel="next" title="Anaconda的使用01-基础">
+                <i class="fa fa-chevron-left"></i> Anaconda的使用01-基础
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/04/19/机器学习专题/深度学习_Keras使用技巧/" rel="prev" title="深度学习_Keras使用技巧">
+                深度学习_Keras使用技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/';
+      var disqus_title = "深度学习_反向传播算法及简单实例";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/04/19/机器学习专题/深度学习_反向传播算法及简单实例/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

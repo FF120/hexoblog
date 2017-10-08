@@ -1,0 +1,1245 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM,树状数组," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="树状数组是一个能够快速完成下术操作的数据结构：   给定一个初始值全为0的数列，a1,a2,a3,a4,…an 给定i,计算a1+a2+…+ai 给定i和x,计算ai = ai + x;">
+<meta name="keywords" content="ACM,树状数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_树状数组">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/07/23/算法专题/算法专题_树状数组/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="树状数组是一个能够快速完成下术操作的数据结构：   给定一个初始值全为0的数列，a1,a2,a3,a4,…an 给定i,计算a1+a2+…+ai 给定i和x,计算ai = ai + x;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/07/23/算法专题/算法专题_树状数组/2017-04-12_161624.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:22.597Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_树状数组">
+<meta name="twitter:description" content="树状数组是一个能够快速完成下术操作的数据结构：   给定一个初始值全为0的数列，a1,a2,a3,a4,…an 给定i,计算a1+a2+…+ai 给定i和x,计算ai = ai + x;">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/07/23/算法专题/算法专题_树状数组/2017-04-12_161624.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/07/23/算法专题/算法专题_树状数组/"/>
+
+  <title> 算法专题_树状数组 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_树状数组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-23T00:18:24+08:00" content="2017-07-23">
+              2017-07-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/07/23/算法专题/算法专题_树状数组/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/07/23/算法专题/算法专题_树状数组/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/07/23/算法专题/算法专题_树状数组/" class="leancloud_visitors" data-flag-title="算法专题_树状数组">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>树状数组是一个能够快速完成下术操作的数据结构：</p>
+<blockquote>
+<ul>
+<li>给定一个初始值全为0的数列，a1,a2,a3,a4,…an</li>
+<li>给定i,计算a1+a2+…+ai</li>
+<li>给定i和x,计算ai = ai + x;</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<p>上面提到的线段树其实已经满足了上面的要求，只不过有些(大材小用了)。可以用更简单的结构实现这个要求。</p>
+<div class="figure">
+<img src="2017-04-12_161624.png" alt="2017-04-12_161624.png">
+<p class="caption">2017-04-12_161624.png</p>
+</div>
+<p>把线段树所有的右节点去掉，只剩下左节点，然后对应的位置不变，投射到最下面一行，就形成了树状数组的结构。例如8个元素的树状数组的结构是：</p>
+<table>
+<thead>
+<tr class="header">
+<th>A[1]</th>
+<th>A[2]</th>
+<th>A[3]</th>
+<th>A[4]</th>
+<th>A[5]</th>
+<th>A[6]</th>
+<th>A[7]</th>
+<th>A[8]</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>[1,2]</td>
+<td>3</td>
+<td>[1,4]</td>
+<td>5</td>
+<td>[5,6]</td>
+<td>7</td>
+<td>[1,8]</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>0001</td>
+<td>0010</td>
+<td>0011</td>
+<td>0100</td>
+<td>0101</td>
+<td>0110</td>
+<td>0111</td>
+<td>1000</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>有了上面的结构，如果想求<code>c[3]+c[4]+c[5]</code>就是<code>A[4]-A[2]+A[5]</code>; 如果想求<code>c[4]</code>,就是<code>A[4]-A[3]-A[2]</code>; 总之，一个区间内的和总可以在常数时间内通过树状数组中的值求出来。树状数组可以使用位来保存，通过寻找其中的规律，可以使用简单的位操作实现树状数组的求和和更新。上面表格的最后一行是对树状数组A进行的二进制的编码。 求树状数组的前i项和：</p>
+<table>
+<thead>
+<tr class="header">
+<th>i</th>
+<th>表达式</th>
+<th>二进制表示</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>A[1]</td>
+<td>0001</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>A[2]</td>
+<td>0010</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>A[3]+A[2]</td>
+<td>0011+0010</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>A[4]</td>
+<td>0100</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>A[5]+A[4]</td>
+<td>0101+0100</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>A[6]+A[4]</td>
+<td>0110+0100</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>A[7]+A[6]+A[4]</td>
+<td>0111+0110+0100</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>A[8]</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>从二进制当中寻找规律，求前i项：</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>初始化sum=0;</li>
+<li>从树状数组A[i]开始，把A[i]加入到结果中去。然后从i中减去i最低位1对应的数字。i的最低位的1对应的数字的值的大小可以用<code>i&amp;(-i)</code>求得。</li>
+<li>直到i的结果为0停止。</li>
+</ol>
+</blockquote>
+<p>按照上面的步骤分析上面表格中的每一行的求解：</p>
+<blockquote>
+<ul>
+<li>0001减去最后一位二进制1对应的数字（1）之后为0，所以最后结果是A[1]</li>
+<li>0010减去最后一位二进制1对应的数字(2)之后为0，所以最后的结果是A[2]</li>
+<li>0011减去最后以为二进制1对应的数字(1)之后为(0010,A[2]),而0010减去最后一位二进制1对应的数字(2)之后为0,所以最后的结果是A[3]+A[2]</li>
+<li>0100减去最后以为二进制1对应的数字(4)之后为0,所以最后的结果是A[4]</li>
+<li>0101减去最后以为二进制1对应的数字(1)之后为0100,0100减去最后以为二进制1对应的数字(4)之后为0,所以最后的结果是A[5]+A[4]</li>
+<li>0110 = 0110 + 0100 = A[6] + A[4]</li>
+<li>0111 = 0111 + 0110 + 0100 + A[7] + A[6] + A[4]</li>
+<li>1000 = 1000 = A[8]</li>
+</ul>
+</blockquote>
+<p>上面就是BIT数组求和的详细解释，了解了这个过程，在知道如何求解一个数字最低位1对应的值，实现BIT的求和应该不难。下面看看BIT如何更新。 假如我们想更新c[2]的值，那么A中所有包含c[2]的值都可能发生变化，到底哪些值包含c[2]呢？从上面的表格我们看出，包含c[2]的A元素有A[2],A[4],A[8];下面再列一个表格，显示每个元素的更新都涉及哪些元素，这样就比较容易找到其中的规律。</p>
+<table>
+<thead>
+<tr class="header">
+<th>更新的值</th>
+<th>涉及的BIT</th>
+<th>二进制表示</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>c[1]</td>
+<td>A[1],A[2],A[4],A[8]</td>
+<td>0001,0010,0100,1000</td>
+</tr>
+<tr class="even">
+<td>c[2]</td>
+<td>A[2],A[4],A[8]</td>
+<td>0010,0100,1000</td>
+</tr>
+<tr class="odd">
+<td>c[3]</td>
+<td>A[3],A[4],A[8]</td>
+<td>0011,0100,1000</td>
+</tr>
+<tr class="even">
+<td>c[4]</td>
+<td>A[4],A[8]</td>
+<td>0100,1000</td>
+</tr>
+<tr class="odd">
+<td>c[5]</td>
+<td>A[5],A[6],A[8]</td>
+<td>0101,0110,1000</td>
+</tr>
+<tr class="even">
+<td>c[6]</td>
+<td>A[6],A[8]</td>
+<td>0110,1000</td>
+</tr>
+<tr class="odd">
+<td>c[7]</td>
+<td>A[7],A[8]</td>
+<td>0111,1000</td>
+</tr>
+<tr class="even">
+<td>c[8]</td>
+<td>A[8]</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到，更新的时候和求和的时候顺序似乎相反，规律是：如果要更新c[i],那么就从i开始，更新A[i]之后将i更新为<code>i = i+(i&amp;(-i))</code>,直到最后一个元素为止。因为无论更新哪个元素，最后一个元素包含所有值的和，所以必须更新最后一个元素。<code>i&amp;(-i)</code>是得到i的最后一位二进制1对应的数值的大小，然后加到i上，对比上面的表格。i的更新情况是：</p>
+<blockquote>
+<ul>
+<li>0001(1)-0001+0001(2)-0010+0010(4)-0100+0100(8)=1000 停止</li>
+<li>0010(2)-0010+0010(4)-0100+0100(8)=1000 停止</li>
+<li>0011(3)-0011+0001(4)-0100+0100(8)=1000 停止</li>
+<li>0100(4)-0100+0100(8)=1000 停止</li>
+<li>0101(5)-0101+0001(6)-0110+0010(8)=1000 停止</li>
+<li>0110(6)-0110+0010(8)=1000 停止</li>
+<li>0111(7)-0111+0001(8)=1000 停止</li>
+<li>1000(8) = 1000 停止</li>
+</ul>
+</blockquote>
+<p>树状数组的实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BIT</span>&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    BIT()&#123;&#125;</div><div class="line">    <span class="comment">// 构建n个元素的空树状数组</span></div><div class="line">    BIT(<span class="keyword">int</span> num)&#123;</div><div class="line">        n = num+<span class="number">1</span>; <span class="comment">// v[0]不用，下标从1开始。</span></div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">           v.push_back(<span class="number">0</span>);</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//求前i项的和</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> s = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(i&gt;<span class="number">0</span>)&#123;</div><div class="line">            s += v[i];</div><div class="line">            i -= i &amp; (-i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> s;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//第i 项加上x</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> x)</span></span>&#123;</div><div class="line">        <span class="keyword">while</span>(i&lt;=n)&#123;</div><div class="line">           v[i] += x;</div><div class="line">            i += i&amp;(-i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//根据传入的数组c构建它的树状数组</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;c)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;c.size();i++)&#123;</div><div class="line">            add(i+<span class="number">1</span>,c[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printV</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> aa:a)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;aa&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; c = &#123;<span class="number">3</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>&#125;;</div><div class="line">    BIT *b = <span class="keyword">new</span> BIT(c.size());</div><div class="line">    b-&gt;create(c);</div><div class="line">    printV(b-&gt;v);</div><div class="line">    b-&gt;add(<span class="number">8</span>,<span class="number">10</span>);</div><div class="line">    printV(b-&gt;v);</div><div class="line">    b-&gt;add(<span class="number">1</span>,<span class="number">1</span>);</div><div class="line">    printV(b-&gt;v);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0 3 10 6 21 4 6 8 36</div><div class="line">0 3 10 6 21 4 6 8 46</div><div class="line">0 4 11 6 22 4 6 8 47</div></pre></td></tr></table></figure>
+<p>可以看到，树状数组仅仅使用位操作就可以实现求和和更新，比线段树的开销要少很多，所以，一些能用树状数组解决的问题，不宜使用线段树。</p>
+<p>参考博文：</p>
+<p>http://www.cnblogs.com/wuwangchuxin0924/p/5921130.html http://www.cnblogs.com/GeniusYang/p/5756975.html</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+            <a href="/hexoblog/tags/树状数组/" rel="tag">#树状数组</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/07/23/算法专题/算法专题_线段树/" rel="next" title="算法专题_线段树">
+                <i class="fa fa-chevron-left"></i> 算法专题_线段树
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/07/23/算法专题/算法专题_并查集/" rel="prev" title="算法专题_并查集">
+                算法专题_并查集 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/07/23/算法专题/算法专题_树状数组/';
+      var disqus_title = "算法专题_树状数组";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/07/23/算法专题/算法专题_树状数组/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

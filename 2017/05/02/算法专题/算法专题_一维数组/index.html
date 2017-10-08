@@ -1,0 +1,1203 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="算法题型中经常涉及到一个序列的问题，可能是一个整数数组，也可能是一个字符串。这类问题涵盖的面非常广,可以考察的知识点也非常多，但是总有一些处理的思想和技巧是不变的。这里，我把遇到的这类问题总结在一起，一遍能够从中发现规律，灵活掌握解题的技巧。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_一维数组">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="算法题型中经常涉及到一个序列的问题，可能是一个整数数组，也可能是一个字符串。这类问题涵盖的面非常广,可以考察的知识点也非常多，但是总有一些处理的思想和技巧是不变的。这里，我把遇到的这类问题总结在一起，一遍能够从中发现规律，灵活掌握解题的技巧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_103300.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_134743.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_135757.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_090951.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_091927.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_092428.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_102624.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_104858.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_133320.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_141706.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_150344.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_161557.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_200734.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_213108.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_213346.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_213648.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_102806.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_102836.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_105837.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_111143.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_112158.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_112307.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_134025.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-22_141453.png">
+<meta property="og:updated_time" content="2017-08-26T13:45:45.749Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_一维数组">
+<meta name="twitter:description" content="算法题型中经常涉及到一个序列的问题，可能是一个整数数组，也可能是一个字符串。这类问题涵盖的面非常广,可以考察的知识点也非常多，但是总有一些处理的思想和技巧是不变的。这里，我把遇到的这类问题总结在一起，一遍能够从中发现规律，灵活掌握解题的技巧。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/2017-03-21_103300.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/"/>
+
+  <title> 算法专题_一维数组 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_一维数组
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-02T10:08:54+08:00" content="2017-05-02">
+              2017-05-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/05/02/算法专题/算法专题_一维数组/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/02/算法专题/算法专题_一维数组/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/05/02/算法专题/算法专题_一维数组/" class="leancloud_visitors" data-flag-title="算法专题_一维数组">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>算法题型中经常涉及到一个序列的问题，可能是一个整数数组，也可能是一个字符串。这类问题涵盖的面非常广,可以考察的知识点也非常多，但是总有一些处理的思想和技巧是不变的。这里，我把遇到的这类问题总结在一起，一遍能够从中发现规律，灵活掌握解题的技巧。</p>
+<a id="more"></a>
+<h2 id="跳跃游戏">跳跃游戏</h2>
+<div class="figure">
+<img src="2017-03-21_103300.png" alt="2017-03-21_103300.png">
+<p class="caption">2017-03-21_103300.png</p>
+</div>
+<p><strong>思路</strong> 如果采用遍历的方法，复杂度与数组的长度和数组元素的大小相关，数组中元素的大小会在很大程度上影响时间复杂度，例如数组元素都是1，代表每次都只能向后一步，那么结果就是n,如果数组的第一个元素就是n,那么一步就可以到达数组的结尾。所以这显然不是一个好的办法.考虑数组<code>array</code>的一个区间<code>[0,i]</code>,截止到<code>i</code>位置的时候，能够到达的最远的位置是<code>next</code>.考虑如何求解<code>next</code>的值.初始的时候,<code>next=0</code>,<code>i=0</code>的时候，能够到达的最远位置是<code>i+array[i]</code>,这个时候<code>next=i+array[i]</code>.当<code>i=1</code>的时候，能够到达的最远位置可能是<code>i+array[i]</code>,也可能是<code>next</code>,所以我们要取这两个元素的最大值作为<code>next</code>的值.这样只需要遍历一遍数组,我们就得到了每个元素可以达到的最远的位置.最后需要得到的结果是跳跃的次数,那么什么时候需要跳跃呢?设置一个变量<code>current</code>表示当前所在的位置,当<code>current</code>小于<code>i</code>的时候,说明我们已经遍历到了大于<code>current</code>的位置，这个时候就需要跳跃,<code>jump++</code>,然后更新<code>current = next</code>指向最新的位置. 具体实现如下。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 跳跃游戏</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> jump = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> current = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> next = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(current &lt; i)&#123;</div><div class="line">            ++jump;</div><div class="line">            current = next;</div><div class="line">        &#125;</div><div class="line">        next = max(next,i+v[i]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> jump;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">4</span>&#125;;</div><div class="line">    <span class="keyword">int</span> re = getMin(v);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;re&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="子数组的最大累加和">子数组的最大累加和</h2>
+<p><img src="2017-03-21_134743.png" alt="2017-03-21_134743.png"> <img src="2017-03-21_135757.png" alt="2017-03-21_135757.png"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 子数组的最大累加和问题</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMaxSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty())&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>; <span class="comment">//遍历到v[i]的累加和</span></div><div class="line">    <span class="keyword">int</span> maxValue = <span class="number">-10000</span>; <span class="comment">// 遍历到v[i]时最大的累加和</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        sum += v[i];</div><div class="line">        <span class="keyword">if</span>(sum &lt; <span class="number">0</span>)&#123;</div><div class="line">            sum = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        maxValue = max(maxValue,sum);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> maxValue;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">1</span>,<span class="number">-2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">-2</span>,<span class="number">6</span>,<span class="number">-1</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;getMaxSum(v)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="子数组的最大累加和动态规划">子数组的最大累加和(动态规划)</h2>
+<p>HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。今天测试组开完会后,他又发话了:在古老的一维模式识别中,常常需要计算连续子向量的最大和,当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,并期望旁边的正数会弥补它呢？例如:<code>{6,-3,-2,7,-15,1,2,2}</code>,连续子向量的最大和为8(从第0个开始,到第3个为止)。你会不会被他忽悠住？(子向量的长度至少是1).</p>
+<p>本题使用简单的动态规划算法，时间复杂度O(N)即可达到题目的要求。</p>
+<p><strong>思路</strong> 首先想最一般的方法。对于一个<code>n</code>个元素的数组，它的所有的连续子数组有 <span class="math inline">\(N=\dfrac {n(n+1)} 2\)</span>. 如果用暴力的方法，需要循环N次。每次循环的操作是求解一个区间内元素的和。每次都求和有点浪费时间，这个过程可以优化成预先求解出前<code>k</code>个数的和的数组存储在<code>sum</code>中，这样，假如某次循环我们要求解<code>[i,j]</code>区间的和，直接计算<code>sum[j]-sum[i-1]</code>即可。这样算下来，暴力求解的时间复杂度是<code>O(N)+O(n)=O(N)</code>.</p>
+<p>仔细考虑这个问题，其实可以拆解成一个小规模的问题和一个递推的规则。假设我们已经知道以第<code>k</code>个元素结尾的子数组的最大和是<code>sumk</code>,那么以第<code>k+1</code>个元素结尾的子数组的最大和就只有两种情况：只有第<code>k+1</code>个元素和<code>sumk+array[k+1]</code>. 只需要比较这两个数字的大小就可以确定第<code>k+1</code>个元素结尾的子数组的最大和了。需要注意的是，之所以能用这样的策略，是题目中限定了必须是连续的子数组，所以以<code>k</code>结尾的数组和以<code>k+1</code>结尾的数组是有关联的。下面是用该动态规划的方法解题的代码，时间复杂度是<code>O(n)</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">FindGreatestSumOfSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">array</span>)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(<span class="built_in">array</span>.size() == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">array</span>[<span class="number">0</span>];</div><div class="line">    <span class="comment">//用动态规划，可以在O(n)的时间内获得答案</span></div><div class="line">    <span class="comment">//设dp[i]表示以i结尾的所有序列的最大的那个和</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(<span class="built_in">array</span>.size(),<span class="number">0</span>);</div><div class="line">    <span class="comment">// 以第一个元素结尾的所有序列只有array[0]一种，所以无论它是正数，负数，还是零，最大的结果都是array[0]</span></div><div class="line">    dp[<span class="number">0</span>] = <span class="built_in">array</span>[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> maxSum = <span class="number">-1000000</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">array</span>.size();i++)&#123;</div><div class="line">        dp[i] = max(<span class="built_in">array</span>[i],dp[i<span class="number">-1</span>]+<span class="built_in">array</span>[i]);</div><div class="line">        maxSum = maxSum &lt; dp[i] ? dp[i] : maxSum;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> maxSum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="滑动窗口子数组最大值"><span id="s01">滑动窗口子数组最大值</span></h2>
+<div class="figure">
+<img src="2017-03-21_090951.png" alt="2017-03-21_090951.png">
+<p class="caption">2017-03-21_090951.png</p>
+</div>
+<p><strong>思路</strong> 首先容易想到的是暴力的方法,对于长度是<code>n</code>窗口宽度是<code>w</code>的题目来说，需要<code>O(n-m+1)*O(m)</code>的时间复杂度。仔细分析暴力的方法就会发现，窗口每次移动一个位置，有一个元素退出窗口，一个元素进来，如果这两个元素都不是最大值，那么遍历整个窗口内的元素寻找最大值的操作就不是必要的。所以，改进的方式是记录窗口的最大值和最小值。每次滑动窗口的时候，维护这个最大值和最小值即可。这样时间复杂度可以降低到<code>O(n)</code>.窗口最大值和最小值的维护方案：维护一个宽度是<code>w</code>的滑动窗口的双端队列结构。始终在队列的尾部保存最大值的下标，始终在队尾保存最小值的下标。从头到位扫描数组，每扫描一个数，就按照相应的规则更新双端队列，把超出范围的下标出队，找到当前的最大值保存下来。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getMaxs(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> w)&#123;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; q;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="keyword">int</span>(v.size());++i)&#123;</div><div class="line">        <span class="keyword">if</span>(v.empty())&#123;</div><div class="line">            v.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(v[i]&lt;=v[q.back()])&#123;</div><div class="line">            v.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            v.pop_back();</div><div class="line">            <span class="keyword">if</span>(v.empty())&#123;</div><div class="line">                v.push_back(i);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">while</span>(v[q.back()]&lt;=v[i])&#123;</div><div class="line">                    q.pop_back();</div><div class="line">                    <span class="keyword">if</span>(q.empty())&#123;</div><div class="line">                        q.push_back(i);</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                q.push_back(i);</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(i-w == q.front())&#123;</div><div class="line">            q.pop_front();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(i&gt;=w<span class="number">-1</span>)&#123;</div><div class="line">            result.insert(result.end(),v[q.front()]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 求滑动窗口做最大值,改进的分支逻辑，减少了if判断</div><div class="line"> * @param v</div><div class="line"> * @param w</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getMaxes2(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v, <span class="keyword">int</span> w)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;  <span class="comment">// store result</span></div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; d; <span class="comment">//store index of the array</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(!d.empty() &amp;&amp; v[d.back()]&lt;=v[i])&#123;</div><div class="line">            <span class="keyword">while</span>(v[d.back()&lt;=v[i]] &amp;&amp; !d.empty())&#123;</div><div class="line">                d.pop_back();</div><div class="line">            &#125;</div><div class="line">            d.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            d.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(i-w == d.front())&#123;</div><div class="line">            d.pop_front();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 记录结果</span></div><div class="line">        <span class="keyword">if</span>(i&gt;=w<span class="number">-1</span>)&#123;</div><div class="line">            result.insert(result.end(),v[d.front()]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 求滑动窗口最小值</div><div class="line"> * @param v</div><div class="line"> * @param w</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getMines(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> w)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; min;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(!min.empty() &amp;&amp; v[min.back()]&gt;=v[i])&#123;</div><div class="line">            <span class="keyword">while</span>(!min.empty() &amp;&amp; v[min.back()]&gt;=v[i])&#123;</div><div class="line">                min.pop_back();</div><div class="line">            &#125;</div><div class="line">            min.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            min.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(i-w ==min.front())&#123;</div><div class="line">            min.pop_front();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//记录结果</span></div><div class="line">        <span class="keyword">if</span>(i&gt;=w<span class="number">-1</span>)&#123;</div><div class="line">            result.insert(result.end(),v[min.front()]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello, World!"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果要求滑动窗口的最小值，只需要在判断大小的时候改变一下即可。</p>
+<h2 id="快速求数组连续子数组的最大值和最小值的差">快速求数组连续子数组的最大值和最小值的差</h2>
+<div class="figure">
+<img src="2017-03-21_091927.png" alt="2017-03-21_091927.png">
+<p class="caption">2017-03-21_091927.png</p>
+</div>
+<p><strong>思路</strong> 使用两个队列维护区间<code>[i,j]</code>的最大值和最小值。这样根据<a href="#s01">滑动窗口子数组最大值</a>中提到的方法,我们可以高效的计算出区间内最大值和最小值。但是长度为<code>n</code>的数组子数组有<code>N</code>个，不能在<code>O(n)</code>的时间内解决。注意到这里其实有隐含的规律在，如果发现这个规律，可以避免很多不必要的计算，如果有区间<code>[i,j]</code>不满足条件<code>max-min&lt;=somevalue</code>，那么所有包含这个区间的子数组都不可能满足这个条件,因为更大的区间的最大值肯定大于等于<code>max</code>,最小值肯定小于等于<code>min</code>. 应用这个规则，就可以在<code>O(n)</code>的时间内解决问题了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 求一个数组的子数组最大值和最小值的差</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>&#125;;</div><div class="line">    <span class="keyword">int</span> num=<span class="number">3</span>;</div><div class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">int</span> j = i;</div><div class="line">        <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; max;</div><div class="line">        <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; min;</div><div class="line">        <span class="keyword">while</span>(j&lt;v.size())&#123;</div><div class="line"></div><div class="line">            <span class="comment">// 维护max</span></div><div class="line">            <span class="keyword">if</span>(!max.empty() &amp;&amp; v[max.front()]&lt;=v[j])&#123;</div><div class="line">                <span class="keyword">while</span>(!max.empty() &amp;&amp; v[max.front()&lt;=v[j]])&#123;</div><div class="line">                    max.pop_back();</div><div class="line">                &#125;</div><div class="line">                max.push_back(j);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                max.push_back(j);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//维护min</span></div><div class="line">            <span class="keyword">if</span>(!min.empty() &amp;&amp; v[min.front()]&gt;=v[j])&#123;</div><div class="line">                <span class="keyword">while</span>(!min.empty() &amp;&amp; v[min.front()&gt;=v[j]])&#123;</div><div class="line">                    min.pop_back();</div><div class="line">                &#125;</div><div class="line">                min.push_back(j);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                min.push_back(j);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//判断当前数组是否满足条件，如果该数组不满足条件，那么所有包含该数组的将全部不满足条件</span></div><div class="line">            <span class="keyword">if</span>(v[max.front()]-v[min.front()]&gt;num)&#123;</div><div class="line">                count+=j-i;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(j==v.size()<span class="number">-1</span>)&#123;</div><div class="line">                count+=j-i+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            ++j;</div><div class="line">        &#125;</div><div class="line"><span class="comment">//        while(!max.empty())&#123;</span></div><div class="line"><span class="comment">//            max.pop_back();</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line"><span class="comment">//        while(!min.empty())&#123;</span></div><div class="line"><span class="comment">//            min.pop_back();</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;count&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="最长递增子序列">最长递增子序列</h2>
+<div class="figure">
+<img src="2017-03-21_092428.png" alt="2017-03-21_092428.png">
+<p class="caption">2017-03-21_092428.png</p>
+</div>
+<p><strong>思路</strong> 长度为<code>n</code>的数组的所有的子序列的个数是<span class="math inline">\(2^n-1\)</span>, 所以暴力的方法是不用考虑的，除非<code>n</code>特别小的情况下。考虑递增子序列的生成过程，只有新的数字比原来递增子序列的最后一个值大的时候，递增子序列才可以增长1，我们用<code>dp[i]</code>表示在以<code>i</code>结尾的时候，最长的递增子序列长度是<code>leni</code>,那么以<code>i+1</code>结尾的最长递增子序列就很容易求得：如果<code>array[i+1]</code>大于递增子序列的末尾元素，就+1，否则就是原来的<code>leni</code>.</p>
+<script src="https://gist.github.com/FF120/913731d335c7973e4569181d1acf0c7f.js"></script>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 最长递增子序列</div><div class="line"> * 给定数组arr,返回arr的最长递增子序列。</div><div class="line"> * e.g. arr = [2,1,5,3,6,4,8,9,7]  返回 1,3,4,8,9 或 2，3，4，8，9</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getIncrease(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp(v.size(),<span class="number">1</span>);<span class="comment">//dp的第一个元素为1，表示以第一个元素结果时，最长递增子序列的长度是1，只包括自己</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j=i<span class="number">-1</span>;j&gt;=<span class="number">0</span>;--j)&#123;</div><div class="line">           dp[i] = <span class="number">1</span>;</div><div class="line">           <span class="keyword">if</span>(v[j]&lt;v[i])&#123;</div><div class="line">               dp[i] = max(dp[i],dp[j]+<span class="number">1</span>);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;dp[i]&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">7</span>&#125;;</div><div class="line">    getIncrease(v);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="排成一条线的纸牌博弈问题">排成一条线的纸牌博弈问题</h2>
+<div class="figure">
+<img src="2017-03-21_102624.png" alt="2017-03-21_102624.png">
+<p class="caption">2017-03-21_102624.png</p>
+</div>
+<p>时间复杂度O(N^2), 空间复杂度O(N^2) 生成两个大小N*N的矩阵 N1的dp[i][j]表示arr[i…j]这个排列上如果A先拿，最终能得到什么分数。 N2的dp[i][j]表示arr[i…j]这个排列上如果B后拿，最终能得到什么分数。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
+<h2 id="数组中的最长连续序列">数组中的最长连续序列</h2>
+<div class="figure">
+<img src="2017-03-21_104858.png" alt="2017-03-21_104858.png">
+<p class="caption">2017-03-21_104858.png</p>
+</div>
+<p><strong>思路</strong> 容易想到，先排序在遍历一遍，就可以知道最长的连续序列有多长，但是最快速的排序算法也要<code>O(nlogn)</code>的时间复杂度，显然不满足要求。所以，本题不可能是使用排序的方法解决。如果要在<code>O(n)</code>的时间内解决，必须遍历数组常数次。考虑遍历到每个数组元素的时候的操作,比如我们处理的某个数组元素是<code>a</code>，这个时候要判断的是a-1,a-2,…a+1,a+2,…是否在这个数组中，直到有不在数组中的时候，停止计数，这就是所有包含该数字的连续序列的最长的长度。然后处理下一个数字。假设能够在<code>O(1)</code>的时间内判断一个数字是否存在数组中(使用哈希表存储)，O(n)的时间内就能解决这个问题。具体实现参考下面的代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 数组中最长连续序列</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMaxSeries</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; hs;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : v)&#123;</div><div class="line">        hs.insert(i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> left=v[i]<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(hs.erase(left))&#123;</div><div class="line">            count++;</div><div class="line">            left--;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> right=v[i]+<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(hs.erase(right))&#123;</div><div class="line">            count++;</div><div class="line">            right++;</div><div class="line">        &#125;</div><div class="line">        sum = max(sum,count);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="计算数组的小和">计算数组的小和</h2>
+<div class="figure">
+<img src="2017-03-21_133320.png" alt="2017-03-21_133320.png">
+<p class="caption">2017-03-21_133320.png</p>
+</div>
+<p><strong>思路</strong> 采用一个数组<code>sum[i]</code>记录数组<code>array[i]</code>对应的小和，当<code>array[i+1]&gt;array[i]</code>的时候，<code>sum[i+1]=sum[i]+array[i]</code>,当<code>array[i+1]&lt;array[i]</code>的时候，需要回溯到第一个小于array[i+1]的位置，假设是j,sum[i+1]=sum[j]+array[j]. 使用这种方法，时间复杂度最坏不会超过O(n^2).</p>
+<p>使用一种归并排序的思想，时间复杂度可以控制在O（N*logN）,但是不如上面的方法简单直接。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMinSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sum(v.size(),<span class="number">0</span>);</div><div class="line">  <span class="keyword">int</span> minSum = <span class="number">0</span>;</div><div class="line">  sum[<span class="number">0</span>]=v[<span class="number">0</span>];</div><div class="line">  minSum += sum[<span class="number">0</span>];</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();i++)&#123;</div><div class="line">     <span class="keyword">if</span>(v[i]&gt;v[i<span class="number">-1</span>])&#123;</div><div class="line">       sum[i] = v[i<span class="number">-1</span>]+sum[i<span class="number">-1</span>];</div><div class="line">     &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">int</span> j=i<span class="number">-1</span>;</div><div class="line">        <span class="keyword">while</span>(v[j]&gt;v[i])&#123;</div><div class="line">          j--;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(j&gt;=<span class="number">0</span>)&#123;</div><div class="line">           sum[i] = v[j] + sum[j];</div><div class="line">        &#125;</div><div class="line">     &#125;</div><div class="line">     minSum += sum[i];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> minSum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="在数组中找到一个局部最小的位置二分法的应用">在数组中找到一个局部最小的位置(二分法的应用)</h2>
+<div class="figure">
+<img src="2017-03-21_141706.png" alt="2017-03-21_141706.png">
+<p class="caption">2017-03-21_141706.png</p>
+</div>
+<p>最容易想到的解法：从头开始遍历数组，一旦遇到<code>a[i-1]&gt;a[i] &amp;&amp; a[i]&lt;a[i+1]</code>的位置,终止遍历,输出i. 最坏的情况下时间复杂度是<code>O(N)</code>.</p>
+<p><em>当一个问题在二分之后，可以明确的知道要求解的结果必定在某一侧时，就可以利用二分法来降低算法的时间复杂度</em>.具体到这个问题,<code>array[0]&lt;array[1]</code>时,<code>array[0]</code>就是局部小,<code>array[n-2]&gt;array[n-1]</code>,<code>array[n-1]</code>就是局部小. 我们讨论区间[1,n-2]的情况. 找到这个区间的中间元素<code>mid=(left+right)/2</code>,如果<code>array[mid]&gt;array[mid-1]</code>，那么局部极小值肯定在mid的左侧,领<code>left=mid-1</code>,继续二分查找.同理,如果<code>array[mid]&gt;array[mid]+1</code>,那么局部极小值一定出现在<code>mid</code>的右侧.为什么呢? 假设我们已经得到了一个左侧的区间<code>[0,mid]</code>,其中0是数组的第一个元素，mid是中间元素，得到array[mid]&gt;array[mid-1],且有a[0]&gt;a[1].可知,两头元素大，中间元素小，局部最小值一定在这个区间,接下来继续使用二分法,直到找出这个元素即可。因为本体要求的是找出任意一个局部极小值，所以可以使用这样的方法来加快速度,如果是要找出所有的局部极小值，二分的方法就没有优势了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 找到任意一个局部最小的位置并返回索引</div><div class="line"> * 从左边开始，如果第二个数比第一个数小，第二个数是局部最小</div><div class="line"> * 从右边开始，如果第二个数比第一个数小，第二个数是局部最小</div><div class="line"> * 如果数组是空 ，没有局部最小</div><div class="line"> * 如果数组只有一个数，这个数就是局部最小</div><div class="line"> * else  局部最小就是两边挨着的数都比它大</div><div class="line"> * 这里规定这个数组任意相邻的数都不相等</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMinPart</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    <span class="keyword">if</span>(v.size() == <span class="number">1</span>) <span class="keyword">return</span> v[<span class="number">0</span>];</div><div class="line">    <span class="keyword">if</span>(v[<span class="number">0</span>]&gt;v[<span class="number">1</span>]) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(v[v.size()<span class="number">-1</span>]&lt;v[v.size()<span class="number">-2</span>]) <span class="keyword">return</span> v.size()<span class="number">-2</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=v.size()<span class="number">-2</span>;++i)&#123;</div><div class="line">        <span class="keyword">if</span>(v[i<span class="number">-1</span>]&gt;v[i] &amp;&amp; v[i] &lt; v[i+<span class="number">1</span>])&#123;</div><div class="line">            <span class="keyword">return</span> i;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 如果没有局部最小值，返回-1</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;getMinPart2(v)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="数组中子数组的最大累乘积">数组中子数组的最大累乘积</h2>
+<div class="figure">
+<img src="2017-03-21_150344.png" alt="2017-03-21_150344.png">
+<p class="caption">2017-03-21_150344.png</p>
+</div>
+<p>解法： 分别求以v[i]结尾的子数组的最大累成积，dp[i], dp[i]可以由dp[i-1]求出来，所以整体的时间复杂度是O（N） 因为最后的结果是求做大累乘积，而dp[i]只和dp[i-1]有关系，所以可以不用维护动态规划表， 空间复杂度可以降低到O（1）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 求数组的最大子数组累乘积</div><div class="line"> * 暴力的方法，就是枚举所有的子数组，计算子数组的累乘，然后取最大值</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">getMaxC</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty())  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> maxC = <span class="number">-1000</span>;</div><div class="line">    <span class="keyword">double</span> sum = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        sum  = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&lt;v.size();++j)&#123;</div><div class="line">            sum = sum * v[j];</div><div class="line">            maxC = max(maxC,sum);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> maxC;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 暴力的方法需要的时间复杂度是2重循环，是O(N**2)</div><div class="line"> * 下面用记录最大累乘和最小累乘值的方法做，时间复杂度是O(N)</div><div class="line"> * 1. 所有的子数组必然以v[i]结尾，首先计算v[0]结尾的最大值和最小值，都是v[0]</div><div class="line"> * 2. 以v[i]结尾的数组的最大值的情况有这样几种；</div><div class="line"> * max*v[i] ; min*v[i], v[i] 分别对应 v[i]正，负 和dp[i-1]是0的情况</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">getMaxC2</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">double</span> maxValue = v[<span class="number">0</span>];</div><div class="line">    <span class="keyword">double</span> minValue = v[<span class="number">0</span>];</div><div class="line">    <span class="keyword">double</span> dpi = v[<span class="number">0</span>]; <span class="comment">// 存放前一个的结果</span></div><div class="line">    <span class="keyword">double</span> maxEnd = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> minEnd = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">        maxEnd = maxValue * v[i];</div><div class="line">        minEnd = minValue * v[i];</div><div class="line">        maxValue = max(max(maxEnd,minEnd),v[i]);</div><div class="line">        minValue = min(min(maxEnd,minEnd),v[i]);</div><div class="line">        dpi = max(dpi,maxValue);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dpi;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; v=&#123;<span class="number">-2.5</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">0.5</span>,<span class="number">-8</span>,<span class="number">8</span>,<span class="number">-1</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;getMaxC(v)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;getMaxC2(v);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="不包含本位置位的累乘数组">不包含本位置位的累乘数组</h2>
+<div class="figure">
+<img src="2017-03-21_161557.png" alt="2017-03-21_161407.png">
+<p class="caption">2017-03-21_161407.png</p>
+</div>
+<p>如果可以使用除法，那么问题很简单，先求累乘，再除以v[i]. (不包含0的情况) 如果数组中有一个0，则0位置上是累乘，其他位置是0 如果数组中有两个及以上的0， 则所有位置都是0；</p>
+<p>如果不能使用除法运算，可以考虑除去自己的乘积，就是从左边乘到v[i-1] 再从右边乘到v[i+1];</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 不包含本位置位的累乘数组,可以使用除法</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getC(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : v)&#123;</div><div class="line">        sum *= i;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        v[i] = sum / v[i] ;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> v;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printVecor</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : v)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 不使用除法的版本</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getC2(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; lr;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rl;</div><div class="line">    <span class="keyword">int</span> lrsum = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> rlsum = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        lrsum *= v[i];</div><div class="line">        lr.push_back(lrsum);</div><div class="line">        rlsum *= v[v.size()<span class="number">-1</span>-i];</div><div class="line">        rl.push_back(rlsum);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rl2;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=v.size()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;--i)&#123;</div><div class="line">        rl2.push_back(rl[i]);</div><div class="line">    &#125;</div><div class="line">    v[<span class="number">0</span>] = rl2[<span class="number">1</span>];</div><div class="line">    v[v.size()<span class="number">-1</span>] = lr[v.size()<span class="number">-2</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size()<span class="number">-1</span>;++i)&#123;</div><div class="line">        v[i] = lr[i<span class="number">-1</span>] * rl2[i+<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> v;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 减少空间复杂度的版本</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; getC3(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span> &#123;&#125;;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re(v);</div><div class="line">    re[<span class="number">0</span>] = v[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size()<span class="number">-1</span>;++i)&#123;</div><div class="line">        re[i] = re[i<span class="number">-1</span>] * v[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> tmp =<span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=v.size()<span class="number">-1</span>;i&gt;<span class="number">0</span>;--i)&#123;</div><div class="line">        re[i] = re[i<span class="number">-1</span>] * tmp ;</div><div class="line">        tmp *= v[i];</div><div class="line">    &#125;</div><div class="line">    re[<span class="number">0</span>] = tmp;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">4</span>&#125;;</div><div class="line">    <span class="keyword">auto</span> result = getC(v);</div><div class="line">    <span class="keyword">auto</span> result2 = getC2(v);</div><div class="line">    <span class="keyword">auto</span>  result3 = getC3(v);</div><div class="line">    printVecor(result);</div><div class="line">    printVecor(result2);</div><div class="line">    printVecor(result3);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="数组的partition调整">数组的partition调整</h2>
+<p><img src="2017-03-21_200734.png" alt="2017-03-21_200734.png"> 都用到了用下标指示不同的分区的思想。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setV</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> u = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(v[i]&gt;v[u])&#123;</div><div class="line">            swap(v[i],v[u+<span class="number">1</span>]);</div><div class="line">            u++;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sortV</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> left = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> right = v.size();</div><div class="line">    <span class="keyword">while</span>(index &lt; right)&#123;</div><div class="line">        <span class="keyword">if</span>(v[index] == <span class="number">0</span>)&#123;</div><div class="line">            swap(v[++left],v[index++]);</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(v[index] == <span class="number">2</span>)&#123;</div><div class="line">            swap(v[index],v[--right]);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a: v)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>&#125;;</div><div class="line">    setV(v);</div><div class="line">    print(v);</div><div class="line"></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">    sortV(v2);</div><div class="line">    print(v2);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="数组中未出现的最小正整数">数组中未出现的最小正整数</h2>
+<p><img src="2017-03-21_213108.png" alt="2017-03-21_213108.png"> <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 给定一个无序的整形数组，找到数组中未出现的最小正整数。</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">missNum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> l = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> r = v.size();</div><div class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</div><div class="line">        <span class="keyword">if</span>(v[l] == l+<span class="number">1</span>)&#123;</div><div class="line">            l++;</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(v[l] &lt;= l || v[l] &gt; r || v[v[l]-l] == v[l])&#123;</div><div class="line">            v[l] = v[--r];</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            swap(v[l],v[v[l]-l]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> l+<span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1 = &#123;<span class="number">-1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;missNum(v1)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;missNum(v2)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="数组排序之后相邻数字的最大差值">数组排序之后相邻数字的最大差值</h2>
+<div class="figure">
+<img src="2017-03-21_213346.png" alt="2017-03-21_213346.png">
+<p class="caption">2017-03-21_213346.png</p>
+</div>
+<p><img src="2017-03-21_213648.png" alt="2017-03-21_213648.png"> <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">// 计算数num应该放入哪个桶里面</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">bucket</span><span class="params">(<span class="keyword">long</span> num,<span class="keyword">long</span> len,<span class="keyword">long</span> min,<span class="keyword">long</span> max)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>) ( (num-min)*len/(max-min) );</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxGap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty() || v.size() &lt; <span class="number">2</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> len = v.size();</div><div class="line">    <span class="keyword">int</span> minValue = INT32_MAX;</div><div class="line">    <span class="keyword">int</span> maxValue = INT32_MIN;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)&#123;</div><div class="line">        minValue = min(minValue,v[i]);</div><div class="line">        maxValue = max(maxValue,v[i]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(minValue == maxValue)  <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">//如果数组的最大值==最小值，说明只有一种元素，那间隔为0</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; hasNum(len+<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; maxes(len+<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; mines(len+<span class="number">1</span>,<span class="number">0</span>);</div><div class="line">    <span class="keyword">int</span> bid = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;++i)&#123;</div><div class="line">        bid = bucket(v[i],len,minValue,maxValue);</div><div class="line">        mines[bid] = hasNum[bid] ? min(mines[bid],v[i]) : v[i];</div><div class="line">        maxes[bid] = hasNum[bid] ? max(maxes[bid],v[i]) : v[i];</div><div class="line">        hasNum[bid] = <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> lastMax = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(i&lt;=len)&#123;</div><div class="line">        <span class="keyword">if</span>(hasNum[i++])&#123;</div><div class="line">            lastMax = maxes[i<span class="number">-1</span>];</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(;i&lt;=len;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(hasNum[i])&#123;</div><div class="line">            res = max(res,mines[i]-lastMax);</div><div class="line">            lastMax = maxes[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a:v)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">9</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">10</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;maxGap(v)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="找到出现50以上的数字">找到出现50%以上的数字</h2>
+<p>思路就是每次删除两个不同的数字，那么最后一定会剩下那个出现次数大于一半的数字。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * 选出数组中出现次数大于一半的数</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">majorityElement</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> cand = <span class="number">-1</span>;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> len = nums.size();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span> (count == <span class="number">0</span>)</div><div class="line">            &#123;</div><div class="line">                count = <span class="number">1</span>;</div><div class="line">                cand = nums[i];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] == cand) count++;</div><div class="line">            <span class="keyword">else</span> count--;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> times = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(nums[i] == cand)&#123;</div><div class="line">                times ++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(times &gt; len /<span class="number">2</span>)&#123;<span class="keyword">return</span> cand;&#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="找到出现次数在nk次以上的数字">找到出现次数在N/K次以上的数字</h2>
+<p>每次删除数组中K个不同的数字。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 每次删除数组中K个不同的数字，返回剩下的数字</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; deleteK(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> k)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; record; <span class="comment">// key : cands  value: times</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(record.find(v[i]) != record.end())&#123;</div><div class="line">            record[v[i]] ++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(record.size() == k<span class="number">-1</span>)&#123;</div><div class="line">            <span class="comment">//所有候选减1，并把是0的删除</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> aa : record)&#123;</div><div class="line">                aa.second--;</div><div class="line">                <span class="keyword">if</span>(aa.second == <span class="number">0</span>)&#123;</div><div class="line">                    record.erase(aa.first);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            record[v[i]] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> ss : record)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;ss.first&lt;&lt;<span class="string">" "</span>&lt;&lt;ss.second&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="求直方图的最大连续面积">求直方图的最大连续面积</h2>
+<p>题目：给定一个正整数数组arr,把每个数字看作直方图的高，宽度都是1，返回连续的最大面积。 例如，arr = [2,3,4,2,7,8,4] 返回 17 ，7和8组成的面积是14，最大。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 直方图求面积的题</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v=&#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">6</span>&#125;;</div><div class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">if</span>(s.empty()||v[s.top()]&lt;v[i])&#123;</div><div class="line">            s.push(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line"></div><div class="line">            <span class="keyword">while</span>( !s.empty() &amp;&amp;v[s.top()]&gt;=v[i])&#123;</div><div class="line">                <span class="keyword">int</span> j = s.top();</div><div class="line">                s.pop();</div><div class="line">                <span class="keyword">int</span> k = s.empty()?<span class="number">-1</span>:s.top();</div><div class="line">                <span class="keyword">int</span> area = (i-k<span class="number">-1</span>)*v[j];</div><div class="line">                result.insert(result.end(),area);</div><div class="line">            &#125;</div><div class="line">            s.push(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i:result)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">auto</span> a=max(result.begin(),result.end());</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"><span class="comment">/**</span></div><div class="line">Largest Rectangle in Histogram</div><div class="line">*/</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">largestRetangleArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;height)</span></span>&#123;</div><div class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</div><div class="line">        height.push_back(<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;height.size();)&#123;</div><div class="line">            <span class="keyword">if</span>(s.empty() || height[i]&gt;height[s.top()])&#123;</div><div class="line">                s.push(i++);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">int</span> tmp = s.top();</div><div class="line">                s.pop();</div><div class="line">                result = max(result,height[tmp]*(s.empty()?i:<span class="number">1</span> -s.top()<span class="number">-1</span>));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</div><div class="line">    Solution s;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;s.largestRetangleArea(a)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"><span class="comment">/**</span></div><div class="line">Largest Rectangle in Histogram</div><div class="line">*/</div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">largestRetangleArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;height)</span></span>&#123;</div><div class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</div><div class="line">        height.push_back(<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;height.size();)&#123;</div><div class="line">            <span class="keyword">if</span>(s.empty() || height[i]&gt;height[s.top()])&#123;</div><div class="line">                s.push(i++);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">int</span> tmp = s.top();</div><div class="line">                s.pop();</div><div class="line">                result = max(result,height[tmp]*(s.empty()?i:<span class="number">1</span> -s.top()<span class="number">-1</span>));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</div><div class="line">    Solution s;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;s.largestRetangleArea(a)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="换钱的最少货币数量">换钱的最少货币数量</h2>
+<p><img src="2017-03-22_102806.png" alt="2017-03-22_102806.png"> <img src="2017-03-22_102836.png" alt="2017-03-22_102836.png"> 原问题和补充问题都可以用动态规划做。 原问题的dp[i][j]表示 在可以任意使用arr[0…i]货币的情况下，做成面值j需要 的最小货币数量</p>
+<p>补充问题的dp[i][j]表示，在可以任意使用arr[0…i]的情况下，组成面值j所需要的 最小张数，注意这里的每个数字仅代表一张，不能重复使用。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> *给定数组arr, 整数aim arr中的整数不重复，每个数字代表一种面值的货币，求组成aim的最少张数</div><div class="line"> * e.g. arr=[5,2,3] aim = 20  输出 4</div><div class="line"> * arr=[3,5] aim=2  找不开的情况输出-1</div><div class="line"> * @param v</div><div class="line"> * @param aim</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v, <span class="keyword">int</span> aim)</span></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; dp(v.size(),<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(aim+<span class="number">1</span>));</div><div class="line">    <span class="comment">//初始化第一列</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        dp[i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//初始化第一行,不能找开的情况设置为1000,只要这个数是整数并且足够大就可以。</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;++j)&#123;</div><div class="line">        dp[<span class="number">0</span>][j] = j%v[<span class="number">0</span>]==<span class="number">0</span> ? j / v[<span class="number">0</span>] : <span class="number">1000</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;++j)&#123;</div><div class="line">            <span class="keyword">if</span>(dp[i][j-v[i]]&lt;<span class="number">0</span> &amp;&amp; dp[i<span class="number">-1</span>][j])&#123;</div><div class="line">                dp[i][j] = <span class="number">1000</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(dp[i][j-v[i]]&lt;<span class="number">0</span>) &#123;</div><div class="line">                dp[i][j] = dp[i - <span class="number">1</span>][j];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                dp[i][j] = min(dp[i - <span class="number">1</span>][j], dp[i][j - v[i]] + <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//输出动态规划表格</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;dp.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;dp[<span class="number">0</span>].size();++j)&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;dp[i][j]&lt;&lt;<span class="string">"\t"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[v.size()<span class="number">-1</span>][aim];</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">    <span class="keyword">int</span> aim = <span class="number">8</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt;getMin(v,aim)&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 给定整数数组arr 和 整数aim arr中的数字可以重复，每个数字代表一张相应面额的货币，</div><div class="line"> * 求组成aim的最少张数</div><div class="line"> * e.g. arr=[5,2,3] aim=20 无法组成</div><div class="line"> * arr = [5,2,5,3] aim = 10 输出2</div><div class="line"> * arr = [5,2,5,3] aim = 0  输出0</div><div class="line"> * @param v</div><div class="line"> * @param aim</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> aim)</span></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; dp(v.size(),<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(aim+<span class="number">1</span>));</div><div class="line">    <span class="comment">//初始化第一列</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        dp[i][<span class="number">0</span>] = <span class="number">0</span>; <span class="comment">//组成0需要任何货币0张就够了</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//初始化第一行</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;++j)&#123;</div><div class="line">        <span class="comment">// 除了能组成和v[0]一样面值的货币，其他的都无法组成，因为v[0]只有一张</span></div><div class="line">        dp[<span class="number">0</span>][j] = j == v[<span class="number">0</span>] ? <span class="number">1</span> : <span class="number">10000</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;++j)&#123;</div><div class="line">            <span class="keyword">if</span>(dp[i<span class="number">-1</span>][j-v[i]]&lt;<span class="number">0</span>)&#123;</div><div class="line">                dp[i][j] = dp[i<span class="number">-1</span>][j];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                dp[i][j] = min(dp[i<span class="number">-1</span>][j],dp[i<span class="number">-1</span>][j-v[i]]+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 打印动态规划表格</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;dp.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;dp[<span class="number">0</span>].size();++j)&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;dp[i][j]&lt;&lt;<span class="string">"\t"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[v.size()<span class="number">-1</span>][aim];</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">5</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>&#125;;</div><div class="line">    <span class="keyword">int</span> aim = <span class="number">7</span>;</div><div class="line"></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; getMin(v,aim)&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="换钱的方法数">换钱的方法数</h2>
+<p><img src="2017-03-22_105837.png" alt="2017-03-22_105837.png"> 使用动态规划的方法，dp[i][j]表示在使用arr[0…i]货币的情况下，组成j有多少中情况。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> aim)</span></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; dp(v.size(),<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(aim+<span class="number">1</span>));</div><div class="line">    <span class="comment">//初始化第一列</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</div><div class="line">        dp[i][<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//初始化第一行</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;j++)&#123;</div><div class="line">        dp[<span class="number">0</span>][j] = j%v[<span class="number">0</span>]==<span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;v.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=aim;++j)&#123;</div><div class="line">            dp[i][j] = j-v[i]&gt;=<span class="number">0</span> ? dp[i<span class="number">-1</span>][j]+dp[i][j-v[i]] : dp[i<span class="number">-1</span>][j];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//打印动态规划表格</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;dp.size();++i)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;dp[<span class="number">0</span>].size();++j)&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;dp[i][j]&lt;&lt;<span class="string">"\t"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[v.size()<span class="number">-1</span>][aim];</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>&#125;;</div><div class="line">    <span class="keyword">int</span> aim = <span class="number">7</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; getNum(v,aim) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="判断字符数组中是否所有的字符都只出现一次">判断字符数组中是否所有的字符都只出现一次</h2>
+<div class="figure">
+<img src="2017-03-22_111143.png" alt="2017-03-22_111143.png">
+<p class="caption">2017-03-22_111143.png</p>
+</div>
+<ul>
+<li>使用哈希表统计字符个数即可</li>
+<li>第二个要求，使用非递归的方式实现堆排序，然后统计相邻的字符是否重复就可以了。</li>
+</ul>
+<h2 id="数组中两个字符串的最小距离">数组中两个字符串的最小距离</h2>
+<p><img src="2017-03-22_112158.png" alt="2017-03-22_112158.png"> <img src="2017-03-22_112307.png" alt="2017-03-22_112307.png"> <img src="2017-03-22_134025.png" alt="2017-03-22_134025.png"></p>
+<h2 id="找到最长回文子串">找到最长回文子串</h2>
+<p><img src="2017-03-22_141453.png" alt="2017-03-22_141453.png"> <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=0&id=631401164&auto=1&height=430"></iframe></p>
+<h2 id="统计数组中每个数字前面比自己小的数字有多少个">统计数组中每个数字前面比自己小的数字有多少个</h2>
+<p>保证都是正整数，没有重复的数字，例如输入 [2,7,4,6,5,3,1] 输出：[0,1,1,2,2,1,0] <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Node(<span class="keyword">int</span> _start, <span class="keyword">int</span> _end) :</div><div class="line">            start(_start), end(_end), left(<span class="literal">nullptr</span>), right(<span class="literal">nullptr</span>),</div><div class="line">            cnt(<span class="number">0</span>) &#123;&#125;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> start, end;</div><div class="line">    Node *left, *right;</div><div class="line">    <span class="keyword">int</span> cnt;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">/**</span></div><div class="line">      * @param A: An integer array</div><div class="line">      * @return: Count the number of element before this element 'ai' is</div><div class="line">      *          smaller than it and return count number array</div><div class="line">      */</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; countOfSmallerNumberII(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        Node *root = build(<span class="number">0</span>, <span class="number">20000</span>);</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.size(); i++)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> cnt = query(root, <span class="number">0</span>, A[i] - <span class="number">1</span>);</div><div class="line">            res.push_back(cnt);</div><div class="line">            <span class="comment">// 更新计数下标是i的计数</span></div><div class="line">            modify(root, A[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function">Node *<span class="title">build</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (start &gt; end)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (start == end)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Node(start, end);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> mid = start + ((end - start) &gt;&gt; <span class="number">1</span>);</div><div class="line"></div><div class="line">        Node *root = <span class="keyword">new</span> Node(start, end);</div><div class="line">        root-&gt;left = build(start, mid);</div><div class="line">        root-&gt;right = build(mid + <span class="number">1</span>, end);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">modify</span><span class="params">(Node *root, <span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (root == <span class="literal">NULL</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (root-&gt;start == root-&gt;end &amp;&amp; root-&gt;start == idx)</div><div class="line">        &#123;</div><div class="line">            ++(root-&gt;cnt);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> mid = root-&gt;start + ((root-&gt;end - root-&gt;start) &gt;&gt; <span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span> (mid &gt;= idx)</div><div class="line">        &#123;</div><div class="line">            modify(root-&gt;left, idx);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            modify(root-&gt;right, idx);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        root-&gt;cnt = root-&gt;left-&gt;cnt + (root-&gt;right ? root-&gt;right-&gt;cnt : <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(Node *root, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span> (root-&gt;end &lt; start || root-&gt;start &gt; end)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (root-&gt;start &gt;= start &amp;&amp; root-&gt;end &lt;= end)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> root-&gt;cnt;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> mid = root-&gt;start + ((root-&gt;end - root-&gt;start) &gt;&gt; <span class="number">1</span>);</div><div class="line">        <span class="keyword">if</span> (mid &gt;= end)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> query(root-&gt;left, start, end);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mid &lt; start)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">return</span> query(root-&gt;right, start, end);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> leftRes = query(root-&gt;left, start, mid);</div><div class="line">        <span class="keyword">int</span> rightRes = query(root-&gt;right, mid + <span class="number">1</span>, end);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> leftRes + rightRes;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">2</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>&#125;;</div><div class="line">    Solution s;</div><div class="line">    <span class="keyword">auto</span> re = s.countOfSmallerNumberII(v);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="统计数组中每个数字后面比自己小的数字有多少个">统计数组中每个数字后面比自己小的数字有多少个</h2>
+<p>保证都是正整数，没有重复的数字，例如输入 [2,7,4,6,5,3,1] 输出：[1,5,2,3,2,1,0]</p>
+<p>这个可以调用上面的函数实现 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; countOfSmallerNumberBack(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)&#123;</div><div class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp(A);</div><div class="line">       <span class="keyword">int</span> len = A.size();</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">           tmp[i] = A[len<span class="number">-1</span>-i];</div><div class="line">       &#125;</div><div class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re = countOfSmallerNumberII(tmp);</div><div class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result(re);</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</div><div class="line">           result[i] = re[len<span class="number">-1</span>-i];</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> result;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="一个有重复数字的整数数组求包含所有的数字的最短的连续序列的长度">一个有重复数字的整数数组，求包含所有的数字的最短的连续序列的长度</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMinUnique</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> len = v.size();</div><div class="line">    <span class="comment">//统计独立的数字的个数</span></div><div class="line">    <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; se;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        se.insert(v[i]);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> ulen = se.size();</div><div class="line"></div><div class="line">    <span class="keyword">int</span> s = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> t = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">    <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; count;</div><div class="line">    <span class="keyword">int</span> res = len; <span class="comment">// 存放结果，最坏的情况下是数组的长度，结果肯定不会大于这个值</span></div><div class="line">    <span class="keyword">for</span>(;;)&#123;</div><div class="line">        <span class="keyword">while</span>(t&lt;len &amp;&amp; num &lt;ulen)&#123;</div><div class="line">            <span class="keyword">if</span>(count[v[t++]]++ == <span class="number">0</span>)&#123;</div><div class="line">                num ++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(num &lt; ulen) <span class="keyword">break</span>;</div><div class="line">        res = min(res,t-s);</div><div class="line">        <span class="keyword">if</span>(--count[v[s++]] == <span class="number">0</span>)&#123;</div><div class="line">            num--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="连续整数和">连续整数和</h2>
+<p>每一个正整数 N 都能表示成若干个连续正整数的和，例如10可以表示成1+2+3+4，15可以表示成4+5+6，8可以表示成8本身。我们称这种表示方法为SCI(Sum of Consecutive Integers)表示法。</p>
+<p>小Hi发现一个整数可能有很多种SCI表示，例如15可以表示成1+2+3+4+5，4+5+6，7+8以及15本身。小Hi想知道N的所有SCI表示中，最多能包含多少个连续正整数。例如1+2+3+4+5是15包含正整数最多的表示。</p>
+<p><a href="http://hihocoder.com/problemset/problem/1543?sid=1145912" target="_blank" rel="external">hihocoder 1453</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 返回整数n的所有SCI表示法</div><div class="line"> * 就是连续整数和等于n</div><div class="line"> *</div><div class="line"> * 思路是利用等差数列的求和公式</div><div class="line"> * @param n</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">SCI</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</div><div class="line">    <span class="keyword">double</span> maxn = <span class="built_in">sqrt</span>(<span class="number">2</span>*num);</div><div class="line">    <span class="keyword">int</span> max_n = (<span class="keyword">int</span>)(maxn + <span class="number">1</span>);</div><div class="line">    <span class="comment">// i个连续的数字的和是num,求首元素</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = max_n; i&gt;=<span class="number">2</span>; --i)&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="number">2</span>*num % i == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> a02 = <span class="number">2</span>*num / i + <span class="number">1</span> - i;</div><div class="line">            <span class="keyword">if</span>(a02 &lt; <span class="number">2</span>) <span class="keyword">continue</span>;</div><div class="line">            <span class="keyword">if</span>(a02 % <span class="number">2</span> == <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">int</span> a0 = a02 / <span class="number">2</span>;</div><div class="line">                <span class="keyword">return</span> i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> T,num;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; T;</div><div class="line">    <span class="keyword">while</span>(T--)&#123;</div><div class="line">        <span class="built_in">cin</span> &gt;&gt; num;</div><div class="line">        <span class="keyword">int</span> re = SCI(num);</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;re&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="集合的子集问题">集合的子集问题</h2>
+<p>给定一个包含N个整数的集合S={A1, A2, … AN}，以及一个给定的整数K，请计算有多少个S的子集满足其中的最大值与最小值的和小于等于K。</p>
+<p>例如对于S={4, 2, 5, 8}以及K=7,满足的条件的子集有以下4个:{2}, {2, 4}, {2, 5}, {2, 4, 5}。</p>
+<p><a href="http://hihocoder.com/problemset/problem/1546" target="_blank" rel="external">hihocoder 1546</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">Montgomery</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> a,<span class="keyword">long</span> <span class="keyword">long</span> b,<span class="keyword">long</span> <span class="keyword">long</span> m)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(b == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(b &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> r=<span class="number">1</span>;</div><div class="line">    a %=m;</div><div class="line">    <span class="keyword">while</span>(b&gt;<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>((b&amp;<span class="number">1</span>)!=<span class="number">0</span>)</div><div class="line">            r = (r*a)%m;</div><div class="line">        a = (a*a)%m;</div><div class="line">        b/=<span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (r*a)%m;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">min_max</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.empty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    sort(v.begin(),v.end());</div><div class="line">    <span class="keyword">int</span> l = <span class="number">0</span>, r = v.size() - <span class="number">1</span>, m = <span class="number">1000000007</span>;</div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> res = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(l &lt;= r)&#123;</div><div class="line">        <span class="keyword">if</span>(v[l] + v[r] &lt;= k)&#123;</div><div class="line">            <span class="keyword">long</span> <span class="keyword">long</span> sum = Montgomery(<span class="number">2</span>,(r-l),m);</div><div class="line">            res = (res + sum ) % m;</div><div class="line">            l++;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            r--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n,k;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; n&gt;&gt; k;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v(n,<span class="number">0</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;v[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">auto</span> re = min_max(v,k);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;re&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/04/27/机器学习专题/深度学习_使用autoencoder自动提取特征/" rel="next" title="深度学习_使用autoencoder自动提取特征">
+                <i class="fa fa-chevron-left"></i> 深度学习_使用autoencoder自动提取特征
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/" rel="prev" title="fMRI中常用的工具包">
+                fMRI中常用的工具包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#跳跃游戏"><span class="nav-number">1.</span> <span class="nav-text">跳跃游戏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子数组的最大累加和"><span class="nav-number">2.</span> <span class="nav-text">子数组的最大累加和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子数组的最大累加和动态规划"><span class="nav-number">3.</span> <span class="nav-text">子数组的最大累加和(动态规划)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动窗口子数组最大值"><span class="nav-number">4.</span> <span class="nav-text">滑动窗口子数组最大值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速求数组连续子数组的最大值和最小值的差"><span class="nav-number">5.</span> <span class="nav-text">快速求数组连续子数组的最大值和最小值的差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最长递增子序列"><span class="nav-number">6.</span> <span class="nav-text">最长递增子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排成一条线的纸牌博弈问题"><span class="nav-number">7.</span> <span class="nav-text">排成一条线的纸牌博弈问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组中的最长连续序列"><span class="nav-number">8.</span> <span class="nav-text">数组中的最长连续序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算数组的小和"><span class="nav-number">9.</span> <span class="nav-text">计算数组的小和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在数组中找到一个局部最小的位置二分法的应用"><span class="nav-number">10.</span> <span class="nav-text">在数组中找到一个局部最小的位置(二分法的应用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组中子数组的最大累乘积"><span class="nav-number">11.</span> <span class="nav-text">数组中子数组的最大累乘积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不包含本位置位的累乘数组"><span class="nav-number">12.</span> <span class="nav-text">不包含本位置位的累乘数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的partition调整"><span class="nav-number">13.</span> <span class="nav-text">数组的partition调整</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组中未出现的最小正整数"><span class="nav-number">14.</span> <span class="nav-text">数组中未出现的最小正整数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组排序之后相邻数字的最大差值"><span class="nav-number">15.</span> <span class="nav-text">数组排序之后相邻数字的最大差值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#找到出现50以上的数字"><span class="nav-number">16.</span> <span class="nav-text">找到出现50%以上的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#找到出现次数在nk次以上的数字"><span class="nav-number">17.</span> <span class="nav-text">找到出现次数在N/K次以上的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求直方图的最大连续面积"><span class="nav-number">18.</span> <span class="nav-text">求直方图的最大连续面积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#换钱的最少货币数量"><span class="nav-number">19.</span> <span class="nav-text">换钱的最少货币数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#换钱的方法数"><span class="nav-number">20.</span> <span class="nav-text">换钱的方法数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断字符数组中是否所有的字符都只出现一次"><span class="nav-number">21.</span> <span class="nav-text">判断字符数组中是否所有的字符都只出现一次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组中两个字符串的最小距离"><span class="nav-number">22.</span> <span class="nav-text">数组中两个字符串的最小距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#找到最长回文子串"><span class="nav-number">23.</span> <span class="nav-text">找到最长回文子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计数组中每个数字前面比自己小的数字有多少个"><span class="nav-number">24.</span> <span class="nav-text">统计数组中每个数字前面比自己小的数字有多少个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计数组中每个数字后面比自己小的数字有多少个"><span class="nav-number">25.</span> <span class="nav-text">统计数组中每个数字后面比自己小的数字有多少个</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个有重复数字的整数数组求包含所有的数字的最短的连续序列的长度"><span class="nav-number">26.</span> <span class="nav-text">一个有重复数字的整数数组，求包含所有的数字的最短的连续序列的长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续整数和"><span class="nav-number">27.</span> <span class="nav-text">连续整数和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的子集问题"><span class="nav-number">28.</span> <span class="nav-text">集合的子集问题</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/05/02/算法专题/算法专题_一维数组/';
+      var disqus_title = "算法专题_一维数组";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/05/02/算法专题/算法专题_一维数组/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

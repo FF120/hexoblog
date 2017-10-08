@@ -1,0 +1,1103 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一种字符串前缀的匹配技术。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_字典树(Trie树)">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/08/23/算法专题-字典树-Trie树/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="一种字符串前缀的匹配技术。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-03T13:04:44.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_字典树(Trie树)">
+<meta name="twitter:description" content="一种字符串前缀的匹配技术。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/08/23/算法专题-字典树-Trie树/"/>
+
+  <title> 算法专题_字典树(Trie树) | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_字典树(Trie树)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-23T09:58:56+08:00" content="2017-08-23">
+              2017-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/08/23/算法专题-字典树-Trie树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/23/算法专题-字典树-Trie树/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/08/23/算法专题-字典树-Trie树/" class="leancloud_visitors" data-flag-title="算法专题_字典树(Trie树)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一种字符串前缀的匹配技术。</p>
+<a id="more"></a>
+<h2 id="字典树">字典树</h2>
+<h2 id="字典树的应用">字典树的应用</h2>
+<h3 id="异或今日头条2017秋招真题">异或（今日头条2017秋招真题）</h3>
+<p><a href="http://exercise.acmcoder.com/online/online_judge_ques?ques_id=3338&amp;konwledgeId=158" target="_blank" rel="external">异或（今日头条2017秋招真题）</a></p>
+<p>题目描述</p>
+<p>给定整数m以及n个数字A1, A2, …, An，将数列A中所有元素两两异或，共能得到n(n-1)/2个结果。请求出这些结果中大于m的有多少个。</p>
+<p>输入 第一行包含两个整数n, m。 第二行给出n个整数A1, A2, …, An。 样例输入 3 10 6 5 10 输出 输出仅包括一行，即所求的答案。 样例输出 2 时间限制 C/C++语言：1000MS其它语言：3000MS<br>
+内存限制 C/C++语言：65536KB其它语言：589824K</p>
+<p>思路：</p>
+<ol style="list-style-type: decimal">
+<li>从最高位开始建立字典树，左子树表示二进制0，右子树表示二进制位1. 每个节点统计在n个数字中对应的二进制位上有多少个对应的0或者1.</li>
+<li><p>查询每个数字a和m，比较a和m对应的位，有如下情况 2.1 a = 0, m = 0, 这个时候 b=0 , a^b = 0 不能确定谁大，继续查找下一位 2.2 a = 0, m = 1, 这个时候 b=0 , 肯定有a^b &lt; m, 不满足条件，跳过； b = 1, 继续查找下一位 2.3 a = 1, m = 0, 这个时候 b=0 , 肯定有a^b &gt; m, 满足条件，直接将对应的count加在结果上， b=1,继续查找下一位 2.4 a = 1, m = 1, 这个时候 b=0 , 继续查找下一位，b = 1,肯定不满足条件，</p></li>
+<li><p>最后的结果除以2返回， 因为我们既统计了a与b的异或，也统计了b与a的异或。</p></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TrieTree</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">TrieTree</span>* <span class="title">next</span>[2]&#123;</span><span class="literal">NULL</span>,<span class="literal">NULL</span>&#125;;</div><div class="line">    TrieTree():count(<span class="number">1</span>)&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function">TrieTree* <span class="title">buildTrieTree</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">array</span>)</span></span></div><div class="line">&#123;</div><div class="line">    TrieTree* trieTree = <span class="keyword">new</span> TrieTree();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(<span class="keyword">int</span>)<span class="built_in">array</span>.size();++i)</div><div class="line">    &#123;</div><div class="line">        TrieTree* cur = trieTree;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">16</span>;j&gt;=<span class="number">0</span>;--j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> digit = (<span class="built_in">array</span>[i] &gt;&gt; j) &amp; <span class="number">1</span>;</div><div class="line">            <span class="keyword">if</span>(<span class="literal">NULL</span> == cur-&gt;next[digit])</div><div class="line">                cur-&gt;next[digit] = <span class="keyword">new</span> TrieTree();</div><div class="line">            <span class="keyword">else</span></div><div class="line">                ++(cur-&gt;next[digit]-&gt;count);</div><div class="line">            cur = cur-&gt;next[digit];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> trieTree;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">queryTrieTree</span><span class="params">(TrieTree*&amp; trieTree, <span class="keyword">const</span> <span class="keyword">int</span> a, <span class="keyword">const</span> <span class="keyword">int</span> m, <span class="keyword">const</span> <span class="keyword">int</span> index)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="literal">NULL</span> == trieTree)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    TrieTree* cur = trieTree;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=index;i&gt;=<span class="number">0</span>;--i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> aDigit = (a &gt;&gt; i) &amp; <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> mDigit = (m &gt;&gt; i) &amp; <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(<span class="number">1</span>==aDigit &amp;&amp; <span class="number">1</span>==mDigit)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(<span class="literal">NULL</span> == cur-&gt;next[<span class="number">0</span>])</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            cur = cur-&gt;next[<span class="number">0</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">0</span> == aDigit &amp;&amp; <span class="number">1</span>==mDigit)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(<span class="literal">NULL</span> == cur-&gt;next[<span class="number">1</span>])</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            cur = cur-&gt;next[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">1</span> == aDigit &amp;&amp; <span class="number">0</span> == mDigit)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">long</span> <span class="keyword">long</span> val0 =  (<span class="literal">NULL</span> == cur-&gt;next[<span class="number">0</span>]) ? <span class="number">0</span> : cur-&gt;next[<span class="number">0</span>]-&gt;count;</div><div class="line">            <span class="keyword">long</span> <span class="keyword">long</span> val1 =  queryTrieTree(cur-&gt;next[<span class="number">1</span>],a,m,i<span class="number">-1</span>);</div><div class="line">            <span class="keyword">return</span> val0+val1;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">0</span> == aDigit &amp;&amp; <span class="number">0</span> == mDigit)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">long</span> <span class="keyword">long</span> val0 =  queryTrieTree(cur-&gt;next[<span class="number">0</span>],a,m,i<span class="number">-1</span>);</div><div class="line">            <span class="keyword">long</span> <span class="keyword">long</span> val1 =  (<span class="literal">NULL</span> == cur-&gt;next[<span class="number">1</span>]) ? <span class="number">0</span> : cur-&gt;next[<span class="number">1</span>]-&gt;count;</div><div class="line">            <span class="keyword">return</span> val0+val1;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">solve</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">array</span>, <span class="keyword">const</span> <span class="keyword">int</span>&amp; m)</span></span></div><div class="line">&#123;</div><div class="line">    TrieTree* trieTree = buildTrieTree(<span class="built_in">array</span>);</div><div class="line">    <span class="keyword">long</span> <span class="keyword">long</span> result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(<span class="keyword">int</span>)<span class="built_in">array</span>.size();++i)</div><div class="line">    &#123;</div><div class="line">        result += queryTrieTree(trieTree,<span class="built_in">array</span>[i],m,<span class="number">16</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result /<span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    freopen(<span class="string">"d:/A.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">int</span> n,m;</div><div class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">array</span>(n);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;++i)</div><div class="line">            <span class="built_in">cin</span>&gt;&gt;<span class="built_in">array</span>[i];</div><div class="line">        <span class="built_in">cout</span>&lt;&lt; solve(<span class="built_in">array</span>,m) &lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXBIT = <span class="number">17</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trieTree</span>&#123;</span></div><div class="line">    ll count = <span class="number">0</span>;</div><div class="line">    trieTree* next[<span class="number">2</span>] = &#123;<span class="literal">nullptr</span>, <span class="literal">nullptr</span>&#125;;</div><div class="line">    trieTree() : count(<span class="number">0</span>)&#123;&#125;</div><div class="line">    trieTree(<span class="keyword">int</span> c) : count(c)&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function">trieTree* <span class="title">createTree</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;arr)</span></span>&#123;</div><div class="line">    trieTree* root = <span class="keyword">new</span> trieTree(<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.size(); ++i) &#123;</div><div class="line">        <span class="keyword">int</span> index = MAXBIT; <span class="comment">// int 整形最多32位</span></div><div class="line">        trieTree* cur = root;</div><div class="line">        <span class="keyword">while</span>(index &gt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> digit = (arr[i] &gt;&gt; index) &amp; <span class="number">1</span>; <span class="comment">// 从低位到高位第index+1位的值</span></div><div class="line">            <span class="keyword">if</span>(cur-&gt;next[digit] == <span class="literal">nullptr</span>)&#123;</div><div class="line">                cur-&gt;next[digit] = <span class="keyword">new</span> trieTree(<span class="number">1</span>);</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                cur-&gt;next[digit]-&gt;count ++;</div><div class="line">            &#125;</div><div class="line">            cur = cur-&gt;next[digit];</div><div class="line">            index--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 查询trie树中有多少个数字满足a^b&gt;m</div><div class="line"> * @param root</div><div class="line"> * @param a</div><div class="line"> * @param m</div><div class="line"> * @param index</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function">ll <span class="title">queryTree</span><span class="params">(trieTree* root,<span class="keyword">int</span> a, <span class="keyword">int</span> m, <span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">        <span class="keyword">int</span> aDigit = (a &gt;&gt; i) &amp; <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> mDigit = (m &gt;&gt; i) &amp; <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(aDigit == <span class="number">0</span> &amp;&amp; mDigit == <span class="number">0</span>)&#123;</div><div class="line">            ll v0 = <span class="number">0</span> , v1 = <span class="number">0</span>;</div><div class="line">            <span class="keyword">if</span>(root-&gt;next[<span class="number">1</span>] != <span class="literal">nullptr</span>)&#123;</div><div class="line">                v0 = root-&gt;next[<span class="number">1</span>]-&gt;count;</div><div class="line">            &#125;</div><div class="line">            v1 = queryTree(root-&gt;next[<span class="number">0</span>],a,m,i<span class="number">-1</span>);</div><div class="line">            <span class="keyword">return</span> v0 + v1;</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(aDigit == <span class="number">0</span> &amp;&amp; mDigit == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(root-&gt;next[<span class="number">1</span>] == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            <span class="keyword">return</span> queryTree(root-&gt;next[<span class="number">1</span>],a,m,i<span class="number">-1</span>);</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(aDigit == <span class="number">1</span> &amp;&amp; mDigit == <span class="number">0</span>)&#123;</div><div class="line">            ll v0 = <span class="number">0</span> , v1 = <span class="number">0</span>;</div><div class="line">            <span class="keyword">if</span>(root-&gt;next[<span class="number">0</span>] != <span class="literal">nullptr</span>)&#123;</div><div class="line">                v0 = root-&gt;next[<span class="number">0</span>]-&gt;count;</div><div class="line">            &#125;</div><div class="line">            v1 = queryTree(root-&gt;next[<span class="number">1</span>],a,m,i<span class="number">-1</span>);</div><div class="line">            <span class="keyword">return</span> v0 + v1;</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(aDigit == <span class="number">1</span> &amp;&amp; mDigit == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(root-&gt;next[<span class="number">0</span>] == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            <span class="keyword">return</span> queryTree(root-&gt;next[<span class="number">0</span>],a,m,i<span class="number">-1</span>);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"error"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function">ll <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v, <span class="keyword">int</span> m)</span></span>&#123;</div><div class="line">    trieTree* root = createTree(v);</div><div class="line">    ll result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v.size(); ++i) &#123;</div><div class="line">        result += queryTree(root,v[i],m,MAXBIT);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result / <span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    freopen(<span class="string">"d:/A.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">int</span> n, m ;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v(n,<span class="number">0</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="built_in">cin</span> &gt;&gt; v[i];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;solve(v,m)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="统计子目录">统计子目录</h3>
+<p><a href="http://hihocoder.com/problemset/problem/1551" target="_blank" rel="external">统计子目录</a></p>
+<p>描述 小Hi的电脑的文件系统中一共有N个文件，例如：</p>
+<p>/hihocoder/offer22/solutions/p1</p>
+<p>/hihocoder/challenge30/p1/test</p>
+<p>/game/moba/dota2/uninstall</p>
+<p>小Hi想统计其中一共有多少个不同的子目录。上例中一共有8个不同的子目录：</p>
+<p>/hihocoder</p>
+<p>/hihocoder/offer22</p>
+<p>/hihocoder/offer22/solutions</p>
+<p>/hihocoder/challenge30</p>
+<p>/hihocoder/challenge30/p1</p>
+<p>/game</p>
+<p>/game/moba</p>
+<p>/game/moba/dota2/</p>
+<p>输入 第一行包含一个整数N (1 ≤ N ≤ 10000)</p>
+<p>以下N行每行包含一个字符串，代表一个文件的绝对路径。保证路径从根目录“/”开始，并且文件名和目录名只包含小写字母和数字。</p>
+<p>对于80%的数据，N个文件的绝对路径长度之和不超过10000</p>
+<p>对于100%的数据，N个文件的绝对路径长度之和不超过500000</p>
+<p>输出 一个整数代表不同子目录的数目。</p>
+<p>样例输入 3<br>
+/hihocoder/offer22/solutions/p1<br>
+/hihocoder/challenge30/p1/test<br>
+/game/moba/dota2/uninstall 样例输出 8</p>
+<p>思路： 用每个目录的名字建立字典树，根是空字符，然后统计整棵树节点的数目，最后返回节点的数目-1.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * [统计子目录](http://hihocoder.com/problemset/solution/1157194)</div><div class="line"> * </div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trieTree</span>&#123;</span></div><div class="line">    <span class="built_in">string</span> description;</div><div class="line">    <span class="built_in">vector</span>&lt;trieTree*&gt; sons;</div><div class="line">    trieTree() : description(<span class="string">""</span>)&#123;&#125;</div><div class="line">    trieTree(<span class="built_in">string</span> &amp;s) : description(s)&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 层次遍历统计节点数目</div><div class="line"> * @param root</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">countNodes</span><span class="params">(trieTree* root)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.empty()) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;trieTree*&gt; nodes, next;</div><div class="line">    nodes.push_back(root);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> re = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(!nodes.empty())&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nodes.size(); ++i) &#123;</div><div class="line">            next.insert(next.end(),nodes[i]-&gt;sons.begin(),nodes[i]-&gt;sons.end());</div><div class="line">        &#125;</div><div class="line">        re += nodes.size();</div><div class="line">        nodes = next;</div><div class="line">        next.clear();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 递归遍历节点数目</div><div class="line"> * @param root</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">countNode2</span><span class="params">(trieTree *root)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.empty()) <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> re = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; root-&gt;sons.size(); ++i) &#123;</div><div class="line">        re += countNode2(root-&gt;sons[i]);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; splitString(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; re;</div><div class="line">    <span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> re;</div><div class="line">    <span class="keyword">size_t</span> index1 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">size_t</span> index2 = <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(s.find(<span class="string">'/'</span>,index2) != <span class="number">-1</span>)&#123;</div><div class="line">        index2 = s.find(<span class="string">'/'</span>,index1+<span class="number">1</span>);</div><div class="line">        re.push_back(s.substr(index1+<span class="number">1</span>,index2-index1<span class="number">-1</span>));</div><div class="line">        index1 = index2;</div><div class="line">        index2++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;pathes, <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(pathes.empty() || n &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    trieTree *root = <span class="keyword">new</span> trieTree();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; path = splitString(pathes[i]);</div><div class="line">        trieTree *cur = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; path.size(); ++j) &#123;</div><div class="line">            <span class="keyword">if</span>(cur-&gt;sons.empty())&#123;</div><div class="line">                cur-&gt;sons.push_back(<span class="keyword">new</span> trieTree(path[j]));</div><div class="line">                result++;</div><div class="line">                cur = cur-&gt;sons[<span class="number">0</span>];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">int</span> index = cur-&gt;sons.size();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cur-&gt;sons.size(); ++k) &#123;</div><div class="line">                    <span class="keyword">if</span>(cur-&gt;sons[k]-&gt;description == path[j])&#123;</div><div class="line">                        index = k;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(index == cur-&gt;sons.size())&#123;</div><div class="line">                    cur-&gt;sons.push_back(<span class="keyword">new</span> trieTree(path[j]));</div><div class="line">                    result++;</div><div class="line">                    cur = cur-&gt;sons[cur-&gt;sons.size()<span class="number">-1</span>];</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    cur = cur-&gt;sons[index];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> re = countNode2(root) - <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    freopen(<span class="string">"d:/A.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; pathes(n,<span class="string">""</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="built_in">cin</span> &gt;&gt; pathes[i];</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;solve(pathes,n)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="合并子目录">合并子目录</h3>
+<p><a href="http://hihocoder.com/problemset/solution/1157744" target="_blank" rel="external">合并子目录</a></p>
+<p>描述 小Hi的电脑的文件系统中一共有N个文件，例如：</p>
+<p>/hihocoder/offer23/solutions/p1</p>
+<p>/hihocoder/challenge30/p1/test</p>
+<p>/game/moba/dota2/uninstall</p>
+<p>经过统计，小Hi认为他的电脑中子目录实在太多了，于是他决定减少子目录的数量。小Hi发现其中一些子目录只包含另一个子目录，例如/hihocoder/offer22只包含一个子目录solution，/game只包含一个子目录moba，而moba也只包含一个子目录dota2。小Hi决定把这样的子目录合并成一个子目录，并且将被合并的子目录的名字用’-’连起来作为新子目录的名字。合并之后上例的3个文件的路径会变为：</p>
+<p>/hihocoder/offer23-solutions/p1</p>
+<p>/hihocoder/challenge30-p1/test</p>
+<p>/game-moba-dota2/uninstall</p>
+<p>输入 第一行包含一个整数N (1 ≤ N ≤ 10000)</p>
+<p>以下N行每行包含一个字符串，代表一个文件的绝对路径。保证路径从根目录“/”开始，并且文件名和目录名只包含小写字母和数字。</p>
+<p>对于80%的数据，N个文件的绝对路径长度之和不超过10000</p>
+<p>对于100%的数据，N个文件的绝对路径长度之和不超过500000</p>
+<p>输出 对于输入中的每个文件，输出合并子目录之后该文件的绝对路径。</p>
+<p>样例输入 3 /hihocoder/offer23/solutions/p1 /hihocoder/challenge30/p1/test /game/moba/dota2/uninstall 样例输出 /hihocoder/offer23-solutions/p1 /hihocoder/challenge30-p1/test /game-moba-dota2/uninstall</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;deque&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * [统计子目录](http://hihocoder.com/problemset/solution/1157194)</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trieTree</span>&#123;</span></div><div class="line">    <span class="built_in">string</span> description;</div><div class="line">    <span class="built_in">vector</span>&lt;trieTree*&gt; sons;</div><div class="line">    trieTree() : description(<span class="string">""</span>)&#123;&#125;</div><div class="line">    trieTree(<span class="built_in">string</span> &amp;s) : description(s)&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; splitString(<span class="built_in">string</span> &amp;s)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; re;</div><div class="line">    <span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> re;</div><div class="line">    s.push_back(<span class="string">'/'</span>);</div><div class="line">    <span class="keyword">size_t</span> index1 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">size_t</span> index2 = <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(s.find(<span class="string">'/'</span>,index2) != <span class="number">-1</span>)&#123;</div><div class="line">        index2 = s.find(<span class="string">'/'</span>,index1+<span class="number">1</span>);</div><div class="line">        re.push_back(s.substr(index1+<span class="number">1</span>,index2-index1<span class="number">-1</span>));</div><div class="line">        index1 = index2;</div><div class="line">        index2++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">trieTree* <span class="title">createTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;pathes)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(pathes.empty()) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    trieTree *root = <span class="keyword">new</span> trieTree();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pathes.size(); ++i) &#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; path = splitString(pathes[i]);</div><div class="line">        trieTree *cur = root;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; path.size(); ++j) &#123;</div><div class="line">            <span class="keyword">if</span>(cur-&gt;sons.empty())&#123;</div><div class="line">                cur-&gt;sons.push_back(<span class="keyword">new</span> trieTree(path[j]));</div><div class="line">                result++;</div><div class="line">                cur = cur-&gt;sons[<span class="number">0</span>];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">int</span> index = cur-&gt;sons.size();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cur-&gt;sons.size(); ++k) &#123;</div><div class="line">                    <span class="keyword">if</span>(cur-&gt;sons[k]-&gt;description == path[j])&#123;</div><div class="line">                        index = k;</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(index == cur-&gt;sons.size())&#123;</div><div class="line">                    cur-&gt;sons.push_back(<span class="keyword">new</span> trieTree(path[j]));</div><div class="line">                    result++;</div><div class="line">                    cur = cur-&gt;sons[cur-&gt;sons.size()<span class="number">-1</span>];</div><div class="line">                &#125;<span class="keyword">else</span>&#123;</div><div class="line">                    cur = cur-&gt;sons[index];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> root;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">trieTree* <span class="title">reduceTree</span><span class="params">(trieTree* root)</span></span>&#123;</div><div class="line">    trieTree* re = root;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.empty()) <span class="keyword">return</span> root;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.size() &gt;= <span class="number">2</span>)&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; root-&gt;sons.size(); ++i) &#123;</div><div class="line">            reduceTree(root-&gt;sons[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.size() == <span class="number">1</span>)&#123;</div><div class="line">        trieTree* next = root-&gt;sons[<span class="number">0</span>];</div><div class="line">        <span class="keyword">if</span>(next-&gt;sons.empty())&#123;</div><div class="line"><span class="comment">//            root-&gt;description = root-&gt;description + "-";</span></div><div class="line"><span class="comment">//            root-&gt;description = root-&gt;description + next-&gt;description;</span></div><div class="line"><span class="comment">//            root-&gt;sons.clear();</span></div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        root-&gt;sons.clear();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; next-&gt;sons.size(); ++i) &#123;</div><div class="line">            root-&gt;sons.push_back(next-&gt;sons[i]);</div><div class="line">        &#125;</div><div class="line">        root-&gt;description = root-&gt;description + <span class="string">"-"</span>;</div><div class="line">        root-&gt;description = root-&gt;description + next-&gt;description;</div><div class="line">        reduceTree(root);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printTree</span><span class="params">(trieTree* root,<span class="built_in">string</span> out)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="literal">nullptr</span> == root) <span class="keyword">return</span>;</div><div class="line">    out += root-&gt;description + <span class="string">"/"</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;sons.empty())&#123;</div><div class="line">        <span class="keyword">if</span>(out.find_last_of(<span class="string">'/'</span>) == out.size() - <span class="number">1</span>)&#123;</div><div class="line">            out.erase(out.size()<span class="number">-1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;out&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; root-&gt;sons.size(); ++i) &#123;</div><div class="line">            printTree(root-&gt;sons[i],out);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;pathes, <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    trieTree* root = createTree(pathes);</div><div class="line">    trieTree* reduced = reduceTree(root);</div><div class="line">    <span class="built_in">string</span> out = <span class="string">""</span>;</div><div class="line">    printTree(reduced,out);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    freopen(<span class="string">"d:/A.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; pathes(n,<span class="string">""</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</div><div class="line">        <span class="built_in">cin</span> &gt;&gt; pathes[i];</div><div class="line">    &#125;</div><div class="line">    solve(pathes,n);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/08/22/算法专题/今日头条-在线编程题/" rel="next" title="今日头条_在线编程题">
+                <i class="fa fa-chevron-left"></i> 今日头条_在线编程题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/09/23/算法专题/算法专题_二叉树2/" rel="prev" title="算法专题_二叉树2">
+                算法专题_二叉树2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树"><span class="nav-number">1.</span> <span class="nav-text">字典树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树的应用"><span class="nav-number">2.</span> <span class="nav-text">字典树的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异或今日头条2017秋招真题"><span class="nav-number">2.1.</span> <span class="nav-text">异或（今日头条2017秋招真题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计子目录"><span class="nav-number">2.2.</span> <span class="nav-text">统计子目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并子目录"><span class="nav-number">2.3.</span> <span class="nav-text">合并子目录</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/08/23/算法专题-字典树-Trie树/';
+      var disqus_title = "算法专题_字典树(Trie树)";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/08/23/算法专题-字典树-Trie树/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,1199 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="deep_learning," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="深度学习应该了解的内容。">
+<meta name="keywords" content="deep_learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习_基本概念">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="深度学习应该了解的内容。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-05-11_102343.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-05-11_104215.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-05-11_104735.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-05-11_105852.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_111733.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_111848.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_112030.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_122122.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_122501.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_123014.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-18_182534.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-19_090342.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-19_092053.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-19_092904.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-04-19_093237.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:20.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习_基本概念">
+<meta name="twitter:description" content="深度学习应该了解的内容。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/2017-05-11_102343.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/"/>
+
+  <title> 深度学习_基本概念 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度学习_基本概念
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-18T11:16:47+08:00" content="2017-04-18">
+              2017-04-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/18/机器学习专题/深度学习_基本概念/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/" class="leancloud_visitors" data-flag-title="深度学习_基本概念">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>深度学习应该了解的内容。</p>
+<a id="more"></a>
+<h2 id="深度学习的应用领域">深度学习的应用领域</h2>
+<p>深度学习得到越来越快的发展，这是因为深度学习是最有希望解决一些普通算法难以解决的问题，让我们来看一看都有哪些问题是目前还没有解决，但是有望可以借助深度学习方法的进步解决的。</p>
+<h3 id="黑白图像的自动着色">黑白图像的自动着色</h3>
+<p>我们都知道，把彩色图像变成黑白图像很容易，但是要把黑白图像变成彩色图像就不那么容易了（颜色信息从那里来？），这个问题以前都是靠<a href="https://en.wikipedia.org/wiki/Hand-colouring_of_photographs" target="_blank" rel="external">手工着色</a>的方式解决的，但是这样的方法费时费力还需要专业的人才。 目前使用ImageNet训练的多层的卷积神经网络可以达到的水平如下图： <img src="2017-05-11_102343.png"></p>
+<h3 id="自动为电影添加声音">自动为电影添加声音</h3>
+<p>为无声电影添加配音应该是一个更加困难的问题，但是深度学习的方法已经做出了一些有益的尝试。现在能够做到的是一些简单的动作的配音，例如视频中出现一个敲击的动作，可以配上一个敲击的声音，当然，这需要大量的训练样本去学习什么样的场景对应什么样的声音。这个方面主要是<strong>CNN</strong>和<strong>LSTM</strong>.</p>
+<h3 id="自动机器翻译">自动机器翻译</h3>
+<p><strong>自动翻译文字</strong></p>
+<p>从一种语言翻译到另外一种语言，这样的软件早就有，而且有了很多年了。但是翻译的水平始终无法与人工翻译相提并论。深度学习技术的发展有希望改变这一点，自动机器翻译的水平不断提高，直逼人工翻译的水平。这个领域使用的神经网络是<strong>Stacked networks of large LSTM recurrent neural networks</strong>.</p>
+<p><strong>翻译图像中的文字</strong></p>
+<p>识别图像中的文字一直以来都是一个比较实际的问题，在各种场合下都有应用。最常见的比如车牌的识别，名片的识别，信用卡号码的识别。以前用图像处理的算法解决这个问题的时候，大多是局限在某一个具体的场景，例如车牌识别，图像大小基本固定，背景颜色基本固定，文字只有很有限的几个，这种情况下普通的算法也能得到很好的效果。但是实际应用的时候往往情况比这个复杂的多，这个领域使用的神经网络主要是<strong>CNN</strong>.</p>
+<div class="figure">
+<img src="2017-05-11_104215.png">
+
+</div>
+<h3 id="物体分类和检测">物体分类和检测</h3>
+<p>识别一个图像中的物体的类别，或者各个物体的类别也是意见很困难的事情。因为类别往往有无穷多种。</p>
+<p><strong>Object Classification</strong></p>
+<p>比如判断一副图像属于1000个类别中的哪一类。目前ImageNet上已经能够做到很高的准确率。</p>
+<p><strong>Object Detection</strong></p>
+<p>识别图像中的各个对象并标记出来。</p>
+<div class="figure">
+<img src="2017-05-11_104735.png">
+
+</div>
+<h3 id="手写笔迹的自动生成">手写笔迹的自动生成</h3>
+<p>我们知道，一个人的签名可以证明身份，这是因为假设了一个前提：每个人的笔迹都有唯一性，并且可以鉴别出来。这个任务就是要打破这个前提，让电脑可以根据一个人的笔迹风格，生成出具有相同风格的笔迹。到那个时候，签名估计就没什么用了。 当然，目前这方面还很弱。</p>
+<h3 id="文本的自动生成">文本的自动生成</h3>
+<p>这是一个更加令人兴奋的领域。可以借助机器自动句子，段落，甚至论文。主要使用的神经网络是<strong>Large recurrent neural networks</strong>. 当然，这个目前还没有什么突破，具体的成果可以参考<a href="http://karpathy.github.io/" class="uri" target="_blank" rel="external">http://karpathy.github.io/</a></p>
+<h3 id="图像理解">图像理解</h3>
+<p>该任务是自动生成一段对图像的描述性文字，类似我们小时候玩的那种<em>看图说话</em>。这个领域已经取得了一些令人惊叹的成果，目前的水平如下图：</p>
+<div class="figure">
+<img src="2017-05-11_105852.png">
+
+</div>
+<h3 id="automatic-game-playing">Automatic Game Playing</h3>
+<p>This is a task where a model learns how to play a computer game based only on the pixels on the screen.</p>
+<p>This very difficult task is the domain of deep reinforcement models and is the breakthrough that DeepMind (now part of google) is renown for achieving.</p>
+<h2 id="深度学习中的概念">深度学习中的概念</h2>
+<p><img src="2017-04-18_111733.png"> 神经网络中的一个函数： <img src="2017-04-18_111848.png"> 将负无穷到正无穷的范围压缩到0–1的函数： <img src="2017-04-18_112030.png"> 下图中的神经网络使用上面的激活函数。 <img src="2017-04-18_122122.png"></p>
+<p>神经网络的结构一旦定义，就定义了一组函数。神经网络的参数一旦确定，就确定了一个函数，对于特定的输入，产生特定的输出。 <img src="2017-04-18_122501.png"> 输出层的处理，归一化0–1的范围。 <img src="2017-04-18_123014.png"></p>
+<h3 id="张量tensor">张量(tensor)</h3>
+<p>张量，或tensor，是本文档会经常出现的一个词汇，在此稍作解释。</p>
+<p>使用这个词汇的目的是为了表述统一，张量可以看作是向量、矩阵的自然推广，我们用张量来表示广泛的数据类型。</p>
+<p>规模最小的张量是0阶张量，即标量，也就是一个数。</p>
+<p>当我们把一些数有序的排列起来，就形成了1阶张量，也就是一个向量</p>
+<p>如果我们继续把一组向量有序的排列起来，就形成了2阶张量，也就是一个矩阵</p>
+<p>把矩阵摞起来，就是3阶张量，我们可以称为一个立方体，具有3个颜色通道的彩色图片就是一个这样的立方体</p>
+<p>把立方体摞起来，好吧这次我们真的没有给它起别名了，就叫4阶张量了，不要去试图想像4阶张量是什么样子，它就是个数学上的概念。</p>
+<p>张量的阶数有时候也称为维度，或者轴，轴这个词翻译自英文axis。譬如一个矩阵[[1,2],[3,4]]，是一个2阶张量，有两个维度或轴，沿着第0个轴（为了与python的计数方式一致，本文档维度和轴从0算起）你看到的是[1,2]，[3,4]两个向量，沿着第1个轴你看到的是[1,3]，[2,4]两个向量。</p>
+<p>要理解沿着某个轴的意思，可以运行如下的代码： <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]])</div><div class="line">sum0 = np.sum(a, axis=<span class="number">0</span>)</div><div class="line">sum1 = np.sum(a, axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="keyword">print</span> sum0</div><div class="line"><span class="keyword">print</span> sum1</div></pre></td></tr></table></figure></p>
+<h3 id="平方误差和交叉熵">平方误差和交叉熵</h3>
+<div class="figure">
+<img src="2017-04-18_182534.png">
+
+</div>
+<h3 id="激活函数">激活函数</h3>
+<p>作用在神经元上，对神经元上的数据进行处理的函数。在神经网络发展的早期，神经元上的数据没有经过任何处理，或者只经过线性的处理，可以认为这个时候的激活函数是<span class="math inline">\(y=x\)</span>,或者(-1|1),(0|1)等阶跃函数。 #### sigmod激活函数 <img src="2017-04-19_090342.png"> <span class="math display">\[
+f(x) =  \dfrac 1 {1 + e^x}
+\]</span></p>
+<p>它的作用是把 <span class="math inline">\(-\infty\)</span> 到 <span class="math inline">\(+\infty\)</span> 映射到[0,1]范围内.函数主要在[-4,4]之间，两侧接近0和1.由于Sigmoid函数所具有的性质, 它常和单位阶跃函数用于构造人工神经网络; 另外心理学中的学习曲线的形状也和Sigmoid函数比较类似.</p>
+<p>主要用于隐层神经元输出。</p>
+<h4 id="tanh-激活函数">tanh 激活函数</h4>
+<p><span class="math display">\[
+tanh(x) = 2sigmoid(2x)-1
+\]</span></p>
+<p>实际应用中，tanh 会比 sigmoid 更好.</p>
+<h4 id="softmax-激活函数">Softmax 激活函数</h4>
+<p>主要用于多分类神经网络输出。 <img src="2017-04-19_092053.png"></p>
+<p>Softmax适合多分类的情况。 #### ReLu(Rectified Linear Units)激活函数 深度学习中，我们一般使用ReLU作为中间隐层神经元的激活函数，AlexNet中提出用ReLU来替代传统的激活函数是深度学习的一大进步。 2001年，神经科学家Dayan、Abott从生物学角度，模拟出了脑神经元接受信号更精确的激活模型，该模型如下图所示： <img src="2017-04-19_092904.png"></p>
+<p><strong>Softplus</strong></p>
+<p>Softplus函数，Softplus函数是Logistic-Sigmoid函数原函数</p>
+<p><span class="math display">\[
+softplus(x) = log(1+e^x)
+\]</span></p>
+<p><strong>Rectifier</strong></p>
+<p><span class="math display">\[
+f(x) = max(0,x)
+\]</span></p>
+<p><img src="2017-04-19_093237.png"> 综合速率和效率，DL中大部分激活函数应该选择ReLu. ## 深度学习工具 ### keras <a href="https://keras-cn.readthedocs.io/en/latest/" target="_blank" rel="external">keras中文文档</a></p>
+<p><a href="https://keras.io/" target="_blank" rel="external">keras官方文档</a></p>
+<p><a href="https://github.com/fchollet/keras" target="_blank" rel="external">github开源代码</a></p>
+<h4 id="安装">安装</h4>
+<ol style="list-style-type: decimal">
+<li>下载源代码</li>
+<li>解压缩</li>
+<li>切换到解压缩之后的目录，包含文件<code>setup.py</code>的路径，执行安装命令<code>python setup.py install</code>.</li>
+<li>打开python环境，输入<code>import keras</code>,如果没有报错，证明安装成功。</li>
+</ol>
+<p>如果以上步骤出现问题，很可能是缺少需要的软件包。keras后端使用tensorflow或者theano，所以二者必须使用安装其中之一。如果没有安装<code>tensorfolw</code>,则会有下面的报错信息： <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Using TensorFlow backend.</div><div class="line">Traceback (most recent call last):</div><div class="line">  File "&lt;stdin&gt;", line 1, in &lt;module&gt;</div><div class="line">  File "C:\Anaconda2\lib\site-packages\keras-2.0.3-py2.7.egg\keras\__init__.py",</div><div class="line"> line 3, in &lt;module&gt;</div><div class="line">    from . import activations</div><div class="line">  File "C:\Anaconda2\lib\site-packages\keras-2.0.3-py2.7.egg\keras\activations.p</div><div class="line">y", line 3, in &lt;module&gt;</div><div class="line">    from . import backend as K</div><div class="line">  File "C:\Anaconda2\lib\site-packages\keras-2.0.3-py2.7.egg\keras\backend\__ini</div><div class="line">t__.py", line 73, in &lt;module&gt;</div></pre></td></tr></table></figure></p>
+<p>如果已经安装了<code>theano</code>,可以切换keras的后端。</p>
+<h4 id="在tensorflow和theano之间切换">在TensorFlow和theano之间切换</h4>
+<p><a href="https://keras.io/backend/" target="_blank" rel="external">官方文档</a></p>
+<ol style="list-style-type: decimal">
+<li><p>找到配置文件<code>$HOME/.keras/keras.json</code>,如果还没有，创建该文件。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"epsilon"</span>: <span class="number">1e-07</span>,</div><div class="line">    <span class="string">"floatx"</span>: <span class="string">"float32"</span>,</div><div class="line">    <span class="string">"image_data_format"</span>: <span class="string">"channels_last"</span>,</div><div class="line">    <span class="string">"backend"</span>: <span class="string">"tensorflow"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p></li>
+<li><p>backend指定了使用哪一个，可使用的关键字是<code>tensorflow</code>和<code>theano</code>,修改保存即可。</p></li>
+</ol>
+<h4 id="安装tensorflow">安装tensorflow</h4>
+<p>如果之前两个软件包都没有安装，那么必须要安装一个才能继续使用keras. <a href="https://www.tensorflow.org/install/" target="_blank" rel="external">官方安装教程</a></p>
+<p>我们只是用来学习，所以先安装一个不支持GPU的版本，这个版本需要的条件少，容易安装成功。关于完整的安装教程，可以参照官方文档。</p>
+<ol style="list-style-type: decimal">
+<li>下载安装<a href="https://www.continuum.io/downloads" target="_blank" rel="external">Anaconda</a></li>
+<li><p>创建一个tensorflow环境：<code>conda create -n tensorflow</code>; <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Fetching package metadata ...........</div><div class="line">Solving package specifications:</div><div class="line">Package plan for installation in environment C:\Anaconda2\envs\tensorflow:</div></pre></td></tr></table></figure></p></li>
+<li>激活该环境：<code>activate tensorflow</code></li>
+<li><p>安装<code>cpu-only</code>版本的tensorflow: <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow<span class="number">-1.0</span><span class="number">.1</span>-cp35-cp35m-win_amd64.whl</div></pre></td></tr></table></figure></p></li>
+</ol>
+<p>如果出现下面的错误： <code>tensorflow-1.0.1-cp35-cp35m-win_amd64.whl is not a supported wheel on this platf orm.</code>;可能是因为你的python环境不是3.5，目前tensorflow在windows上只支持python 3.5.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>anaconda创建一个python 3.5的环境：<code>&gt;conda create --name tensorflow35 python=3.5</code>,然后激活该环境<code>activate tensorflow35</code>.然后再执行第四步的安装语句。</li>
+<li>成功安装之后会有<code>successful</code>的字样。<code>Successfully installed appdirs-1.4.3 numpy-1.12.1 packaging-16.8 protobuf-3.2.0 pyparsing-2.2.0 setuptools-35.0.0 six-1.10.0 tensorflow-1.0.1 wheel-0.29.0</code>.</li>
+<li>测试安装是否成功：进入python环境执行<code>import tensorflow as tf</code>，没有报错证明安装成功。</li>
+</ol>
+<p>安装完<code>tensorflow</code>之后，重新执行上面的安装keras的所有步骤，即可成功安装keras. <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> keras</div><div class="line">Using TensorFlow backend.</div></pre></td></tr></table></figure></p>
+<p>出现上面的提示，没有任何的报错信息，证明安装成功。</p>
+<h4 id="安装theano">安装theano</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">conda install mingw libpython</div><div class="line">pip insall theano</div></pre></td></tr></table></figure>
+<h4 id="keras配置文件">keras配置文件</h4>
+<p>位置： <code>C:\Users\FF120\.keras\keras.json</code>; 内容： <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"epsilon"</span>: <span class="number">1e-07</span>,</div><div class="line">    <span class="string">"floatx"</span>: <span class="string">"float32"</span>,</div><div class="line">    <span class="string">"image_data_format"</span>: <span class="string">"channels_last"</span>,</div><div class="line">    <span class="string">"backend"</span>: <span class="string">"tensorflow"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>backend : 用来指定keras使用的后端实现，可选的关键字是<code>tensorflow</code>,<code>theano</code>;</p>
+<p>image_data_format: 用来指定图像输入参数的格式，可选的关键字是<code>channels_first</code>,<code>channels_last</code>,详细的叙述参看下面。 &gt; 在如何表示一组彩色图片的问题上，Theano和TensorFlow发生了分歧，’th’模式，也即Theano模式会把100张RGB三通道的16×32（高为16宽为32）彩色图表示为下面这种形式（100,3,16,32），Caffe采取的也是这种方式。第0个维度是样本维，代表样本的数目，第1个维度是通道维，代表颜色通道数。后面两个就是高和宽了。这种theano风格的数据组织方法，称为“channels_first”，即通道维靠前。 &gt; 而TensorFlow，的表达形式是（100,16,32,3），即把通道维放在了最后，这种数据组织方式称为“channels_last”。</p>
+<h4 id="keras模型">keras模型</h4>
+<p>接受张量作为输入然后输出张量的实体都叫做模型，keras中有两种模型。一种是最简单的<code>Sequential</code>,它是单输入单输出，一条路通到底，层与层之间只有相邻关系，跨层连接统统没有。这种模型编译速度快，操作上也比较简单。</p>
+<p>还有一种是<code>functional model API</code>,这个模型支持多输入多输出，层与层之间想怎么连怎么连，但是编译速度慢。</p>
+<h4 id="keras编程概念">keras编程概念</h4>
+<p><strong>batch_size</strong> 深度学习的优化算法，说白了就是梯度下降。每次的参数更新有两种方式。</p>
+<p>第一种，遍历全部数据集算一次损失函数，然后算函数对各个参数的梯度，更新梯度。这种方法每更新一次参数都要把数据集里的所有样本都看一遍，计算量开销大，计算速度慢，不支持在线学习，这称为Batch gradient descent，批梯度下降。</p>
+<p>另一种，每看一个数据就算一下损失函数，然后求梯度更新参数，这个称为随机梯度下降，stochastic gradient descent。这个方法速度比较快，但是收敛性能不太好，可能在最优点附近晃来晃去，hit不到最优点。两次参数的更新也有可能互相抵消掉，造成目标函数震荡的比较剧烈。</p>
+<p>为了克服两种方法的缺点，现在一般采用的是一种折中手段，mini-batch gradient decent，小批的梯度下降，这种方法把数据分为若干个批，按批来更新参数，这样，一个批中的一组数据共同决定了本次梯度的方向，下降起来就不容易跑偏，减少了随机性。另一方面因为批的样本数与整个数据集相比小了很多，计算量也不是很大。</p>
+<p>基本上现在的梯度下降都是基于mini-batch的，所以Keras的模块中经常会出现batch_size，就是指这个。</p>
+<p>顺便说一句，Keras中用的优化器SGD是stochastic gradient descent的缩写，但不代表是一个样本就更新一回，还是基于mini-batch的。</p>
+<h5 id="layers">layers</h5>
+<p><strong>Dense</strong> 普通的全连接的神经网络层。</p>
+<p><strong>Dropout</strong> 一个简单的避免神经网络的训练过程中过拟合的方法，具体的还不是太懂，参考论文：<a href="http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf" target="_blank" rel="external">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</a></p>
+<h2 id="深度学习资料">深度学习资料</h2>
+<p>https://ljalphabeta.gitbooks.io/neural-networks-and-deep-learning-notes/content/chapter6.html</p>
+<p>http://www.tensorfly.cn/home/?p=80</p>
+<p>http://neuralnetworksanddeeplearning.com/chap2.html</p>
+<p>http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial</p>
+<p>http://www.pyimagesearch.com/2014/09/22/getting-started-deep-learning-python</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/deep-learning/" rel="tag">#deep_learning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/04/17/算法专题/算法专题_算法总结/" rel="next" title="算法专题_算法总结">
+                <i class="fa fa-chevron-left"></i> 算法专题_算法总结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/04/18/机器学习专题/深度学习_利用神经网络识别手写数字/" rel="prev" title="深度学习__利用神经网络识别手写数字">
+                深度学习__利用神经网络识别手写数字 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习的应用领域"><span class="nav-number">1.</span> <span class="nav-text">深度学习的应用领域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#黑白图像的自动着色"><span class="nav-number">1.1.</span> <span class="nav-text">黑白图像的自动着色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动为电影添加声音"><span class="nav-number">1.2.</span> <span class="nav-text">自动为电影添加声音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动机器翻译"><span class="nav-number">1.3.</span> <span class="nav-text">自动机器翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物体分类和检测"><span class="nav-number">1.4.</span> <span class="nav-text">物体分类和检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手写笔迹的自动生成"><span class="nav-number">1.5.</span> <span class="nav-text">手写笔迹的自动生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本的自动生成"><span class="nav-number">1.6.</span> <span class="nav-text">文本的自动生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像理解"><span class="nav-number">1.7.</span> <span class="nav-text">图像理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#automatic-game-playing"><span class="nav-number">1.8.</span> <span class="nav-text">Automatic Game Playing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习中的概念"><span class="nav-number">2.</span> <span class="nav-text">深度学习中的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量tensor"><span class="nav-number">2.1.</span> <span class="nav-text">张量(tensor)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平方误差和交叉熵"><span class="nav-number">2.2.</span> <span class="nav-text">平方误差和交叉熵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激活函数"><span class="nav-number">2.3.</span> <span class="nav-text">激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tanh-激活函数"><span class="nav-number">2.3.1.</span> <span class="nav-text">tanh 激活函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax-激活函数"><span class="nav-number">2.3.2.</span> <span class="nav-text">Softmax 激活函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.3.3.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在tensorflow和theano之间切换"><span class="nav-number">2.3.4.</span> <span class="nav-text">在TensorFlow和theano之间切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装tensorflow"><span class="nav-number">2.3.5.</span> <span class="nav-text">安装tensorflow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装theano"><span class="nav-number">2.3.6.</span> <span class="nav-text">安装theano</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#keras配置文件"><span class="nav-number">2.3.7.</span> <span class="nav-text">keras配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#keras模型"><span class="nav-number">2.3.8.</span> <span class="nav-text">keras模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#keras编程概念"><span class="nav-number">2.3.9.</span> <span class="nav-text">keras编程概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#layers"><span class="nav-number">2.3.9.1.</span> <span class="nav-text">layers</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习资料"><span class="nav-number">3.</span> <span class="nav-text">深度学习资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/04/18/机器学习专题/深度学习_基本概念/';
+      var disqus_title = "深度学习_基本概念";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/04/18/机器学习专题/深度学习_基本概念/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

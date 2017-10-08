@@ -1,0 +1,1079 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="动态规划方法就是有规律的记忆化搜索方法。一般可以从穷竭搜索中总结出来。 动态规划还可以解决许多排列组合问题。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_动态规划">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="动态规划方法就是有规律的记忆化搜索方法。一般可以从穷竭搜索中总结出来。 动态规划还可以解决许多排列组合问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/QQ截图20170406094558.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/QQ截图20170406095153.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:22.581Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_动态规划">
+<meta name="twitter:description" content="动态规划方法就是有规律的记忆化搜索方法。一般可以从穷竭搜索中总结出来。 动态规划还可以解决许多排列组合问题。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/QQ截图20170406094558.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/"/>
+
+  <title> 算法专题_动态规划 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_动态规划
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-05T14:58:57+08:00" content="2017-04-05">
+              2017-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/04/05/算法专题/算法专题_动态规划/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/05/算法专题/算法专题_动态规划/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/04/05/算法专题/算法专题_动态规划/" class="leancloud_visitors" data-flag-title="算法专题_动态规划">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>动态规划方法就是有规律的记忆化搜索方法。一般可以从穷竭搜索中总结出来。 动态规划还可以解决许多排列组合问题。 <a id="more"></a></p>
+<h2 id="背包问题">0-1背包问题</h2>
+<div class="figure">
+<img src="QQ截图20170406094558.png" alt="QQ截图20170406094558.png">
+<p class="caption">QQ截图20170406094558.png</p>
+</div>
+<h3 id="使用穷竭搜索">使用穷竭搜索</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 0--1 背包问题</div><div class="line"> * 从第start个物体开始，总重量为weight的背包，返回最大的价值</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">rec</span><span class="params">(<span class="keyword">int</span> start,<span class="keyword">int</span> weight,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;ob)</span></span>&#123;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"rec("</span>&lt;&lt;start&lt;&lt;<span class="string">","</span>&lt;&lt;weight&lt;&lt;<span class="string">")"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 物体的最大个数是w.size()-1,如果超过这个，返回0，含义是从第n个</span></div><div class="line">    <span class="comment">//物体开始，得到的价值是0，因为不能放入进去</span></div><div class="line">    <span class="keyword">if</span>(start == w.size()) &#123;<span class="keyword">return</span> result;&#125;</div><div class="line">    <span class="comment">//如果当前物体的重量已经大于总重量，那么一定不能放入背包，</span></div><div class="line">    <span class="comment">//一旦放入重量就超过了</span></div><div class="line">    <span class="keyword">if</span>(w[start] &gt; weight)&#123;</div><div class="line">        result = rec(start+<span class="number">1</span>,weight,w,v,ob);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果当前物体的重量小于等于最大的重量，那么这个物体可以放入背包，</span></div><div class="line">    <span class="comment">//尝试放入和不放入两种情况，选择较大的那个；</span></div><div class="line"><span class="comment">//    if(w[start] &lt;= weight)&#123;</span></div><div class="line"><span class="comment">//        result = max(rec(start+1,weight,w,v),rec(start+1,weight-w[start],w,v)+v[start]);</span></div><div class="line"><span class="comment">//    &#125;</span></div><div class="line">    <span class="comment">// 记录物品是否放入了背包</span></div><div class="line">    <span class="keyword">if</span>(w[start] &lt;= weight)&#123;</div><div class="line">        <span class="keyword">int</span> noput = rec(start+<span class="number">1</span>,weight,w,v,ob);</div><div class="line">        <span class="keyword">int</span> putted = rec(start+<span class="number">1</span>,weight-w[start],w,v,ob)+v[start];</div><div class="line">        <span class="keyword">if</span>(putted &gt; noput)&#123;</div><div class="line">            result = putted;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"==="</span>&lt;&lt;<span class="string">"rec("</span>&lt;&lt;start&lt;&lt;<span class="string">","</span>&lt;&lt;weight&lt;&lt;<span class="string">")"</span>&lt;&lt;<span class="string">"==="</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">            ob.push_back(start);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            result = noput;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a : v)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;a&lt;&lt;<span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w = &#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>&#125;;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</div><div class="line">    <span class="keyword">int</span> weight = <span class="number">5</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ob;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;rec(<span class="number">0</span>,weight,w,v,ob)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    print(ob);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用动态规划">使用动态规划</h3>
+<p>动态规划的递推公式实际上可以从上面的穷竭搜索中得到。 rec(i,j) 表示从第i个物体开始，在不超过j的重量的情况下，最大的价值是多少 设置dp[i][j] = rec(i,j); 则可以知道dp[n][j] = 0; 因为最多只有n-1个物体； <code>dp[i][j] = dp[i+1][j]</code> 当第i个物体的重量大于j的时候； <code>dp[i][i] = max( dp[i+1][j] , dp[i+1][j-w[i]]+v[i] )</code> 当第i个物体能够装进去的时候，分别尝试装入和不装入，取最大值。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 背包问题的动态规划解法</div><div class="line"> * @param w</div><div class="line"> * @param v</div><div class="line"> * @param weight</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> weight)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n = w.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(weight+<span class="number">1</span>));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">0</span>;i--)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;weight+<span class="number">1</span>;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(w[i] &gt; j)&#123;</div><div class="line">                dp[i][j] = dp[i+<span class="number">1</span>][j];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                dp[i][j] = max(dp[i+<span class="number">1</span>][j],dp[i+<span class="number">1</span>][j-w[i]] + v[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    print2(dp);</div><div class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][weight];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="使用状态转移的观点">使用状态转移的观点</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 从状态转移的观点来看</div><div class="line"> * dp[i][j] 表示挑选出从0到i物体，总重量不超过j的状态。dp[0][j]表示选择0个物品时的重大价值</div><div class="line"> * dp[1][j] 表示选择物体1时候，总重量不超过j的最大的价值</div><div class="line"> * 所以有dp[0][j] = 0;</div><div class="line"> * dp[i][j] = dp[i-1][j] 当i-1物体不能放入背包时</div><div class="line"> * dp[i][j] = dp[i-1][j-w[i]] + v[i] 当i-1物体可以放入背包的时候</div><div class="line"> * dp[0][j]</div><div class="line"> * @param w</div><div class="line"> * @param v</div><div class="line"> * @param weight</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp2</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> weight)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n = w.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(weight+<span class="number">1</span>));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;weight+<span class="number">1</span>;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(w[i] &gt; j)&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = dp[i][j];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = max(dp[i][j],dp[i][j-w[i]] + v[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    print2(dp);</div><div class="line">    <span class="keyword">return</span> dp[n][weight];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="完全背包问题">完全背包问题</h2>
+<p><img src="QQ截图20170406095153.png" alt="QQ截图20170406095153.png"> 完全背包问题可以这样建立递推关系； dp[i][j] 表示前i-1个物体放入背包，总重量不超过j的情况下的最大价值。i=0时表示没有物体。 w[i] 和 v[i] 表示第i个物体的重量和价值。注意这里dp中的i和w,v中的i相差1.也就是dp[i+1]对应的物体的重量和价值分别是w[i],v[i]; <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dp[i+<span class="number">1</span>][j] := dp[i][j]  第i个物体不放入背包</div><div class="line">           := dp[i][j<span class="number">-1</span>*w[i]] + v[i] 第i个物体放入<span class="number">1</span>次的时候</div><div class="line">		   := dp[i][j<span class="number">-2</span>*w[i]] + <span class="number">2</span>*v[i] 第i个物体放入<span class="number">2</span>次的时候</div><div class="line">		   ...</div></pre></td></tr></table></figure></p>
+<p>上面的递推关系虽然容易理解，却存在这循环，有重复计算的地方。递推关系还可以定义如下：</p>
+<blockquote>
+<p>dp[i+1][j] = dp[i][j] ; 第i个物体无法放入背包的情况 dp[i+1][j] = d[i+1][j-w[i]] + v[i] ; 如果第i个物体可以放入背包，那么最大价值等于 在dp[i+1][j-w[i]]的基础上再放入一个i物品，这时的价值是dp[i+1][j-w[i]] + v[i]; 所以最后的递推关系可以写成： dp[0][j] = 0; dp[i+1][j] = max(dp[i][j],dp[i+1][j-w[i]] + v[i])</p>
+</blockquote>
+<p>完全背包问题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 完全背包问题</div><div class="line"> * @param w</div><div class="line"> * @param v</div><div class="line"> * @param weight</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp3</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> weight)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n = w.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(weight+<span class="number">1</span>));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=weight;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(j&lt;w[i])&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = dp[i][j];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = max(dp[i][j],dp[i+<span class="number">1</span>][j-w[i]]+v[i]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    print2(dp);</div><div class="line">    <span class="keyword">return</span> dp[n][weight];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上背包的问题的时间复杂度都可以优化到O（nW）也就是物品数量 * 背包容量，空间复杂度可以优化到O（n）. 一般情况下，这样的时间复杂度足够了。但是针对下面这道题，时间复杂度就不够用了，需要另外寻找解题的方法。 &gt; 有n个重量和价值分别为w[i],v[i]的物品，装入容量为W的背包，求最大价值。 &gt; 限制条件： &gt; n : 1–100 ; w[i] : 1–10000000 ; v[i] : 1–100; W : 1–1000000000</p>
+<p>原来背包问题的时间复杂度是O(nW),但是本题’故意’把W设置的很大，使得不能使用原来的方法求解。 仔细分析数据的取值范围发现，v[i]的范围比较小，我们可以转换思路，求解总重量不超过W的情况下价值的最大值， 就是求解相同价值下的总重量的最小值。 dp[i][j] 表示前i-1个物体在价值不超过j的时候的总重量的最小值。 dp[0][j] = INF; 把不存在最小值的情况设置为最大值，这样是方便用min(); dp[0][0] = 0 ; dp[i+1][j] = min(dp[i][j],dp[i][j-v[i]]+w[i])</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 0-1背包的变种</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dp4</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; w,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> weight)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n = w.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(weight+<span class="number">1</span>));</div><div class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=weight;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(j&lt;v[i])&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = dp[i][j];</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                dp[i+<span class="number">1</span>][j] = min(dp[i][j],dp[i+<span class="number">1</span>][j-v[i]]+w[i]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    print2(dp);</div><div class="line">    <span class="keyword">return</span> dp[n][weight];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="单词切分">单词切分</h2>
+<p>给出一个字符串s和一个词典，判断字符串s是否可以被空格切分成一个或多个出现在字典中的单词。 样例</p>
+<p>给出</p>
+<p>s = “lintcode”</p>
+<p>dict = [“lint”,“code”]</p>
+<p>返回 true 因为“lintcode”可以被空格切分成“lint code”</p>
+<p><a href="http://lintcode.com/zh-cn/problem/word-break/" target="_blank" rel="external">单词切分</a></p>
+<p>思路一：开一个<code>dp[n+1]</code>表示前i个字母能否用空格分割开(按照字典里面给出的单词)。<code>dp[0]=true</code>表示空字符串能够分割开，<code>dp[1]=true</code>当<code>s[0]</code>在字典中存在时。对于<code>dp[j]</code>来说，逐个向前搜索，看是否有<code>s[i,j]</code>存在与dict中的同时<code>dp[i-1]</code>为真。如果有，<code>dp[j]=true</code>,如果搜索到头还没有，<code>dp[j]=false</code>.这种方法最容易想到，但是时间复杂度高。(不能通过<code>lintcode</code>的所有测试用例)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//[单词切分](http://lintcode.com/zh-cn/problem/word-break/)</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; &amp;dict)</span> </span>&#123;</div><div class="line">    <span class="comment">// write your code here</span></div><div class="line">    <span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; dp(s.size()+<span class="number">1</span>,<span class="literal">false</span>);</div><div class="line">    dp[<span class="number">0</span>] = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s.size(); ++i) &#123;</div><div class="line">        <span class="keyword">if</span>(dict.find(s.substr(i<span class="number">-1</span>,<span class="number">1</span>))!=dict.end() &amp;&amp; dp[i<span class="number">-1</span>])&#123;</div><div class="line">            dp[i] = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> clen = <span class="number">2</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">1</span> ; --j) &#123;</div><div class="line">            <span class="built_in">string</span> ss = s.substr(j<span class="number">-1</span>,clen);</div><div class="line">            <span class="keyword">if</span>(dict.find(ss) != dict.end() &amp;&amp; dp[j<span class="number">-1</span>])&#123;</div><div class="line">                dp[i]  = <span class="literal">true</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            clen ++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[s.size()];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>思路二：上面的算法每次都会回溯到第一个字符，如果字典的最大的字符的长度远远小于字符串的长度(很常见的情况)，会造成大量的浪费，所以可以改进一下，每次只回溯到字典中最大的字符串长度处，这样就能通过<code>lintcode</code>的大规模的数据了。<code>getMaxLen</code>用来获取字典中最长的字符串的长度。但是该方法当dict中最大字符串的长度很长时，时间复杂度并没有降低。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMaxLen</span><span class="params">( <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; &amp;dict)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> maxlen = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a : dict)&#123;</div><div class="line">        maxlen = max(maxlen,(<span class="keyword">int</span>)a.size());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> maxlen;</div><div class="line">&#125;</div><div class="line"><span class="comment">//[单词切分](http://lintcode.com/zh-cn/problem/word-break/)</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; &amp;dict)</span> </span>&#123;</div><div class="line">    <span class="comment">// write your code here</span></div><div class="line">    <span class="keyword">if</span>(s.empty() &amp;&amp; dict.empty()) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; dp(s.size()+<span class="number">1</span>,<span class="literal">false</span>);</div><div class="line">    <span class="keyword">int</span> maxlen = getMaxLen(dict);</div><div class="line">    dp[<span class="number">0</span>] = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= s.size(); ++i) &#123;</div><div class="line">        <span class="keyword">if</span>(dict.find(s.substr(i<span class="number">-1</span>,<span class="number">1</span>))!=dict.end() &amp;&amp; dp[i<span class="number">-1</span>])&#123;</div><div class="line">            dp[i] = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> clen = <span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> end = max(<span class="number">1</span>,i<span class="number">-1</span>-maxlen);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i - <span class="number">1</span>; j &gt;= end ; --j) &#123;</div><div class="line">            <span class="built_in">string</span> ss = s.substr(j<span class="number">-1</span>,clen);</div><div class="line">            <span class="keyword">if</span>(dict.find(ss) != dict.end() &amp;&amp; dp[j<span class="number">-1</span>])&#123;</div><div class="line">                dp[i]  = <span class="literal">true</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            clen ++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[s.size()];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/03/23/算法专题/算法专题_链表/" rel="next" title="算法专题_链表">
+                <i class="fa fa-chevron-left"></i> 算法专题_链表
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/04/06/算法专题/算法专题_图/" rel="prev" title="算法专题_图问题">
+                算法专题_图问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背包问题"><span class="nav-number">1.</span> <span class="nav-text">0-1背包问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用穷竭搜索"><span class="nav-number">1.1.</span> <span class="nav-text">使用穷竭搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用动态规划"><span class="nav-number">1.2.</span> <span class="nav-text">使用动态规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用状态转移的观点"><span class="nav-number">1.3.</span> <span class="nav-text">使用状态转移的观点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全背包问题"><span class="nav-number">2.</span> <span class="nav-text">完全背包问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单词切分"><span class="nav-number">3.</span> <span class="nav-text">单词切分</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/04/05/算法专题/算法专题_动态规划/';
+      var disqus_title = "算法专题_动态规划";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/04/05/算法专题/算法专题_动态规划/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

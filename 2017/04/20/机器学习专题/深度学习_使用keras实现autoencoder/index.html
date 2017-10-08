@@ -1,0 +1,1056 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="keras,autoencoder," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+<meta name="keywords" content="keras,autoencoder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习_使用keras实现autoencoder">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-31T15:02:19.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习_使用keras实现autoencoder">
+<meta name="twitter:description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/"/>
+
+  <title> 深度学习_使用keras实现autoencoder | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度学习_使用keras实现autoencoder
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-20T16:31:16+08:00" content="2017-04-20">
+              2017-04-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/" class="leancloud_visitors" data-flag-title="深度学习_使用keras实现autoencoder">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个<span class="math inline">\(f(x)=x\)</span>的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数据的某种抽象，因为压缩了数据的维数，所以是一种降维的方法。当然，也可以使输入输出的维数远远小于中间隐含层的维数，这样会得到低维数据的高维表示。 <a id="more"></a> 参考资料：https://blog.keras.io/building-autoencoders-in-keras.html</p>
+<p>keras是一个抽象层次较高的深度学习框架，它以theano和tensorflow作为后端实现，使用她可以很方便的实现多种不同的autoencoder. ## 最简单的单层编码解码机 我们使用手写数字识别的数据构造一个简单的自动编码机。目的是给数据降维。我们构造一个三层的神经网络，输入层包含<code>28*28 = 784</code> 个神经元，中间的隐含层包含<code>4*4 = 16</code> 个神经元,输出层包含<code>28*28 = 784</code> 个神经元。然后把手写数字识别的数据去掉标签，后者说是把标签设置为自己的输入，然后训练该神经网络，就会得到一个把<code>28*28</code>的灰度图像映射到<code>4*4</code>的灰度图像的映射，通过后面两层神经网络，我们可以根据<code>4*4</code>的数据恢复原来的<code>28*28</code>的图像，如果恢复的图像的质量还不错，就能够说明神经网络自动学习到的压缩方法确实是很不错的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pickle</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model</span><span class="params">(model,name)</span>:</span></div><div class="line">    <span class="comment">## fit完成之后，保存整个模型的配置</span></div><div class="line">    root_path = <span class="string">r'd:\deeplearning'</span></div><div class="line">    model_config = model.get_config()</div><div class="line">    model_weight = model.get_weights()</div><div class="line"></div><div class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</div><div class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</div><div class="line">    pickle.dump(model_config, open(config_save_path, <span class="string">'wb'</span>))</div><div class="line">    pickle.dump(model_weight, open(weight_save_path, <span class="string">'wb'</span>))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_model</span><span class="params">(name)</span>:</span></div><div class="line">    root_path = <span class="string">r'd:\deeplearning'</span></div><div class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</div><div class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</div><div class="line">    model_config = pickle.load(open(config_save_path, <span class="string">'rb'</span>))</div><div class="line">    model_weight = pickle.load(open(weight_save_path, <span class="string">'rb'</span>))</div><div class="line">    model = Model.from_config(model_config)</div><div class="line">    model.set_weights(model_weight)</div><div class="line">    <span class="keyword">return</span> model</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">## 加载数据</span></div><div class="line">(x_train, _), (x_test, _) = mnist.load_data()</div><div class="line"><span class="comment"># 把数据缩放到 0 -- 1</span></div><div class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[<span class="number">1</span>:])))</div><div class="line">x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[<span class="number">1</span>:])))</div><div class="line">print(x_train.shape)</div><div class="line">print(x_test.shape)</div><div class="line"></div><div class="line"><span class="comment">###############################################################################</span></div><div class="line"><span class="comment">###############################################################################</span></div><div class="line"><span class="comment"># this is the size of our encoded representations</span></div><div class="line"><span class="comment"># 将784维的数据压缩到32维</span></div><div class="line">encoding_dim = <span class="number">16</span>  <span class="comment"># 32 floats -&gt; compression of factor 24.5, assuming the input is 784 floats</span></div><div class="line"></div><div class="line"><span class="comment"># this is our input placeholder</span></div><div class="line">input_img = Input(shape=(<span class="number">784</span>,))</div><div class="line"><span class="comment"># "encoded" is the encoded representation of the input</span></div><div class="line"><span class="comment"># 新建了一个32个网络节点，激活函数使用relu的层，注意在此层前面应该是输入层，拥有784个神经元的节点。</span></div><div class="line"><span class="comment">#encoded = Dense(encoding_dim, activation='relu')(input_img)</span></div><div class="line"><span class="comment"># 在压缩层添加稀疏的限制。在没有任何限制，只用节点的数目限制的时候，结果和PCA的结果十分类似</span></div><div class="line"><span class="comment"># 但是当加入稀疏优化之后，就不一样了</span></div><div class="line">encoded = Dense(encoding_dim, activation=<span class="string">'relu'</span>,activity_regularizer=regularizers.l1(<span class="number">10e-5</span>))(input_img)</div><div class="line"><span class="comment"># "decoded" is the lossy reconstruction of the input</span></div><div class="line"><span class="comment"># 在encoded的后面，新建了一个拥有784个节点的神经网络层，作为解码层。</span></div><div class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(encoded)</div><div class="line"></div><div class="line"><span class="comment"># this model maps an input to its reconstruction</span></div><div class="line">autoencoder = Model(input_img, decoded)</div><div class="line"><span class="comment"># 现在autoencoder是这样的一个神经网络，输入包含784个节点，紧接着是32个节点的第一个隐含层，然后是784个节点的输出层。</span></div><div class="line"></div><div class="line">encoder = Model(input_img, encoded)</div><div class="line"><span class="comment"># encoder 以784个节点作为输入层，以32个节点作为输出层，没有中间的隐含层，这就是一个最简单的感知机的模型。</span></div><div class="line"></div><div class="line"><span class="comment"># create a placeholder for an encoded (32-dimensional) input</span></div><div class="line">encoded_input = Input(shape=(encoding_dim,))</div><div class="line"><span class="comment"># retrieve the last layer of the autoencoder model</span></div><div class="line"><span class="comment"># 找到上面创建的神经网络的最后一层，也就是输出层。</span></div><div class="line">decoder_layer = autoencoder.layers[<span class="number">-1</span>]</div><div class="line"><span class="comment"># create the decoder model</span></div><div class="line">decoder = Model(encoded_input, decoder_layer(encoded_input))</div><div class="line"><span class="comment"># 现在decoder 是以32个维度输入，以784个维度输出的简单的神经网络，需要注意的是，encoder和decorder都是上面定义的autoencoder神经网络的</span></div><div class="line"><span class="comment"># 的一部分，只是用了新的变量名称把其中的一部分网络提取出来了。所以，对应的网络参数是一样的，因为本来指代的就是同一个网络的不同部分。</span></div><div class="line"></div><div class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</div><div class="line"></div><div class="line"><span class="comment">##x训练过程，注意到这里并不是没有标签，而是把子集的输入作为了输出，所以这不是无监督学习。而是有监督学习</span></div><div class="line"><span class="comment">## 这里通常叫做自监督学习。</span></div><div class="line">autoencoder.fit(x_train, x_train,</div><div class="line">                epochs=<span class="number">50</span>,</div><div class="line">                batch_size=<span class="number">256</span>,</div><div class="line">                shuffle=<span class="keyword">True</span>,</div><div class="line">                validation_data=(x_test, x_test))</div><div class="line"></div><div class="line">save_model(autoencoder,<span class="string">'autoencoder'</span>)</div><div class="line">save_model(encoder,<span class="string">'encoder'</span>)</div><div class="line">save_model(decoder,<span class="string">'decoder'</span>)</div><div class="line"><span class="comment">## 加载保存的模型</span></div><div class="line">autoencoder = load_model(<span class="string">"autoencoder"</span>)</div><div class="line">encoder = load_model(<span class="string">"encoder"</span>)</div><div class="line">decoder = load_model(<span class="string">"decoder"</span>)</div><div class="line"><span class="comment">## 这样，保存的模型包括结构和参数就都回来了。</span></div><div class="line"><span class="comment"># encode and decode some digits</span></div><div class="line"><span class="comment"># note that we take them from the *test* set</span></div><div class="line">encoded_imgs = encoder.predict(x_test) <span class="comment"># 会利用上面训练好的网络，输出32维的数据</span></div><div class="line">decoded_imgs = decoder.predict(encoded_imgs) <span class="comment"># 会利用训练好的网络，输出784维的数据。</span></div><div class="line"></div><div class="line"><span class="comment"># use Matplotlib (don't ask)</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="comment"># 设置显示前多少个数据</span></div><div class="line">n = <span class="number">12</span>  <span class="comment"># how many digits we will display</span></div><div class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">    <span class="comment"># display original</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span>)</div><div class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line"></div><div class="line">    <span class="comment"># display reconstruction</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span> + n)</div><div class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h2 id="多层的编码解码机">多层的编码解码机</h2>
+<p>单层神经网络的处理能力是有限的，无论编码还是解码，我们都可以使用多个层来提高映射，或者说数据表征空间转换的能力。下面我们建立一个多层的神经网络，让每层的神经元的数量逐渐减少再逐渐增大，这样可以实现一个分层的数据压缩，数据降维。 我们建立的神经网络的形式是这样的(<code>784--&gt;128--&gt;64--&gt;32--&gt;64--&gt;128--&gt;784</code>),包含输入层，输出层在内，一共有7层。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="string">"""</span></div><div class="line">Created on Thu Apr 20 11:30:40 2017</div><div class="line"></div><div class="line">@author: FF120</div><div class="line">"""</div><div class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pickle</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model</span><span class="params">(model,name)</span>:</span></div><div class="line">    <span class="comment">## fit完成之后，保存整个模型的配置</span></div><div class="line">    root_path = <span class="string">r'd:\deeplearning'</span></div><div class="line">    model_config = model.get_config()</div><div class="line">    model_weight = model.get_weights()</div><div class="line"></div><div class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</div><div class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</div><div class="line">    pickle.dump(model_config, open(config_save_path, <span class="string">'wb'</span>))</div><div class="line">    pickle.dump(model_weight, open(weight_save_path, <span class="string">'wb'</span>))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_model</span><span class="params">(name)</span>:</span></div><div class="line">    root_path = <span class="string">r'd:\deeplearning'</span></div><div class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</div><div class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</div><div class="line">    model_config = pickle.load(open(config_save_path, <span class="string">'rb'</span>))</div><div class="line">    model_weight = pickle.load(open(weight_save_path, <span class="string">'rb'</span>))</div><div class="line">    model = Model.from_config(model_config)</div><div class="line">    model.set_weights(model_weight)</div><div class="line">    <span class="keyword">return</span> model</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">## 加载数据</span></div><div class="line">(x_train, _), (x_test, _) = mnist.load_data()</div><div class="line"><span class="comment"># 把数据缩放到 0 -- 1</span></div><div class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[<span class="number">1</span>:])))</div><div class="line">x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[<span class="number">1</span>:])))</div><div class="line">print(x_train.shape)</div><div class="line">print(x_test.shape)</div><div class="line"></div><div class="line"><span class="comment">###############################################################################</span></div><div class="line"><span class="comment">###############################################################################</span></div><div class="line">encoding_dim = <span class="number">32</span></div><div class="line"></div><div class="line"><span class="comment"># this is our input placeholder</span></div><div class="line">input_img = Input(shape=(<span class="number">784</span>,))</div><div class="line"></div><div class="line">encoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(input_img)</div><div class="line">encoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</div><div class="line">encoded = Dense(encoding_dim, activation=<span class="string">'relu'</span>)(encoded)</div><div class="line"></div><div class="line">decoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</div><div class="line">decoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(decoded)</div><div class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(decoded)</div><div class="line"></div><div class="line">autoencoder = Model(input_img, decoded)</div><div class="line"></div><div class="line">encoder = Model(input_img, encoded)</div><div class="line"></div><div class="line">encoded_input = Input(shape=(<span class="number">32</span>,))</div><div class="line">decoder_layer1 = autoencoder.layers[<span class="number">-3</span>](encoded_input)</div><div class="line">decoder_layer2 = autoencoder.layers[<span class="number">-2</span>](decoder_layer1)</div><div class="line">decoder_layer3 = autoencoder.layers[<span class="number">-1</span>](decoder_layer2)</div><div class="line">decoder = Model(encoded_input, decoder_layer3)</div><div class="line"></div><div class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</div><div class="line"></div><div class="line">autoencoder.fit(x_train, x_train,</div><div class="line">                epochs=<span class="number">50</span>,</div><div class="line">                batch_size=<span class="number">256</span>,</div><div class="line">                shuffle=<span class="keyword">True</span>,</div><div class="line">                validation_data=(x_test, x_test))</div><div class="line"></div><div class="line">save_model(autoencoder,<span class="string">'autoencoder'</span>)</div><div class="line">save_model(encoder,<span class="string">'encoder'</span>)</div><div class="line">save_model(decoder,<span class="string">'decoder'</span>)</div><div class="line"><span class="comment">## 加载保存的模型</span></div><div class="line">autoencoder = load_model(<span class="string">"autoencoder"</span>)</div><div class="line">encoder = load_model(<span class="string">"encoder"</span>)</div><div class="line">decoder = load_model(<span class="string">"decoder"</span>)</div><div class="line">encoded_imgs = encoder.predict(x_test)</div><div class="line">decoded_imgs = decoder.predict(encoded_imgs)</div><div class="line"></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">n = <span class="number">10</span>  <span class="comment"># how many digits we will display</span></div><div class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">    <span class="comment"># display original</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span>)</div><div class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line"></div><div class="line">    <span class="comment"># display reconstruction</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span> + n)</div><div class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></p>
+<p>上面的代码以中间神经元数目最少的作为分割，前面的作为编码机，后面的作为解码机，前后正好是对称的。当然，这并不是必须的，你也可以让中间的任何一层作为分割，前面作为编码机，后面的作为解码机。这样会实现不同的压缩表示层级。</p>
+<p>我们把中间层向前推进一层，再看结果： <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">input_img = Input(shape=(<span class="number">784</span>,))</div><div class="line"></div><div class="line">encoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(input_img)</div><div class="line">encoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</div><div class="line"></div><div class="line">decoded = Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>)(encoded)</div><div class="line">decoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(decoded)</div><div class="line">decoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(decoded)</div><div class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(decoded)</div><div class="line"></div><div class="line">autoencoder = Model(input_img, decoded)</div><div class="line"></div><div class="line">encoder = Model(input_img, encoded)</div><div class="line"></div><div class="line">encoded_input = Input(shape=(<span class="number">64</span>,))</div><div class="line">decoder_layer0 = autoencoder.layers[<span class="number">-4</span>](encoded_input)</div><div class="line">decoder_layer1 = autoencoder.layers[<span class="number">-3</span>](decoder_layer0)</div><div class="line">decoder_layer2 = autoencoder.layers[<span class="number">-2</span>](decoder_layer1)</div><div class="line">decoder_layer3 = autoencoder.layers[<span class="number">-1</span>](decoder_layer2)</div><div class="line">decoder = Model(encoded_input, decoder_layer3)</div></pre></td></tr></table></figure></p>
+<h2 id="卷积神经网络的autoencoder">卷积神经网络的autoencoder</h2>
+<p>处理图像的时候，使用卷积神经网络通常可以有更好的效果。所以，我们尝试使用卷积神经网络做autoencoder,看看数据压缩的效果如何。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense, Conv2D, MaxPooling2D, UpSampling2D</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> keras.callbacks <span class="keyword">import</span> TensorBoard</div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">(x_train, _), (x_test, _) = mnist.load_data()</div><div class="line"></div><div class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></div><div class="line">x_train = np.reshape(x_train, (len(x_train), <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></div><div class="line">x_test = np.reshape(x_test, (len(x_test), <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></div><div class="line"></div><div class="line"><span class="comment">## 28*28的图像，只有1个通道，黑白图像</span></div><div class="line">input_img = Input(shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></div><div class="line"></div><div class="line"><span class="comment"># 定义一个卷积核是3*3的层</span></div><div class="line">x = Conv2D(<span class="number">16</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(input_img)</div><div class="line"><span class="comment"># 定义一个pooling层，取2*2区域内的最大值</span></div><div class="line">x = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</div><div class="line"><span class="comment"># 定义一个3*3的核</span></div><div class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</div><div class="line">x = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</div><div class="line"><span class="comment"># 定义一个pooling层，取2*2区域内的最大值</span></div><div class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</div><div class="line"></div><div class="line">encoded = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</div><div class="line"></div><div class="line"><span class="comment"># at this point the representation is (4, 4, 8) i.e. 128-dimensional</span></div><div class="line"></div><div class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(encoded)</div><div class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</div><div class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</div><div class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</div><div class="line">x = Conv2D(<span class="number">16</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>)(x)</div><div class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</div><div class="line">decoded = Conv2D(<span class="number">1</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'sigmoid'</span>, padding=<span class="string">'same'</span>)(x)</div><div class="line"></div><div class="line">autoencoder = Model(input_img, decoded)</div><div class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</div><div class="line"></div><div class="line">autoencoder.fit(x_train, x_train,</div><div class="line">                epochs=<span class="number">1</span>,</div><div class="line">                batch_size=<span class="number">128</span>,</div><div class="line">                shuffle=<span class="keyword">True</span>,</div><div class="line">                validation_data=(x_test, x_test),</div><div class="line">                callbacks=[TensorBoard(log_dir=<span class="string">'d:/log'</span>)])</div><div class="line"></div><div class="line">decoded_imgs = autoencoder.predict(x_test)</div><div class="line"></div><div class="line">n = <span class="number">10</span></div><div class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">    <span class="comment"># display original</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i)</div><div class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line"></div><div class="line">    <span class="comment"># display reconstruction</span></div><div class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + n)</div><div class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</div><div class="line">    plt.gray()</div><div class="line">    ax.get_xaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">    ax.get_yaxis().set_visible(<span class="keyword">False</span>)</div><div class="line">plt.show()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> plot_model</div><div class="line">plot_model(autoencoder, to_file=<span class="string">'model.png'</span>)</div></pre></td></tr></table></figure>
+<p>上面的代码建立了一个这样的模型： <code>input--&gt;Conv2D--&gt;MaxPooling2D--&gt;Conv2D--&gt;MaxPooling2D--&gt;Conv2D--&gt;MaxPooling2D(encoded)--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D(decoded)</code> 一共有14层网络。使用下面的语句可以打印出这些结构： <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> plot_model</div><div class="line">plot_model(autoencoder, to_file=<span class="string">'model.png'</span>)</div></pre></td></tr></table></figure></p>
+<p>1<a href="model.png"></a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/keras/" rel="tag">#keras</a>
+          
+            <a href="/hexoblog/tags/autoencoder/" rel="tag">#autoencoder</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/04/19/机器学习专题/深度学习_Keras使用技巧/" rel="next" title="深度学习_Keras使用技巧">
+                <i class="fa fa-chevron-left"></i> 深度学习_Keras使用技巧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/04/20/机器学习专题/深度学习_卷积神经网络/" rel="prev" title="深度学习_卷积神经网络">
+                深度学习_卷积神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多层的编码解码机"><span class="nav-number">1.</span> <span class="nav-text">多层的编码解码机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络的autoencoder"><span class="nav-number">2.</span> <span class="nav-text">卷积神经网络的autoencoder</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/';
+      var disqus_title = "深度学习_使用keras实现autoencoder";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/04/20/机器学习专题/深度学习_使用keras实现autoencoder/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

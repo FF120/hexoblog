@@ -1,0 +1,1105 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="堆，或者更准确的叫作二叉堆，是一种特殊的完全二叉树，通常分为最大堆和最小堆。最大堆是指堆顶的元素最大，堆顶的左右孩子的值小于等于它，然后左右子树也满足这个条件。最小堆是指堆顶的元素最小，左右孩子大于等于堆顶元素，左右子树也满足这个条件。 可以看到，堆是递归定义了，而且是一种完全二叉树。节点之间是有大小次序关系的。但是左右子树是没有顺序的。而二叉搜索树左右孩子是有次序的，不能颠倒。 既然堆是完全二">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_二叉堆">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/08/06/算法专题/算法专题_二叉堆/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="堆，或者更准确的叫作二叉堆，是一种特殊的完全二叉树，通常分为最大堆和最小堆。最大堆是指堆顶的元素最大，堆顶的左右孩子的值小于等于它，然后左右子树也满足这个条件。最小堆是指堆顶的元素最小，左右孩子大于等于堆顶元素，左右子树也满足这个条件。 可以看到，堆是递归定义了，而且是一种完全二叉树。节点之间是有大小次序关系的。但是左右子树是没有顺序的。而二叉搜索树左右孩子是有次序的，不能颠倒。 既然堆是完全二">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-03T02:46:52.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_二叉堆">
+<meta name="twitter:description" content="堆，或者更准确的叫作二叉堆，是一种特殊的完全二叉树，通常分为最大堆和最小堆。最大堆是指堆顶的元素最大，堆顶的左右孩子的值小于等于它，然后左右子树也满足这个条件。最小堆是指堆顶的元素最小，左右孩子大于等于堆顶元素，左右子树也满足这个条件。 可以看到，堆是递归定义了，而且是一种完全二叉树。节点之间是有大小次序关系的。但是左右子树是没有顺序的。而二叉搜索树左右孩子是有次序的，不能颠倒。 既然堆是完全二">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/08/06/算法专题/算法专题_二叉堆/"/>
+
+  <title> 算法专题_二叉堆 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_二叉堆
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-08-06T08:53:25+08:00" content="2017-08-06">
+              2017-08-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/08/06/算法专题/算法专题_二叉堆/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/08/06/算法专题/算法专题_二叉堆/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/08/06/算法专题/算法专题_二叉堆/" class="leancloud_visitors" data-flag-title="算法专题_二叉堆">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>堆，或者更准确的叫作二叉堆，是一种特殊的完全二叉树，通常分为最大堆和最小堆。最大堆是指堆顶的元素最大，堆顶的左右孩子的值小于等于它，然后左右子树也满足这个条件。最小堆是指堆顶的元素最小，左右孩子大于等于堆顶元素，左右子树也满足这个条件。 可以看到，堆是递归定义了，而且是一种完全二叉树。节点之间是有大小次序关系的。但是左右子树是没有顺序的。而二叉搜索树左右孩子是有次序的，不能颠倒。</p>
+<p>既然堆是完全二叉树，就可以使用数组来简便的表示一棵树。假设一个节点的下标是<code>i</code>,那么它的左孩子为<code>2*i</code>,右孩子为<code>2*i+1</code>,父节点为<code>i/2</code>. 本文主要介绍二叉堆的构建，调整和有关应用(堆排序和优先队列)。注意这里假设根节点的标号是1.</p>
+<p>如果根节点是从0开始标号的，那么对于节点<code>i</code>, 左孩子为<code>2*i+1</code>,右孩子为<code>2*i+2</code>,父节点为<code>(i-1)/2</code>.</p>
+<p><a href="2017-04-11_091249.png"></a></p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 根节点从0开始标号，对于节点i，求其左孩子，右孩子和父节点</span></div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">left</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> (i&lt;&lt;<span class="number">1</span>) + <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">right</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> (i&lt;&lt;<span class="number">1</span>) + <span class="number">2</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">parent</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(i == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    <span class="keyword">return</span> (i<span class="number">-1</span>) &gt;&gt; <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="最大堆">最大堆</h2>
+<p>最大堆就是满足父节点大于等于子节点的堆。最大堆的根节点是所有元素中最大的(但可能不是唯一的最大的，注意这里是大于等于)。</p>
+<h3 id="维护最大堆调整最大堆">维护最大堆(调整最大堆)</h3>
+<p>假设<code>A</code>是存储堆的数组,<code>A.length()</code>表示数组的大小，<code>heap_size</code>表示堆中元素的个数, 满足<code>heap_size &lt;= A.length()</code>.假设我们需要调整节点<code>i</code>以使得堆重新满足最大堆的性质(注意这个时候只有节点i是不满足最大堆的性质的)，步骤如下：</p>
+<ol style="list-style-type: decimal">
+<li>找出节点<code>i</code>的左右孩子<code>l</code>,<code>r</code>;</li>
+<li>如果<code>l</code>,<code>r</code>超过了堆的大小，直接返回，如果A[i]大于等于<code>l</code>,<code>r</code>,直接返回</li>
+<li>找到<code>l</code>,<code>r</code>中的较大者,记为<code>maxIndex</code>，和<code>A[i]</code>交换</li>
+<li>令i = maxIndex, 转到1。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 调整节点i,使得整个堆保持最大堆的性质</div><div class="line"> * @param A</div><div class="line"> * @param i</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A,<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> heap_size = A.size();</div><div class="line">    <span class="comment">// 不存在这个样的节点（节点从0开始编号）</span></div><div class="line">    <span class="keyword">if</span>(i &gt;= heap_size || i &lt; <span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">auto</span> l = left(i);</div><div class="line">    <span class="keyword">auto</span> r = right(i);</div><div class="line">    <span class="comment">// 如果没有孩子节点了，不需要调整了</span></div><div class="line">    <span class="keyword">if</span>(l &gt;= heap_size ) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> maxIndex = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">if</span>(r &gt;= heap_size )&#123;</div><div class="line">        <span class="keyword">if</span>(A[i] &gt;= A[l]) <span class="keyword">return</span>;</div><div class="line">        maxIndex = l;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">// 如果节点i比它两个孩子节点都大，则满足最大堆的性质，不用调整</span></div><div class="line">        <span class="keyword">if</span>(A[i] &gt;= A[l] &amp;&amp; A[i] &gt;= A[r]) <span class="keyword">return</span>;</div><div class="line">        <span class="comment">// 找到两个孩子节点中较大的那一个</span></div><div class="line">        A[l] &gt;= A[r] ? maxIndex = l : maxIndex = r;</div><div class="line">    &#125;</div><div class="line">    swap(A[i],A[maxIndex]);</div><div class="line">    max_heap(A,maxIndex);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 调整节点i,使得整个堆保持最小堆的性质</div><div class="line"> * @param A </div><div class="line"> * @param i </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">min_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A,<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> heap_size = A.size();</div><div class="line">    <span class="comment">// 不存在这个样的节点（节点从0开始编号）</span></div><div class="line">    <span class="keyword">if</span>(i &gt;= heap_size || i &lt; <span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">auto</span> l = left(i);</div><div class="line">    <span class="keyword">auto</span> r = right(i);</div><div class="line">    <span class="comment">// 如果没有孩子节点了，不需要调整了</span></div><div class="line">    <span class="keyword">if</span>(l &gt;= heap_size ) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> minIndex = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">if</span>(r &gt;= heap_size ) &#123;</div><div class="line">        <span class="keyword">if</span>(A[i] &lt;= A[l]) <span class="keyword">return</span>;</div><div class="line">        minIndex = l;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">// 如果节点i比它两个孩子节点都小，则满足最小堆的性质，不用调整</span></div><div class="line">        <span class="keyword">if</span>(A[i] &lt;= A[l] &amp;&amp; A[i] &lt;= A[r]) <span class="keyword">return</span>;</div><div class="line">        <span class="comment">// 找到两个孩子节点中较大的那一个</span></div><div class="line">        A[l] &lt;= A[r] ? minIndex = l : minIndex = r;</div><div class="line">    &#125;</div><div class="line">    swap(A[i],A[minIndex]);</div><div class="line">    min_heap(A,minIndex);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="建堆">建堆</h3>
+<p>如何从一个无序的数组建立一个堆是堆操作中一个基本的，但很重要的问题，它通常是很多问题的第一步。</p>
+<p>根据完全二叉树的性质，一个包含n个元素的数组形成的完全二叉树中，n - ([n/2] + 1) + 1个元素是叶子节点。我们只需要针对所有的叶子节点之外的节点调用上面的重建堆的函数，就可以构建一个最大堆。 时间复杂度是O(n).</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 从无序数组建立最大堆</div><div class="line"> * @param A</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_max_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> leaf = A.size() / <span class="number">2</span> ;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = leaf - <span class="number">1</span>; i &gt;= <span class="number">0</span> ; --i) &#123;</div><div class="line">        max_heap(A,i);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 从无序数组建立最小堆</div><div class="line"> * @param A</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_min_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> leaf = A.size() / <span class="number">2</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = leaf - <span class="number">1</span>; i &gt;= <span class="number">0</span> ; --i) &#123;</div><div class="line">        min_heap(A,i);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="堆排序">堆排序</h2>
+<p>堆排序就是利用堆的结构来维护最大值或者最小值实现排序的一种算法，这里以最大堆为例来说明。 首先把无序数组重建一个最大堆，使用上面提到的函数，这一步可以轻松的在O(n)的时间复杂度内完成。 此时A[0]存储的是这个数组的最大值，将它与数组的最后一个元素交换位置，然后堆的长度减少1，也就是数组的最后一个元素不再当作堆的元素，因为它已经在正确的位置上了，然后调整堆使之符合最大堆的性质。 重复这个步骤直到所有的元素放到了正确的位置之上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">max_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A,<span class="keyword">int</span> heap_size,<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="comment">// 不存在这个样的节点（节点从0开始编号）</span></div><div class="line">    <span class="keyword">if</span>(i &gt;= heap_size || i &lt; <span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">auto</span> l = left(i);</div><div class="line">    <span class="keyword">auto</span> r = right(i);</div><div class="line">    <span class="comment">// 如果没有孩子节点了，不需要调整了</span></div><div class="line">    <span class="keyword">if</span>(l &gt;= heap_size ) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> maxIndex = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">if</span>(r &gt;= heap_size )&#123;</div><div class="line">        <span class="keyword">if</span>(A[i] &gt;= A[l]) <span class="keyword">return</span>;</div><div class="line">        maxIndex = l;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">// 如果节点i比它两个孩子节点都大，则满足最大堆的性质，不用调整</span></div><div class="line">        <span class="keyword">if</span>(A[i] &gt;= A[l] &amp;&amp; A[i] &gt;= A[r]) <span class="keyword">return</span>;</div><div class="line">        <span class="comment">// 找到两个孩子节点中较大的那一个</span></div><div class="line">        A[l] &gt;= A[r] ? maxIndex = l : maxIndex = r;</div><div class="line">    &#125;</div><div class="line">    swap(A[i],A[maxIndex]);</div><div class="line">    max_heap(A,heap_size,maxIndex);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">build_max_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> leaf = A.size() / <span class="number">2</span> ;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = leaf - <span class="number">1</span>; i &gt;= <span class="number">0</span> ; --i) &#123;</div><div class="line">        max_heap(A,A.size(),i);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort_with_max_heap</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v)</span></span>&#123;</div><div class="line">    build_max_heap(v);</div><div class="line">    <span class="keyword">int</span> heap_size = v.size();</div><div class="line">    <span class="keyword">while</span>(heap_size)&#123;</div><div class="line">        swap(v[<span class="number">0</span>],v[heap_size<span class="number">-1</span>]);</div><div class="line">        heap_size--;</div><div class="line">        max_heap(v,heap_size,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>堆排序的时间性能是nlogn,但是实际使用的时候，快速排序的性能更好一些，一般情况下都是使用快速排序。</p>
+<h2 id="优先队列">优先队列</h2>
+<p>优先队列是能够<code>快速</code>的完成以下操作的数据结构：</p>
+<ol style="list-style-type: decimal">
+<li>返回最大值</li>
+<li>返回最大值并删除该元素</li>
+<li>将任意一个已在优先队列中的元素增加k.</li>
+<li>插入一个任意值</li>
+</ol>
+<p>能够维护一个数据结构，快速的实现以上所有操作的叫做优先队列。使用堆来实现优先队列，可以保证所有的操作都可以在<code>o(lgn)</code>完成。</p>
+<ol style="list-style-type: decimal">
+<li>返回最大值</li>
+</ol>
+<p>使用最大堆实现优先队列这种结构，直接返回<code>A[0]</code>就是最大值。</p>
+<ol start="2" style="list-style-type: decimal">
+<li>返回最大值并删除该元素</li>
+</ol>
+<p>首先输出<code>A[0]</code>, 然后把最后一个元素赋值给<code>A[0]</code>,调整堆使之符合最大堆性质。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxP</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;A)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> maxV = A[<span class="number">0</span>];</div><div class="line">    A[<span class="number">0</span>] = A[A.size()<span class="number">-1</span>];</div><div class="line">    <span class="keyword">int</span> heap_size = A.size()<span class="number">-1</span>;</div><div class="line">    max_heap(A,heap_size,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> maxV;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="直接使用stl进行堆操作">直接使用STL进行堆操作</h2>
+<p>C++11 中的STL已经有了堆的各种操作的高效实现，我们可以直接使用。既能减少自己编写出错的概率，也能使得代码更加简洁，效率更高。</p>
+<h3 id="建堆-1">建堆</h3>
+<p><strong>建立最大堆</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">// v 是一个无序的数组</span></div><div class="line">make_heap(v.begin(),v.end());</div><div class="line"><span class="comment">// 或者使用</span></div><div class="line">make_heap(v.begin(),v.end(),less&lt;<span class="keyword">int</span>&gt;());</div></pre></td></tr></table></figure>
+<p><strong>建立最小堆</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make_heap(v.begin(),v.end(),greater&lt;<span class="keyword">int</span>&gt;());</div></pre></td></tr></table></figure>
+<p>make_heap()方法的第三个参数其实可以传入一个函数的实例，表示你怎样比较两个元素。例如我们可以自己实现<code>less</code>方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 大根堆</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mless</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> &amp;a,<span class="keyword">const</span> <span class="keyword">int</span> &amp;b)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> a &lt;= b;</div><div class="line">&#125;</div><div class="line">make_heap(v.begin(),v.end(),mless);</div><div class="line"></div><div class="line"><span class="comment">//小根堆</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">mgreater</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> &amp;a,<span class="keyword">const</span> <span class="keyword">int</span> &amp;b)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> a &gt;= b;</div><div class="line">&#125;</div><div class="line">make_heap(v.begin(),v.end(),mgreater);</div></pre></td></tr></table></figure>
+<p>当堆中存放的数据不是简单的数字，而是复杂的结构体或者类数据的时候，自定义比较函数就十分有用了，可以自定义依据类中哪个字段生成堆。</p>
+<h3 id="其他与堆有关的操作">其他与堆有关的操作</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 弹出大根堆的顶部元素，重排堆，注意这个时候顶部元素没有删除，放在了数组的最后</span></div><div class="line">pop_heap(v.begin(),v.end(),less&lt;<span class="keyword">int</span>&gt;())</div><div class="line"></div><div class="line"><span class="comment">// 弹出小根堆的顶部元素</span></div><div class="line">pop_heap(v.begin(),v.end(),greater&lt;<span class="keyword">int</span>&gt;())</div><div class="line"></div><div class="line"><span class="comment">// 把[v.begin(), v.end()-2] 作为大根堆，v.end()-1, 也就是最后一个元素作为插入元素插入到大根堆中，重新调整好顺序</span></div><div class="line">push_heap(v.begin(),v.end(),less&lt;<span class="keyword">int</span>&gt;())</div><div class="line"></div><div class="line"><span class="comment">// 插入小根堆</span></div><div class="line">push_heap(v.begin(),v.end(),less&lt;<span class="keyword">int</span>&gt;())</div></pre></td></tr></table></figure>
+<h3 id="优先队列-1">优先队列</h3>
+<p><code>priority_queue&lt;Type, Container, Functional&gt;</code> 实现了优先队列的结构和相应的操作方法，可以用他来实现大根堆，小根堆，优先队列等数据结构。</p>
+<p><strong>大根堆</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">priority_queue&lt;<span class="keyword">int</span>&gt; q;</div><div class="line"><span class="comment">// 或者使用完整的声明形式</span></div><div class="line">priority_queue&lt;<span class="keyword">int</span>,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; less&lt;<span class="keyword">int</span>&gt;()&gt; q;</div><div class="line"></div><div class="line"><span class="comment">// 从无序数组建立大顶堆</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">5</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">14</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">30</span>&#125;;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v.size(); ++i) &#123;</div><div class="line">    q.push(v[i]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 弹出最大元素</span></div><div class="line">q.pop()</div></pre></td></tr></table></figure>
+<p><strong>小根堆</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">priority_queue&lt;<span class="keyword">int</span>, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;, greater&lt;<span class="keyword">int</span>&gt; &gt; q;</div><div class="line"></div><div class="line"><span class="comment">// 从无序数组建立小顶堆</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">5</span>,<span class="number">4</span>,<span class="number">10</span>,<span class="number">14</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">30</span>&#125;;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v.size(); ++i) &#123;</div><div class="line">    q.push(v[i]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 弹出最大元素</span></div><div class="line">q.pop()</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/07/26/算法专题/算法专题_链表2/" rel="next" title="算法专题_链表2">
+                <i class="fa fa-chevron-left"></i> 算法专题_链表2
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/08/07/算法专题/算法专题_快速排序/" rel="prev" title="算法专题_快速排序">
+                算法专题_快速排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#最大堆"><span class="nav-number">1.</span> <span class="nav-text">最大堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#维护最大堆调整最大堆"><span class="nav-number">1.1.</span> <span class="nav-text">维护最大堆(调整最大堆)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建堆"><span class="nav-number">1.2.</span> <span class="nav-text">建堆</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">2.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优先队列"><span class="nav-number">3.</span> <span class="nav-text">优先队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接使用stl进行堆操作"><span class="nav-number">4.</span> <span class="nav-text">直接使用STL进行堆操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建堆-1"><span class="nav-number">4.1.</span> <span class="nav-text">建堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他与堆有关的操作"><span class="nav-number">4.2.</span> <span class="nav-text">其他与堆有关的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先队列-1"><span class="nav-number">4.3.</span> <span class="nav-text">优先队列</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/08/06/算法专题/算法专题_二叉堆/';
+      var disqus_title = "算法专题_二叉堆";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/08/06/算法专题/算法专题_二叉堆/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

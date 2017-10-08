@@ -1,0 +1,59 @@
+KISSY.add('js/notice',function(S,Node,Event){
+	var $ = S.one,
+		DOM = S.all;
+
+	function Carousel(id,opt){
+		this._id = id;
+		this.oBox = id ? DOM(id) : null;
+		if(!this.oBox) return false;
+		this.config = {
+			btn:'.btn-carousel',
+			easing:'easeNone'
+		};
+
+		S.mix(this.config,opt);		
+		this._init();
+	}
+	Carousel.prototype = {
+		constructor:Carousel,
+		_init : function(){
+			this.iH = this.oBox.height();
+			this.isNotice = true;
+			this._bind();
+		},
+		_bind : function(){
+			var self = this;
+
+			Event.delegate(this._id,'click',this.config.btn,function(ev){
+				var oBtn = $(self.config.btn);
+
+				if( self.isNotice === true){
+					oBtn.addClass(self.config.flexedBtn);
+					self.oBox.stop().animate({
+						marginTop: -self.iH
+					},.5,self.config.easing,function(){
+						self.isNotice = false;
+					});
+				}else{
+					oBtn.removeClass(self.config.flexedBtn);
+					self.oBox.stop().animate({
+						marginTop: 0
+					},.5,self.config.easing,function(){
+						self.isNotice = true;
+					});
+				}
+			});	
+		},
+		_flex : function(){
+
+		}
+	}
+
+	return Carousel;
+
+},{
+	requires:[
+		'node',
+		'event'
+	]
+})

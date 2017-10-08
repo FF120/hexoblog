@@ -1,0 +1,1170 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,scikit-learn," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="scikit-learn是一个很受欢迎的机器学习方面的python工具包，它定义的一些范式和处理流程影响深远，所以，认识和了解一些这个工具包对于自己实现一些机器学习算法是很有帮助的。它已经实现了很多方法帮助我们便捷的处理数据，例如，划分数据集为训练集和验证集，交叉验证，数据预处理，归一化等等。">
+<meta name="keywords" content="python,scikit-learn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习_Scikit-Learn机器学习算法的使用">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="scikit-learn是一个很受欢迎的机器学习方面的python工具包，它定义的一些范式和处理流程影响深远，所以，认识和了解一些这个工具包对于自己实现一些机器学习算法是很有帮助的。它已经实现了很多方法帮助我们便捷的处理数据，例如，划分数据集为训练集和验证集，交叉验证，数据预处理，归一化等等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-31T15:02:05.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习_Scikit-Learn机器学习算法的使用">
+<meta name="twitter:description" content="scikit-learn是一个很受欢迎的机器学习方面的python工具包，它定义的一些范式和处理流程影响深远，所以，认识和了解一些这个工具包对于自己实现一些机器学习算法是很有帮助的。它已经实现了很多方法帮助我们便捷的处理数据，例如，划分数据集为训练集和验证集，交叉验证，数据预处理，归一化等等。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/"/>
+
+  <title> 深度学习_Scikit-Learn机器学习算法的使用 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                深度学习_Scikit-Learn机器学习算法的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-14T18:51:20+08:00" content="2017-05-14">
+              2017-05-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/" class="leancloud_visitors" data-flag-title="深度学习_Scikit-Learn机器学习算法的使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>scikit-learn</code>是一个很受欢迎的机器学习方面的<code>python</code>工具包，它定义的一些范式和处理流程影响深远，所以，认识和了解一些这个工具包对于自己实现一些机器学习算法是很有帮助的。它已经实现了很多方法帮助我们便捷的处理数据，例如，划分数据集为训练集和验证集，交叉验证，数据预处理，归一化等等。</p>
+<a id="more"></a>
+<h3 id="预测结果与真实结果的比较">预测结果与真实结果的比较</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 计算均方误差</span></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</div><div class="line">rmse = sqrt(metrics.mean_squared_error(y_test, y_pred))</div><div class="line"></div><div class="line"><span class="comment"># 计算准确率</span></div><div class="line">acc = metrics.accuracy_score(y_test, y_pred)</div><div class="line"></div><div class="line"><span class="comment"># 混淆矩阵</span></div><div class="line">cm = metrics.confusion_matrix(y_test, y_pred)</div><div class="line"></div><div class="line"><span class="comment"># classification_report</span></div><div class="line">cr = metrics.classification_report(y_true, y_pred)</div><div class="line"></div><div class="line"><span class="comment"># ROC AUC曲线</span></div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve, auc</div></pre></td></tr></table></figure>
+<h3 id="划分数据集">划分数据集</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> cross_validation</div><div class="line">X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_size=<span class="number">0.3</span>, random_state=<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># 分折</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> KFold</div><div class="line">kf = KFold(n_samples, n_folds=<span class="number">2</span>)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> kf:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 保证不同的类别之间的均衡，这里需要用到标签labels</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> StratifiedKFold</div><div class="line">labels = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</div><div class="line">skf = StratifiedKFold(labels, <span class="number">3</span>)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> skf:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 留一交叉验证</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> LeaveOneOut</div><div class="line">loo = LeaveOneOut(n_samples)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> loo:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 留P交叉验证</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> LeavePOut</div><div class="line">lpo = LeavePOut(n_samples, p=<span class="number">2</span>)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> lpo:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 按照额外提供的标签留一交叉验证,常用的情况是按照时间序列</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> LeaveOneLabelOut</div><div class="line">labels = [<span class="number">1</span>, <span class="number">1</span>,<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>]</div><div class="line">lolo = LeaveOneLabelOut(labels)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> lolo:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 按照额外提供的标签留P交叉验证</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> LeavePLabelOut</div><div class="line">labels = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>,<span class="number">3</span>]</div><div class="line">lplo = LeavePLabelOut(labels, p=<span class="number">2</span>)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> lplo:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div><div class="line"></div><div class="line"><span class="comment"># 随机分组</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> ShuffleSplit</div><div class="line">ss = ShuffleSplit(<span class="number">16</span>, n_iter=<span class="number">3</span>, test_size=<span class="number">0.25</span>,random_state=<span class="number">0</span>)</div><div class="line"><span class="keyword">for</span> train_index, test_index <span class="keyword">in</span> ss:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train_index, test_index))</div><div class="line"></div><div class="line"><span class="comment"># 考虑类别均衡的随机分组</span></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> StratifiedShuffleSplit</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">X = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</div><div class="line">y = np.array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>])</div><div class="line">sss = StratifiedShuffleSplit(y, <span class="number">3</span>, test_size=<span class="number">0.5</span>, random_state=<span class="number">0</span>)</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> sss:</div><div class="line">    print(<span class="string">"%s %s"</span> % (train, test))</div></pre></td></tr></table></figure>
+<h3 id="特征选择方法">特征选择方法</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 去除方差较小的特征</span></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> feature_selection</div><div class="line">vt = feature_selection.VarianceThreshold(threshold=<span class="string">''</span>)</div><div class="line">vt.fit(X_train)</div><div class="line">X_train_transformed = vt.transform(X_train)</div><div class="line">X_test_transformed = vt.transform(X_test)</div><div class="line"></div><div class="line"><span class="comment"># 按照某种排序规则 选择前K个特征</span></div><div class="line"><span class="comment"># 除了使用系统定义好的函数f_classif，还可以自己定义函数</span></div><div class="line">sk = SelectKBest(feature_selection.f_classif,k=<span class="number">100</span>)</div><div class="line">sk.fit(X_train,y_train)</div><div class="line">X_train_transformed = sk.transform(X_train)</div><div class="line">X_test_transformed = sk.transform(X_test)</div><div class="line"></div><div class="line"><span class="comment"># 递归特征消除</span></div><div class="line">rfecv = RFECV(estimator=svc, step=step, cv=StratifiedKFold(y, n_folds = n_folds),scoring=<span class="string">'accuracy'</span>)</div><div class="line">rfecv.fit(X_train, y_train)</div><div class="line">X_train_transformed = rfecv.transform(X_train)</div><div class="line">X_test_transformed = rfecv.transform(y_train)</div><div class="line"></div><div class="line"><span class="comment"># 使用L1做特征选择</span></div><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> LinearSVC</div><div class="line">lsvc = LinearSVC(C=<span class="number">1</span>, penalty=<span class="string">"l1"</span>, dual=<span class="keyword">False</span>)</div><div class="line">lsvc.fit(X_train,y_train)</div><div class="line">X_train_transformed = lsvc.transform(X_train)</div><div class="line">X_test_transformed = lsvc.transform(y_train)</div><div class="line"></div><div class="line"><span class="comment"># 基于树的特征选择</span></div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> ExtraTreesClassifier</div><div class="line">etc = ExtraTreesClassifier()</div><div class="line">etc.fit(X_train, y_train)</div><div class="line">X_train_transformed = etc.transform(X_train)</div><div class="line">X_test_transformed = etc.transform(X_test)</div><div class="line"></div><div class="line"><span class="comment"># 基于线性判别分析做特征选择</span></div><div class="line"><span class="keyword">from</span> sklearn.discriminant_analysis <span class="keyword">import</span> LinearDiscriminantAnalysis</div><div class="line">lda = LinearDiscriminantAnalysis(solver=<span class="string">'lsqr'</span>,shrinkage=<span class="string">'auto'</span>)</div><div class="line">lda.fit(X_train, y_train)</div><div class="line">X_train_transformed = lda.transform(X_train)</div><div class="line">X_test_transformed = lda.transform(X_test)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> VarianceThreshold</div><div class="line">X = [[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>]]</div><div class="line">sel = VarianceThreshold(threshold=(<span class="number">.8</span> * (<span class="number">1</span> - <span class="number">.8</span>)))</div><div class="line"></div><div class="line">&gt;&gt;&gt;sel</div><div class="line">&gt;&gt;&gt;VarianceThreshold(threshold=<span class="number">0.16</span>)</div><div class="line"></div><div class="line">X2 = sel.fit_transform(X)</div><div class="line"></div><div class="line">&gt;&gt;&gt;X2</div><div class="line">&gt;&gt;&gt;</div><div class="line">array([[<span class="number">0</span>, <span class="number">1</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">0</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">1</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">0</span>],</div><div class="line">       [<span class="number">1</span>, <span class="number">1</span>]])</div></pre></td></tr></table></figure>
+<p>计算每维特征的方差 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">a1 = np.array([<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>])</div><div class="line"></div><div class="line">&gt;&gt;&gt;a1.var()</div><div class="line">&gt;&gt;&gt;<span class="number">0.13888888888888892</span></div><div class="line"></div><div class="line">a2 = np.array([<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</div><div class="line"></div><div class="line">&gt;&gt;&gt;a2.var()</div><div class="line">&gt;&gt;&gt;Out[<span class="number">161</span>]: <span class="number">0.22222222222222224</span></div><div class="line"></div><div class="line">a3 = np.array([<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>])</div><div class="line"></div><div class="line">&gt;&gt;&gt;a3.var()</div><div class="line">&gt;&gt;&gt;Out[<span class="number">163</span>]: <span class="number">0.25</span></div></pre></td></tr></table></figure></p>
+<p>可以看到，方差小于0.16的只有第一维特征，所以X2保留下来的是原来的第二维和第三维特征。 &gt;这应该是最简单的特征选择方法了：假设某特征的特征值只有0和1，并且在所有输入样本中，95%的实例的该特征取值都是1，那就可以认为这个特征作用不大。如果100%都是1，那这个特征就没意义了。当特征值都是离散型变量的时候这种方法才能用，如果是连续型变量，就需要将连续变量离散化之后才能用，而且实际当中，一般不太会有95%以上都取某个值的特征存在，所以这种方法虽然简单但是不太好用。可以把它作为特征选择的预处理，先去掉那些取值变化小的特征，然后再从接下来提到的的特征选择方法中选择合适的进行进一步的特征选择。</p>
+<h4 id="univariate-feature-selection-单变量特征选择">Univariate feature selection （单变量特征选择）</h4>
+<p>主要使用统计的方法计算各个统计值，再根据一定的阈值筛选出符合要求的特征，去掉不符合要求的特征。 #### 主要的统计方法 - F值分类 <code>f_classif</code> - F值回归 <code>f_regression</code> - 卡方统计 <code>chi2</code> (适用于非负特征值 和 稀疏特征值)</p>
+<h4 id="主要的选择策略">主要的选择策略</h4>
+<ul>
+<li>选择排名前K的特征 <code>SelectKbest</code></li>
+<li>选择前百分之几的特征 <code>SelectPercentile</code></li>
+<li><code>SelectFpr</code> Select features based on a false positive rate test.</li>
+<li><code>SelectFdr</code> Select features based on an estimated false discovery rate.</li>
+<li><code>SelectFwe</code> Select features based on family-wise error rate.</li>
+<li><code>GenericUnivariateSelect</code> Univariate feature selector with configurable mode.</li>
+</ul>
+<blockquote>
+<p><code>false positive rate</code>: FP / (FP + TP) 假设类别为0，1；记0为negative,1为positive, <code>FPR</code>就是实际的类别是0，但是分类器错误的预测为1的个数 与 分类器预测的类别为1的样本的总数（包括正确的预测为1和错误的预测为1） 的比值。 <code>estimated false discovery rate</code>: 错误的拒绝原假设的概率 <code>family-wise error rate</code>: 至少有一个检验犯第一类错误的概率</p>
+</blockquote>
+<p>假设检验的两类错误： &gt; - 第一类错误：原假设是正确的，但是却被拒绝了。(用α表示） &gt; - 第二类错误：原假设是错误的，但是却被接受了。(用β表示)</p>
+<h4 id="具体应用">具体应用</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</div><div class="line"><span class="comment">#SelectKBest -- f_classif</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> f_classif</div><div class="line">iris = load_iris()</div><div class="line">X, y = iris.data, iris.target</div><div class="line">X_fitted = SelectKBest(f_classif, k=<span class="number">3</span>).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectKBest -- f_classif"</span></div><div class="line"><span class="keyword">print</span> X_fitted.scores_</div><div class="line"><span class="keyword">print</span> X_fitted.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted.get_support()</div><div class="line">X_transformed = X_fitted.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed.shape</div><div class="line"><span class="comment">#SelectKBest -- chi2</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> chi2</div><div class="line">X_fitted_2 = SelectKBest(chi2, k=<span class="number">3</span>).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectKBest -- chi2"</span></div><div class="line"><span class="keyword">print</span> X_fitted_2.scores_</div><div class="line"><span class="keyword">print</span> X_fitted_2.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted_2.get_support()</div><div class="line">X_transformed_2 = X_fitted_2.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed_2.shape</div><div class="line"></div><div class="line"><span class="comment">#SelectPercentile -- f_classif</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectPercentile</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> f_classif</div><div class="line">X_fitted_3 = SelectPercentile(f_classif, percentile=<span class="number">50</span>).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectPercentile -- f_classif"</span></div><div class="line"><span class="keyword">print</span> X_fitted_3.scores_</div><div class="line"><span class="keyword">print</span> X_fitted_3.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted_3.get_support()</div><div class="line">X_transformed_3 = X_fitted_3.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed_3.shape</div><div class="line"></div><div class="line"><span class="comment">#SelectPercentile -- chi2</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectPercentile</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> chi2</div><div class="line">X_fitted_4 = SelectPercentile(chi2, percentile=<span class="number">50</span>).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectPercentile -- chi2"</span></div><div class="line"><span class="keyword">print</span> X_fitted_4.scores_</div><div class="line"><span class="keyword">print</span> X_fitted_4.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted_4.get_support()</div><div class="line">X_transformed_4 = X_fitted_4.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed_4.shape</div><div class="line"></div><div class="line"><span class="comment">#SelectFpr --- chi2</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFpr</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> chi2</div><div class="line">X_fitted_5 = SelectFpr(chi2, alpha=<span class="number">2.50017968e-15</span>).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectFpr --- chi2"</span></div><div class="line"><span class="keyword">print</span> X_fitted_5.scores_</div><div class="line"><span class="keyword">print</span> X_fitted_5.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted_5.get_support()</div><div class="line">X_transformed_5 = X_fitted_5.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed_5.shape</div><div class="line"></div><div class="line"><span class="comment">#SelectFpr --- f_classif</span></div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFpr</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> f_classif</div><div class="line">X_fitted_6 = SelectFpr(f_classif, alpha=<span class="number">1.66966919e-31</span> ).fit(X,y)</div><div class="line"><span class="keyword">print</span> <span class="string">"SelectFpr --- f_classif"</span></div><div class="line"><span class="keyword">print</span> X_fitted_6.scores_</div><div class="line"><span class="keyword">print</span> X_fitted_6.pvalues_</div><div class="line"><span class="keyword">print</span> X_fitted_6.get_support()</div><div class="line">X_transformed_6 = X_fitted_6.transform(X)</div><div class="line"><span class="keyword">print</span> X_transformed_6.shape</div><div class="line"></div><div class="line"><span class="comment"># SelectFdr  和 SelectFwe 的用法和上面类似，只是选择特征时候的依据不同，真正决定得分不同的是</span></div><div class="line"><span class="comment">#统计检验方法，从上面可以看到，使用f_classif的得出的参数都相同。</span></div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">SelectKBest -- f_classif</div><div class="line">[  <span class="number">119.26450218</span>    <span class="number">47.3644614</span>   <span class="number">1179.0343277</span>    <span class="number">959.32440573</span>]</div><div class="line">[  <span class="number">1.66966919e-31</span>   <span class="number">1.32791652e-16</span>   <span class="number">3.05197580e-91</span>   <span class="number">4.37695696e-85</span>]</div><div class="line">[ <span class="keyword">True</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">3L</span>)</div><div class="line">SelectKBest -- chi2</div><div class="line">[  <span class="number">10.81782088</span>    <span class="number">3.59449902</span>  <span class="number">116.16984746</span>   <span class="number">67.24482759</span>]</div><div class="line">[  <span class="number">4.47651499e-03</span>   <span class="number">1.65754167e-01</span>   <span class="number">5.94344354e-26</span>   <span class="number">2.50017968e-15</span>]</div><div class="line">[ <span class="keyword">True</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">3L</span>)</div><div class="line">SelectPercentile -- f_classif</div><div class="line">[  <span class="number">119.26450218</span>    <span class="number">47.3644614</span>   <span class="number">1179.0343277</span>    <span class="number">959.32440573</span>]</div><div class="line">[  <span class="number">1.66966919e-31</span>   <span class="number">1.32791652e-16</span>   <span class="number">3.05197580e-91</span>   <span class="number">4.37695696e-85</span>]</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">2L</span>)</div><div class="line">SelectPercentile -- chi2</div><div class="line">[  <span class="number">10.81782088</span>    <span class="number">3.59449902</span>  <span class="number">116.16984746</span>   <span class="number">67.24482759</span>]</div><div class="line">[  <span class="number">4.47651499e-03</span>   <span class="number">1.65754167e-01</span>   <span class="number">5.94344354e-26</span>   <span class="number">2.50017968e-15</span>]</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">2L</span>)</div><div class="line">SelectFpr --- chi2</div><div class="line">[  <span class="number">10.81782088</span>    <span class="number">3.59449902</span>  <span class="number">116.16984746</span>   <span class="number">67.24482759</span>]</div><div class="line">[  <span class="number">4.47651499e-03</span>   <span class="number">1.65754167e-01</span>   <span class="number">5.94344354e-26</span>   <span class="number">2.50017968e-15</span>]</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">1L</span>)</div><div class="line">SelectFpr --- f_classif</div><div class="line">[  <span class="number">119.26450218</span>    <span class="number">47.3644614</span>   <span class="number">1179.0343277</span>    <span class="number">959.32440573</span>]</div><div class="line">[  <span class="number">1.66966919e-31</span>   <span class="number">1.32791652e-16</span>   <span class="number">3.05197580e-91</span>   <span class="number">4.37695696e-85</span>]</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>]</div><div class="line">(<span class="number">150L</span>, <span class="number">2L</span>)</div></pre></td></tr></table></figure>
+<h4 id="recursive-feature-elimination-递归特征消除">Recursive feature elimination （递归特征消除）</h4>
+<p>使用某种方法，给每一维特征赋一个权重（例如线性回归的系数），去除系数最小的K个特征，然后在剩下的特征上重复上述方法，直到剩下的特征满足特征选择个数的要求。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line">用SVM获得每个特征对分类结果的贡献程度，按照贡献程度从大到小排名，选出贡献程度最大的</div><div class="line">前K个特征作为特征选择的结果,使用SVM的时候，排名的依据是fit之后的coef_值。</div><div class="line"></div><div class="line">这里的估计器可以替换成任何其他方法，如GLM</div><div class="line">'''</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_digits</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> RFE</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="comment"># Load the digits dataset</span></div><div class="line">digits = load_digits()</div><div class="line">X = digits.images.reshape((len(digits.images), <span class="number">-1</span>))</div><div class="line">y = digits.target</div><div class="line"><span class="keyword">print</span> <span class="string">"原来的特征："</span></div><div class="line"><span class="keyword">print</span> X.shape</div><div class="line"></div><div class="line"><span class="comment"># Create the RFE object and rank each pixel</span></div><div class="line">svc = SVC(kernel=<span class="string">"linear"</span>, C=<span class="number">1</span>)</div><div class="line">rfe = RFE(estimator=svc, n_features_to_select=<span class="number">10</span>, step=<span class="number">1</span>)</div><div class="line">ref = rfe.fit(X, y)</div><div class="line"><span class="keyword">print</span> <span class="string">"选择的特征的个数"</span></div><div class="line"><span class="keyword">print</span> np.sum(ref._get_support_mask())</div><div class="line"><span class="keyword">print</span> ref._get_support_mask()</div><div class="line"><span class="keyword">print</span> rfe.ranking_</div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">原来的特征：</div><div class="line">(<span class="number">1797L</span>, <span class="number">64L</span>)</div><div class="line">选择的特征的个数</div><div class="line"><span class="number">10</span></div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span></div><div class="line"> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span></div><div class="line"> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span></div><div class="line"> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span></div><div class="line"> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span></div><div class="line"> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>]</div><div class="line">[<span class="number">55</span> <span class="number">41</span> <span class="number">22</span> <span class="number">14</span>  <span class="number">1</span>  <span class="number">8</span> <span class="number">25</span> <span class="number">42</span> <span class="number">48</span> <span class="number">28</span> <span class="number">21</span> <span class="number">34</span>  <span class="number">5</span> <span class="number">23</span> <span class="number">35</span> <span class="number">43</span> <span class="number">45</span> <span class="number">32</span> <span class="number">10</span>  <span class="number">6</span> <span class="number">19</span>  <span class="number">1</span> <span class="number">30</span> <span class="number">44</span> <span class="number">46</span></div><div class="line"> <span class="number">36</span>  <span class="number">1</span>  <span class="number">9</span> <span class="number">11</span> <span class="number">29</span>  <span class="number">1</span> <span class="number">50</span> <span class="number">54</span> <span class="number">33</span> <span class="number">16</span> <span class="number">26</span> <span class="number">20</span>  <span class="number">7</span>  <span class="number">1</span> <span class="number">53</span> <span class="number">52</span> <span class="number">31</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">4</span>  <span class="number">1</span>  <span class="number">1</span> <span class="number">49</span> <span class="number">47</span> <span class="number">38</span></div><div class="line"> <span class="number">17</span> <span class="number">27</span> <span class="number">15</span>  <span class="number">1</span> <span class="number">13</span> <span class="number">39</span> <span class="number">51</span> <span class="number">40</span>  <span class="number">1</span> <span class="number">18</span> <span class="number">24</span> <span class="number">12</span>  <span class="number">3</span> <span class="number">37</span>]</div></pre></td></tr></table></figure></p>
+<p>使用上面的方法，需要人为的确定最后输出的特征的个数，如果不知道需要多少特征才能达到好的效果，可以使用下面的交叉验证方法自动确定输出几个特征最优。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> StratifiedKFold</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> RFECV</div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_classification</div><div class="line"></div><div class="line"><span class="comment">#产生人工数据</span></div><div class="line"><span class="comment"># Build a classification task using 3 informative features</span></div><div class="line">X, y = make_classification(n_samples=<span class="number">1000</span>, n_features=<span class="number">25</span>, n_informative=<span class="number">5</span>,</div><div class="line">                           n_redundant=<span class="number">2</span>, n_repeated=<span class="number">0</span>, n_classes=<span class="number">8</span>,</div><div class="line">                           n_clusters_per_class=<span class="number">1</span>, random_state=<span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># Create the RFE object and compute a cross-validated score.</span></div><div class="line">svc = SVC(kernel=<span class="string">"linear"</span>)</div><div class="line"><span class="comment"># The "accuracy" scoring is proportional to the number of correct</span></div><div class="line"><span class="comment"># classifications</span></div><div class="line">rfecv = RFECV(estimator=svc, step=<span class="number">1</span>, cv=StratifiedKFold(y, <span class="number">5</span>),</div><div class="line">              scoring=<span class="string">'accuracy'</span>)</div><div class="line">rfecv = rfecv.fit(X, y)</div><div class="line"></div><div class="line">print(<span class="string">"Optimal number of features : %d"</span> % rfecv.n_features_)</div><div class="line">print(<span class="string">"选择的特征："</span>)</div><div class="line"><span class="keyword">print</span> rfecv.support_</div></pre></td></tr></table></figure></p>
+<h4 id="feature-selection-using-selectfrommodel从模型中选择特征">Feature selection using SelectFromModel(从模型中选择特征)</h4>
+<p>许多估计模型在执行完fit方法以后都会有<code>coef_</code>参数，这个参数实际上是各个特征的权重，所以我们可以根据这个权重选择特征，把权重小的特征去除。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">print(__doc__)</div><div class="line"></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_boston</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectFromModel</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LassoCV</div><div class="line"></div><div class="line"><span class="comment"># Load the boston dataset.</span></div><div class="line">boston = load_boston()</div><div class="line">X, y = boston[<span class="string">'data'</span>], boston[<span class="string">'target'</span>]</div><div class="line"></div><div class="line"><span class="comment"># We use the base estimator LassoCV since the L1 norm promotes sparsity of features.</span></div><div class="line">clf = LassoCV()</div><div class="line">clf.fit(X,y)</div><div class="line"><span class="comment"># Set a minimum threshold of 0.25</span></div><div class="line">sfm = SelectFromModel(clf, threshold=<span class="string">'mean'</span>,prefit=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">print</span> X.shape</div><div class="line"><span class="comment">#sfm = sfm.fit(X, y)</span></div><div class="line"><span class="keyword">print</span> <span class="string">"============LassoCV================"</span></div><div class="line"><span class="keyword">print</span> <span class="string">"选择的特征"</span></div><div class="line"><span class="keyword">print</span> sfm._get_support_mask();</div><div class="line">n_features = sfm.transform(X).shape[<span class="number">1</span>]</div><div class="line"><span class="keyword">print</span> n_features</div><div class="line"></div><div class="line"><span class="comment"># We use LinearSVC</span></div><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> LinearSVC</div><div class="line"><span class="comment">#C 越小，选择的特征越少</span></div><div class="line">lsvc = LinearSVC(C=<span class="number">0.001</span>, penalty=<span class="string">"l1"</span>, dual=<span class="keyword">False</span>)</div><div class="line">y = y.astype(np.int64) <span class="comment">#转换成整数，因为是分类器，不是回归</span></div><div class="line">lsvc.fit(X,y)</div><div class="line">model = SelectFromModel(lsvc, prefit=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"============线性SVM==============================="</span></div><div class="line"><span class="keyword">print</span> <span class="string">"选择的特征"</span></div><div class="line"><span class="keyword">print</span> model._get_support_mask();</div><div class="line">n_features = model.transform(X).shape[<span class="number">1</span>]</div><div class="line"><span class="keyword">print</span> n_features</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</div><div class="line">clf = linear_model.LogisticRegression(C=<span class="number">0.001</span>, penalty=<span class="string">'l1'</span>, tol=<span class="number">1e-6</span>)</div><div class="line">y = y.astype(np.int64) <span class="comment">#转换成整数，因为是分类器，不是回归</span></div><div class="line">clf.fit(X,y)</div><div class="line">model = SelectFromModel(clf, prefit=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"============逻辑回归==============================="</span></div><div class="line"><span class="keyword">print</span> <span class="string">"选择的特征"</span></div><div class="line"><span class="keyword">print</span> model._get_support_mask();</div><div class="line">n_features = model.transform(X).shape[<span class="number">1</span>]</div><div class="line"><span class="keyword">print</span> n_features</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> ExtraTreesClassifier</div><div class="line">clf = ExtraTreesClassifier()</div><div class="line">y = y.astype(np.int64) <span class="comment">#转换成整数，因为是分类器，不是回归</span></div><div class="line">clf = clf.fit(X, y)</div><div class="line">model = SelectFromModel(clf, prefit=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"============基于树的特征选择==============================="</span></div><div class="line"><span class="keyword">print</span> clf.feature_importances_</div><div class="line"><span class="keyword">print</span> <span class="string">"选择的特征："</span></div><div class="line"><span class="keyword">print</span> model._get_support_mask();</div><div class="line">n_features = model.transform(X).shape[<span class="number">1</span>]</div><div class="line"><span class="keyword">print</span> n_features</div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">(<span class="number">506L</span>, <span class="number">13L</span>)</div><div class="line">============LassoCV================</div><div class="line">选择的特征</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span></div><div class="line">  <span class="keyword">True</span>]</div><div class="line"><span class="number">4</span></div><div class="line">============线性SVM===============================</div><div class="line">选择的特征</div><div class="line">[<span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span>  <span class="keyword">True</span></div><div class="line"> <span class="keyword">False</span>]</div><div class="line"><span class="number">4</span></div><div class="line">============逻辑回归===============================</div><div class="line">选择的特征</div><div class="line">[<span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span> <span class="keyword">False</span>  <span class="keyword">True</span></div><div class="line"> <span class="keyword">False</span>]</div><div class="line"><span class="number">2</span></div><div class="line">============基于树的特征选择===============================</div><div class="line">[ <span class="number">0.12196356</span>  <span class="number">0.02193675</span>  <span class="number">0.03935991</span>  <span class="number">0.01633832</span>  <span class="number">0.0721041</span>   <span class="number">0.13938681</span></div><div class="line">  <span class="number">0.11703915</span>  <span class="number">0.10962258</span>  <span class="number">0.03116833</span>  <span class="number">0.04455059</span>  <span class="number">0.04134067</span>  <span class="number">0.1074465</span></div><div class="line">  <span class="number">0.13774273</span>]</div><div class="line">选择的特征</div><div class="line">[ <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span>  <span class="keyword">True</span>  <span class="keyword">True</span> <span class="keyword">False</span> <span class="keyword">False</span> <span class="keyword">False</span>  <span class="keyword">True</span></div><div class="line">  <span class="keyword">True</span>]</div><div class="line"><span class="number">6</span></div></pre></td></tr></table></figure></p>
+<h3 id="分类器">分类器</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># linear_model</span></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</div><div class="line"></div><div class="line">lmlr = linear_model.LinearRegression()</div><div class="line">lmlr.fit(X_train,y_train)</div><div class="line">lmlr.coef_</div><div class="line">predicted_y = lmlr.predict(X_test)</div><div class="line"></div><div class="line"><span class="comment"># L1 惩罚项</span></div><div class="line">lmr = linear_model.Ridge (alpha = <span class="number">.5</span>)</div><div class="line">lmr.fit(X_train,y_train)</div><div class="line">lmr.coef_</div><div class="line">lmr.intercept_</div><div class="line">predicted_y = lmr.predict(X_test)</div><div class="line"></div><div class="line">lmrcv = linear_model.RidgeCV(alphas=[<span class="number">0.1</span>, <span class="number">0.5</span>,<span class="number">1.0</span>, <span class="number">10.0</span>]) <span class="comment"># 自带交叉验证</span></div><div class="line">lmrcv.fit(X_train,y_train)</div><div class="line">lmrcv.alpha_</div><div class="line">predicted_y = lmrcv.predict(X_test)</div><div class="line"></div><div class="line"><span class="comment"># L2 惩罚项</span></div><div class="line">lmla = linear_model.Lasso(alpha = <span class="number">0.001</span>)</div><div class="line">lmla.fit(X_train,y_train)</div><div class="line">predicted_y = lmla.predict(X_test)</div><div class="line"></div><div class="line"><span class="comment"># L1 + L2 惩罚项的一个混合</span></div><div class="line">lmela = linear_model.ElasticNet(alpha=<span class="number">0.01</span>,l1_ratio=<span class="number">0.9</span>)</div><div class="line">lmela.fit(X_train,y_train)</div><div class="line">predicted_y = lmela.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Least Angle Regression : 适用于高维数据，缺点是对噪声比较敏感</div><div class="line">"""</div><div class="line">lmlar = linear_model.Lars(n_nonzero_coefs=<span class="number">10</span>)</div><div class="line">lmlar.fit(X_train,y_train)</div><div class="line">predicted_y = lmlar.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">BayesianRidge : Bayesian Ridge Regression</div><div class="line">小特征数目表现不佳</div><div class="line">"""</div><div class="line">lmbr = linear_model.BayesianRidge()</div><div class="line">lmbr.fit(X_train,y_train)</div><div class="line">lmbr.coef_</div><div class="line">predicted_y = lmbr.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">ARDRegression : similar to BayesianRidge, but tend to sparse</div><div class="line">"""</div><div class="line">lmardr = linear_model.ARDRegression(compute_score=<span class="keyword">True</span>)</div><div class="line">lmardr.fit(X_train, y_train)</div><div class="line">predicted_y = lmardr.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">逻辑回归</div><div class="line">Logistic regression</div><div class="line">"""</div><div class="line">lmlr1 = linear_model.LogisticRegression(C=<span class="number">1</span>, penalty=<span class="string">'l1'</span>, tol=<span class="number">0.01</span>)</div><div class="line">lmlr2 = linear_model.LogisticRegression(C=<span class="number">1</span>, penalty=<span class="string">'l2'</span>, tol=<span class="number">0.01</span>)</div><div class="line">lmlr1.fit(X_train,y_train)</div><div class="line">predicted_y = lmlr1.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">SGDClassifier</div><div class="line">"""</div><div class="line">lmsdg = linear_model.SGDClassifier()</div><div class="line">lmsdg.fit(X_train,y_train)</div><div class="line">predicted_y = lmsdg.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Perceptron : 感知机算法</div><div class="line">"""</div><div class="line">lmper = linear_model.Perceptron()</div><div class="line">lmper.fit(X_train,y_train)</div><div class="line">predicted_y = lmper.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">PassiveAggressiveClassifier : similar to Perceptron but have peny</div><div class="line">"""</div><div class="line">lmpac = linear_model.PassiveAggressiveClassifier()</div><div class="line">lmpac.fit(X_train,y_test)</div><div class="line">predicted_y = lmpac.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Linear discriminant analysis  &amp;&amp; quadratic discriminant analysis</div><div class="line">"""</div><div class="line"><span class="keyword">from</span> sklearn.lda <span class="keyword">import</span> LDA</div><div class="line">lda = LDA(solver=<span class="string">"svd"</span>, store_covariance=<span class="keyword">True</span>)</div><div class="line">lda.fit(X, y)</div><div class="line">predicted_y = lda.predict(X_test)</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.qda <span class="keyword">import</span> QDA</div><div class="line">qda = QDA()</div><div class="line">qda.fit(X, y, store_covariances=<span class="keyword">True</span>)</div><div class="line">predicted_y = qda.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Kernel ridge regression:</div><div class="line">combines Ridge Regression (linear least squares with l2-norm regularization)</div><div class="line">with the kernel trick</div><div class="line">"""</div><div class="line"><span class="keyword">from</span> sklearn.kernel_ridge <span class="keyword">import</span> KernelRidge</div><div class="line">kr = KernelRidge(alpha=<span class="number">0.1</span>)</div><div class="line">kr.fit(X,y)</div><div class="line">predicted_y = kr.predict(X_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Support Vector Machines : 支持向量机分类</div><div class="line">"""</div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">svmsvc = svm.SVC(C=<span class="number">0.1</span>,kernel=<span class="string">'rbf'</span>)</div><div class="line">svmsvc.fit(X_train,y_train)</div><div class="line">svmsvc.score(X_test,y_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Support Vector Regression.</div><div class="line">"""</div><div class="line">svmsvr = svm.SVR()</div><div class="line">svmsvr.fit(X_train,y_train)</div><div class="line">svmsvr.score(X_test,y_test)</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line">Nearest Neighbors : 最近邻</div><div class="line">"""</div><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> NearestNeighbors</div><div class="line">nbrs = NearestNeighbors(n_neighbors=<span class="number">2</span>, algorithm=<span class="string">'ball_tree'</span>).fit(X)</div><div class="line">distances, indices = nbrs.kneighbors(X)</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</div><div class="line">nkc = KNeighborsClassifier(<span class="number">15</span>, weights=<span class="string">'uniform'</span>)</div><div class="line">nkc.fit(X_train,y_train)</div><div class="line">nkc.score(X_test,y_test)</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> NearestCentroid</div><div class="line">clf = NearestCentroid(shrink_threshold=<span class="number">0.1</span>)</div><div class="line">clf.fit(X_train, y_train)</div><div class="line">clf.score(X_test,y_test)</div></pre></td></tr></table></figure>
+<h4 id="支持向量机svm">支持向量机（SVM）</h4>
+<h5 id="简介">简介</h5>
+<p>scikit-learn支持稠密的(dense)和稀疏的（sparse）数据，但是当测试数据是稀疏的时候，训练数据必须也是稀疏的。为了达到最优的性能，建议稠密数据使用<code>numpy.ndarray</code>,稀疏数据使用<code>scipy.sparse.csr_matrix</code> and <code>dtype=float64</code>.</p>
+<h5 id="用途">用途</h5>
+<ul>
+<li>分类（classfication）</li>
+<li>回归 (regression)</li>
+<li>离群点检测 (outliers detection)</li>
+</ul>
+<h5 id="优点">优点</h5>
+<ul>
+<li>当特征维数很高时很有效(effective in high dimensional space)</li>
+<li>当特征的维数远大于样本的数量的时候依然有效</li>
+<li>使用的是训练点（training points）的子集进行决策函数（decision function）的计算，所以是内存高效的（memory efficient）</li>
+<li>多种可供选择的核函数(kernel function)提高了算法的灵活性，核函数是可以根据自己的需要自定义的。</li>
+</ul>
+<h5 id="缺点">缺点</h5>
+<ul>
+<li>当特征的数量远大于样本的数量的时候，算法的性能会下降（poor performance）</li>
+<li>SVM不直接提供概率估计（probability estimates），而是使用一个五折交叉验证（five-fold cross-validation）,计算复杂性较高，一般不适合海量数据的处理。</li>
+</ul>
+<h5 id="使用方法">使用方法</h5>
+<h6 id="二分类">二分类</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#准备数据</span></div><div class="line">X = [[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]]</div><div class="line">y = [<span class="number">0</span>, <span class="number">1</span>]</div><div class="line"><span class="comment">#引入支持向量机</span></div><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line"><span class="string">'''</span></div><div class="line">创建模型,这里有三种方法:</div><div class="line">svm.SVC(); svm.NuSVC(); svm.LinearSVC()</div><div class="line">'''</div><div class="line">clf = svm.SVC()</div><div class="line"><span class="string">'''</span></div><div class="line">训练数据，这里X是[n_samples,n_features],y是[n_labels]</div><div class="line">'''</div><div class="line">clf = clf.fit(X_train, y)</div><div class="line"><span class="comment">#使用训练好的模型预测</span></div><div class="line">y_predicted = clf.predict(X_test)</div><div class="line"></div><div class="line"><span class="comment">#获得训练好的模型的一些参数</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># get support vectors</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.support_vectors_</div><div class="line">array([[ <span class="number">0.</span>,  <span class="number">0.</span>],</div><div class="line">       [ <span class="number">1.</span>,  <span class="number">1.</span>]])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># get indices of support vectors</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.support_</div><div class="line">array([<span class="number">0</span>, <span class="number">1</span>]...)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="comment"># get number of support vectors for each class</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>clf.n_support_</div><div class="line">array([<span class="number">1</span>, <span class="number">1</span>]...)</div><div class="line"><span class="comment">#get the params of the svm</span></div><div class="line">&gt;&gt;&gt;clf.coef_</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面是最简单的支持向量机的使用方式，下一步还需要了解可以设置的各个参数是什么意思，如何设置，如何交叉验证，如何选择和函数。</p>
+</blockquote>
+<h6 id="多分类">多分类</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">X = [[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">2</span>], [<span class="number">3</span>]]</div><div class="line">Y = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line"><span class="comment"># "one-against-one"</span></div><div class="line">clf = svm.SVC(decision_function_shape=<span class="string">'ovo'</span>)</div><div class="line">clf.fit(X, Y)</div><div class="line"><span class="string">'''</span></div><div class="line">one-against-one 就是一对一，假设这四类的名称为a,b,c,d.</div><div class="line">则需要训练区分(a,b)(a,c)(a,d)(b,c)(b,d)(c,d)的6种模型，所以</div><div class="line">one-against-one这种策略在做多分类问题的时候会生成n*(n-1)/2个模型，每个模型区分其中的两个类。</div><div class="line">'''</div><div class="line">dec = clf.decision_function([[<span class="number">1</span>]])</div><div class="line">dec.shape[<span class="number">1</span>] <span class="comment"># 4 classes: 4*3/2 = 6</span></div><div class="line"><span class="string">'''</span></div><div class="line"> "one-vs-the-rest" 就是一对余下所有的，假设四类的名称为a,b,c,d;</div><div class="line"> 则需要训练区分(a,bcd),(b,acd)(c,abd)(d,abc)的4种模型，每个模型区分其中一个类，被除此类之外的所有类当作另外一个类处理。</div><div class="line"> 这种策略在做多分类问题的时候会生成n个模型。</div><div class="line">'''</div><div class="line"></div><div class="line">clf.decision_function_shape = <span class="string">"ovr"</span></div><div class="line">dec = clf.decision_function([[<span class="number">1</span>]])</div><div class="line">dec.shape[<span class="number">1</span>] <span class="comment"># 4 classes</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>一些补充说明：<code>SVC</code>和<code>NuSVC</code>实现了<code>one-against-one</code>(<code>ovo</code>)方法，<code>LinearSVC</code>实现了<code>one-vs-test</code>(<code>ovr</code>)和另外一个叫做<code>Crammer and Singer</code>的实现多分类的方法， 可以通过指定<code>multi_class='crammer_singer'</code>来使用它。不多实践证明，在使用<code>LinearSVC</code>的进行多分类的时候，优先选择<code>one-vs-test</code>(<code>ovr</code>)， 因为<code>one-vs-test</code>(<code>ovr</code>)和<code>crammer_singer</code>得到的结果差不多，但是前者的计算时间要短。</p>
+</blockquote>
+<h4 id="模型参数说明">模型参数说明</h4>
+<h5 id="linearsvc">LinearSVC</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">X = [[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">y = [<span class="number">0</span>, <span class="number">1</span>]</div><div class="line">clf = svm.LinearSVC()</div><div class="line">clf.fit(X,y)</div><div class="line"><span class="keyword">print</span> clf</div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">LinearSVC(C=<span class="number">1.0</span>, class_weight=<span class="keyword">None</span>, dual=<span class="keyword">True</span>, fit_intercept=<span class="keyword">True</span>,</div><div class="line">     intercept_scaling=<span class="number">1</span>, loss=<span class="string">'squared_hinge'</span>, max_iter=<span class="number">1000</span>,</div><div class="line">     multi_class=<span class="string">'ovr'</span>, penalty=<span class="string">'l2'</span>, random_state=<span class="keyword">None</span>, tol=<span class="number">0.0001</span>,</div><div class="line">     verbose=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<p><strong>参数</strong> - <code>C</code>：可选参数，类型<code>float</code>,默认为1.0；误差的惩罚参数 - <code>class_weight</code>: 类型<code>dict</code>,可选参数，默认每个class的权重都是1.用来设置每个class的权重。 - <code>dual</code>:默认为<code>True</code>,类型<code>bool</code>,当<code>n_samples</code> &gt; <code>n_features</code>时，设置成<code>False</code>. - <code>fit_intercept</code>: 可选参数，类型为bool,默认为True. 意思是为模型计算截距（intercept），当数据事先已经是centered的时候，可以设置成False，不计算截距。 - <code>intercept_scaling</code>： 可选参数，类型为float,默认为1.意思是截距是否缩放。 - <code>loss</code>: 类型string,只能取“hinge” 和 “squared_hinge”,默认取“squared_hinge”；定义SVM的损失函数，“hinge”是标准的SVM损失函数，“squared_hinge”是标准损失函数的平方。 - <code>max_iter</code>： 类型为int,默认为1000，模型最大的迭代次数。 - <code>multi_class</code>：类型string，只能取’ovr’ 和 ‘crammer_singer’ (默认值是’ovr’)，当计算多分类的时候，指定多分类采取的策略。‘ovr’是将其中一类和剩下所有类二分，默认用这个策略就好。 - <code>penalty</code>： 类型string,只能取’l1’ or ‘l2’ (默认值是’l2’)，l1使参数稀疏，l2使大部分参数接近为0但是不是0，详细信息参考“机器学习中的范数” - <code>random_state</code>： 只能取int seed, RandomState instance, None 三个中的一个，默认值是None,指定产生伪随机数的时候使用的种子（seed） - <code>tol</code>：可选参数，类型为float,默认值是1e-4,指定停止时候的允许的误差。 - <code>verbose</code>：类型为int,默认值是0，是否开启详细的输出，默认不要开启就好。如果开启，在多线程的时候可能运行不正确。</p>
+<p><strong>属性</strong> - <code>coef_</code>：训练好之后的SVM模型中的参数的取值（就是系数），当是二分类的时候，shape=[n_features],多分类的时候，shape = [n_classes,n_features] - <code>intercept_</code>:截距，二分类的时候shape = [1] ,多分类的时候shape=[n_classes]</p>
+<h5 id="svc">SVC</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">X = [[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">y = [<span class="number">0</span>, <span class="number">1</span>]</div><div class="line">clf = svm.SVC()</div><div class="line">clf.fit(X,y)</div><div class="line"><span class="keyword">print</span> clf</div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">SVC(C=<span class="number">1.0</span>, cache_size=<span class="number">200</span>, class_weight=<span class="keyword">None</span>, coef0=<span class="number">0.0</span>,</div><div class="line">  decision_function_shape=<span class="keyword">None</span>, degree=<span class="number">3</span>, gamma=<span class="string">'auto'</span>, kernel=<span class="string">'rbf'</span>,</div><div class="line">  max_iter=<span class="number">-1</span>, probability=<span class="keyword">False</span>, random_state=<span class="keyword">None</span>, shrinking=<span class="keyword">True</span>,</div><div class="line">  tol=<span class="number">0.001</span>, verbose=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p><strong>参数</strong> - <code>C</code>=1.0, 可选参数，类型<code>float</code>,默认为1.0；误差的惩罚参数 - <code>cache_size</code>=200, 定义模型计算时使用的缓存大小，单位MB。 - <code>class_weight</code>=None,类型dict,默认为None,可以设置成’balanced’，这样会根据y自动计算每个class的权重。还可以手动设置每个class的权重。 - <code>coef0</code>=0.0,可选参数，类型为float,默认为0.0，独立于核函数（kernel function）的参数，只在’poly’ and ‘sigmoid’的时候有影响。 - <code>decision_function_shape</code>=None, ’ovo’, ‘ovr’ or None, default=None - <code>degree</code>=3, 可选参数，类型为int,默认为3，多项式和函数的度，其他类型的和函数自动忽略该参数。 - <code>gamma</code>=‘auto’, 可选参数，类型为float,默认为‘auto’,默认取 1/n_features作为gamma的值。 - <code>kernel</code>=‘rbf’,可选参数，类型为string，默认值为‘rbf’,定义SVM所使用的核函数，可选择的项如下： - linear - poly - rbf - sigmoid - precomputed - a callable(一个回调函数) - <code>max_iter</code>=-1, 最大迭代次数，默认为-1，意思是无限制。 - <code>probability</code>=False, 可选参数，类型bool,默认值为False. 是否进行概率估计，使用之前需要先调用fit方法。 - <code>random_state</code>=None, 只能取int seed, RandomState instance, None 三个中的一个，默认值是None,指定产生伪随机数的时候使用的种子（seed） - <code>shrinking</code>=True,可选参数，类型boolean,默认值为True,是否开启“shrinking heuristic” - <code>tol</code>=0.001, 可选参数，类型为float,默认值是1e-4,指定停止时候的允许的误差。 - <code>verbose</code>=False，类型为int,默认值是0，是否开启详细的输出，默认不要开启就好。如果开启，在多线程的时候可能运行不正确。</p>
+<p><strong>属性</strong> - <code>support_</code> : array-like, shape = [n_SV]，支持向量的下标 - <code>n_support_</code> : array-like, dtype=int32, shape = [n_class] 每个类的支持向量的个数。 - <code>support_vectors_</code> ：shape = [n_SV, n_features]，支持向量(SVM确定了一个分类超平面，支持向量就是平移这个超平面，最先与数据集的交点。) - <code>dual_coef_</code> : array, shape = [n_class-1, n_SV] 在决策函数（decision function）中支持向量的系数 - <code>coef_</code> : array, shape = [n_class-1, n_features]，特征的权重，只在线性核的时候可用。 - <code>intercept_</code> : array, shape = [n_class * (n_class-1) / 2]，决策函数（decision function）中的常量。</p>
+<h5 id="nusvc">NuSVC</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</div><div class="line">X = [[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">3</span>]]</div><div class="line">y = [<span class="number">0</span>, <span class="number">1</span>]</div><div class="line">clf = svm.NuSVC()</div><div class="line">clf.fit(X,y)</div><div class="line"><span class="keyword">print</span> clf</div><div class="line"></div><div class="line">&gt;&gt;&gt;</div><div class="line">NuSVC(cache_size=<span class="number">200</span>, class_weight=<span class="keyword">None</span>, coef0=<span class="number">0.0</span>,</div><div class="line">   decision_function_shape=<span class="keyword">None</span>, degree=<span class="number">3</span>, gamma=<span class="string">'auto'</span>, kernel=<span class="string">'rbf'</span>,</div><div class="line">   max_iter=<span class="number">-1</span>, nu=<span class="number">0.5</span>, probability=<span class="keyword">False</span>, random_state=<span class="keyword">None</span>,</div><div class="line">   shrinking=<span class="keyword">True</span>, tol=<span class="number">0.001</span>, verbose=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p><strong>参数</strong> 大部分都与<code>SVC</code>一样，只是使用了一个额外的参数控制支持向量（support vector）的个数。 - <code>nu</code>:可选参数，类型float，默认值是0.5，值必须要(0,1]之间。</p>
+<p><strong>属性</strong> - <code>support_</code> : array-like, shape = [n_SV]，支持向量的下标 - <code>n_support_</code> : array-like, dtype=int32, shape = [n_class] 每个类的支持向量的个数。 - <code>support_vectors_</code> ：shape = [n_SV, n_features]，支持向量 - <code>dual_coef_</code> : array, shape = [n_class-1, n_SV] 在决策函数（decision function）中支持向量的系数 - <code>coef_</code> : array, shape = [n_class-1, n_features]，特征的权重，只在线性核的时候可用。 - <code>intercept_</code> : array, shape = [n_class * (n_class-1) / 2]，决策函数（decision function）中的常量。</p>
+<h4 id="查看训练好的模型的参数">查看训练好的模型的参数</h4>
+<h4 id="决策函数decision-function">决策函数（decision function）</h4>
+<h4 id="核函数kernel-function">核函数（kernel function）</h4>
+<p>优先使用‘rbf’调节参数，当特征的数量远远大于样本的数量的时候，考虑使用线性核函数。</p>
+<hr>
+<h4 id="随机梯度下降stochastic-gradient-descen">随机梯度下降（Stochastic Gradient Descen）</h4>
+<p>分类，回归 ##### 简介 随机梯度下降法适用于特征数据大于10的5次方，样本数量大于10的5次方的大规模数据的处理领域。</p>
+<h5 id="用途-1">用途</h5>
+<p>可以处理大规模数据和稀疏数据。</p>
+<h5 id="优点-1">优点</h5>
+<ul>
+<li>高效</li>
+<li>易于实现</li>
+</ul>
+<h5 id="缺点-1">缺点</h5>
+<ul>
+<li>需要很多超参数</li>
+<li>对特征的缩放敏感</li>
+</ul>
+<h5 id="使用方法-1">使用方法</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</div><div class="line">X = [[<span class="number">0.</span>, <span class="number">0.</span>], [<span class="number">1.</span>, <span class="number">1.</span>]]</div><div class="line">y = [<span class="number">0</span>, <span class="number">1</span>]</div><div class="line">clf = SGDClassifier()</div><div class="line">clf.fit(X, y) <span class="comment">#训练</span></div><div class="line">clf.predict([[<span class="number">2.</span>, <span class="number">2.</span>]])  <span class="comment">#预测</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> clf</div><div class="line">&gt;&gt;&gt;</div><div class="line">SGDClassifier(alpha=<span class="number">0.0001</span>, average=<span class="keyword">False</span>, class_weight=<span class="keyword">None</span>, epsilon=<span class="number">0.1</span>,</div><div class="line">       eta0=<span class="number">0.0</span>, fit_intercept=<span class="keyword">True</span>, l1_ratio=<span class="number">0.15</span>,</div><div class="line">       learning_rate=<span class="string">'optimal'</span>, loss=<span class="string">'hinge'</span>, n_iter=<span class="number">5</span>, n_jobs=<span class="number">1</span>,</div><div class="line">       penalty=<span class="string">'l2'</span>, power_t=<span class="number">0.5</span>, random_state=<span class="keyword">None</span>, shuffle=<span class="keyword">True</span>,</div><div class="line">       verbose=<span class="number">0</span>, warm_start=<span class="keyword">False</span>)</div><div class="line"></div><div class="line">&gt;&gt;&gt;clf.coef_  <span class="comment">#模型系数</span></div><div class="line">&gt;&gt;&gt;Out[<span class="number">31</span>]: array([[ <span class="number">9.91080278</span>,  <span class="number">9.91080278</span>]])</div><div class="line"></div><div class="line">&gt;&gt;&gt;clf.intercept_    <span class="comment">#截距</span></div><div class="line">&gt;&gt;&gt;array([<span class="number">-9.99002993</span>])</div></pre></td></tr></table></figure>
+<p><strong>参数</strong> - <code>alpha</code>=0.0001, - <code>average</code>=False, - <code>class_weight</code>=None, epsilon=0.1, - <code>eta0</code>=0.0, - <code>fit_intercept</code>=True, - <code>l1_ratio</code>=0.15, - <code>learning_rate</code>=‘optimal’, - <code>loss</code>=‘hinge’, - <code>n_iter</code>=5, n_jobs=1, - <code>penalty</code>=‘l2’, - <code>power_t</code>=0.5, - <code>random_state</code>=None, - <code>shuffle</code>=True, - <code>verbose</code>=0, - <code>warm_start</code>=False</p>
+<p><strong>属性</strong> - coef_ : array, shape (1, n_features) if n_classes == 2 else (n_classes,n_features);Weights assigned to the features.</p>
+<ul>
+<li>intercept_ : array, shape (1,) if n_classes == 2 else (n_classes,);Constants in decision function.</li>
+</ul>
+<h4 id="最近邻方法nearest-neighbors">最近邻方法（Nearest Neighbors）</h4>
+<p>如果一个样本在特征空间中的k个最相 似(即特征空间中最邻近)的样本中的大多数属于某一个类别，则该样本也属于这个类别.</p>
+<h5 id="简介-1">简介</h5>
+<p>scikit-learn实现了监督的和非监督的最近邻方法，决定最近邻的算法有<code>ball_tree</code>,<code>kd_tree</code>,<code>brute</code>,可以通过指定模型参数<code>algorithm</code>的值来指定到底使用哪一个算法。 主要功能是实现<strong><em>分类</em></strong>和<strong><em>回归</em></strong>。</p>
+<h5 id="用法">用法</h5>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> NearestNeighbors</div><div class="line">X = np.array([[<span class="number">-1</span>, <span class="number">-1</span>], [<span class="number">-2</span>, <span class="number">-1</span>], [<span class="number">-3</span>, <span class="number">-2</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">2</span>]])</div><div class="line">nbrs = NearestNeighbors(n_neighbors=<span class="number">2</span>, algorithm=<span class="string">'ball_tree'</span>).fit(X)</div></pre></td></tr></table></figure>
+<h3 id="模型持久化">模型持久化</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.externals <span class="keyword">import</span> joblib</div><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line">clf_l1_LR = LogisticRegression(C=<span class="number">0.1</span>, penalty=<span class="string">'l1'</span>, tol=<span class="number">0.01</span>)</div><div class="line">joblib.dump(clf_l1_LR, <span class="string">'LogisticRegression.model'</span>)</div></pre></td></tr></table></figure>
+<h3 id="结果的可视化">结果的可视化</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">plt.figure()</div><div class="line">plt.title(<span class="string">"VarianceThreshold For Feature Selection"</span>)</div><div class="line">plt.xlabel(<span class="string">"Number of features selected"</span>)</div><div class="line">plt.ylabel(<span class="string">"Cross validation score (nb of correct classifications)"</span>)</div><div class="line">plt.plot(lsvc_feature_num, lsvc_score)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h3 id="数据预处理">数据预处理</h3>
+<p><code>scikit-learn</code>提供了很多数据预处理的方法，使用的时候需要引入的包是<code>preprocessing</code>.</p>
+<p><strong>缩放scale</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> MinMaxScaler</div><div class="line"></div><div class="line"><span class="comment"># 根据最大值和最小值缩放到[0,1]范围</span></div><div class="line">min_max_scaler = MinMaxScaler()</div><div class="line">X_transformed = min_max_scaler.fit_transform(X)</div><div class="line"></div><div class="line"><span class="comment"># 数据标准化，使得均值为0，方差为1</span></div><div class="line">ss = StandardScaler()</div><div class="line">X_transformed = ss.fit_transform(X)</div><div class="line"></div><div class="line"><span class="comment"># 考虑离群点的缩放，首先排除离群点再缩放</span></div><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> RobustScaler</div><div class="line">robust_scaler = RobustScaler()</div><div class="line">X_transformed = robust_scaler.fit_transform(X)</div></pre></td></tr></table></figure>
+<p><strong>one-hot编码</strong></p>
+<p>对于离散的类别特征，可以使用<code>one-hot</code>编码来处理特征，这样处理之后的特征可以直接被一些学习器使用。该方法默认会根据类别的数量生成能够表示该类别的二进制编码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder</div><div class="line">enc = OneHotEncoder()</div><div class="line">transformed_data = enc.transform(data).toarray()</div></pre></td></tr></table></figure>
+<p><strong>特征组合</strong></p>
+<p>特征组合的一个最简单的尝试是生成多项式特征，例如，如果有两个特征x_1,x_2,多项式为2的特征会自动生成1, x1,x2,x1*x2,x1<sup>2,x2</sup>2 这些特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> PolynomialFeatures</div><div class="line"></div><div class="line">poly = PolynomialFeatures(<span class="number">2</span>)</div><div class="line">X_transformed = poly.fit_transform(X)</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/python/" rel="tag">#python</a>
+          
+            <a href="/hexoblog/tags/scikit-learn/" rel="tag">#scikit-learn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/05/14/认知神经科学专题/fMRI相关的资源汇总/" rel="next" title="fMRI相关的资源汇总">
+                <i class="fa fa-chevron-left"></i> fMRI相关的资源汇总
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/05/15/机器学习专题/机器学习_时间序列预测の广告效果预测/" rel="prev" title="机器学习_时间序列预测の广告效果预测">
+                机器学习_时间序列预测の广告效果预测 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#预测结果与真实结果的比较"><span class="nav-number">1.</span> <span class="nav-text">预测结果与真实结果的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#划分数据集"><span class="nav-number">2.</span> <span class="nav-text">划分数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征选择方法"><span class="nav-number">3.</span> <span class="nav-text">特征选择方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#univariate-feature-selection-单变量特征选择"><span class="nav-number">3.1.</span> <span class="nav-text">Univariate feature selection （单变量特征选择）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要的选择策略"><span class="nav-number">3.2.</span> <span class="nav-text">主要的选择策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具体应用"><span class="nav-number">3.3.</span> <span class="nav-text">具体应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursive-feature-elimination-递归特征消除"><span class="nav-number">3.4.</span> <span class="nav-text">Recursive feature elimination （递归特征消除）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#feature-selection-using-selectfrommodel从模型中选择特征"><span class="nav-number">3.5.</span> <span class="nav-text">Feature selection using SelectFromModel(从模型中选择特征)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器"><span class="nav-number">4.</span> <span class="nav-text">分类器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#支持向量机svm"><span class="nav-number">4.1.</span> <span class="nav-text">支持向量机（SVM）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">4.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用途"><span class="nav-number">4.1.2.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优点"><span class="nav-number">4.1.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">4.1.4.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用方法"><span class="nav-number">4.1.5.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#二分类"><span class="nav-number">4.1.5.1.</span> <span class="nav-text">二分类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#多分类"><span class="nav-number">4.1.5.2.</span> <span class="nav-text">多分类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型参数说明"><span class="nav-number">4.2.</span> <span class="nav-text">模型参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#linearsvc"><span class="nav-number">4.2.1.</span> <span class="nav-text">LinearSVC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#svc"><span class="nav-number">4.2.2.</span> <span class="nav-text">SVC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nusvc"><span class="nav-number">4.2.3.</span> <span class="nav-text">NuSVC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看训练好的模型的参数"><span class="nav-number">4.3.</span> <span class="nav-text">查看训练好的模型的参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#决策函数decision-function"><span class="nav-number">4.4.</span> <span class="nav-text">决策函数（decision function）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#核函数kernel-function"><span class="nav-number">4.5.</span> <span class="nav-text">核函数（kernel function）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降stochastic-gradient-descen"><span class="nav-number">4.6.</span> <span class="nav-text">随机梯度下降（Stochastic Gradient Descen）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#用途-1"><span class="nav-number">4.6.1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#优点-1"><span class="nav-number">4.6.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点-1"><span class="nav-number">4.6.3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用方法-1"><span class="nav-number">4.6.4.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最近邻方法nearest-neighbors"><span class="nav-number">4.7.</span> <span class="nav-text">最近邻方法（Nearest Neighbors）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介-1"><span class="nav-number">4.7.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#用法"><span class="nav-number">4.7.2.</span> <span class="nav-text">用法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型持久化"><span class="nav-number">5.</span> <span class="nav-text">模型持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果的可视化"><span class="nav-number">6.</span> <span class="nav-text">结果的可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理"><span class="nav-number">7.</span> <span class="nav-text">数据预处理</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/';
+      var disqus_title = "深度学习_Scikit-Learn机器学习算法的使用";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/05/14/机器学习专题/机器学习_Scikit-Learn使用技巧/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,1199 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="matplotlib," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="matplotlib">
+<meta name="keywords" content="matplotlib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习_Matplolib使用技巧">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="matplotlib">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/matplotlib.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_3_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_5_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_7_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_9_1.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_10_1.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_12_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_14_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_16_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_18_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_20_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_22_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/output_25_0.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/boxplot.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/heatmap.jpg">
+<meta property="og:updated_time" content="2017-07-31T15:02:04.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习_Matplolib使用技巧">
+<meta name="twitter:description" content="matplotlib">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/matplotlib.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/"/>
+
+  <title> 机器学习_Matplolib使用技巧 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习_Matplolib使用技巧
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-11T11:11:36+08:00" content="2016-07-11">
+              2016-07-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/" class="leancloud_visitors" data-flag-title="机器学习_Matplolib使用技巧">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div class="figure">
+<img src="matplotlib.png" alt="matplotlib">
+<p class="caption">matplotlib</p>
+</div>
+<a id="more"></a>
+<p>　　Matplotlib是一个使用Python实现的画图函数库。它可以以Python脚本，或者IPython Shell的形式被被使用。它是最著名的python绘图库，它提供了一整套和Matlab相似的命令API，十分适合交互式的进行制图。而且也可以方便的将它作为绘图控件，嵌入到GUI程序中去。它的文档相当完备，并且Gallery页面中有上百幅缩略图，打开之后都有源程序。因此如果你需要绘制某种类型的图，只需要在这个页面中浏览/复制/粘贴一下，基本上都能搞定。 　　Matplotlib官方网站：<a href="http://matplotlib.org/" class="uri" target="_blank" rel="external">http://matplotlib.org/</a> 　　Gallery页面地址：<a href="http://matplotlib.org/gallery.html" class="uri" target="_blank" rel="external">http://matplotlib.org/gallery.html</a></p>
+<h2 id="pyplot">pyplot</h2>
+<p>　　pyplot是一个仿照MATLAB画图的接口设计的一个画图的库，接口的函数名称和使用规则都和MATLAB类似。</p>
+<h3 id="引入">引入</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div></pre></td></tr></table></figure>
+<h3 id="画线">画线</h3>
+<p><code>plt.plot(x,y,commond)</code> x表示横坐标的取值，y表示纵坐标的取值，commond是可选的控制参数。如果只传递一个参数，例如plot(a), a被认为是纵坐标，横坐标为从0开始的自然数 0,1,2,3,… 还可以以两个或者三个参数为一组传递参数进入plot,这样可以一次画多条线段，<code>plot(x1,y1,x2,y2,x3,y3)</code></p>
+<blockquote>
+<p>commond的取值： b- : 蓝色直线 ro : 红色圆点 r– : 红色虚线 bs : 蓝色实心方框 g^ : 绿色实心三角</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line">plt.plot([<span class="number">8</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">7</span>])</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">2</span>],<span class="string">'go'</span>)</div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>],<span class="string">'r--'</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>],<span class="string">'r^'</span>,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>],<span class="string">'rs'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_3_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="控制样式">控制样式</h3>
+<ol style="list-style-type: decimal">
+<li>设置横坐标和纵坐标的取值范围：plt.axis([xmin.xmax,ymin,ymax])</li>
+<li><p>设置线宽：<code>plt.plot(x,y,linewidth = 2)</code> 或者使用set方法：<code>line, = plot(x,y,'-')</code> <code>line.set_antialiased(False)</code> <code>plt.setp(lines, color='r', linewidth=2.0)</code> 要查看所有可以设置的属性，可以使用<code>plt.setp(lines)</code></p></li>
+<li><p>设置坐标标识：</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">plt.xlable(<span class="string">'x轴说明'</span>,fontsize=<span class="number">14</span>,color=<span class="string">'red'</span>)</div><div class="line">plt.ylabel(<span class="string">'y轴说明'</span>)</div><div class="line">plt.title(<span class="string">'图表标题'</span>)</div><div class="line">plt.text(<span class="string">'图表中说明性文字'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>) <span class="comment">#是否显示网格线</span></div></pre></td></tr></table></figure>
+<p>每个设置都有更多的选项可以控制显示的各个方面，详细的属性信息参考<a href="http://matplotlib.org/users/text_props.html#text-properties" target="_blank" rel="external">Text properties and layout</a>,关于图表上数学公式的书写，参考<a href="http://matplotlib.org/users/usetex.html#usetex-tutorial" target="_blank" rel="external">Text rendering With LaTeX</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'g'</span>, alpha=<span class="number">0.75</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</div><div class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</div><div class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_5_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="同时画多个图">同时画多个图</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">plt.figure(<span class="number">1</span>)  <span class="comment">#创建图对象，括号里面的数字是这个图的标识</span></div><div class="line">plt.subplot(<span class="number">211</span>) <span class="comment"># 创建子图，括号里的数字是numrows, numcols, fignum，这里这个子图所在的位置是第二行，第一列，在上面创建的那个figure1中。</span></div><div class="line">plt.plot(x1,y1)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">221</span>)</div><div class="line">plt.plot(x2,y2)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(t)</span>:</span></div><div class="line">    <span class="keyword">return</span> np.exp(-t) * np.cos(<span class="number">2</span>*np.pi*t)</div><div class="line"></div><div class="line">t1 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.1</span>)</div><div class="line">t2 = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.02</span>)</div><div class="line"></div><div class="line">plt.figure(<span class="number">2</span>)</div><div class="line">plt.subplot(<span class="number">211</span>)</div><div class="line">plt.plot(t1, f(t1), <span class="string">'bo'</span>, t2, f(t2), <span class="string">'k'</span>)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">212</span>)</div><div class="line">plt.plot(t2, np.cos(<span class="number">2</span>*np.pi*t2), <span class="string">'r--'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_7_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="图例">图例</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.patches <span class="keyword">as</span> mpatches</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">line_up, = plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], label=<span class="string">'Line 2'</span>)</div><div class="line">line_down, = plt.plot([<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>], label=<span class="string">'Line 1'</span>)</div><div class="line">plt.legend([line_up, line_down], [<span class="string">'Line AA'</span>, <span class="string">'Line BB'</span>])</div></pre></td></tr></table></figure>
+<p>&lt;matplotlib.legend.Legend at 0xb95ce10&gt;</p>
+<div class="figure">
+<img src="output_9_1.png" alt="png">
+<p class="caption">png</p>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.lines <span class="keyword">as</span> mlines</div><div class="line">blue_line = mlines.Line2D([], [], color=<span class="string">'blue'</span>, marker=<span class="string">'*'</span>,</div><div class="line">                          markersize=<span class="number">15</span>, label=<span class="string">'Blue stars'</span>)</div><div class="line">plt.legend(handles=[blue_line])</div></pre></td></tr></table></figure>
+<p>&lt;matplotlib.legend.Legend at 0xc4013c8&gt;</p>
+<div class="figure">
+<img src="output_10_1.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="各种图">各种图</h3>
+<h4 id="基本图表plot">基本图表(plot)</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">2.0</span>, <span class="number">0.01</span>)</div><div class="line">s = np.sin(<span class="number">2</span>*np.pi*t)</div><div class="line">plt.plot(t, s)</div><div class="line"></div><div class="line">plt.xlabel(<span class="string">'time (s)'</span>)</div><div class="line">plt.ylabel(<span class="string">'voltage (mV)'</span>)</div><div class="line">plt.title(<span class="string">'About as simple as it gets, folks'</span>)</div><div class="line">plt.grid(<span class="keyword">True</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_12_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h4 id="多个子图绘制在一起subplot">多个子图绘制在一起(subplot)</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Simple demo with multiple subplots.</div><div class="line">"""</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"></div><div class="line">x1 = np.linspace(<span class="number">0.0</span>, <span class="number">5.0</span>)</div><div class="line">x2 = np.linspace(<span class="number">0.0</span>, <span class="number">2.0</span>)</div><div class="line"></div><div class="line">y1 = np.cos(<span class="number">2</span> * np.pi * x1) * np.exp(-x1)</div><div class="line">y2 = np.cos(<span class="number">2</span> * np.pi * x2)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">plt.plot(x1, y1, <span class="string">'yo-'</span>)</div><div class="line">plt.title(<span class="string">'A tale of 2 subplots'</span>)</div><div class="line">plt.ylabel(<span class="string">'Damped oscillation'</span>)</div><div class="line"></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">plt.plot(x2, y2, <span class="string">'r.-'</span>)</div><div class="line">plt.xlabel(<span class="string">'time (s)'</span>)</div><div class="line">plt.ylabel(<span class="string">'Undamped'</span>)</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_14_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h4 id="直方图hist">直方图(hist)</h4>
+<ul>
+<li>下面这个程序展示了如何使用hist函数绘制直方图和如何绘制一条拟合直方图的曲线。 <code>n, bins, patches = hist(x,num_bins)</code> x 构建直方图的数据，x = [n_samples,] num_bins 要分成的组数，最后生成的直方图有num_bins个方框。 n 每个直方的值 bins 每个直方的起始位置 patches :Silent list of individual patches used to create the histogram or list of such list if multiple input datasets.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Demo of the histogram (hist) function with a few features.</div><div class="line"></div><div class="line">In addition to the basic histogram, this demo shows a few optional features:</div><div class="line"></div><div class="line">    * Setting the number of data bins</div><div class="line">    * The ``normed`` flag, which normalizes bin heights so that the integral of</div><div class="line">      the histogram is 1. The resulting histogram is a probability density.</div><div class="line">    * Setting the face color of the bars</div><div class="line">    * Setting the opacity (alpha value).</div><div class="line"></div><div class="line">"""</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.mlab <span class="keyword">as</span> mlab</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># example data</span></div><div class="line">mu = <span class="number">100</span>  <span class="comment"># mean of distribution</span></div><div class="line">sigma = <span class="number">15</span>  <span class="comment"># standard deviation of distribution</span></div><div class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</div><div class="line"></div><div class="line">num_bins = <span class="number">50</span></div><div class="line"><span class="comment"># the histogram of the data</span></div><div class="line">n, bins, patches = plt.hist(x, num_bins, normed=<span class="number">1</span>, facecolor=<span class="string">'green'</span>, alpha=<span class="number">0.5</span>)</div><div class="line"><span class="comment"># add a 'best fit' line</span></div><div class="line">y = mlab.normpdf(bins, mu, sigma)</div><div class="line">plt.plot(bins, y, <span class="string">'r--'</span>)</div><div class="line">plt.xlabel(<span class="string">'Smarts'</span>)</div><div class="line">plt.ylabel(<span class="string">'Probability'</span>)</div><div class="line">plt.title(<span class="string">r'Histogram of IQ: $\mu=100$, $\sigma=15$'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Tweak spacing to prevent clipping of ylabel</span></div><div class="line">plt.subplots_adjust(left=<span class="number">0.15</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_16_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h4 id="饼状图pie">饼状图(pie)</h4>
+<p><code>plt.pie(size,explode,labels,colors)</code> size: 绘制图的数据 explode: 分割出来显示的某个数据 lables:文字说明 colors: 饼状图对应部分的颜色</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"><span class="comment"># The slices will be ordered and plotted counter-clockwise.</span></div><div class="line">labels = <span class="string">'Frogs'</span>, <span class="string">'Hogs'</span>, <span class="string">'Dogs'</span>, <span class="string">'Logs'</span></div><div class="line">sizes = [<span class="number">15</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">10</span>]</div><div class="line">colors = [<span class="string">'yellowgreen'</span>, <span class="string">'gold'</span>, <span class="string">'lightskyblue'</span>, <span class="string">'lightcoral'</span>]</div><div class="line">explode = (<span class="number">0.1</span>, <span class="number">0</span>, <span class="number">0.2</span>, <span class="number">0</span>)  <span class="comment"># only "explode" the 2nd slice (i.e. 'Hogs')</span></div><div class="line"></div><div class="line">plt.pie(sizes, explode=explode, labels=labels, colors=colors,</div><div class="line">        autopct=<span class="string">'%1.1f%%'</span>, shadow=<span class="keyword">True</span>, startangle=<span class="number">90</span>)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_18_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h4 id="表格">表格</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plt.table(cellText=data,rowLabels=rows,colLabels=columns,loc=<span class="string">'bottom'</span>,bbox=[<span class="number">0.25</span>, <span class="number">-0.5</span>, <span class="number">0.5</span>, <span class="number">0.3</span>])</div></pre></td></tr></table></figure>
+<p>cellText: 表格中的数据 [n_rows,n_colums] rowLabels: 行标签 collabels: 列标签 loc: 相对于图表的位置，top,right,left,bottom bbox: 边距</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Demo of table function to display a table within a plot.</div><div class="line">"""</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">data = [[  <span class="number">100</span>,  <span class="number">200</span>,   <span class="number">300</span>  ],</div><div class="line">        [  <span class="number">200</span>,  <span class="number">100</span>,   <span class="number">50</span>   ],</div><div class="line">        [  <span class="number">40</span>,   <span class="number">200</span>,  <span class="number">100</span>   ],</div><div class="line">        [  <span class="number">100</span>,   <span class="number">200</span>,  <span class="number">300</span>  ]]</div><div class="line">y = np.array(data)</div><div class="line">y = y.reshape(<span class="number">1</span>,<span class="number">-1</span>)</div><div class="line">columns = (<span class="string">'Freeze'</span>, <span class="string">'Wind'</span>, <span class="string">'Flood'</span>, <span class="string">'Quake'</span>, <span class="string">'Hail'</span>)</div><div class="line">rows = [<span class="string">'%d year'</span> % x <span class="keyword">for</span> x <span class="keyword">in</span> (<span class="number">50</span>, <span class="number">20</span>, <span class="number">10</span>, <span class="number">5</span>)]</div><div class="line"></div><div class="line"><span class="comment"># Add a table at the bottom of the axes</span></div><div class="line">the_table = plt.table(cellText=data,</div><div class="line">                      rowLabels=rows,</div><div class="line">                      colLabels=columns,</div><div class="line">                      loc=<span class="string">'bottom'</span>,</div><div class="line">                      bbox=[<span class="number">0.25</span>, <span class="number">-0.5</span>, <span class="number">0.5</span>, <span class="number">0.3</span>])</div><div class="line"></div><div class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_20_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h4 id="极坐标下绘图">极坐标下绘图</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ax = plt.subplot(211, projection=&apos;polar&apos;)</div><div class="line">ax.plot(theta, r, color=&apos;r&apos;, linewidth=3)</div></pre></td></tr></table></figure>
+<p>projection=‘polar’ 指定是极坐标 theta： 横坐标 r: 纵坐标</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Demo of a line plot on a polar axis.</div><div class="line">"""</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line"></div><div class="line">r = np.arange(<span class="number">0</span>, <span class="number">3.0</span>, <span class="number">0.01</span>)</div><div class="line">theta = <span class="number">2</span> * np.pi * r</div><div class="line"></div><div class="line">ax = plt.subplot(<span class="number">211</span>, projection=<span class="string">'polar'</span>)</div><div class="line">ax.plot(theta, r, color=<span class="string">'r'</span>, linewidth=<span class="number">3</span>)</div><div class="line">ax.set_rmax(<span class="number">2.0</span>)</div><div class="line">ax.grid(<span class="keyword">True</span>)</div><div class="line">ax.set_title(<span class="string">"A line plot on a polar axis"</span>, va=<span class="string">'bottom'</span>)</div><div class="line"></div><div class="line">ax2 = plt.subplot(<span class="number">212</span>)</div><div class="line">ax2.plot(theta,r,color=<span class="string">'g'</span>,linewidth=<span class="number">2</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_22_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="颜色colormaps">颜色（Colormaps）</h3>
+<h3 id="动画animation">动画（animation）</h3>
+<ul>
+<li><code>import matplotlib.animation as animation</code></li>
+<li><code>animation.FuncAnimation(fig1, update_line, num, fargs=(data, l), interval=200, blit=True,repeat=False)</code></li>
+<li><code>FuncAnimation</code>是根据自定义函数生成动画的一个接口，</li>
+<li><code>fig1</code> 是画布，用<code>plt.figure()</code>生成</li>
+<li><code>uodate_line</code> 是更新图像的函数，一般返回的是一个<code>2D</code>或者<code>3D</code>的<code>line</code>对象，<code>FuncAnimation</code>会自动循环调用该函数设置图像显示的line,以达到动画的效果。</li>
+<li><code>num</code>是传入<code>update_line</code>的第一个参数，该参数会从0开始每次递增1，直到结束。</li>
+<li><code>fargs</code>可以传入额外的参数，这里我的<code>update_line</code>有三个参数，第一个是<code>num</code>,第二个和第三个就是靠指定<code>fargs</code>参数传入进去的，通过fargs传递的参数不会自动递增。</li>
+<li><code>interval</code> 指定调用<code>update_line</code>的间隔，就是动画间隔</li>
+<li><code>repeat</code> 设置动画播放完后是否重复</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> matplotlib.animation <span class="keyword">as</span> animation</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_line</span><span class="params">(num, data, line)</span>:</span></div><div class="line">    xxdata = data</div><div class="line">    yydata = <span class="number">4</span> * data + num</div><div class="line">    line.set_xdata(xxdata)</div><div class="line">    line.set_ydata(yydata)</div><div class="line">    <span class="keyword">return</span> line,</div><div class="line"></div><div class="line">fig1 = plt.figure()</div><div class="line">data = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</div><div class="line">l, = plt.plot([], [], <span class="string">'r-'</span>)</div><div class="line">plt.xlim(<span class="number">1</span>,<span class="number">3</span>)</div><div class="line">plt.ylim(<span class="number">1</span>,<span class="number">30</span>)</div><div class="line">plt.xlabel(<span class="string">'x'</span>)</div><div class="line">plt.ylabel(<span class="string">'y'</span>)</div><div class="line">plt.title(<span class="string">'test'</span>)</div><div class="line">line_ani = animation.FuncAnimation(fig1, update_line, <span class="number">25</span>, fargs=(data, l),</div><div class="line">                                   interval=<span class="number">200</span>, blit=<span class="keyword">True</span>,repeat=<span class="keyword">False</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<div class="figure">
+<img src="output_25_0.png" alt="png">
+<p class="caption">png</p>
+</div>
+<h3 id="配色">配色</h3>
+<p>不同种类的颜色，渐变色等的搭配，可以从<a href="http://colorbrewer2.org" target="_blank" rel="external">这里</a>生成。</p>
+<h2 id="统计绘图seaborn">统计绘图(seaborn)</h2>
+<p>需要各种带有统计量的图形的时候，一种选择是自己计算各种统计量，然后使用Matplotlib手动绘制，另外一种方法就是使用专门用来绘制统计图形的工具，好处是不需要自己计算各种统计量，只需要传入原始的数据，工具包会自己计算需要的统计量。一个比较流行的统计绘图工具是<a href="http://seaborn.pydata.org/" target="_blank" rel="external">seaborn</a>.</p>
+<h3 id="箱线图">箱线图</h3>
+<p>反应数据分布规律的一种图形，可以把数据的中位数，四分位数等都显示在一张图上。使用来观察数据分布的较好方法。图形类似下面这样。</p>
+<div class="figure">
+<img src="boxplot.png">
+
+</div>
+<p><code>seaborn</code>自带的函数支持<code>pandas.DataFrame</code>格式的数据，所以使用起来非常方便。但是如果想要把两个DataFrame每一列的数据作为对比，制作成箱线图，<code>seaborn</code>并没有提供这样的方法，需要修改DataFrame的格式，使之符合要求。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotBox</span><span class="params">(self,dflist,palette=<span class="string">"Set3"</span>,rotation=<span class="number">45</span>)</span>:</span></div><div class="line">       <span class="string">"""</span></div><div class="line">       绘制箱线图</div><div class="line"></div><div class="line">       Parameters</div><div class="line">       ----------</div><div class="line">       dflist : list of pandas.DataFrame, each of the DataFrame as a class and will be plot together</div><div class="line">       pallette : pallette in sns</div><div class="line">       rotation : x_lable rotation to show whole word</div><div class="line"></div><div class="line">       """</div><div class="line">       sdata =pd.Series()</div><div class="line">       sxx = pd.Series()</div><div class="line">       slabel = pd.Series()</div><div class="line"></div><div class="line">       <span class="keyword">for</span> i <span class="keyword">in</span> range(len(dflist)):</div><div class="line">           pdd = dflist[i]</div><div class="line">           columns = pdd.columns.values</div><div class="line">           ds = pd.Series([i+<span class="number">1</span>]*(pdd.shape[<span class="number">0</span>]*pdd.shape[<span class="number">1</span>]))</div><div class="line">           slabel = slabel.append(ds)</div><div class="line">           <span class="keyword">for</span> cc <span class="keyword">in</span> columns:</div><div class="line">               sdata = sdata.append(pdd[cc])</div><div class="line">               sxx = sxx.append(pd.Series([cc]*len(pdd[cc])))</div><div class="line"></div><div class="line">       snsdata = pd.DataFrame(&#123;<span class="string">"y"</span>:sdata.values,<span class="string">"x"</span>:sxx.values,<span class="string">"label"</span>:slabel&#125;)</div><div class="line">       sns.set(style=<span class="string">"ticks"</span>)</div><div class="line">       ax = sns.boxplot(data=snsdata,x=<span class="string">'x'</span>,y=<span class="string">'y'</span>,hue=<span class="string">'label'</span>,palette=palette)</div><div class="line">       ax.set_xticklabels(ax.xaxis.get_ticklabels(), rotation=rotation)</div><div class="line">       sns.despine(offset=<span class="number">10</span>, trim=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<h3 id="矩阵可视化">矩阵可视化</h3>
+<p>把矩阵的值作为颜色的取值，可视化的表示出矩阵的情况。图形类似下面这样：</p>
+<div class="figure">
+<img src="heatmap.jpg">
+
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line"></div><div class="line">sns.set(context=<span class="string">"paper"</span>, font=<span class="string">"monospace"</span>,palette=<span class="string">"Set3"</span>)</div><div class="line">f, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">10</span>))</div><div class="line"><span class="comment"># Draw the heatmap using seaborn</span></div><div class="line">sns.heatmap(matrix, vmax=<span class="number">.8</span>,square=<span class="keyword">True</span>,annot=<span class="keyword">True</span>, fmt=<span class="string">".1f"</span>,linewidths=<span class="number">.5</span>)</div><div class="line">ax.set_xticklabels(ax.xaxis.get_ticklabels(), rotation=<span class="number">90</span>)</div><div class="line">ax.set_yticklabels(ax.yaxis.get_ticklabels(), rotation=<span class="number">0</span>)</div></pre></td></tr></table></figure>
+<h2 id="牛逼的绘图">牛逼的绘图</h2>
+<p>http://www.bugman123.com/index.html</p>
+<h2 id="参考文献">参考文献</h2>
+<ol style="list-style-type: decimal">
+<li>https://www.zhihu.com/question/21664179</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/matplotlib/" rel="tag">#matplotlib</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2016/06/30/网站开发/前端_bootsharp学习笔记/" rel="next" title="Bootsharp学习笔记">
+                <i class="fa fa-chevron-left"></i> Bootsharp学习笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/" rel="prev" title="circos入门教程">
+                circos入门教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pyplot"><span class="nav-number">1.</span> <span class="nav-text">pyplot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入"><span class="nav-number">1.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#画线"><span class="nav-number">1.2.</span> <span class="nav-text">画线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制样式"><span class="nav-number">1.3.</span> <span class="nav-text">控制样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同时画多个图"><span class="nav-number">1.4.</span> <span class="nav-text">同时画多个图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图例"><span class="nav-number">1.5.</span> <span class="nav-text">图例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种图"><span class="nav-number">1.6.</span> <span class="nav-text">各种图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本图表plot"><span class="nav-number">1.6.1.</span> <span class="nav-text">基本图表(plot)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个子图绘制在一起subplot"><span class="nav-number">1.6.2.</span> <span class="nav-text">多个子图绘制在一起(subplot)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#直方图hist"><span class="nav-number">1.6.3.</span> <span class="nav-text">直方图(hist)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#饼状图pie"><span class="nav-number">1.6.4.</span> <span class="nav-text">饼状图(pie)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表格"><span class="nav-number">1.6.5.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#极坐标下绘图"><span class="nav-number">1.6.6.</span> <span class="nav-text">极坐标下绘图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色colormaps"><span class="nav-number">1.7.</span> <span class="nav-text">颜色（Colormaps）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动画animation"><span class="nav-number">1.8.</span> <span class="nav-text">动画（animation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配色"><span class="nav-number">1.9.</span> <span class="nav-text">配色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计绘图seaborn"><span class="nav-number">2.</span> <span class="nav-text">统计绘图(seaborn)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#箱线图"><span class="nav-number">2.1.</span> <span class="nav-text">箱线图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵可视化"><span class="nav-number">2.2.</span> <span class="nav-text">矩阵可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#牛逼的绘图"><span class="nav-number">3.</span> <span class="nav-text">牛逼的绘图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/';
+      var disqus_title = "机器学习_Matplolib使用技巧";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,1118 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="每种编程语言中都会有相关的位运算操作符，实现二进制的按位运算。 位运算有四种：与(&amp;amp;)，或(|)，非(~),异或(^) 熟悉每种位运算的特点，是做与位运算有关的题目的基础。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_位运算">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="每种编程语言中都会有相关的位运算操作符，实现二进制的按位运算。 位运算有四种：与(&amp;amp;)，或(|)，非(~),异或(^) 熟悉每种位运算的特点，是做与位运算有关的题目的基础。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/2017-03-21_222908.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/2017-03-21_223709.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/2017-03-21_223758.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:22.565Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_位运算">
+<meta name="twitter:description" content="每种编程语言中都会有相关的位运算操作符，实现二进制的按位运算。 位运算有四种：与(&amp;amp;)，或(|)，非(~),异或(^) 熟悉每种位运算的特点，是做与位运算有关的题目的基础。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/2017-03-21_222908.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/"/>
+
+  <title> 算法专题_位运算 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_位运算
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-21T11:12:12+08:00" content="2017-03-21">
+              2017-03-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/03/21/算法专题/算法专题_位运算/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/21/算法专题/算法专题_位运算/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/03/21/算法专题/算法专题_位运算/" class="leancloud_visitors" data-flag-title="算法专题_位运算">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>每种编程语言中都会有相关的位运算操作符，实现二进制的按位运算。 位运算有四种：与(&amp;)，或(|)，非(~),异或(^) 熟悉每种位运算的特点，是做与位运算有关的题目的基础。</p>
+<a id="more"></a>
+<h2 id="与">与(&amp;)</h2>
+<ul>
+<li><code>0&amp;0=0; 0&amp;1=0; 1&amp;0=0; 1&amp;1=1;</code></li>
+<li>仔细观察上面的操作，发现与操作的结果与二进制加法的进位规则非常一致。 <code>0+0=0 ; 0+1=0; 1+0=0; 1+1 = 1;</code> (此处等号后面的数字表示应该的进位)</li>
+<li><code>n = n&amp;(n-1)</code> 该操作的效果是把n的最后一个二进制1变为0. 此操作在涉及统计二进制数中1的个数的时候比较有用。</li>
+<li><code>n = n&amp;(~n+1)</code> 该操作的效果是把n的最右边的二进制1留下，其余的1全部置0.</li>
+<li><code>n = n&amp;(-n)</code> 该操作的效果是得到n的最后一个1</li>
+</ul>
+<h2 id="或">或(|)</h2>
+<ul>
+<li><code>0|0=0; 0|1=1; 1|0=1; 1|1=1;</code></li>
+<li>``</li>
+</ul>
+<h2 id="非">非(~)</h2>
+<ul>
+<li><code>~0=1; ~1=0</code></li>
+</ul>
+<h2 id="异或">异或(^)</h2>
+<ul>
+<li><code>0^0=0;1^1=0; 0^1=1;1^0=1;</code></li>
+<li>仔细观察上面的操作，发现异或操作的结果与二进制加法(忽略进位的情况下)规则一致。 <code>0+0=0;0+1=1;1+0=1;1+1=0;</code>(此处等号后面的数字是无进位加法的结果)</li>
+<li><code>a^0=a; a^a=0; a^a^a=a</code> 偶数个a异或的结果是0，奇数个a异或的结果是a.</li>
+<li><code>a^(a^b)=b;b^(a^b)=a;</code> 此规则可以用来交换两个数字，无需额外的空间</li>
+</ul>
+<h2 id="除法">除法</h2>
+<ul>
+<li><code>(a)/(a &amp; (-a));</code>, 去除末尾的若干个0. 例如 1011000 -&gt; 1011</li>
+</ul>
+<h2 id="相关的应用">相关的应用</h2>
+<h3 id="交换两个整数不适用额外的空间">交换两个整数(不适用额外的空间)</h3>
+<p>此题是典型的利用异或运算的性质求解的题。 - <code>a^a = 0;  a^0 = a;</code> - <code>a^(a^b) = b ; b^(a^b) = a ;</code> 具体的交换代码如下： <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = a^b;</div><div class="line">b = a^b;</div><div class="line">a = a^b;</div></pre></td></tr></table></figure></p>
+<p>分析一下这三行代码，我们把原来的a,b 记作a1,b1;把交换之后的记作a2,b2;最后要达到的结果是a2=b1;b2=a1; 第一行，<code>a=a^b</code>, 此时a的值已经改变，变成了<code>a^b</code>的值； 第二行变成<code>b = (a^b)^b = a</code>, 此时b的值已经改变，变成了a的值。 第三行，此时的<code>a=a^b</code>,而<code>b=a</code>,所以 <code>a=a^b=(a^b)^a=b</code>,a变成了b的值。 通过分析可以发现，其实充当暂存中间结果的变量是a, a先存储了a^b的值，然后去跟b异或得到a,再跟得到的a异或得到b. 而一般的需要第三个变量做中介的交换思路是首先把b存起来，因为在b=a时，b的值丢失了。之所以利用异或不怕b的值丢失， 是因为可以利用得到的a再次得到b.</p>
+<h3 id="不用比较找出两个数中较大的数">不用比较找出两个数中较大的数</h3>
+<p><img src="2017-03-21_222908.png" alt="2017-03-21_222908.png"> 不用比较运算符比较两个数字的大小，可以使用减法运算符。 如果也不能使用减法运算符，可以考虑只使用位运算实现减法运算。 <code>a-b = c</code> 如果<code>c&gt;0,a&gt;b;</code> 如果<code>c&lt;0;c&lt;b;</code>但是不幸的是，还是用到的<code>&lt;</code>或者<code>&gt;</code> C++中有函数<code>signbit(x)</code>可以返回x的符号，使用的时候需要注意包含头文件<code>#include &lt;cmath&gt;</code> 另外需要注意的问题就是整数的溢出，<code>a-b</code>如果a是正数，b是负数，就会变成两个整数相加，这时候如果二者都接近 INT类型表示的边界，就会超出能够表示的最大的数的范围，产生正溢出。 同理，如果a是负数,b是正数，同样可能超出 能够表示的最小的负数的范围，产生负溢出。 幸运的是，如果知道二者异号，很容易判断谁大谁小。所以先判断是否是异号比较好，可以防止数据溢出产生错误。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">//找出两个数中较大的数字，不使用任何比较运算</span></div><div class="line"><span class="comment">// 不比较两个元素，只能做差</span></div><div class="line"><span class="comment">//两个数做差或涉及到溢出的问题</span></div><div class="line"><span class="comment">// a - b 如果a 接近最大的整数，b接近最大的负数， 就会溢出</span></div><div class="line"><span class="comment">// a- b 如果a 接近最大的负数，b接近最大的正数，也会溢出</span></div><div class="line"><span class="comment">//所以先判断正负，再做差</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getMax</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(signbit(a) &amp;&amp; !signbit(b))&#123;<span class="keyword">return</span> b;&#125;</div><div class="line">    <span class="keyword">if</span>(signbit(b) &amp;&amp; !signbit(a))&#123;<span class="keyword">return</span> a;&#125;</div><div class="line">    <span class="keyword">if</span>(signbit(a-b))&#123;<span class="keyword">return</span> b;&#125;</div><div class="line">    <span class="keyword">return</span> a;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;getMax(<span class="number">5435651</span>,<span class="number">-2393</span>)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="不使用任何算术运算只使用位运算实现加减乘除">不使用任何算术运算只使用位运算实现加减乘除</h3>
+<ul>
+<li><p>加法运算的思路 不考虑进位的情况下， <code>a^b</code> 就是<code>a+b</code>的结果 只考虑进位的情况下， <code>(a&amp;b)&lt;&lt;1</code> 就是<code>a+b</code>的结果 所以综合二者，就能得到加法的正确答案。</p></li>
+<li><p>减法的思路 <code>a-b = a+(-b);</code> 而<code>-b = ~b+1</code> 每个二进制位取反再加1.</p></li>
+<li><p>乘法运算的思路 a*b 把b看成二进制位，每次把a左移（相当于乘以2），看b对应的位置上是否是1， 是1就将结果加到最终的结果上，是0就不加，返回最后的结果。</p></li>
+<li><p>除法运算的思路 <img src="2017-03-21_223709.png" alt="2017-03-21_223709.png"> <img src="2017-03-21_223758.png" alt="2017-03-21_223758.png"> <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 用位运算实现加法运算</div><div class="line"> * 按照二进制位加法 0 + 0 = 0 | 0 + 1 = 1 | 1 + 1 = 0</div><div class="line"> * 如果不考虑进位，该规则正好与异或相同</div><div class="line"> *</div><div class="line"> * 考虑什么时候会产生进位 0 + 0 = 0 0 + 1 = 0 1+ 1 = 1</div><div class="line"> * 该规则正好与  &amp; 运算一致</div><div class="line"> *</div><div class="line"> * 所以分别考虑无进位相加和只考虑进位的结果  加在一起就好了。</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> sum =a ;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="number">0</span>)&#123;</div><div class="line">        sum = a ^ b;</div><div class="line">        b = (a &amp; b) &lt;&lt; <span class="number">1</span>;</div><div class="line">        a = sum;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> a;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 用位实现减法运算， 不能用-运算符</div><div class="line"> * @param a</div><div class="line"> * @param b</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">minus2</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="comment">// a - b == a + (-b)</span></div><div class="line">    <span class="comment">// -b == ~b + 1</span></div><div class="line">    add(a,add(~b,<span class="number">1</span>));</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 用位运算实现乘法</div><div class="line"> *</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">cheng</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(b!=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(b&amp;<span class="number">1</span>!=<span class="number">0</span>)&#123;</div><div class="line">            sum = add(sum,a);</div><div class="line">        &#125;</div><div class="line">        a&lt;&lt;=<span class="number">1</span>;</div><div class="line">        b&gt;&gt;=<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; cheng(<span class="number">-20</span>,<span class="number">500</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p></li>
+</ul>
+<h3 id="整数的二进制表达中有多少个1">整数的二进制表达中有多少个1</h3>
+<p>题目： 给定一个32位的整数，可0，可正，可负，返回该整数的二进制表达中有多少个1. 第一种方法是每次右移，然后统计1的个数，这种方法需要统计32次。 第二种方法只有原来数字中有多少个1有关，1越少速度越快。 n = n&amp;(n-1) 该操作可以抹掉n最右边的1 n = n&amp;(~n+1) 该操作可以得到n最右侧的1 使用上面的任意一种操作，可以设计算法实现只与1的个数有关的算法。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 统计整数的二进制表达中有多少个1</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</div><div class="line">   <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(a!=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(a&amp;<span class="number">1</span> == <span class="number">1</span>)&#123;</div><div class="line">            sum++;</div><div class="line">        &#125;</div><div class="line">        a = a&gt;&gt;<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * n&amp;(n-1)的作用就是消除n最右边的1</div><div class="line"> * @param a</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSumA</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(a!=<span class="number">0</span>)&#123;</div><div class="line">        a = a&amp;(a<span class="number">-1</span>);</div><div class="line">        ++sum;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; getSumA(<span class="number">8</span>)&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="找出一个只出现一次的数字">找出一个只出现一次的数字</h3>
+<p>题目： 一个整数数组中，只有一个数字只出现了一次，其他所有数字都出现的两次，找出这个出现一次的数字。 变种： 一个整数数组中，只有一个数字出现了奇数次，其他所有的数字都出现了偶数次，找出这个出现奇数次的数字。 了解异或运算特点，<code>a^a = 0;  a^0 = a; a^a^a = a;</code> 出现偶数次的数在异或运算下都是0，出现奇数次的数异或之后就是它本身。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 只有一个数字出现了奇数次，其余的数字都出现了偶数次，找出这个数字</div><div class="line"> * 找出这个数字</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">research</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> re = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a:v)&#123;</div><div class="line">        re = re ^ a;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个题目还可以从另外一个角度去理解，K个K进制的数字如果忽略进位相加的话，结果一定是0.那么nK个K进制的数字相加的话，结果 也一定是0. 而异或恰好是二进制无进位相加的实现。 了解了这一点，如果我们能够像异或这样，实现任意的K进制数无进位相加的结果，就可以解决下面这样的问题： 在其他数字都出现K次的数组中找出只出现一次的数字。</p>
+<h3 id="找出两个只出现一次的数字">找出两个只出现一次的数字</h3>
+<p>题目：一个整数数组中，只有两个数字只出现了一次，其他所有数字都出现的两次，找出这两个数字。 思路：异或一遍之后得到的结果是a^b， a,b必然有一位是不同的(如果结果是0，那么a=b，说明并没有两个只出现一次的数字)。 根据这个二进制位将原来的数据分成两组，分别异或一遍即可得到这两个数字。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 只有两个数出现了奇数次，找出这两个数</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; research2(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v)&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">int</span> r1 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : v)&#123;</div><div class="line">        r1 = r1 ^ i;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> bit1 = r1 &amp; (~r1 +<span class="number">1</span>);</div><div class="line">    <span class="keyword">int</span> ab = <span class="number">0</span>; <span class="comment">// 现在r1保存的是两个出现奇数次的数的异或</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> j : v)&#123;</div><div class="line">        <span class="keyword">if</span>((j&amp;bit1) != <span class="number">0</span>)&#123;</div><div class="line">           ab = ab ^ j;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    result.push_back(ab);</div><div class="line">    result.push_back(ab^r1);</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="找出三个只出现一次的数字">找出三个只出现一次的数字</h3>
+<p>题目：一个整数数组中，只有三个数字只出现了一次，其他所有数字都出现的两次，找出这三个数字。 思路：整体异或一遍，得到<code>x=a^b^c</code>. 设<code>f(x)</code>表示获取x的最后一位二进制1，例如<code>f(10100)=00100</code>. <code>n = f(x^a)^f(x^b)^f(x^c)</code>, 设n的最后一个二进制位1在第m位上。则有<code>x^a,x^b,x^c</code>只有一个数字在第m位上是1，其余的两个数字在第m位上都是0. (具体的推导过程参考<a href="http://zhedahht.blog.163.com/blog/static/25411174201283084246412/" target="_blank" rel="external">这里</a>).</p>
+<p>算法步骤：</p>
+<ol style="list-style-type: decimal">
+<li><code>abc = 0;  循环一遍：abc^=v[i]</code> , 得到<code>x=a^b^c</code>;</li>
+<li><code>g1 = 0; 循环一遍：g1^=getLastOne(abc^v[i]);</code>, 得到上面提到的n.</li>
+<li><code>g1 = getLastOne(g1)</code>, 得到分界数字，上面提到的第m位置1的数字。</li>
+<li>把所有满足<code>getLastOne( v[i] ^ abc ) == g1</code>条件的分成一组，该组中只包含<code>a,b,c</code>三个数字中的一个数字，异或一遍，得到a.</li>
+<li>剩下的就是找到两个数字了。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getLastOne</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> n &amp; -(n<span class="number">-1</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> &amp;a,<span class="keyword">int</span> &amp;b,<span class="keyword">int</span> &amp;c)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(v.size() == <span class="number">0</span>) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> abc = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        abc = abc ^ v[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> g1 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        g1 = g1 ^ getLastOne(abc^v[i]);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// g1 只有1位是1，a,b,c中只有一个数字的这一位是1</span></div><div class="line">    g1 = getLastOne(g1);</div><div class="line">    a = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        <span class="keyword">if</span>(getLastOne( v[i] ^ abc ) == g1)&#123;</div><div class="line">            a = a ^ v[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> bc = abc ^ a;</div><div class="line">    <span class="keyword">int</span> g2 = getLastOne(bc);</div><div class="line">    b = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        <span class="keyword">if</span>(v[i]&amp;g2 &amp;&amp; v[i]!=a)&#123;</div><div class="line">            b = b ^ v[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    c = bc ^ b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在其他数字都出现k次的数组中找到只出现一次的数">在其他数字都出现K次的数组中找到只出现一次的数</h3>
+<p>这里要明白一个规律，K个相同的K进制的数无进位相加的话，结果必然是0，因为所有是0的位还是0，所有不是0的位都加到了需要进位，除去进位，就是0. 明白了上面的一点，这个问题就容易解决了。首先把所有的数字转换成K进制，然后实现无进位相加的函数,再把结果转换回十进制输出即可。</p>
+<p>另外一种解法：</p>
+<p>可以统计所有数字每个二进制位上1的个数。然后每个二进制位对K取余，哪些出现K次的数字累加到对应位上的和肯定是K的倍数，取余之后就是0.剩下来的就是那个只出现一次的数字。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将一个十进制的数转换成K进制</div><div class="line"> * @param n</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; Kin(<span class="keyword">int</span> n,<span class="keyword">int</span> k)&#123;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">while</span>(n/k != <span class="number">0</span>)&#123;</div><div class="line">        result.push_front(n%k);</div><div class="line">        n = n / k;</div><div class="line">    &#125;</div><div class="line">    result.push_front(n);</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 将K进制的deque转换成10进制</div><div class="line"> * @param v</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Kinverse</span><span class="params">(<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> s = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(!v.empty())&#123;</div><div class="line">        s += v.back() * <span class="built_in">std</span>::<span class="built_in">pow</span>(<span class="keyword">float</span>(k),i);</div><div class="line">        ++i;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> s;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 实现两个vector按照K进制相加，忽略进位</div><div class="line"> * @param v1</div><div class="line"> * @param v2</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; addV(<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; v1,<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; v2,<span class="keyword">int</span> k)&#123;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">if</span>(v1.size() &lt; v2.size())&#123;</div><div class="line">        <span class="keyword">auto</span> tmp = v1;</div><div class="line">        v1 = v2;</div><div class="line">        v2 = tmp;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!v2.empty())&#123;</div><div class="line">        result.push_front( (v1.back() + v2.back() ) % k );</div><div class="line">        v1.pop_back();</div><div class="line">        v2.pop_back();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!v1.empty())&#123;</div><div class="line">        result.push_front( v1.back() );</div><div class="line">        v1.pop_back();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * 实现v中的十进制数按照K进制相加，忽略进位，返回和</div><div class="line"> * @param v</div><div class="line"> * @param k</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Kplus</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">    <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; result;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i : v)&#123;</div><div class="line">        result = addV(result,Kin(i,k),k);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> Kinverse(result,k);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"><span class="comment">//    vector&lt;int&gt; v = &#123;1,2,2,3,3,4,4,5,5,70&#125;;</span></div><div class="line"><span class="comment">//    auto reuslt = research2(v);</span></div><div class="line"><span class="comment">//    std::cout &lt;&lt; reuslt[0] &lt;&lt;" "&lt;&lt;reuslt[1] &lt;&lt; std::endl;</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;Kplus(v,<span class="number">10</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; counts(<span class="number">64</span>,<span class="number">0</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> tmp = v[i];</div><div class="line">        <span class="keyword">while</span>(tmp)&#123;</div><div class="line">            <span class="keyword">if</span>(tmp&amp;<span class="number">1</span>)&#123;</div><div class="line">                counts[index]++;</div><div class="line">            &#125;</div><div class="line">            tmp = tmp&gt;&gt;<span class="number">1</span>;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();i++)&#123;</div><div class="line">        counts[i] = counts[i] % k;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> number = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> base = <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;counts.size();i++)&#123;</div><div class="line">        number += counts[i] * base;</div><div class="line">        base  = base *<span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> number;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="快速的求一个整数的n次方">快速的求一个整数的N次方</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bitset&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="comment">/**</span></div><div class="line"> * f(n) = f(n-1) + f(n-2)</div><div class="line"> * 1 1 2 3 5 8 ...</div><div class="line"> * 要求实现O(logn)的算法</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNum</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(i==<span class="number">0</span>)&#123;</div><div class="line">            v.insert(v.end(),<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(i==<span class="number">1</span>)&#123;</div><div class="line">            v.insert(v.end(),<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            v.insert(v.end(),v[i<span class="number">-2</span>]+v[i<span class="number">-1</span>]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> i:v)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> v.back();</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> *</div><div class="line"> * @param n</div><div class="line"> * @return</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNum2</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(n!=<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">int</span> s = n&amp;<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(s==<span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">double</span> t = powf(<span class="number">2</span>,i);</div><div class="line">            sum += powf(a,t);</div><div class="line">        &#125;</div><div class="line">        n&gt;&gt;<span class="number">1</span>;</div><div class="line">        ++i;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;sum&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">3</span>;</div><div class="line">    <span class="keyword">int</span> n = <span class="number">5</span>;</div><div class="line">    <span class="keyword">while</span>(n!=<span class="number">0</span>)&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=0&amp;id=631401164&amp;auto=1&amp;height=430">
+</iframe>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/03/21/算法专题/算法专题_矩阵和图/" rel="next" title="矩阵和用矩阵表示的图的相关问题">
+                <i class="fa fa-chevron-left"></i> 矩阵和用矩阵表示的图的相关问题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/03/22/收藏夹/博客集锦/" rel="prev" title="博客收藏">
+                博客收藏 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#与"><span class="nav-number">1.</span> <span class="nav-text">与(&)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#或"><span class="nav-number">2.</span> <span class="nav-text">或(|)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非"><span class="nav-number">3.</span> <span class="nav-text">非(~)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异或"><span class="nav-number">4.</span> <span class="nav-text">异或(^)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除法"><span class="nav-number">5.</span> <span class="nav-text">除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关的应用"><span class="nav-number">6.</span> <span class="nav-text">相关的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交换两个整数不适用额外的空间"><span class="nav-number">6.1.</span> <span class="nav-text">交换两个整数(不适用额外的空间)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不用比较找出两个数中较大的数"><span class="nav-number">6.2.</span> <span class="nav-text">不用比较找出两个数中较大的数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不使用任何算术运算只使用位运算实现加减乘除"><span class="nav-number">6.3.</span> <span class="nav-text">不使用任何算术运算只使用位运算实现加减乘除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数的二进制表达中有多少个1"><span class="nav-number">6.4.</span> <span class="nav-text">整数的二进制表达中有多少个1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出一个只出现一次的数字"><span class="nav-number">6.5.</span> <span class="nav-text">找出一个只出现一次的数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出两个只出现一次的数字"><span class="nav-number">6.6.</span> <span class="nav-text">找出两个只出现一次的数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出三个只出现一次的数字"><span class="nav-number">6.7.</span> <span class="nav-text">找出三个只出现一次的数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在其他数字都出现k次的数组中找到只出现一次的数"><span class="nav-number">6.8.</span> <span class="nav-text">在其他数字都出现K次的数组中找到只出现一次的数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速的求一个整数的n次方"><span class="nav-number">6.9.</span> <span class="nav-text">快速的求一个整数的N次方</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/03/21/算法专题/算法专题_位运算/';
+      var disqus_title = "算法专题_位运算";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/03/21/算法专题/算法专题_位运算/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

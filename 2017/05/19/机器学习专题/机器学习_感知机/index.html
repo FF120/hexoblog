@@ -1,0 +1,1166 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="perception," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="感知机是神经网络的基本组成单元，这里有一篇文章是从零基础开始介绍感知机的，本文就是参考她实现的感知机。https://www.zybuluo.com/hanbingtao/note/433855">
+<meta name="keywords" content="perception">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习_感知机">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="感知机是神经网络的基本组成单元，这里有一篇文章是从零基础开始介绍感知机的，本文就是参考她实现的感知机。https://www.zybuluo.com/hanbingtao/note/433855">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/2017-05-19_145930.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:05.348Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习_感知机">
+<meta name="twitter:description" content="感知机是神经网络的基本组成单元，这里有一篇文章是从零基础开始介绍感知机的，本文就是参考她实现的感知机。https://www.zybuluo.com/hanbingtao/note/433855">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/2017-05-19_145930.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/"/>
+
+  <title> 机器学习_感知机 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习_感知机
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-19T14:40:18+08:00" content="2017-05-19">
+              2017-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/19/机器学习专题/机器学习_感知机/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/" class="leancloud_visitors" data-flag-title="机器学习_感知机">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>感知机是神经网络的基本组成单元，这里有一篇文章是从零基础开始介绍感知机的，本文就是参考她实现的感知机。<a href="https://www.zybuluo.com/hanbingtao/note/433855" class="uri" target="_blank" rel="external">https://www.zybuluo.com/hanbingtao/note/433855</a></p>
+<a id="more"></a>
+<h2 id="自己动手实现感知机">自己动手实现感知机</h2>
+<p>感知机是只有一层功能神经元的最简单的神经网络，它只能处理简单的线性分类。它的基本形式是：</p>
+<div class="figure">
+<img src="2017-05-19_145930.png" alt="perception">
+<p class="caption">perception</p>
+</div>
+<p>设 <span class="math inline">\(x\)</span> 表示输入向量，<span class="math inline">\(y\)</span> 表示输出，感知机其实就是实现了以下的函数的结构：</p>
+<p><span class="math display">\[
+y = f(w \times x + b)
+\]</span></p>
+<p>其中，<span class="math inline">\(w\)</span> 是一个和 <span class="math inline">\(x\)</span> 长度相同的向量，代表每个 <span class="math inline">\(x_i\)</span> 的权重，<span class="math inline">\(b\)</span> 是一个实数，表示偏置。<span class="math inline">\(f(x)\)</span> 是任意一个定义在实数域上的函数，输入是一个实数，输出是一个实数。</p>
+<p>感知机的<strong>学习</strong>就是根据给出的 <span class="math inline">\(x\)</span> 和对应的 <span class="math inline">\(y\)</span>, 求解出参数 <span class="math inline">\(w\)</span> 和偏置 <span class="math inline">\(b\)</span>. 感知机的<strong>预测</strong>就是利用训练好的模型( <span class="math inline">\(w\)</span> 和 <span class="math inline">\(b\)</span> 已经确定)，给出 <span class="math inline">\(x\)</span>, 求解 <span class="math inline">\(y\)</span>.</p>
+<p>开始的时候，<span class="math inline">\(w\)</span> 和 <span class="math inline">\(b\)</span> 都初始化为0，用python代码表示就是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_num, activator)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        初始化感知器，设置输入参数的个数，以及激活函数。</div><div class="line">        激活函数的类型为double -&gt; double</div><div class="line">        '''</div><div class="line">        self.activator = activator</div><div class="line">        <span class="comment"># 权重向量初始化为0</span></div><div class="line">        self.weights = [<span class="number">0.0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(input_num)]</div><div class="line">        <span class="comment"># 偏置项初始化为0</span></div><div class="line">        self.bias = <span class="number">0.0</span></div></pre></td></tr></table></figure>
+<p>其中，<code>input_num</code>表示向量 <span class="math inline">\(x\)</span> 包含多少个数字，<code>activator</code> 是上式中的 <span class="math inline">\(f(x)\)</span>.</p>
+<p>感知机的预测就是在已知 <span class="math inline">\(w\)</span> 和 <span class="math inline">\(b\)</span> 的情况下， 计算 <span class="math inline">\(y\)</span>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, input_vec)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        输入向量，输出感知器的计算结果</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把input_vec[x1,x2,x3...]和weights[w1,w2,w3,...]打包在一起</span></div><div class="line">        <span class="comment"># 变成[(x1,w1),(x2,w2),(x3,w3),...]</span></div><div class="line">        <span class="comment"># 然后利用map函数计算[x1*w1, x2*w2, x3*w3]</span></div><div class="line">        <span class="comment"># 最后利用reduce求和</span></div><div class="line">        <span class="keyword">return</span> self.activator(</div><div class="line">            reduce(<span class="keyword">lambda</span> a, b: a + b,</div><div class="line">                   map(<span class="keyword">lambda</span> (x, w): x * w,</div><div class="line">                       zip(input_vec, self.weights))</div><div class="line">                , <span class="number">0.0</span>) + self.bias)</div></pre></td></tr></table></figure>
+<p>感知机的训练就是在给出 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 的情况下，一步一步调整 <span class="math inline">\(w\)</span> 和 <span class="math inline">\(b\)</span> 的取值，使得输入和输出尽可能的匹配。这里直接给出参数调整的方法，至于为什么会是这样，为什么这样可以保证得到结果，可以看算法导论上相关的数学推导。</p>
+<p><span class="math display">\[
+w_i \leftarrow w_i + \triangle w_i \\
+b \leftarrow b + \triangle b \\
+其中 \\
+\triangle w = \beta (t-y) x_i \\
+\triangle b = \beta (t-y)
+\]</span></p>
+<p><span class="math inline">\(y\)</span> 是感知机在当前的参数设置条件下(初始化的时候都是0) 的输出， <span class="math inline">\(y\)</span> 是训练数据实际的标签，<span class="math inline">\(\beta\)</span> 称为<strong>学习率</strong>，控制参数更新的程度大小。可以看到，参数学习的时候，感知机是一条一条的处理的训练数据的，每处理一条训练数据，参数就更新一次，先来看看权重更新的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_update_weights</span><span class="params">(self, input_vec, output, label, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        按照感知器规则更新权重</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把input_vec[x1,x2,x3,...]和weights[w1,w2,w3,...]打包在一起</span></div><div class="line">        <span class="comment"># 变成[(x1,w1),(x2,w2),(x3,w3),...]</span></div><div class="line">        <span class="comment"># 然后利用感知器规则更新权重</span></div><div class="line">        delta = label - output</div><div class="line">        self.weights = map(</div><div class="line">            <span class="keyword">lambda</span> (x, w): w + rate * delta * x,</div><div class="line">            zip(input_vec, self.weights))</div><div class="line">        <span class="comment"># 更新bias</span></div><div class="line">        self.bias += rate * delta</div></pre></td></tr></table></figure>
+<p>把所有的训练数据都循环处理一遍，就完成了一次<strong>迭代</strong>，通常，只处理一次参数是不能得到充分的学习的，训练的时候要根据模型的复杂程度进行多次迭代，每次迭代参数都会更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_one_iteration</span><span class="params">(self, input_vecs, labels, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        一次迭代，把所有的训练数据过一遍</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把输入和输出打包在一起，成为样本的列表[(input_vec, label), ...]</span></div><div class="line">        <span class="comment"># 而每个训练样本是(input_vec, label)</span></div><div class="line">        samples = zip(input_vecs, labels)</div><div class="line">        <span class="comment"># 对每个样本，按照感知器规则更新权重</span></div><div class="line">        <span class="keyword">for</span> (input_vec, label) <span class="keyword">in</span> samples:</div><div class="line">            <span class="comment"># 计算感知器在当前权重下的输出</span></div><div class="line">            output = self.predict(input_vec)</div><div class="line">            <span class="comment"># 更新权重</span></div><div class="line">            self._update_weights(input_vec, output, label, rate)</div></pre></td></tr></table></figure>
+<p>上面的代码就是完成一次迭代的过程，首先用现有的感知机的参数，预测输入 <span class="math inline">\(x\)</span> 对应的输出 <span class="math inline">\(y\)</span>, 然后调用上面的参数更新函数，更新参数。</p>
+<p>我们这里用<strong>迭代次数</strong>控制算法的停止时间，得到训练的方法. 当然，实际当中也可以用误差小于某一个给定的值来作为算法终止的条件。为什么要有误差，而不是百分之百的匹配上呢? 这是因为，在机器学习当中，百分之百拟合了训练数据，往往意味着过拟合了，在测试数据并不一定表现好，而我们需要的是在测试集上表现好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, input_vecs, labels, iteration, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        输入训练数据：一组向量、与每个向量对应的label；以及训练轮数、学习率</div><div class="line">        '''</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(iteration):</div><div class="line">            self._one_iteration(input_vecs, labels, rate)</div></pre></td></tr></table></figure>
+<p>一个简单的感知机的实现就是这样，实际使用的时候，还可以添加一些模型可视化的方法，例如输出模型参数 <span class="math inline">\(w\)</span> 和 <span class="math inline">\(b\)</span> 的方法，显示每次迭代过程的方法等等。下面是完整的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Perceptron</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_num, activator)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        初始化感知器，设置输入参数的个数，以及激活函数。</div><div class="line">        激活函数的类型为double -&gt; double</div><div class="line">        '''</div><div class="line">        self.activator = activator</div><div class="line">        <span class="comment"># 权重向量初始化为0</span></div><div class="line">        self.weights = [<span class="number">0.0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(input_num)]</div><div class="line">        <span class="comment"># 偏置项初始化为0</span></div><div class="line">        self.bias = <span class="number">0.0</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        打印学习到的权重、偏置项</div><div class="line">        '''</div><div class="line">        <span class="keyword">return</span> <span class="string">'weights\t:%s\nbias\t:%f\n'</span> % (self.weights, self.bias)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, input_vec)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        输入向量，输出感知器的计算结果</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把input_vec[x1,x2,x3...]和weights[w1,w2,w3,...]打包在一起</span></div><div class="line">        <span class="comment"># 变成[(x1,w1),(x2,w2),(x3,w3),...]</span></div><div class="line">        <span class="comment"># 然后利用map函数计算[x1*w1, x2*w2, x3*w3]</span></div><div class="line">        <span class="comment"># 最后利用reduce求和</span></div><div class="line">        <span class="keyword">return</span> self.activator(</div><div class="line">            reduce(<span class="keyword">lambda</span> a, b: a + b,</div><div class="line">                   map(<span class="keyword">lambda</span> (x, w): x * w,</div><div class="line">                       zip(input_vec, self.weights))</div><div class="line">                , <span class="number">0.0</span>) + self.bias)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, input_vecs, labels, iteration, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        输入训练数据：一组向量、与每个向量对应的label；以及训练轮数、学习率</div><div class="line">        '''</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(iteration):</div><div class="line">            self._one_iteration(input_vecs, labels, rate)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_one_iteration</span><span class="params">(self, input_vecs, labels, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        一次迭代，把所有的训练数据过一遍</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把输入和输出打包在一起，成为样本的列表[(input_vec, label), ...]</span></div><div class="line">        <span class="comment"># 而每个训练样本是(input_vec, label)</span></div><div class="line">        samples = zip(input_vecs, labels)</div><div class="line">        <span class="comment"># 对每个样本，按照感知器规则更新权重</span></div><div class="line">        <span class="keyword">for</span> (input_vec, label) <span class="keyword">in</span> samples:</div><div class="line">            <span class="comment"># 计算感知器在当前权重下的输出</span></div><div class="line">            output = self.predict(input_vec)</div><div class="line">            <span class="comment"># 更新权重</span></div><div class="line">            self._update_weights(input_vec, output, label, rate)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_update_weights</span><span class="params">(self, input_vec, output, label, rate)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        按照感知器规则更新权重</div><div class="line">        '''</div><div class="line">        <span class="comment"># 把input_vec[x1,x2,x3,...]和weights[w1,w2,w3,...]打包在一起</span></div><div class="line">        <span class="comment"># 变成[(x1,w1),(x2,w2),(x3,w3),...]</span></div><div class="line">        <span class="comment"># 然后利用感知器规则更新权重</span></div><div class="line">        delta = label - output</div><div class="line">        self.weights = map(</div><div class="line">            <span class="keyword">lambda</span> (x, w): w + rate * delta * x,</div><div class="line">            zip(input_vec, self.weights))</div><div class="line">        <span class="comment"># 更新bias</span></div><div class="line">        self.bias += rate * delta</div></pre></td></tr></table></figure>
+<p>下面我们使用写好的代码实现一个计算<code>and</code>功能的感知机。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">and_f</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    定义激活函数f</div><div class="line">    '''</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> x &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 训练and感知器</span></div><div class="line">    X = [[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">1</span>]]</div><div class="line">    y = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]</div><div class="line">    and_perception = Perceptron(<span class="number">2</span>,and_f)</div><div class="line">    and_perception.train(X,y,<span class="number">10</span>,<span class="number">0.1</span>)</div><div class="line">    <span class="comment"># 打印训练获得的权重</span></div><div class="line">    <span class="keyword">print</span> and_perception</div><div class="line">    <span class="comment"># 测试</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'1 and 1 = %d'</span> % and_perception.predict([<span class="number">1</span>, <span class="number">1</span>])</div><div class="line">    <span class="keyword">print</span> <span class="string">'0 and 0 = %d'</span> % and_perception.predict([<span class="number">0</span>, <span class="number">0</span>])</div><div class="line">    <span class="keyword">print</span> <span class="string">'1 and 0 = %d'</span> % and_perception.predict([<span class="number">1</span>, <span class="number">0</span>])</div><div class="line">    <span class="keyword">print</span> <span class="string">'0 and 1 = %d'</span> % and_perception.predict([<span class="number">0</span>, <span class="number">1</span>])</div></pre></td></tr></table></figure>
+<p>输出类似这样子： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">weights :[0.2, 0.1]</div><div class="line">bias    :-0.200000</div><div class="line"></div><div class="line">1 and 1 = 1</div><div class="line">0 and 0 = 0</div><div class="line">1 and 0 = 0</div><div class="line">0 and 1 = 0</div></pre></td></tr></table></figure></p>
+<p>从中我们可以看出，对于<code>and</code>的计算全部正确。我们从训练好的模型中可以提取出实现该<code>and</code>功能的函数。</p>
+<p><span class="math display">\[
+y = f(0.2x_1 + 0.1x_2 -0.2)
+\]</span></p>
+<p><span class="math inline">\(f(x)\)</span> 就是上面代码自定义的函数，当 <span class="math inline">\(x&gt;0\)</span> 时输出1，否则输出0.</p>
+<h2 id="scikit-learn中的感知机">scikit-learn中的感知机</h2>
+<p>多数情况下我们不需要自己实现感知机，有很多已经写好的代码可以使用，scikit-learn中就实现了感知机。我们直接调用它的函数，看看会是什么结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</div><div class="line">lmper = linear_model.Perceptron(n_iter=<span class="number">10</span>)</div><div class="line">lmper.fit(X,y)</div><div class="line">print(lmper.coef_)</div><div class="line">print(lmper.intercept_)</div><div class="line"><span class="keyword">print</span> <span class="string">'1 and 1 = %d'</span> % lmper.predict([<span class="number">1</span>, <span class="number">1</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'0 and 0 = %d'</span> % lmper.predict([<span class="number">0</span>, <span class="number">0</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'1 and 0 = %d'</span> % lmper.predict([<span class="number">1</span>, <span class="number">0</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'0 and 1 = %d'</span> % lmper.predict([<span class="number">0</span>, <span class="number">1</span>])</div><div class="line"></div><div class="line"><span class="comment">## output</span></div><div class="line">[[ <span class="number">3.</span>  <span class="number">2.</span>]]</div><div class="line">[<span class="number">-4.</span>]</div><div class="line"><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span> = <span class="number">1</span></div><div class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">0</span> = <span class="number">0</span></div><div class="line"><span class="number">1</span> <span class="keyword">and</span> <span class="number">0</span> = <span class="number">0</span></div><div class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">1</span> = <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>我们可以得到，<code>scikit-learn</code>得到的可以用来计算<code>and</code>的函数是：</p>
+<p><span class="math display">\[
+ y = f(3x_1+2x_2-4)
+\]</span></p>
+<p>虽然和我们自己实现的不一样，但是功能都是一样的。目前还没有明白激活函数在哪里设置，所以最终参数的不同可能和激活函数的设置有关。</p>
+<h2 id="keras-实现感知机">keras 实现感知机</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">X = [[<span class="number">0</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>],[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">1</span>,<span class="number">1</span>]]</div><div class="line">y = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>]</div><div class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Dropout</div><div class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> RMSprop</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">X = np.array(X)</div><div class="line">y = np.array(y)</div><div class="line">model = Sequential()</div><div class="line">model.add(Dense(<span class="number">1</span>, activation=<span class="string">'relu'</span>, input_shape=(<span class="number">2</span>,)))</div><div class="line">model.compile(loss=<span class="string">'mean_squared_error'</span>,</div><div class="line">            optimizer=<span class="string">'SGD'</span>,</div><div class="line">            metrics=[<span class="string">'accuracy'</span>])</div><div class="line">print(model.summary())</div><div class="line">history = model.fit(X, y,batch_size=<span class="number">128</span>, epochs=<span class="number">1</span>)</div><div class="line">print(model.get_weights())</div><div class="line"><span class="comment"># 测试</span></div><div class="line">print(<span class="string">'1 and 1 = %d'</span> % model.predict(np.array([<span class="number">1</span>, <span class="number">1</span>]).reshape(<span class="number">1</span>,<span class="number">2</span>)))</div><div class="line">print(<span class="string">'0 and 0 = %d'</span> % model.predict(np.array([<span class="number">0</span>, <span class="number">0</span>]).reshape(<span class="number">1</span>,<span class="number">2</span>)))</div><div class="line">print(<span class="string">'1 and 0 = %d'</span> % model.predict(np.array([<span class="number">1</span>, <span class="number">0</span>]).reshape(<span class="number">1</span>,<span class="number">2</span>)))</div><div class="line">print(<span class="string">'0 and 1 = %d'</span> % model.predict(np.array([<span class="number">0</span>, <span class="number">1</span>]).reshape(<span class="number">1</span>,<span class="number">2</span>)))</div><div class="line"></div><div class="line"><span class="comment"># output</span></div><div class="line">[array([[<span class="number">-1.21217406</span>],</div><div class="line">       [<span class="number">-1.16362488</span>]], dtype=float32), array([ <span class="number">0.</span>], dtype=float32)]</div><div class="line"><span class="number">1</span> <span class="keyword">and</span> <span class="number">1</span> = <span class="number">0</span></div><div class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">0</span> = <span class="number">0</span></div><div class="line"><span class="number">1</span> <span class="keyword">and</span> <span class="number">0</span> = <span class="number">0</span></div><div class="line"><span class="number">0</span> <span class="keyword">and</span> <span class="number">1</span> = <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>使用神经网络训练的并没有达到最优的结果，可能和我们训练的样本过少有关系。我们同样得到了训练出来的感知机：</p>
+<p><span class="math display">\[
+y = f(-1.2121x_1-1.1636x_2+0)
+\]</span></p>
+<p>不过这里只有75%的准确率，现在还不清楚里面的原理。</p>
+<h2 id="感知机的扩展">感知机的扩展</h2>
+<p>上面我们介绍的感知机使用了如下的激活函数：</p>
+<p><span class="math display">\[
+f(x)=\begin{cases}
+        0   &amp;  \text{x&gt;0}\\
+        1   &amp;  \text{x&lt;=0}
+      \end{cases}
+\]</span></p>
+<p>这导致我们的输出智能是<code>0</code>,<code>1</code>,我们可以改变一下这个函数，使得输出的值是连续的，这样就可以用来解决回归的问题了。例如，我们直接使用 <span class="math inline">\(f(x)=x\)</span> 来作为激活函数。这样，我们实现了下面这样的线性函数：</p>
+<p><span class="math display">\[
+ y = w * x + b
+\]</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fx</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> x</div><div class="line"></div><div class="line">X = [[<span class="number">5</span>], [<span class="number">3</span>], [<span class="number">8</span>], [<span class="number">1.4</span>], [<span class="number">10.1</span>]]</div><div class="line">y = [<span class="number">5500</span>, <span class="number">2300</span>, <span class="number">7600</span>, <span class="number">1800</span>, <span class="number">11400</span>]</div><div class="line">linear_perception = Perceptron(<span class="number">1</span>,fx)</div><div class="line">linear_perception.train(X,y,<span class="number">10</span>,<span class="number">0.1</span>)</div><div class="line"><span class="keyword">print</span> linear_perception</div><div class="line"><span class="keyword">print</span> <span class="string">'Work 3.4 years, monthly salary = %.2f'</span> % linear_perception.predict([<span class="number">3.4</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'Work 15 years, monthly salary = %.2f'</span> % linear_perception.predict([<span class="number">15</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'Work 1.5 years, monthly salary = %.2f'</span> % linear_perception.predict([<span class="number">1.5</span>])</div><div class="line"><span class="keyword">print</span> <span class="string">'Work 6.3 years, monthly salary = %.2f'</span> % linear_perception.predict([<span class="number">6.3</span>])</div><div class="line"></div><div class="line"><span class="comment"># output</span></div><div class="line">weights :[<span class="number">765.63113396072</span>]</div><div class="line">bias    :<span class="number">-778.455331</span></div><div class="line"></div><div class="line">Work <span class="number">3.4</span> years, monthly salary = <span class="number">1824.69</span></div><div class="line">Work <span class="number">15</span> years, monthly salary = <span class="number">10706.01</span></div><div class="line">Work <span class="number">1.5</span> years, monthly salary = <span class="number">369.99</span></div><div class="line">Work <span class="number">6.3</span> years, monthly salary = <span class="number">4045.02</span></div></pre></td></tr></table></figure>
+<p>上面训练了一个简单的一次线性函数：</p>
+<p><span class="math display">\[
+y = 765x-778
+\]</span></p>
+<h2 id="更新规则的推导梯度下降法">更新规则的推导(梯度下降法)</h2>
+<p>上面介绍感知机的时候，我们直接给出了参数更新的方法，但是没有说明这个方法是如何得出来的，现在我们给出推导的方法。</p>
+<p><span class="math display">\[
+w_i \leftarrow w_i + \triangle w_i \\
+b \leftarrow b + \triangle b \\
+其中 \\
+\triangle w = \beta (t-y) x_i \\
+\triangle b = \beta (t-y)
+\]</span></p>
+<p>设模型的输出是 $ $, 真实的标签是 <span class="math inline">\(y\)</span>, 那么我们训练模型的目的是使得 <span class="math inline">\(\hat y\)</span> 尽可能的接近 <span class="math inline">\(y\)</span>, 那么，如何度量它们之间的接近程度呢？ 一个简单的想法就是使用平方和. <span class="math display">\[
+E = \sum_{i=1}^{n}( {\hat y_i}-y_i )^2
+\]</span></p>
+<p>有了损失函数，接下来我们的目标就是使得该函数达到极小值，这样 <span class="math inline">\(\hat y\)</span>和 <span class="math inline">\(y\)</span> 之间就尽可能接近了。</p>
+<p>如何求解函数的极小值呢，我们可以求函数的导数，令导数等于0，这样我们就能找到它的极值点。不幸的是，并不是所有的函数我们都能求解出导数的，所以求导数的方法并没有什么普适性，计算机有强大的计算能力，所以遇到这类问题，基本上都使用数值计算的方法解决。</p>
+<p>我们直到一个函数的梯度表示一个函数上升最快的方向，那么她的反方向就是下降最快的方向，而梯度的计算就是函数对每一个变量的偏导数，这个我们可以事先计算出来。然后随机初始化一个 <span class="math inline">\(x\)</span>, 求解<span class="math inline">\(f(x)\)</span> 的值，然后朝着梯度下降的方向更新 <span class="math inline">\(x\)</span>, 经过无数次迭代之后，我们就能找到函数的极小值点对应的那个 <span class="math inline">\(x\)</span>.</p>
+<p>$ y = f(w*x+b)$ , 令<span class="math inline">\(x_0 = 1,w_0=b\)</span>, 可以把它写成统一的形式<span class="math inline">\(\hat y = f(w*x)\)</span> , 这样我们最终的目标是求解 <span class="math inline">\(w\)</span>, 所以我们把 <span class="math inline">\(E\)</span> 看作 <span class="math inline">\(w\)</span> 的函数，这样优化函数变形为：</p>
+<p><span class="math display">\[
+E(w) = \sum_{i=1}^n ({\hat y_i}-y_i)^2
+\]</span></p>
+<p>求偏导的时候2次方会有一个系数2，所以我们把函数乘以 <span class="math inline">\(\dfrac 1 2\)</span>, 消除求导时候的系数，这样优化的目标函数变为：</p>
+<p><span class="math display">\[
+E(w) =\dfrac 1 2 \sum_{i=1}^n ({\hat y_i}-y_i)^2
+\]</span></p>
+<p>下面就是求这个函数对 <span class="math inline">\(w\)</span> 的梯度了。首先我们复习一下链式求导法则。</p>
+<p><span class="math display">\[
+\dfrac {\partial E(w)} {\partial w} = \dfrac {E(w)} {\partial \hat y} * \dfrac {\partial \hat y} {\partial w}
+\]</span></p>
+<p>根据以上的链式求导法则，我们可以求解得到目标函数的梯度：</p>
+<p><span class="math display">\[
+\Delta {E(w)} = - \sum_{i=1}^n (y^i-\hat y^i)x
+\]</span></p>
+<p>有了函数的梯度，就可以按照梯度的方向更新参数了。</p>
+<p><span class="math display">\[
+w_{new} = w_{old} + \beta  \sum_{i=1}^n (y^i-\hat y^i)x^i
+\]</span></p>
+<p>式子中，<span class="math inline">\(y^i\)</span> 是真实的标签值，<span class="math inline">\(x\)</span>是训练的样本， <span class="math inline">\(\beta\)</span>是学习率，也就是每次梯度下降的步长。这个步长的设置是一个技术活，太小的话，收敛太慢，太大的话，一不小心就过了，找不到最小的位置。</p>
+<p>把上面感知机的参数更新规则拿过来对比：</p>
+<p><span class="math display">\[
+w_i \leftarrow w_i + \triangle w_i \\
+b \leftarrow b + \triangle b \\
+其中 \\
+\triangle w = \beta (t-y) x_i \\
+\triangle b = \beta (t-y)
+\]</span></p>
+<p>我们发现二者是完全一致的， 原来，感知机也是按照梯度下降的方向更新参数的。</p>
+<p>需要注意的是，我们上面介绍的是最朴素的梯度下降法，实际应用中，经常使用随机梯度下降法，就是每次更新参数的时候，并不是把所有的训练数据都遍历一边再计算一次更新，而是每一个样本都计算一次更新，这样可能会导致有使参数的更新不是朝着下降的方向，但是实际经验证明，总体趋势上还是下降的，并且这样的方法计算开销小，还很有可能收敛速度更快。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/perception/" rel="tag">#perception</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/05/17/机器学习专题/机器学习_Pandas使用技巧/" rel="next" title="深度学习_Pandas使用技巧">
+                <i class="fa fa-chevron-left"></i> 深度学习_Pandas使用技巧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/05/19/机器学习专题/机器学习_逻辑回归/" rel="prev" title="机器学习_逻辑回归">
+                机器学习_逻辑回归 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自己动手实现感知机"><span class="nav-number">1.</span> <span class="nav-text">自己动手实现感知机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scikit-learn中的感知机"><span class="nav-number">2.</span> <span class="nav-text">scikit-learn中的感知机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keras-实现感知机"><span class="nav-number">3.</span> <span class="nav-text">keras 实现感知机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感知机的扩展"><span class="nav-number">4.</span> <span class="nav-text">感知机的扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新规则的推导梯度下降法"><span class="nav-number">5.</span> <span class="nav-text">更新规则的推导(梯度下降法)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/05/19/机器学习专题/机器学习_感知机/';
+      var disqus_title = "机器学习_感知机";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/05/19/机器学习专题/机器学习_感知机/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

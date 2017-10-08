@@ -1,0 +1,1092 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="circos," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="keywords" content="circos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="circos入门教程">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/circos.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/example1.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/StrawberryPerlInstall.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/StrawberryPerlInstall.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/cpanCMD.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/perlcircos.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/circos_example.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/example2.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/ok.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/aal2.png">
+<meta property="og:updated_time" content="2017-07-22T14:48:11.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="circos入门教程">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/circos.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/"/>
+
+  <title> circos入门教程 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                circos入门教程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-03T21:08:48+08:00" content="2017-01-03">
+              2017-01-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/认知神经科学/" itemprop="url" rel="index">
+                    <span itemprop="name">认知神经科学</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/01/03/认知神经科学专题/circos入门教程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/" class="leancloud_visitors" data-flag-title="circos入门教程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="circos.png" alt="circos"> <a id="more"></a> ## circos简介 <a href="http://circos.ca/" target="_blank" rel="external">circos</a>是设计用来专门绘制基因图的，但是其应用并不仅仅局限于此，它能胜任任何需要绘制环状图像的地方。 例如在认知神经科学中表示脑区之间的连接。本教程旨在实现绘制以下图像： <img src="example1.png" alt="example1"> 该图主要由几个部分组成： 1 chromosome（染色体）； 2 label（标签）；3 links（连接）; 4 间隔 我们要实现这样一个任务： 用chromosome表示脑区，用chromosome长度表示与脑区的关联量，例如脑区体素数量; 用links表示脑区之间的连接,用links线的颜色和粗细以及层次表示连接的强度（例如，连接越强，颜色越鲜艳，线越粗，越靠上层）; 用间隔表示分组，例如分成大脑和小脑。</p>
+<h2 id="circos安装">circos安装</h2>
+<p>circos是运行在perl环境下的跨平台的工具包，只要安装好perl环境，直接解压缩circos的代码就能运行。 ### 安装perl环境 Linux下可以直接安装perl,windows最好使用集成环境，例如<a href="http://strawberryperl.com/releases.html" target="_blank" rel="external">Strawberry Perl</a> Strawberry Perl windows 7 旗舰版 64位安装包下载地址: <a href="http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-64bit.msi" class="uri" target="_blank" rel="external">http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-64bit.msi</a> 安装过程和普通的Windows程序没有区别，一路下一步就可以。 <img src="StrawberryPerlInstall.png" alt="StrawberryPerlInstall"> 安装完成后，打开CMD，输入<code>perl -v</code>, 出现版本信息就证明安装成功了。 <img src="StrawberryPerlInstall.png" alt="StrawberryPerlInstallCMD"></p>
+<h3 id="下载circos">下载circos</h3>
+<p>circos主程序：http://circos.ca/distribution/circos-0.69-3.tgz circos示例程序：http://circos.ca/distribution/circos-tutorials-0.67.tgz</p>
+<p>下载完后解压缩到任意位置（需要解压缩两次，推荐用7z）,切换到<code>bin</code>目录下，键入<code>circos</code>: 如果出现missing …是因为有些circos需要的模块没有安装。</p>
+<h3 id="安装perl模块">安装perl模块</h3>
+<p>在CMD键入<code>cpan</code>命令，进入cpan环境 <img src="cpanCMD.png" alt="cpanCMD"> 输入<code>install 模块名</code> 就会完成自动下载安装过程。 模块名可以从上面的报错信息中找到。 丢失的模块全部完后，可以按照一下方法做一个测试。</p>
+<p>在bin文件夹下面新建一个test文件夹，test内新建一个名称为helloword.conf的文件。 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"># MINIMUM CIRCOS CONFIGURATION</div><div class="line">#</div><div class="line"># The 'hello world' Circos tutorial. Only required</div><div class="line"># configuration elements are included.</div><div class="line">#</div><div class="line"># Common optional elements are commented out.</div><div class="line"></div><div class="line"># Defines unit length for ideogram and tick spacing, referenced</div><div class="line"># using "u" prefix, e.g. 10u</div><div class="line">#chromosomes_units           = 1000000</div><div class="line"></div><div class="line"># Show all chromosomes in karyotype file. By default, this is</div><div class="line"># true. If you want to explicitly specify which chromosomes</div><div class="line"># to draw, set this to 'no' and use the 'chromosomes' parameter.</div><div class="line"># chromosomes_display_default = yes</div><div class="line"></div><div class="line"># Chromosome name, size and color definition</div><div class="line">karyotype = data/karyotype/karyotype.human.txt</div><div class="line"></div><div class="line">&lt;ideogram&gt;</div><div class="line"></div><div class="line">&lt;spacing&gt;</div><div class="line"># spacing between ideograms</div><div class="line">default = 0.05r</div><div class="line">&lt;/spacing&gt;</div><div class="line"></div><div class="line"># ideogram position, thickness and fill</div><div class="line">radius           = 0.20r</div><div class="line">thickness        = 100p</div><div class="line">fill             = yes</div><div class="line"></div><div class="line">#stroke_thickness = 1</div><div class="line">#stroke_color     = black</div><div class="line"></div><div class="line"># ideogram labels</div><div class="line"># &lt;&lt;include ideogram.label.conf&gt;&gt;</div><div class="line"></div><div class="line"># ideogram cytogenetic bands, if defined in the karyotype file</div><div class="line"># &lt;&lt;include bands.conf&gt;&gt;</div><div class="line"></div><div class="line">&lt;/ideogram&gt;</div><div class="line"></div><div class="line"># image size, background color, angular position</div><div class="line"># of first ideogram, transparency levels, output</div><div class="line"># file and directory</div><div class="line">#</div><div class="line"># it is best to include these parameters from etc/image.conf</div><div class="line"># and override any using param* syntax</div><div class="line">#</div><div class="line"># e.g.</div><div class="line"># &lt;image&gt;</div><div class="line"># &lt;&lt;include etc/image.conf&gt;&gt;</div><div class="line"># radius* = 500</div><div class="line"># &lt;/image&gt;</div><div class="line">&lt;image&gt;</div><div class="line">&lt;&lt;include etc/image.conf&gt;&gt; # included from Circos distribution</div><div class="line">&lt;/image&gt;</div><div class="line"></div><div class="line"># RGB/HSV color definitions, color lists, location of fonts,</div><div class="line"># fill patterns</div><div class="line">&lt;&lt;include etc/colors_fonts_patterns.conf&gt;&gt; # included from Circos distribution</div><div class="line"></div><div class="line"># debugging, I/O an dother system parameters</div><div class="line">&lt;&lt;include etc/housekeeping.conf&gt;&gt; # included from Circos distribution</div><div class="line"></div><div class="line"># &lt;ticks&gt; blocks to define ticks, tick labels and grids</div><div class="line">#</div><div class="line"># requires that chromosomes_units be defined</div><div class="line">#</div><div class="line"># &lt;&lt;include ticks.conf&gt;&gt;</div></pre></td></tr></table></figure></p>
+<p>然后在CMD输入命令<code>perl circos -conf test\helloword.conf</code>,会有类似下面的输出 <img src="perlcircos.png" alt="perlcircos"> 默认会在当前目录下生成circos.png 和 circos,svg两个文件 <img src="circos_example.png" alt="circos"></p>
+<p>至此，完成了circos的安装，生成了一个最简单的图像。</p>
+<h2 id="circos基本概念">circos基本概念</h2>
+<h3 id="组织结构">组织结构</h3>
+<p>circos 生成图像所需要的所有内容都保存在一个配置文件中，例如 helloword.conf 这个配置文件以XML的格式来组织。 - <code>&lt;ideogram&gt;&lt;/ideagram&gt;</code> 标签内定义chromosome的相关属性，例如radius，thickness，fill，<spacing>，<labels>，<bands> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;ideogram&gt;</div><div class="line"></div><div class="line">	&lt;spacing&gt;</div><div class="line">	# spacing between ideograms</div><div class="line">	default = 0.05r</div><div class="line">	&lt;/spacing&gt;</div><div class="line"></div><div class="line"># ideogram position, thickness and fill</div><div class="line">radius           = 0.20r</div><div class="line">thickness        = 100p</div><div class="line">fill             = yes</div><div class="line"></div><div class="line">#stroke_thickness = 1</div><div class="line">#stroke_color     = black</div><div class="line"></div><div class="line"># ideogram labels</div><div class="line"># &lt;&lt;include ideogram.label.conf&gt;&gt;</div><div class="line"></div><div class="line"># ideogram cytogenetic bands, if defined in the karyotype file</div><div class="line"># &lt;&lt;include bands.conf&gt;&gt;</div><div class="line"></div><div class="line">&lt;/ideogram&gt;</div></pre></td></tr></table></figure></bands></labels></spacing></p>
+<ul>
+<li><p><code>&lt;image&gt;&lt;/image&gt;</code>标签内定义生成的图像的一些属性，例如生成路径，文件名等 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;image&gt;</div><div class="line">&lt;&lt;include etc/image.conf&gt;&gt;</div><div class="line"># generated image path</div><div class="line">dir*   = D:\FMRI_ROOT\YIYU\CONN\PNG</div><div class="line"></div><div class="line"># generated image name</div><div class="line">file*	= 1.png</div><div class="line">&lt;/image&gt;</div></pre></td></tr></table></figure></p></li>
+<li><p><code>&lt;links&gt;&lt;/links&gt;</code> 标签内可定义若干<link>标签，每一对都是一组连接 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;links&gt;</div><div class="line">#ribbon           = yes</div><div class="line">#flat             = yes</div><div class="line">&lt;link&gt;</div><div class="line">file          = links1000.data.txt # links 文件路径</div><div class="line">radius        = 0.99r</div><div class="line">color         = red</div><div class="line"></div><div class="line"># Curves look best when this value is small (e.g. 0.1r or 0r)</div><div class="line">bezier_radius = 0.1r</div><div class="line">thickness     = 2</div><div class="line"></div><div class="line"># These parameters have default values. To unset them</div><div class="line"># use &apos;undef&apos;</div><div class="line">#crest                = undef</div><div class="line">#bezier_radius_purity = undef</div><div class="line"></div><div class="line"># Limit how many links to read from file and draw</div><div class="line">record_limit  = 40000</div><div class="line"></div><div class="line">#&lt;rule&gt;</div><div class="line">#condition  = var(intrachr) &amp;&amp; abs(var(pos1)-var(pos2)) &lt; 10Mb</div><div class="line">#show       = no</div><div class="line">#color = red</div><div class="line">#&lt;/rule&gt;</div><div class="line"></div><div class="line">&lt;/link&gt;</div><div class="line"></div><div class="line">&lt;/links&gt;</div></pre></td></tr></table></figure></p></li>
+<li><p><code>karyotype</code> 定义染色体文件路径 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">karyotype   = brainnetome.data.txt</div></pre></td></tr></table></figure></p></li>
+</ul>
+<h3 id="染色体文件">染色体文件</h3>
+<p>染色体文件在配置文件中用关键字<code>karyotype = data.txt</code>指明。染色体就是环上要显示的实体。数据格式如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">b    parent    ID   label    start    end    color   options</div><div class="line"></div><div class="line">chr  -         hs1   g1      0        100     red     thickness=3</div><div class="line">chr  -         hs2   g2      0        88      blue    color=blue,thickness=5</div></pre></td></tr></table></figure></p>
+<p>b 是circos中的保留关键字，可以是chr，代表该行定义的是染色体，可以是band，代表该行定义的是band. band就是染色体上一条染色带。 parent 定义该行的父元素，-表示没有父元素。 ID 该行的标识符，通过ID可以唯一的找到该行 label 将来显示在图像中的该染色体的名字 start 起始位置 end 终止位置 color 定义显示时的颜色 options 可选，前面的字段都是必须的，这里额外添加需要的内容，格式为<code>key1=value1,key2=value2,key3=value3</code></p>
+<p>注意 start end 可以用来控制染色体显示时候的相对比例，例如，如果希望所有的染色体都一样长，可以全部设为 0 1 或者全部设为0 100； 如果希望染色体体积越大越长，则可以start设置为0，end设置为每个染色体的体积。（这里体积只是举例，可以为染色体的任意一个属性）</p>
+<h3 id="连接文件">连接文件</h3>
+<p>连接文件在<code>&lt;links&gt;&lt;link&gt; file = link.data.txt&lt;/link&gt;&lt;links&gt;</code>中定义，它有两种格式： 第一种： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ID1 start1 end1 ID2 start2 end2 options    定义ID1到ID2的连接</div><div class="line"></div><div class="line">hs1  0       1   hs2   0    1   color=red,thickness=2，z=100</div><div class="line">hs1  1       2   hs3   0    1</div></pre></td></tr></table></figure></p>
+<p>第二种： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">b1 ID1 start1 end1</div><div class="line">b1 ID2 start2 end2  # 两行定义一个由ID1到ID2的连接</div></pre></td></tr></table></figure></p>
+<p>这里的ID都是指karyotype文件中定义的ID。 所以，要实现连接的变化，只需要在定义的每个连接后面定义好相应的颜色，线宽，层次就可以了。</p>
+<h3 id="颜色">颜色</h3>
+<p>默认的颜色定义在<code>etc\colors.conf</code>中，默认的颜色定义已经能够满足大部分的要求，使用的时候只需要指定其中的名称即可。 也可以定义自己的颜色文件，在<code>etc\colors.conf</code>添加<code>&lt;&lt;include colors.me.conf&gt;&gt;</code>,然后在etc下新建文件<code>colors.me.conf</code> 颜色文件的定义格式是： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">colorname = R,G,B</div><div class="line">black=0,0,0</div><div class="line">white=255,255,255</div></pre></td></tr></table></figure></p>
+<h3 id="显示配置选项">显示配置选项</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">&lt;image&gt;</div><div class="line">&lt;&lt;include etc/image.conf&gt;&gt;</div><div class="line"># generated image path</div><div class="line">dir*   = D:\FMRI_ROOT\YIYU\CONN\PNG # 图像生成路径</div><div class="line"></div><div class="line"># generated image name</div><div class="line">file*	= 1.png # 生成图像名称</div><div class="line">&lt;/image&gt;</div><div class="line"></div><div class="line">&lt;ideogram&gt;</div><div class="line">show_label       = yes # 是否显示label</div><div class="line">label_font       = default</div><div class="line">label_radius     = dims(ideogram,radius) + 0.025r  #控制labels的位置</div><div class="line">label_with_tag   = no</div><div class="line">label_size       = 20 # labels的大小</div><div class="line">label_parallel   = no  # 控制labels是否水平显示，label较长时应该设为no</div><div class="line">label_case       = upper # 控制labels的大小写</div><div class="line">label_format     = eval(sprintf(&quot;%s&quot;,var(label)))  # 控制labels的格式</div><div class="line"></div><div class="line">radius           = 0.70r #染色体的半径</div><div class="line">thickness        = 100p #染色体线的厚度</div><div class="line">fill             = yes</div><div class="line">fill_color       = black</div><div class="line">stroke_thickness = 2 # 中间线的颜色和宽度</div><div class="line">stroke_color     = blue</div><div class="line"></div><div class="line">&lt;ticks&gt;</div><div class="line">show_ticks          = no # 是否显示染色体上的刻度</div><div class="line">show_tick_labels    = yes</div><div class="line">&lt;/ticks&gt;</div><div class="line"></div><div class="line">&lt;bands&gt;</div><div class="line">show_bands            = yes # 是否显示bands</div><div class="line">fill_bands            = no</div><div class="line">band_stroke_thickness = 2</div><div class="line">band_stroke_color     = white</div><div class="line">band_transparency     = 0</div><div class="line"></div><div class="line">max_ideograms* = 250 # 显示的染色体的最大数目</div><div class="line">max_links* = 35000 # 显示的连接的最大数目</div><div class="line"></div><div class="line">&lt;links&gt;</div><div class="line">#ribbon           = yes</div><div class="line">#flat             = yes</div><div class="line">&lt;link&gt;</div><div class="line">file          = links1000.data.txt # 连接数据文件</div><div class="line">radius        = 0.99r # 连接的大小</div><div class="line">color         = red # 连接的颜色</div><div class="line"></div><div class="line"># Curves look best when this value is small (e.g. 0.1r or 0r)</div><div class="line">bezier_radius = 0.1r</div><div class="line">thickness     = 2 # 线的宽度</div><div class="line"></div><div class="line"># These parameters have default values. To unset them</div><div class="line"># use &apos;undef&apos;</div><div class="line">#crest                = undef</div><div class="line">#bezier_radius_purity = undef</div><div class="line"></div><div class="line"># Limit how many links to read from file and draw</div><div class="line">record_limit  = 40000</div><div class="line"></div><div class="line">#&lt;rule&gt;  # 可以用条件语句控制连接的格式</div><div class="line">#condition  = var(intrachr) &amp;&amp; abs(var(pos1)-var(pos2)) &lt; 10Mb</div><div class="line">#show       = no</div><div class="line">#color = red</div><div class="line">#&lt;/rule&gt;</div><div class="line"></div><div class="line">&lt;/link&gt;</div><div class="line"></div><div class="line">&lt;/links&gt;</div><div class="line"></div><div class="line">&lt;/bands&gt;</div><div class="line">&lt;/ideogram&gt;</div></pre></td></tr></table></figure>
+<h2 id="circos实例">circos实例</h2>
+<p>要生成的图像： <img src="example2.png" alt="example2"> 所需文件： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">test\me\circos.conf</div><div class="line">test\me\ideogram.conf</div><div class="line">test\me\ideogram.label.conf</div><div class="line">test\me\ideogram.position.conf</div><div class="line">test\me\links.me.conf</div><div class="line">test\me\ticks.conf</div><div class="line">test\me\bands.conf</div><div class="line">test\me\brainnetome.data.txt</div><div class="line">test\me\links50.data.txt</div><div class="line">etc\colors.me.conf</div></pre></td></tr></table></figure></p>
+<p>链接: https://pan.baidu.com/s/1eSebD9w 密码: nham</p>
+<p>CMD中键入命令<code>perl circos -conf test\me\circos.conf</code>,OK . <img src="ok.png" alt="ok"></p>
+<p>其中colors.me.conf是自己根据colorbar生成的颜色，用来实现不同的颜色代表不同的强度值的目的。 该颜色主题用红色代表最大值，用蓝色表示最小值，值又大变小的过程 对应着 颜色由暖变冷的过程。 下面贴上生成colors.me.conf的matlab代码： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">% 生成color bar 原始数据集</div><div class="line">% colorname1 R G B</div><div class="line">% colorname2 R G B</div><div class="line">% 产生颜色的种类</div><div class="line">color_num = 60;</div><div class="line">colors_unit = jet(color_num);</div><div class="line">colors = colors_unit * 255;</div><div class="line">fid=fopen(&apos;D:\FMRI_ROOT\TOOLS\circos-0.69-3\etc\colors.me.conf&apos;,&apos;w+&apos;);</div><div class="line">for i =1:size(colors,1)</div><div class="line">    fprintf(fid,[&apos;mecolor&apos;,num2str(size(colors,1)-i+1),&apos;=&apos;,num2str(colors(i,1)),&apos;,&apos;,num2str(colors(i,2)),&apos;,&apos;,num2str(colors(i,3)),&apos;\n&apos;]);</div><div class="line">end</div><div class="line"></div><div class="line">fclose(fid);</div><div class="line"></div><div class="line">colormap(colors_unit);</div><div class="line">colorbar();</div></pre></td></tr></table></figure></p>
+<p>brainnetome.data.txt部分内容: <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">chr - SFG_L_7_1 SFG_L_7_1 0 100 chr0</div><div class="line">chr - SFG_R_7_1 SFG_R_7_1 0 100 chr1</div><div class="line">chr - SFG_L_7_2 SFG_L_7_2 0 100 chr2</div><div class="line">chr - SFG_R_7_2 SFG_R_7_2 0 100 chr3</div><div class="line">chr - SFG_L_7_3 SFG_L_7_3 0 100 chr4</div><div class="line">chr - SFG_R_7_3 SFG_R_7_3 0 100 chr5</div><div class="line">chr - SFG_L_7_4 SFG_L_7_4 0 100 chr6</div></pre></td></tr></table></figure></p>
+<p>colors.me.conf部分内容： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mecolor6=221,0,0</div><div class="line">mecolor5=204,0,0</div><div class="line">mecolor4=187,0,0</div><div class="line">mecolor3=170,0,0</div><div class="line">mecolor2=153,0,0</div><div class="line">mecolor1=136,0,0</div></pre></td></tr></table></figure></p>
+<h2 id="生成带分组的图形">生成带分组的图形</h2>
+<p>先看一个示例 <img src="aal2.png" alt="aal"></p>
+<p>要想在染色体中间加入分割，可以在<code>ideogram.conf</code>文件中添加如下语句： <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">spacing</span>&gt;</span></div><div class="line">default = 0.001r  # 每个染色体的间隔</div><div class="line">break   = 0.01r</div><div class="line">axis_break_at_edge = yes</div><div class="line">axis_break         = yes</div><div class="line">	<span class="tag">&lt;<span class="name">pairwise</span> <span class="attr">Cingulum_Ant_L</span> <span class="attr">Caudate_R</span>&gt;</span></div><div class="line">	   spacing = 10r</div><div class="line">	<span class="tag">&lt;/<span class="name">pairwise</span>&gt;</span>   # 定义相邻的两个染色体的间隔</div><div class="line"></div><div class="line">	<span class="tag">&lt;<span class="name">pairwise</span> <span class="attr">Temporal_Pole_Mid_L</span> <span class="attr">Calcarine_R</span>&gt;</span></div><div class="line">	   spacing = 10r</div><div class="line">	<span class="tag">&lt;/<span class="name">pairwise</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">spacing</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这里需要注意的是，定义两个相邻的染色体之间的间隔的时候，如果用r为单位，是相对于default的倍数。 如果default设置成0，则无论多少倍都是0，这时候设置的特定的两个染色体的间隔也不会出现任何效果。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/circos/" rel="tag">#circos</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2016/07/11/机器学习专题/机器学习_Matplolib使用技巧/" rel="next" title="机器学习_Matplolib使用技巧">
+                <i class="fa fa-chevron-left"></i> 机器学习_Matplolib使用技巧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/03/08/认知神经科学专题/基于视频的车牌识别和流量统计/" rel="prev" title="基于视频的车牌识别和流量统计">
+                基于视频的车牌识别和流量统计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#circos安装"><span class="nav-number">1.</span> <span class="nav-text">circos安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载circos"><span class="nav-number">1.1.</span> <span class="nav-text">下载circos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装perl模块"><span class="nav-number">1.2.</span> <span class="nav-text">安装perl模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#circos基本概念"><span class="nav-number">2.</span> <span class="nav-text">circos基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组织结构"><span class="nav-number">2.1.</span> <span class="nav-text">组织结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#染色体文件"><span class="nav-number">2.2.</span> <span class="nav-text">染色体文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接文件"><span class="nav-number">2.3.</span> <span class="nav-text">连接文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色"><span class="nav-number">2.4.</span> <span class="nav-text">颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示配置选项"><span class="nav-number">2.5.</span> <span class="nav-text">显示配置选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#circos实例"><span class="nav-number">3.</span> <span class="nav-text">circos实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成带分组的图形"><span class="nav-number">4.</span> <span class="nav-text">生成带分组的图形</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/01/03/认知神经科学专题/circos入门教程/';
+      var disqus_title = "circos入门教程";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/01/03/认知神经科学专题/circos入门教程/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

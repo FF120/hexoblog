@@ -1,0 +1,1111 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="fMRI," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。目前主流的算法基本上都有Python的实现版本，所以能够使用Python处理fMRI数据对于直接使用多种多样的机器学习算法是十分有帮助的。 本文主要涉及的内容有Python,Scikit-lean,nibabel,nilean等。">
+<meta name="keywords" content="fMRI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Python处理fMRI数据">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。目前主流的算法基本上都有Python的实现版本，所以能够使用Python处理fMRI数据对于直接使用多种多样的机器学习算法是十分有帮助的。 本文主要涉及的内容有Python,Scikit-lean,nibabel,nilean等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/spyder.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/haxy_database.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/svm_weights.png">
+<meta property="og:updated_time" content="2017-07-31T15:02:23.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Python处理fMRI数据">
+<meta name="twitter:description" content="Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。目前主流的算法基本上都有Python的实现版本，所以能够使用Python处理fMRI数据对于直接使用多种多样的机器学习算法是十分有帮助的。 本文主要涉及的内容有Python,Scikit-lean,nibabel,nilean等。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/spyder.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/"/>
+
+  <title> 使用Python处理fMRI数据 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Python处理fMRI数据
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-12T20:50:50+08:00" content="2016-06-12">
+              2016-06-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/认知神经科学/" itemprop="url" rel="index">
+                    <span itemprop="name">认知神经科学</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/12/认知神经科学专题/使用Python处理fMRI数据/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/" class="leancloud_visitors" data-flag-title="使用Python处理fMRI数据">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。目前主流的算法基本上都有Python的实现版本，所以能够使用Python处理fMRI数据对于直接使用多种多样的机器学习算法是十分有帮助的。 本文主要涉及的内容有Python,Scikit-lean,nibabel,nilean等。 <a id="more"></a> ## Python 安装Python环境，Windows下使用建议使用Anaconda,一个类似matlab界面的Python环境。 <a href="https://www.continuum.io/downloads" target="_blank" rel="external">Anaconda</a> 安装完成后，打开<code>cmd</code>键入<code>spyder</code>打开软件 <img src="spyder.png" alt="spyder"> ## scikit-learn scikit-learn是一个很有名的机器学习库，设计了一系列的通用接口以使不同的机器学习算法符合相似的流程。里面实现了大部分目前流行的机器学习算法，而且文档良好，更新速度很快。 &gt;安装 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda install scikit-learn</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>卸载 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda remove scikit-learn</div></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>更新 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conda update scikit-learn</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="nibabel">NiBabel</h2>
+<p>NiBabel是一个读写常见的神经影像数据的Python语言的程序包，可以实现读取和生成大部分常见的神经影像数据格式。 &gt;安装 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install nibabel</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>测试是否成功安装 在Python控制台键入<code>import nibabel</code>没有报错信息证明安装成功</p>
+</blockquote>
+<h3 id="神经影像数据格式">神经影像数据格式</h3>
+<p>使用fMRI得到的原始数据一般是.IMA结尾的数据，每个TR一个文件，我们可以使用<a href="">mricron</a>的<code>dcm2niigui.exe</code>转换成.nii结尾的4D文件格式 ### 读取数据 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> nibabel <span class="keyword">as</span> nib </div><div class="line"></div><div class="line">img = nib.load(<span class="string">"image.nii"</span>)</div></pre></td></tr></table></figure></p>
+<p>以上代码将image.nii文件读取到<code>img</code>中，<code>img</code>是<code>nibabel.nifti1.Nifti1Image</code>类型的。 一个<code>nibabel.nifti1.Nifti1Image</code>类型的数据包含三个主要的部分 - image data array 存放图像数据的矩阵 - an affine array 定义了图像数据在参考空间的位置 - image metadata 存放图像的一些属性信息，采集设备名称，体素的大小，扫描层数等等。 &gt;image data array 虽然存储了每个体素的取值信息，但是并没有存储位置信息。也就是说我们并不知道某个体素来自由大脑哪个具体的位置 &gt;affine数组定义了一个从image data array 到标准的参考空间的映射，每个体素经过这个数组映射后都会到一个标准的参考空间，在那个空间中，我们精确的知道每个体素所处的位置。 &gt;结构像和功能像扫描的区域和方向均有所差异，所以都需要使用affine数组映射到参考空间，以确定体素在真实大脑中的位置 ### 显示数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">img_array = img.get_data() //get image data array</div><div class="line">affine_array = img.affine //get the affine array</div><div class="line">img_head = img.header; //get image metadata</div><div class="line"></div><div class="line">//获取其他一些信息的方法</div><div class="line">img.shape // 获得维数信息</div><div class="line">img.get_data_dtype() // 获得数据类型</div><div class="line">img_head.get_data_dtype() // 获得头信息的数据类型</div><div class="line">img_head.get_data_shape() // 获得维数信息</div><div class="line">img_head.get_zooms() //获得体素大小</div></pre></td></tr></table></figure>
+<h2 id="nilearn">Nilearn</h2>
+<p><code>Nilearn</code>是一个<code>Python</code>实现的适用于处理<code>Neuro-Image</code>数据的机器学习工具包，它可以和<code>scikit-learn</code>很好的结合，用很少的代码就能将大部分机器学习方法用来处理神经影像数据。</p>
+<h3 id="实验和数据介绍">实验和数据介绍</h3>
+<p>该工具包中大部分说明都是使用<code>The Haxby 2001 experiment</code>的实验数据，这里我们介绍一下该实验的相关信息和采集的数据的结构。 #### 实验内容 实验一个选取了六个被试，每个被试的实验内容都有一样。每个被试在实验的时候观看一些图片，使用功能核磁共振获取被试此时大脑的激活信息，利用获得的信息看是否能够分类被试看到的图片的种类。 给被试看的图片分为八类 - 人脸 - 猫 - 房屋 - 椅子 - 剪刀 - 鞋 - 瓶子 - 毫无意义的照片（使用随机噪声生成的图片）</p>
+<h4 id="数据结构">数据结构</h4>
+<blockquote>
+<ul>
+<li>数据的获取可以使用内建的方法 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> nilearn <span class="keyword">import</span> datasets</div><div class="line">haxby_dataset = datasets.fetch_haxby()</div></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<p>haxby_dataset的结构是这样的 <img src="haxy_database.png" alt="haxy_database"> &gt;- <code>anat</code> 是被试1的结构像，<code>T1</code>像，是<code>124X256X256</code>的，是一个<code>3D</code>图像，是被试在静息态的扫描图像 &gt;- <code>func</code> 是被试1的功能图像，就是被试在实验过程中做任务的时候扫描的图像，是<code>40X64X64X1452</code>的，是个4D的图像，前三维是一次<code>TR</code>扫描到的图像，是三维的，最后一维<strong>1452</strong>代表被试1的功能像一共扫描了<code>1452</code>个<code>TR</code>，也就是有<code>1452</code>个功能图像。 &gt;- <code>mask</code> 是感兴趣的脑区的一个掩膜，想要留下的部分都是1，不需要的部分都是0，是一个和原来图像一样大的矩阵，这个mask是应用到功能像上的，所以它的大小是<code>40X64X64</code> &gt;- <code>session_target</code>是一个文本文件，里面一共<strong>1452</strong>行，每一行代表一个TR，表示该TR进行的时候被试受到的刺激的类型。</p>
+<blockquote>
+<p>使用内建方法获得的数据只有一个被试的数据，不过该数据集已经公开，完整数据可以去网站下载。</p>
+</blockquote>
+<h3 id="解码实验">解码实验</h3>
+<p>使用fMRI测量得到的大脑状态信息(这里表现为一个<code>40X64X64X1452</code>的矩阵)，解码出被试所受刺激的种类(这里是图片的八种类别)。 基本思路是：从原始数据中用一定的策略提取有用的特征作为输入，session_target中的信息作为输出，训练一个分类器，尽可能的根据输入的特征得出正确的分类结果。 特征选择可以使用的方法： - 选择感兴趣的脑区 - 使用统计方法，计算体素T值和F值，只选择那些有显著变化的体素 - 使用无监督的降维方法，例如PCA</p>
+<p>分类器可以选择的方法： - 线性的支持向量机 - LDA，ICA - 决策树 - 神经网络</p>
+<p>以下分成四个部分介绍分析的过程： - 特征选择 - 数据准备 - 模型训练和测试 - 结果分析和可视化显示</p>
+<h4 id="特征选择">特征选择</h4>
+<h5 id="使用mask">使用mask</h5>
+<p>这里我们选择使用mask的方法降低特征的数量。mask一般定位在某一个或几个脑区，感兴趣的脑区是根据以前的相关研究确定的，比如研究视觉刺激，就找大脑皮层处理视觉的相关区域。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> nilearn.input_data <span class="keyword">import</span> NiftiMasker</div><div class="line"><span class="comment">#模版文件的路径</span></div><div class="line">mask_vt_filename = haxby_dataset.mask_vt[<span class="number">0</span>]</div><div class="line"><span class="comment">#加载模版并标准化</span></div><div class="line">nifti_masker = NiftiMasker(mask_img=mask_vt_filename, standardize=<span class="keyword">True</span>)</div><div class="line"><span class="comment">#功能像4D文件</span></div><div class="line">func_filename = haxby_dataset.func[<span class="number">0</span>]</div><div class="line"><span class="comment">#应用mask，并将数据合适转换成（n_sample,n_features）的形式</span></div><div class="line">fmri_vt_masked = nifti_masker.fit_transform(func_filename)</div><div class="line"></div><div class="line">&gt;&gt;&gt;fmri_vt_masked</div><div class="line">&gt;&gt;&gt;(<span class="number">1452L</span>, <span class="number">577L</span>)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>功能像文件本来是<code>40*64*64*1452</code>的，如果不做特征选择，直接转换成(n_samples,n_features)的形式,应该是<code>1452*163840</code>的规模，显然特征数量太大了。 应用完<code>mask</code>之后，现在<code>fmri_masked</code>是<code>1452*577</code>的，特征一下少了很多。 我们推测，mask文件中应该有577个1，其余的都是0， &gt; <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import nibabel as nib</div><div class="line">mask_v4 = nib.load(&apos;mask4_vt.nii.gz&apos;)</div><div class="line">mask_v4data = mask_v4.get_data()</div><div class="line">import numpy as np </div><div class="line">print np.sum(mask_v4data)</div></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>输出<code>577.0</code>,所以经过mask之后的特征变成了577维。</p>
+</blockquote>
+</blockquote>
+<h5 id="使用f检验">使用F检验</h5>
+<p>这里我们使用数据提供的一个比较大的mask先选择一个比较大的感兴趣的区域<code>hsxby2001\mask.nii.gz</code>，然后使用F检验找出影响程度最大的前577个特征，与上面直接使用一个小的mask的分类结果做对比。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> nilearn.input_data <span class="keyword">import</span> NiftiMasker</div><div class="line"><span class="comment">#模版文件的路径</span></div><div class="line">mask_filename = haxby_dataset.mask</div><div class="line"><span class="comment">#加载模版并标准化</span></div><div class="line">nifti_masker = NiftiMasker(mask_img=mask_filename, standardize=<span class="keyword">True</span>)</div><div class="line"><span class="comment">#功能像4D文件</span></div><div class="line">func_filename = haxby_dataset.func[<span class="number">0</span>]</div><div class="line"><span class="comment">#应用mask，并将数据合适转换成（n_sample,n_features）的形式</span></div><div class="line">fmri_masked = nifti_masker.fit_transform(func_filename)</div><div class="line"></div><div class="line">&gt;&gt;&gt;fmri_masked</div><div class="line">&gt;&gt;&gt;(<span class="number">1452L</span>, <span class="number">39912L</span>)</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</div><div class="line">svc = SVC(kernel=<span class="string">'linear'</span>)</div><div class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest, f_classif</div><div class="line">feature_selection = SelectKBest(f_classif, k=<span class="number">577</span>) <span class="comment">#选择排名前577的特征</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</div><div class="line">anova_svc = Pipeline([(<span class="string">'anova'</span>, feature_selection), (<span class="string">'svc'</span>, svc)])</div></pre></td></tr></table></figure>
+<blockquote>
+<p>此处的<code>anova_svc</code>相当于下面的<code>svc</code>,只不过<code>anova_svc</code>会首先执行特征选择过程，再把特征选择的结果送入SVM分类器，<code>anova_svc</code>和<code>svc</code>的使用在形式上完全一样，都是<code>.fit(X,y)</code>,<code>.predict(X)</code>的形式。</p>
+</blockquote>
+<h4 id="数据准备">数据准备</h4>
+<p>在这一步，我们要对数据的组织格式进行处理，使之符合<code>scikit-learn</code>的输入格式。 &gt;<code>scikit-learn</code>训练器的输入格式一般为train_data,target_data;train_data的格式为(n_samples,n_features)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#实验包含八类，这里我们只选择其中的两类数据进行实验</span></div><div class="line"><span class="comment">#加载target数据</span></div><div class="line">labels = np.recfromcsv(haxby_dataset.session_target[<span class="number">0</span>], delimiter=<span class="string">" "</span>)</div><div class="line">target = labels[<span class="string">'labels'</span>]</div><div class="line">condition_mask = np.logical_or(labels[<span class="string">'labels'</span>] == <span class="string">b'face'</span>,</div><div class="line">                               labels[<span class="string">'labels'</span>] == <span class="string">b'cat'</span>)</div><div class="line">target_data = target[condition_mask]</div><div class="line"><span class="comment">#使用mask的特征</span></div><div class="line">train_data = fmri_vt_masked[condition_mask]</div><div class="line"><span class="comment">#使用F检验的特征</span></div><div class="line">train_f_data = fmri_masked[condition_mask]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>现在我们准备好了数据，<code>train_data</code>是<code>216*577</code>的，<code>target_data</code>是<code>216*1</code>的，正好能对应上。</p>
+</blockquote>
+<h4 id="模型训练和测试">模型训练和测试</h4>
+<p>实际的模型训练和测试中，常使用交叉验证的方式来保证可靠性。所谓的交叉验证，就是使用一部分数据训练模型，使用另外一部分测试准确率；然后反过来。每次训练数据和测试数据都是互斥的，没有交集。 <code>scikit-learn</code>提供了接口，我们可以很方便的实现交叉验证。 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#使用SVM分类和预测</span></div><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</div><div class="line">svc = SVC(kernel=<span class="string">'linear'</span>)</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> KFold</div><div class="line">cv = KFold(n=len(train_data), n_folds=<span class="number">5</span>)</div><div class="line"><span class="comment">#使用mask</span></div><div class="line">cv_scores = [] <span class="comment">#存储每次测试的准确率</span></div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> cv:</div><div class="line">    svc.fit(train_data[train], target_data[train])</div><div class="line">    prediction = svc.predict(train_data[test])</div><div class="line">    cv_scores.append( np.sum(prediction == target_data[test]) / float(np.size(target_data[test])) )</div><div class="line">	</div><div class="line">classification_accuracy = np.mean(cv_scores) <span class="comment">#计算平均的分类准确率</span></div><div class="line"></div><div class="line">&gt;&gt;&gt;cv_scores</div><div class="line">&gt;&gt;&gt;</div><div class="line">[<span class="number">0.72727272727272729</span>,</div><div class="line"> <span class="number">0.46511627906976744</span>,</div><div class="line"> <span class="number">0.72093023255813948</span>,</div><div class="line"> <span class="number">0.58139534883720934</span>,</div><div class="line"> <span class="number">0.7441860465116279</span>]</div><div class="line"> </div><div class="line">&gt;&gt;&gt;classification_accuracy</div><div class="line">&gt;&gt;&gt;<span class="number">0.64778012684989428</span></div><div class="line"></div><div class="line"><span class="comment">#使用F检验</span></div><div class="line">cv_f_scores = []</div><div class="line"><span class="keyword">for</span> train, test <span class="keyword">in</span> cv:</div><div class="line">    anova_svc.fit(train_f_data[train], target_data[train])</div><div class="line">    y_pred = anova_svc.predict(train_f_data[test])</div><div class="line">    cv_f_scores.append(np.sum(y_pred == target_data[test]) / float(np.size(target_data[test])))</div><div class="line"></div><div class="line">classification_f_accuracy = np.mean(cv_f_scores) <span class="comment">#计算平均的分类准确率</span></div><div class="line"></div><div class="line">&gt;&gt;&gt;cv_f_scores</div><div class="line">&gt;&gt;&gt;Out[<span class="number">133</span>]: </div><div class="line">[<span class="number">0.59090909090909094</span>,</div><div class="line"> <span class="number">0.39534883720930231</span>,</div><div class="line"> <span class="number">0.76744186046511631</span>,</div><div class="line"> <span class="number">0.65116279069767447</span>,</div><div class="line"> <span class="number">0.55813953488372092</span>]</div><div class="line"> </div><div class="line">&gt;&gt;&gt;classification_f_accuracy</div><div class="line">&gt;&gt;&gt;<span class="number">0.59260042283298098</span></div><div class="line"></div><div class="line"><span class="comment">#计算change level</span></div><div class="line"><span class="keyword">from</span> sklearn.dummy <span class="keyword">import</span> DummyClassifier</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> cross_val_score</div><div class="line"></div><div class="line">null_cv_scores = cross_val_score(DummyClassifier(), train_data, target_data, cv=cv)  </div><div class="line">null_accuracy = np.mean(null_cv_scores)</div><div class="line"></div><div class="line">&gt;&gt;&gt;null_cv_scores</div><div class="line">&gt;&gt;&gt;array([ <span class="number">0.54545455</span>,  <span class="number">0.48837209</span>,  <span class="number">0.48837209</span>,  <span class="number">0.34883721</span>,  <span class="number">0.55813953</span>])</div><div class="line"></div><div class="line">&gt;&gt;&gt;null_accuracy</div><div class="line">&gt;&gt;&gt;<span class="number">0.48583509513742068</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> cv_scores,classification_accuracy</div><div class="line"></div><div class="line"><span class="keyword">print</span> cv_f_scores,classification_f_accuracy</div><div class="line"></div><div class="line"><span class="keyword">print</span> null_cv_scores,null_accuracy</div></pre></td></tr></table></figure></p>
+<p>可以看到，简单的使用F检验的结果并没有使用先验的小mask获得的准确率高，但是F检验获得的分类准确率也显著高于chance level. #### 结果分析和可视化显示 获得模型参数 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Retrieve the SVC discriminating weights</span></div><div class="line">coef_ = svc.coef_</div><div class="line"></div><div class="line"><span class="comment"># Reverse masking thanks to the Nifti Masker</span></div><div class="line">coef_img = nifti_masker.inverse_transform(coef_)</div><div class="line"></div><div class="line"><span class="comment"># Save the coefficients as a Nifti image</span></div><div class="line">coef_img.to_filename(<span class="string">'haxby_svc_weights.nii'</span>)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>svc.coef_</code>是SVM模型的参数，从中可以看出各个特征对分类结果的贡献的大小。</p>
+</blockquote>
+<p>显示图像 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Create the figure</span></div><div class="line"><span class="keyword">from</span> nilearn <span class="keyword">import</span> image</div><div class="line"><span class="keyword">from</span> nilearn.plotting <span class="keyword">import</span> plot_stat_map, show</div><div class="line"><span class="keyword">import</span> nibabel <span class="keyword">as</span> nib</div><div class="line"></div><div class="line"><span class="comment"># Plot the mean image because we have no anatomic data</span></div><div class="line">mean_img = image.mean_img(func_filename)</div><div class="line">weight_img = nib.load(<span class="string">'haxby_svc_weights.nii'</span>)</div><div class="line">plot_stat_map(weight_img, mean_img, title=<span class="string">'SVM weights'</span>)</div><div class="line">show()</div></pre></td></tr></table></figure></p>
+<p><img src="svm_weights.png" alt="svm_weights"> &gt; 从该图像中，我们能够看到那些对分类结果影响较大的体素，这些地方很可能就是大脑内专门负责这两个不同的类别的区分任务的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/fMRI/" rel="tag">#fMRI</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2016/06/12/工具的使用/Hexo的使用02-同步/" rel="next" title="Hexo的使用02-同步">
+                <i class="fa fa-chevron-left"></i> Hexo的使用02-同步
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2016/06/13/工具的使用/Hexo的使用01-搭建/" rel="prev" title="Hexo的使用01-搭建">
+                Hexo的使用01-搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nibabel"><span class="nav-number">1.</span> <span class="nav-text">NiBabel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经影像数据格式"><span class="nav-number">1.1.</span> <span class="nav-text">神经影像数据格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nilearn"><span class="nav-number">2.</span> <span class="nav-text">Nilearn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实验和数据介绍"><span class="nav-number">2.1.</span> <span class="nav-text">实验和数据介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构"><span class="nav-number">2.1.1.</span> <span class="nav-text">数据结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解码实验"><span class="nav-number">2.2.</span> <span class="nav-text">解码实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特征选择"><span class="nav-number">2.2.1.</span> <span class="nav-text">特征选择</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用mask"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">使用mask</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用f检验"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">使用F检验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据准备"><span class="nav-number">2.2.2.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型训练和测试"><span class="nav-number">2.2.3.</span> <span class="nav-text">模型训练和测试</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2016/06/12/认知神经科学专题/使用Python处理fMRI数据/';
+      var disqus_title = "使用Python处理fMRI数据";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2016/06/12/认知神经科学专题/使用Python处理fMRI数据/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

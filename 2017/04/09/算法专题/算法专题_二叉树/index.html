@@ -1,0 +1,1180 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="树是没有环的图。树和链表、图都有关联。链表是树的一种特殊情况，而图都可以对应一棵生成树。学习完链表，学习树，然后学习图，是一个比较容易接受的过程。每个节点最多有两个子节点的树叫做二叉树。二叉树是递归定义的，这导致很多涉及二叉树的问题都可以用递归的方法求解。按照节点数目的不同，二叉树的类型有：完全二叉树，满二叉树和完美二叉树。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_二叉树">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="树是没有环的图。树和链表、图都有关联。链表是树的一种特殊情况，而图都可以对应一棵生成树。学习完链表，学习树，然后学习图，是一个比较容易接受的过程。每个节点最多有两个子节点的树叫做二叉树。二叉树是递归定义的，这导致很多涉及二叉树的问题都可以用递归的方法求解。按照节点数目的不同，二叉树的类型有：完全二叉树，满二叉树和完美二叉树。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/construct_tree.svg">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/2017-04-11_094148.png">
+<meta property="og:updated_time" content="2017-09-26T08:23:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_二叉树">
+<meta name="twitter:description" content="树是没有环的图。树和链表、图都有关联。链表是树的一种特殊情况，而图都可以对应一棵生成树。学习完链表，学习树，然后学习图，是一个比较容易接受的过程。每个节点最多有两个子节点的树叫做二叉树。二叉树是递归定义的，这导致很多涉及二叉树的问题都可以用递归的方法求解。按照节点数目的不同，二叉树的类型有：完全二叉树，满二叉树和完美二叉树。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/construct_tree.svg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/"/>
+
+  <title> 算法专题_二叉树 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                算法专题_二叉树
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-09T17:33:46+08:00" content="2017-04-09">
+              2017-04-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/04/09/算法专题/算法专题_二叉树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/09/算法专题/算法专题_二叉树/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/04/09/算法专题/算法专题_二叉树/" class="leancloud_visitors" data-flag-title="算法专题_二叉树">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>树是没有环的图。树和链表、图都有关联。链表是树的一种特殊情况，而图都可以对应一棵生成树。学习完链表，学习树，然后学习图，是一个比较容易接受的过程。每个节点最多有两个子节点的树叫做二叉树。二叉树是递归定义的，这导致很多涉及二叉树的问题都可以用递归的方法求解。按照节点数目的不同，二叉树的类型有：完全二叉树，满二叉树和完美二叉树。</p>
+<a id="more"></a>
+<h2 id="二叉树的通用性质">二叉树的通用性质</h2>
+<ul>
+<li>二叉树的第i层节点数目至多是<code>2^(i-1); (i&gt;=1)</code></li>
+<li>深度为K的二叉树至多有<code>2^(K-1)</code>个节点。</li>
+<li>二叉树中出度为2的节点数目记作n2, 叶节点记作n0; 则有<code>n0 = n2 + 1</code></li>
+<li>深度为n的完美二叉树，其节点的数目是<code>2^n -1</code>, 叶节点数目是<code>2^(n-1)</code>, 非叶节点的数目是<code>2^(n-1)-1</code></li>
+<li>节点数目为n的完美二叉树，深度是<code>log2(n+1)</code></li>
+<li>节点数目为n的完全二叉树，深度是<code>[log2(n)] + 1</code> 其中[]表示向下取整</li>
+</ul>
+<h2 id="二叉树的定义">二叉树的定义</h2>
+<p>二叉树的结构和双向链表比较相似，需要两个指针分别指向左孩子和右孩子。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 定义二叉树的结构</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">   <span class="keyword">int</span> val;</div><div class="line">   TreeNode *left, *right;</div><div class="line">   TreeNode(<span class="keyword">int</span> val) &#123;</div><div class="line">       <span class="keyword">this</span>-&gt;val = val;</div><div class="line">       <span class="keyword">this</span>-&gt;left = <span class="keyword">this</span>-&gt;right = <span class="literal">nullptr</span>;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="二叉树的创建生成">二叉树的创建(生成)</h2>
+<p>创建一棵二叉树有多种方式，算法中指定二叉树通常使用“#”表示不存在的节点，这里我们采用两个遍历序列的方式来确定一棵二叉树的结构。前序遍历序列和中序遍历序列可以唯一的确定一颗二叉树的结构，后序遍历序列和中序遍历序列也可以唯一的确定一棵二叉树的结构。</p>
+<h3 id="根据前序遍历和中序遍历重建二叉树">根据前序遍历和中序遍历重建二叉树</h3>
+<p>根据二叉树的前序遍历和中序遍历的结果创建二叉树，根据前序遍历序列和中序遍历序列可以唯一的确定一棵二叉树。 假设前序遍历的序列是pre; 中序遍历的序列是vin;里面都不含有重复数字；首先确定根节点，肯定是pre[0], 然后在vin中寻找pre[0], 它前面的一定是左子树上的，后面的都是右子树上的。假设pre[0]出现在vin[3],可以知道左子树上有三个节点，分别是vin[0],vin[1],vin[2], 在pre中从pre[0]以后数3个数字这三个数字一定是位于左子树上的，剩下的属于右子树。分别按照上面的方法递归处理左右子树，直到只剩下一个元素，返回答案；举例来说，假设<code>pre = [1,2,4,7,3,5,6,8]</code> <code>vin=[4,7,2,1,5,3,8,6]</code>第一次： 可知1是根，2，4，7是1的左子树上的，3,5,6,8,是1的右子树上的。 分别处理序列<code>[2,4,7] [4,7,2]</code> 和<code>[3,5,6,8] [5,3,6,8]</code>第二次： 对于<code>[2,4,7] [4,7,2]</code> 可以得到2是根，而4，7都是左子树上的， 接着处理<code>[4,7] [4,7]</code> 此时4是根，而7位于右子树上，这边处理完毕；对于<code>[3,5,6,8] [5,3,8,6]</code> 可以得到3是根，5是左子树上的，<code>[6,8]</code>是右子树上的。接着处理<code>[6,8][8,6]</code> 此时6是根，而8位于左子树上。</p>
+<p>综合上面的分析，可以得到这个二叉树的形状如下：</p>
+<div class="figure">
+<img src="construct_tree.svg">
+
+</div>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//根据前序遍历和中序遍历重建二叉树</span></div><div class="line"><span class="function">TreeNode* <span class="title">reConstructBinaryTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pre,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vin)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(pre.empty() || vin.empty())&#123;<span class="keyword">return</span> <span class="literal">nullptr</span>;&#125;</div><div class="line">        TreeNode* node = <span class="keyword">new</span> TreeNode(pre[<span class="number">0</span>]);<span class="comment">// 先建立根节点</span></div><div class="line">        <span class="keyword">int</span> len = pre.size();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>;i&lt;vin.size();++i)&#123;</div><div class="line">            <span class="keyword">if</span>(vin[i] == pre[<span class="number">0</span>])&#123;</div><div class="line">                <span class="comment">// 找到了中序遍历的根节点，则左面的全部是左子树，右面的全部是右子树。</span></div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left_pre(i,<span class="number">0</span>);</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left_vin(i,<span class="number">0</span>);</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right_pre(len<span class="number">-1</span>-i,<span class="number">0</span>);</div><div class="line">                <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right_vin(len<span class="number">-1</span>-i,<span class="number">0</span>);</div><div class="line">                copy(vin.begin(),vin.begin()+i,left_vin.begin());</div><div class="line">                copy(vin.begin()+i+<span class="number">1</span>,vin.end(),right_vin.begin());</div><div class="line">                copy(pre.begin()+<span class="number">1</span>,pre.begin()+<span class="number">1</span>+i,left_pre.begin());</div><div class="line">                copy(pre.begin()+i+<span class="number">1</span>,pre.end(),right_pre.begin());</div><div class="line">                node-&gt;left =  reConstructBinaryTree(left_pre,left_vin);</div><div class="line">                node-&gt;right = reConstructBinaryTree(right_pre,right_vin);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> node;</div></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/#/description" target="_blank" rel="external">leetcode</a> <a href="https://gist.github.com/FF120/8c0508c1412cf1ca486dc10695ea1c94" target="_blank" rel="external">gist</a></p>
+<h3 id="根据后序遍历和中序遍历重建二叉树">根据后序遍历和中序遍历重建二叉树</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//后序遍历和中序遍历重建二叉树</span></div><div class="line"><span class="function">TreeNode* <span class="title">buildTree</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; inorder, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (inorder.empty() || postorder.empty()) &#123; <span class="keyword">return</span> <span class="literal">nullptr</span>; &#125;</div><div class="line">    TreeNode *node = <span class="keyword">new</span> TreeNode(postorder[postorder.size()<span class="number">-1</span>]);<span class="comment">// 先建立根节点</span></div><div class="line">    <span class="keyword">int</span> len = inorder.size();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; inorder.size(); ++i) &#123;</div><div class="line">        <span class="keyword">if</span> (inorder[i] == postorder[postorder.size()<span class="number">-1</span>]) &#123;</div><div class="line">            <span class="comment">// 找到了中序遍历的根节点，则左面的全部是左子树，右面的全部是右子树。</span></div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left_post(i, <span class="number">0</span>);</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; left_vin(i, <span class="number">0</span>);</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right_post(len - <span class="number">1</span> - i, <span class="number">0</span>);</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; right_vin(len - <span class="number">1</span> - i, <span class="number">0</span>);</div><div class="line">            copy(inorder.begin(), inorder.begin() + i, left_vin.begin());</div><div class="line">            copy(inorder.begin() + i + <span class="number">1</span>, inorder.end(), right_vin.begin());</div><div class="line">            copy(postorder.begin(), postorder.begin() + i, left_post.begin());</div><div class="line">            copy(postorder.begin() + i, postorder.end()<span class="number">-1</span>, right_post.begin());</div><div class="line">            node-&gt;left = buildTree(left_vin,left_post);</div><div class="line">            node-&gt;right = buildTree(right_vin,right_post);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/#/description" target="_blank" rel="external">leetcode</a> <a href="https://gist.github.com/FF120/86ed96f2c2a7c110119e191ddcc94cd8" target="_blank" rel="external">gist</a></p>
+<h2 id="二叉树的深度">二叉树的深度</h2>
+<p>从根节点到叶节点经过的节点数量定义为二叉树的深度。</p>
+<h3 id="最大深度">最大深度</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// 二叉树的最大深度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> left = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> right = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> depth = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">        left += maxDepth(root-&gt;left);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">        right += maxDepth(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">    depth = max(left,right);</div><div class="line">    <span class="keyword">return</span> depth;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="最小深度">最小深度</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 二叉树的最小深度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left == <span class="literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="literal">nullptr</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> left = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> right = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left &amp;&amp; root-&gt;right == <span class="literal">nullptr</span>)&#123;</div><div class="line">        left += minDepth(root-&gt;left);</div><div class="line">        <span class="keyword">return</span> left;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;right &amp;&amp; root-&gt;left == <span class="literal">nullptr</span>)&#123;</div><div class="line">        right += minDepth(root-&gt;right);</div><div class="line">        <span class="keyword">return</span> right;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left &amp;&amp; root-&gt;right)&#123;</div><div class="line">        left += minDepth(root-&gt;left);</div><div class="line">        right += minDepth(root-&gt;right);</div><div class="line">        <span class="keyword">return</span> min(left,right);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="二叉树的遍历">二叉树的遍历</h2>
+<p>二叉树有三种常见的遍历方式：前序遍历、中序遍历、后序遍历。前中后指的都是根节点相对于左右孩子节点的顺序。所以前序遍历的顺序是 <code>root-left-right</code>, 中序遍历的顺序是 <code>left-root-right</code>, 后序遍历的顺序是 <code>left-right-root</code>.</p>
+<h3 id="前序遍历递归">前序遍历(递归)</h3>
+<p><strong>前序遍历遍历的步骤</strong>：</p>
+<ol style="list-style-type: decimal">
+<li>输出当前节点</li>
+<li>如果有左孩子，用左孩子做参数递归</li>
+<li>如果有右孩子，用由孩子做参数递归</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 前序遍历</span></div><div class="line"> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode *root) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line">        re.push_back(root-&gt;val);</div><div class="line">        <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ll = preorderTraversal(root-&gt;left);</div><div class="line">            re.insert(re.end(), ll.begin(), ll.end());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rr = preorderTraversal(root-&gt;right);</div><div class="line">            re.insert(re.end(), rr.begin(), rr.end());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="前序遍历非递归">前序遍历(非递归)</h3>
+<p>非递归的实现，递归函数的实现是使用堆栈的方式，所以把递归调用的函数改写成非递归的形式一般也是使用堆栈作为数据结构。</p>
+<p><strong>前序遍历的非递归遍历步骤</strong></p>
+<ol style="list-style-type: decimal">
+<li>输出当前的节点值，并把当前的节点压入栈</li>
+<li><code>current = current-&gt;left</code>;循环以上步骤直到没有左孩子，执行下面的步骤</li>
+<li>取栈顶元素的右孩子，弹出栈顶元素，然后回到步骤1.</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//前序遍历的非递归实现</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode *root) &#123;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">	 <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line">	 <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</div><div class="line">	 TreeNode *tmp = root;</div><div class="line">	 <span class="keyword">while</span>(tmp!=<span class="literal">nullptr</span> || !s.empty())&#123; <span class="comment">// 逻辑或是短路的</span></div><div class="line">		<span class="keyword">while</span>(tmp!=<span class="literal">nullptr</span>)&#123;</div><div class="line">			re.push_back(tmp-&gt;val);</div><div class="line">			s.push(tmp);</div><div class="line">			tmp = tmp-&gt;left;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 循环退出说明没有了左孩子</span></div><div class="line">		<span class="keyword">if</span>(!s.empty())&#123;</div><div class="line">		   tmp = s.top();</div><div class="line">		   s.pop();</div><div class="line">		   tmp = tmp-&gt;right;</div><div class="line">		&#125;</div><div class="line">	 &#125;</div><div class="line">	 <span class="keyword">return</span> re;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="中序遍历递归">中序遍历(递归)</h3>
+<p><strong>中序遍历遍历的步骤</strong></p>
+<ol style="list-style-type: decimal">
+<li>如果当前的节点有左孩子，用左孩子作为参数递归</li>
+<li>输出当前节点</li>
+<li>如果当前节点有右孩子，用右孩子作为参数递归</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 中序遍历的递归实现</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode *root) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line">        <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ll = inorderTraversal(root-&gt;left);</div><div class="line">            re.insert(re.end(),ll.begin(),ll.end());</div><div class="line">        &#125;</div><div class="line">        re.push_back(root-&gt;val);</div><div class="line">        <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rr = inorderTraversal(root-&gt;right);</div><div class="line">            re.insert(re.end(),rr.begin(),rr.end());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="中序遍历非递归">中序遍历(非递归)</h3>
+<p><strong>中序遍历的非递归实现</strong></p>
+<ol style="list-style-type: decimal">
+<li>对于当前的节点，放入堆栈，然后搜索有没有左孩子，一直向下搜索到没有左孩子为止。</li>
+<li>从堆栈取出栈顶元素，输出，然后搜索右孩子</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//中序遍历的非递归实现</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorder(TreeNode *root) &#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ll = inorder(root-&gt;left);</div><div class="line">        re.insert(re.end(),ll.begin(),ll.end());</div><div class="line">    &#125;</div><div class="line">    re.push_back(root-&gt;val);</div><div class="line">    <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rr = inorder(root-&gt;right);</div><div class="line">        re.insert(re.end(),rr.begin(),rr.end());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="后序遍历递归">后序遍历(递归)</h3>
+<p><strong>后序遍历遍历的步骤是</strong></p>
+<ol style="list-style-type: decimal">
+<li>如果当前节点有左孩子，用左孩子作为参数递归</li>
+<li>如果当前节点有右孩子，用右孩子作为参数递归</li>
+<li>输出当前节点</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 后续遍历的递归实现</span></div><div class="line"> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode *root) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line">        <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ll = postorderTraversal(root-&gt;left);</div><div class="line">            re.insert(re.end(),ll.begin(),ll.end());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; rr = postorderTraversal(root-&gt;right);</div><div class="line">            re.insert(re.end(),rr.begin(),rr.end());</div><div class="line">        &#125;</div><div class="line">        re.push_back(root-&gt;val);</div><div class="line">        <span class="keyword">return</span> re;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="后序遍历非递归">后序遍历(非递归)</h3>
+<p><strong>后序遍历的非递归实现</strong></p>
+<p>第一种思路：对于任一结点P，将其入栈，然后沿其左子树一直往下搜索，直到搜索到没有左孩子的结点，此时该结点出现在栈顶，但是此时不能将其出栈并访问，因此其右孩子还为被访问。所以接下来按照相同的规则对其右子树进行相同的处理，当访问完其右孩子时，该结点又出现在栈顶，此时可以将其出栈并访问。这样就保证了正确的访问顺序。可以看出，在这个过程中，每个结点都两次出现在栈顶，只有在第二次出现在栈顶时，才能访问它。因此需要多设置一个变量标识该结点是否是第一次出现在栈顶。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//后序遍历的非递归实现</span></div></pre></td></tr></table></figure>
+<p>第二种思路：要保证根结点在左孩子和右孩子访问之后才能访问，因此对于任一结点P，先将其入栈。如果P不存在左孩子和右孩子，则可以直接访问它；或者P存在左孩子或者右孩子，但是其左孩子和右孩子都已被访问过了，则同样可以直接访问该结点。若非上述两种情况，则将P的右孩子和左孩子依次入栈，这样就保证了每次取栈顶元素的时候，左孩子在右孩子前面被访问，左孩子和右孩子都在根结点前面被访问。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 后序遍历的非递归实现</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postOrder(TreeNode *root)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; re;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> re;</div><div class="line"></div><div class="line">    TreeNode *p = root;</div><div class="line">    <span class="built_in">stack</span>&lt;TreeNode *&gt; s; </div><div class="line">    TreeNode *last = root;</div><div class="line">    s.push(p);</div><div class="line">    <span class="keyword">while</span> (!s.empty())</div><div class="line">    &#123;</div><div class="line">        p = s.top();</div><div class="line">        <span class="keyword">if</span>( (p-&gt;left == <span class="literal">nullptr</span> &amp;&amp; p-&gt;right == <span class="literal">nullptr</span>) || (p-&gt;right == <span class="literal">nullptr</span> &amp;&amp; last == p-&gt;left) || (last == p-&gt;right) )</div><div class="line">        &#123;</div><div class="line">            re.push_back(p-&gt;val);</div><div class="line">            last = p;</div><div class="line">            s.pop();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(p-&gt;right)</div><div class="line">                s.push(p-&gt;right);</div><div class="line">            <span class="keyword">if</span>(p-&gt;left)</div><div class="line">                s.push(p-&gt;left);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> re;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="层次遍历">层次遍历</h3>
+<p>二叉树的层次遍历类似与图的广度优先搜索，可以使用队列来实现。思路是： 使用两个队列保存相邻两层的节点，循环输出每层的节点</p>
+<p><strong>层次遍历遍历的步骤</strong></p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>初始化两个队列d1,d2;令d1保存root,d2为空</li>
+<li>清空d2,遍历d1中的节点，把d1中节点的所有孩子节点按照顺序放入d2中</li>
+<li>打印d1中的节点</li>
+<li>交换d1和d2;转到2</li>
+</ol>
+<p>循环直到d2中为空，结束。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 从底向上层次遍历二叉树</span></div><div class="line"> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrderBottom(TreeNode *root) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; v1,v2;</div><div class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)&#123;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">        v1.push_back(root);</div><div class="line">        <span class="keyword">while</span>(!v1.empty())&#123;</div><div class="line">            <span class="comment">// 遍历v1中的所有节点，将下一层节点保存在v2中</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v1.size();i++)&#123;</div><div class="line">                <span class="keyword">if</span>(v1[i]-&gt;left)&#123;</div><div class="line">                    v2.push_back(v1[i]-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(v1[i]-&gt;right)&#123;</div><div class="line">                    v2.push_back(v1[i]-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp;</div><div class="line">            <span class="comment">//打印v1</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v1.size();i++)&#123;</div><div class="line">                tmp.push_back(v1[i]-&gt;val);</div><div class="line">            &#125;</div><div class="line">            result.insert(result.begin(),tmp);</div><div class="line">            swap(v1,v2);</div><div class="line">            v2.clear();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 自顶向下遍历二叉树</span></div><div class="line"> <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; zigzagLevelOrder(TreeNode *root) &#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</div><div class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> result;</div><div class="line">        <span class="built_in">vector</span>&lt;TreeNode*&gt; v1,v2;</div><div class="line">        v1.push_back(root);</div><div class="line">        <span class="keyword">int</span> level = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(!v1.empty())&#123;</div><div class="line">            <span class="comment">//遍历v1中的节点，把v1中所有节点的下一级节点存储在v2中</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v1.size();i++)&#123;</div><div class="line">                <span class="keyword">if</span>(v1[i]-&gt;left)&#123;</div><div class="line">                    v2.push_back(v1[i]-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(v1[i]-&gt;right)&#123;</div><div class="line">                    v2.push_back(v1[i]-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">// 打印v1中的节点,如果level 是奇数，则从左向又打印，</span></div><div class="line">            <span class="comment">// 如果level是偶数，则从右向左打印</span></div><div class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tmp;</div><div class="line">            <span class="keyword">if</span>(level % <span class="number">2</span> == <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=v1.size()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</div><div class="line">                    tmp.push_back(v1[i]-&gt;val);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(level % <span class="number">2</span> )&#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v1.size();i++)&#123;</div><div class="line">                    tmp.push_back(v1[i]-&gt;val);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            result.push_back(tmp);</div><div class="line">            <span class="comment">// 更新该更新的数据</span></div><div class="line">            swap(v1,v2);</div><div class="line">            v2.clear();</div><div class="line">            level++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 之字形遍历二叉树</span></div><div class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; Print(TreeNode* pRoot) &#123;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; output;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; row;</div><div class="line">    <span class="keyword">if</span>(pRoot == <span class="literal">nullptr</span>) <span class="keyword">return</span> output;</div><div class="line">    <span class="built_in">vector</span>&lt;TreeNode*&gt; first;</div><div class="line">    <span class="built_in">vector</span>&lt;TreeNode*&gt; second;</div><div class="line">    <span class="keyword">bool</span> odd = <span class="literal">true</span>;</div><div class="line">    first.push_back(pRoot);</div><div class="line">    <span class="keyword">while</span>(!first.empty())&#123;</div><div class="line">        <span class="keyword">if</span>(odd)&#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; first.size(); ++i) &#123;</div><div class="line">                row.push_back(first[i]-&gt;val);</div><div class="line">                <span class="keyword">if</span>(first[i]-&gt;left)&#123;</div><div class="line">                    second.push_back(first[i]-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(first[i]-&gt;right)&#123;</div><div class="line">                    second.push_back(first[i]-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            output.push_back(row);</div><div class="line">            row.clear();</div><div class="line">            swap(first,second);</div><div class="line">            second.clear();</div><div class="line">            odd = !odd;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = first.size()<span class="number">-1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</div><div class="line">                row.push_back(first[i]-&gt;val);</div><div class="line">            &#125;</div><div class="line">            output.push_back(row);</div><div class="line">            row.clear();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; first.size(); ++j) &#123;</div><div class="line">                <span class="keyword">if</span>(first[j]-&gt;left)&#123;</div><div class="line">                    second.push_back(first[j]-&gt;left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(first[j]-&gt;right)&#123;</div><div class="line">                    second.push_back(first[j]-&gt;right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            swap(first,second);</div><div class="line">            second.clear();</div><div class="line">            odd = !odd;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> output;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="平衡二叉树">平衡二叉树</h2>
+<p>平衡二叉树的定义是：要么是一棵空树，要么根节点左右两棵子树的高度相差不超过1，并且左右两个子树也是平衡二叉树。</p>
+<h3 id="平衡二叉树的判定">平衡二叉树的判定</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 求树的最大深度</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> left = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> right = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> depth = <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left)&#123;</div><div class="line">        left += maxDepth(root-&gt;left);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;right)&#123;</div><div class="line">        right += maxDepth(root-&gt;right);</div><div class="line">    &#125;</div><div class="line">    depth = max(left,right);</div><div class="line">    <span class="keyword">return</span> depth;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 判断二叉树是否是平衡二叉树</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isBalanced</span><span class="params">(TreeNode* root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left == <span class="literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left &amp;&amp; root-&gt;right == <span class="literal">nullptr</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(root-&gt;left-&gt;left== <span class="literal">nullptr</span> &amp;&amp; root-&gt;left-&gt;right == <span class="literal">nullptr</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root-&gt;left == <span class="literal">nullptr</span> &amp;&amp; root-&gt;right)&#123;</div><div class="line">        <span class="keyword">if</span>(root-&gt;right-&gt;left == <span class="literal">nullptr</span> &amp;&amp; root-&gt;right-&gt;right == <span class="literal">nullptr</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">bool</span> left = isBalanced(root-&gt;left);</div><div class="line">    <span class="keyword">bool</span> right = isBalanced(root-&gt;right);</div><div class="line">    <span class="keyword">int</span> ldepth = maxDepth(root-&gt;left);</div><div class="line">    <span class="keyword">int</span> rdepth = maxDepth(root-&gt;right);</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">abs</span>(ldepth-rdepth)&lt;=<span class="number">1</span> &amp;&amp; left &amp;&amp; right) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="二叉搜索树二叉查找树">二叉搜索树(二叉查找树)</h2>
+<p>二叉查找树（Binary Search Tree），也称有序二叉树（ordered binary tree）,排序二叉树（sorted binary tree），是指一棵空树或者具有下列性质的二叉树：</p>
+<blockquote>
+<ul>
+<li>若任意结点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
+<li>若任意结点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>任意结点的左、右子树也分别为二叉查找树。</li>
+<li>没有键值相等的结点（no duplicate nodes）。</li>
+</ul>
+</blockquote>
+<p>因为，一棵由n个结点，随机构造的二叉查找树的高度为lgn，所以顺理成章，一般操作的执行时间为O（lgn）.（至于n个结点的二叉树高度为lgn的证明，可参考算法导论 第12章 二叉查找树 第12.4节）。</p>
+<p>但二叉树若退化成了一棵具有n个结点的线性链后，则此些操作最坏情况运行时间为O（n）。后面我们会看到一种基于二叉查找树-红黑树，它通过一些性质使得树相对平衡，使得最终查找、插入、删除的时间复杂度最坏情况下依然为O（lgn）。</p>
+<h3 id="二叉搜索树的判定">二叉搜索树的判定</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<h3 id="二叉搜索树的遍历序列">二叉搜索树的遍历序列</h3>
+<p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 思路：如果是二叉搜索树的后序遍历序列，那么最后一个一定是根，并且一定可以存在这样的关系：根前面的元素分成两部分，前一部分都比根小，后一部分都比根大，注意，这里前一部分和后一部分都可能为空。判断给出的序列是否满足这样的规律，然后分别递归判断左右两个分支。</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">bst</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</div><div class="line">       <span class="comment">// 1. 找到第一个比根(r)小的元素，这里作为左右子树的分界</span></div><div class="line">       <span class="keyword">if</span>(l&gt;=r) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">       <span class="keyword">int</span> i=r<span class="number">-1</span>;</div><div class="line">       <span class="keyword">while</span>(i&gt;=l &amp;&amp; a[i]&gt;a[r])&#123;</div><div class="line">           --i;</div><div class="line">       &#125;</div><div class="line">       <span class="comment">// 此时i指向从后向前第一个小于a[r]的元素</span></div><div class="line">       <span class="comment">// 2. 检查从i到l的所有元素是否都小于a[r]</span></div><div class="line">       <span class="keyword">int</span> mid = i;</div><div class="line">       <span class="keyword">while</span>(i&gt;=l)&#123;</div><div class="line">           <span class="keyword">if</span>(a[i] &gt;= a[r])&#123;</div><div class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">           &#125;</div><div class="line">           i--;</div><div class="line">       &#125;</div><div class="line">       <span class="comment">// 此时 i应该等于l-1</span></div><div class="line">       <span class="comment">// 3. 划分出左右子树并且确保符合二叉搜索树的要求，递归左右子树，看是否符合要求</span></div><div class="line">       <span class="keyword">return</span> bst(a,l,mid) &amp;&amp; bst(a,mid+<span class="number">1</span>,r<span class="number">-1</span>);</div><div class="line"></div><div class="line">   &#125;</div><div class="line">   <span class="function"><span class="keyword">bool</span> <span class="title">VerifySquenceOfBST</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sequence)</span> </span>&#123;</div><div class="line">   <span class="keyword">if</span>(sequence.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">       <span class="keyword">return</span> bst(sequence,<span class="number">0</span>,sequence.size()<span class="number">-1</span>);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h2 id="红黑树">红黑树</h2>
+<p>参考文章：http://blog.csdn.net/chenhuajie123/article/details/11951777 红黑树，本质上来说就是一棵二叉查找树，但它在二叉查找树的基础上增加了着色和相关的性质使得红黑树相对平衡，从而保证了红黑树的查找、插入、删除的时间复杂度最坏为O(log n)</p>
+<p>红黑树的性质：</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>每个结点要么是红的，要么是黑的。</li>
+<li>根结点是黑的。</li>
+<li>每个叶结点（叶结点即指树尾端NIL指针或NULL结点）是黑的。</li>
+<li>如果一个结点是红的，那么它的俩个儿子都是黑的。</li>
+<li>对于任一结点而言，其到叶结点树尾端NIL指针的每一条路径都包含相同数目的黑结点。</li>
+</ol>
+</blockquote>
+<p>红黑树的示例：</p>
+<div class="figure">
+<img src="2017-04-11_094148.png" alt="2017-04-11_094148.png">
+<p class="caption">2017-04-11_094148.png</p>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/04/09/算法专题/算法专题_通用树结构/" rel="next" title="算法专题_通用树结构">
+                <i class="fa fa-chevron-left"></i> 算法专题_通用树结构
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/04/10/算法专题/算法专题_大数据和空间限制/" rel="prev" title="算法专题_大数据和空间限制">
+                算法专题_大数据和空间限制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的通用性质"><span class="nav-number">1.</span> <span class="nav-text">二叉树的通用性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的定义"><span class="nav-number">2.</span> <span class="nav-text">二叉树的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的创建生成"><span class="nav-number">3.</span> <span class="nav-text">二叉树的创建(生成)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据前序遍历和中序遍历重建二叉树"><span class="nav-number">3.1.</span> <span class="nav-text">根据前序遍历和中序遍历重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据后序遍历和中序遍历重建二叉树"><span class="nav-number">3.2.</span> <span class="nav-text">根据后序遍历和中序遍历重建二叉树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的深度"><span class="nav-number">4.</span> <span class="nav-text">二叉树的深度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最大深度"><span class="nav-number">4.1.</span> <span class="nav-text">最大深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小深度"><span class="nav-number">4.2.</span> <span class="nav-text">最小深度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的遍历"><span class="nav-number">5.</span> <span class="nav-text">二叉树的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前序遍历递归"><span class="nav-number">5.1.</span> <span class="nav-text">前序遍历(递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前序遍历非递归"><span class="nav-number">5.2.</span> <span class="nav-text">前序遍历(非递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中序遍历递归"><span class="nav-number">5.3.</span> <span class="nav-text">中序遍历(递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中序遍历非递归"><span class="nav-number">5.4.</span> <span class="nav-text">中序遍历(非递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后序遍历递归"><span class="nav-number">5.5.</span> <span class="nav-text">后序遍历(递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后序遍历非递归"><span class="nav-number">5.6.</span> <span class="nav-text">后序遍历(非递归)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层次遍历"><span class="nav-number">5.7.</span> <span class="nav-text">层次遍历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平衡二叉树"><span class="nav-number">6.</span> <span class="nav-text">平衡二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平衡二叉树的判定"><span class="nav-number">6.1.</span> <span class="nav-text">平衡二叉树的判定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉搜索树二叉查找树"><span class="nav-number">7.</span> <span class="nav-text">二叉搜索树(二叉查找树)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树的判定"><span class="nav-number">7.1.</span> <span class="nav-text">二叉搜索树的判定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树的遍历序列"><span class="nav-number">7.2.</span> <span class="nav-text">二叉搜索树的遍历序列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#红黑树"><span class="nav-number">8.</span> <span class="nav-text">红黑树</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/04/09/算法专题/算法专题_二叉树/';
+      var disqus_title = "算法专题_二叉树";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/04/09/算法专题/算法专题_二叉树/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

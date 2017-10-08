@@ -1,0 +1,512 @@
+$(function(){
+var isLogin = $('body').find('.login_ed').length;
+var raceId= RequestUtil.getQueryParam("raceId");
+var postsId=RequestUtil.getQueryParam("postsId");
+var from = RequestUtil.getQueryParam("from");
+var LIST_COMMENTS_URL = "/race/gitlab/posts/listCommentsOfPosts";
+var GET_POSTS_DETAIL_URL = "/race/gitlab/posts/getPosts";
+var ADD_COMMENTS_URL = "/race/gitlab/posts/addComments";
+var UPDATE_COMMENTS_URL = "/race/gitlab/posts/updateComments?postsId='+postsId+'&body=";
+var pageNums = 1;
+var pageIndex = 1;
+var pageData;
+var mark = true;
+
+
+
+	if(from == 'part'){
+		$('.crumbs_patch a.forum').attr('href','./new_forum.htm?raceId='+raceId);
+	}else if(from == 'user'){
+		$('.crumbs_patch a.tianchi').html('');
+		$('.crumbs_patch a.forum').html(i18n.competition.newDetail.myPost).attr('href','/user/myForumList.htm');
+	}else{
+		$('.crumbs_patch a.tianchi').html('');
+		$('.crumbs_patch a.forum').attr('href','./new_globalForum.htm');
+	}
+	$('.createDetailBtn').on('click',function(){
+		if(!isLogin){
+			window.location.href="/login.html";
+			return false;	
+		}
+	});
+	$('#huifu_btn').on('click',function(){
+		if(!isLogin){
+			window.location.href="/login.html";
+			return false;	
+		}
+	});
+	
+	$.ajax({
+		  method:"GET",
+		  url: GET_POSTS_DETAIL_URL,
+		  dataType:'json',
+		  data:{
+		  	raceId:raceId,
+		  	postsId:postsId
+		  },
+	}).done(function(data){
+		detailPostList(data);		
+	});
+	
+    		
+//detail	
+function detailPostList(data){
+	var list =data.data;
+	$('.acticleHeade .create_date').html(list.gmtCreate);
+	$('.acticleHeade .reply_num').html(list.commentVote);
+	$('.acticleHeade .browse_num').html(list.viewCount);
+	$('.acticleHeade .nick').html(list.nickName);
+	$('.acticleHeade h3.title').html(list.title);
+	$('.acticleHeade .author_photo img').attr('src','/avatar.do?userId=' + list.userId);
+	$('.acticleBody .host_edit a').attr('href','./new_editGlobalForum.html?raceId='+raceId+'&postsId='+list.id);
+	$('.acticleBody .article_content.fit').html(list.body);
+	$('#zan_block .zan_num').html(list.upVote);
+	$('#zan_block').attr({isUpVote:list.isUpVote,postsId:list.id});
+	if(!list.isUpVote){
+		$('#zan_block').css('background','#4788f0');
+	}
+
+	$('#nowTitle').html(list.title);
+	if(!list.hasAvatar){
+		$('.acticleHeade .author_photo img').attr('src','/images/default-pic.jpg');		
+	}
+	if(!list.isOwner){
+		$('.acticleBody .host_edit').html('&nbsp');
+	}
+
+	$('#zan_block').on('click',function(){
+		clickZan();
+	});
+
+	
+}
+
+function loadDetailList(){
+	$.ajax({
+		method:"GET",
+  		url:LIST_COMMENTS_URL,
+  		dataType:'json',
+  		data:{
+  			pageNum:pageIndex,
+  			postsId:postsId,
+  			raceId:raceId
+  		}
+	}).done(function(data){
+		//根据返回的data去处理数据
+		detailList(data);
+		add_firstNumTag();
+	});
+}
+
+var loadDetails = function(htHandle){
+	$.ajax({
+		method:"GET",
+  		url:LIST_COMMENTS_URL,
+  		dataType:'json',
+  		data:{
+  			pageNum:pageIndex,
+  			postsId:postsId,
+  			raceId:raceId
+  		}
+	}).done(function(data){
+		//根据返回的data去处理数据
+		htHandle(data);
+		
+	});
+}
+
+
+//list
+var detailList = function(data){
+	var pl_list = $('#pl_list');
+	pl_list.html('');
+	var pageInfo = data.data;
+	
+	list =pageInfo.data ;
+	if(pageInfo.pages){
+		pages = pageInfo.pages;
+	}else{
+		pages = 1;
+	}
+	for(var i = 0 ; i < list.length ; i++){
+		var lou = ((pageIndex-1)*10) + (i+1);		
+		var lis = '<div class="pl_content row tz bg_white"><div class="pinlunList col-md-12"><div class="line_dashed"></div><div class="author pull-left"><a href="#" class="photo"><img src="/avatar.do?userId=' + list[i].userId + '" alt="" width=40 height=40></a></div><div class="ht_body"><div class="content fit"><span class="nick">'+ list[i].nickName +':</span>'+list[i].body+'</div><div class="ht_foot margin_bt20"><span>'+list[i].gmtCreate+'&nbsp&nbsp</span><span>'+ lou + i18n.competition.newArticleDetail.lou +'</span><a class="edit" href="./new_editGlobalForum.html?commentsId='+list[i].id+'">'+ i18n.competition.newArticleDetail.edit +'</a></div></div></div></div>';
+		pl_list.append(lis);
+		if(!list[i].hasAvatar){
+			$('#pl_list .photo:last-child img').attr('src','/images/default-pic.jpg');	
+		}
+		if(!list[i].isOwner){
+			$('#pl_list a.edit:last-child').html('<a>&nbsp</a>');
+		}
+
+		
+	}
+}
+var add_firstNumTag = function(){
+$('.num_tags').html('');
+for(var i = 0; i< pages;i ++){	
+	if(i == 10){
+		break;
+	}
+	page_tag = '<a href="javascript:void(0)" class="page_num btn btn-default">'+ (i+1) +'</a>';
+	$('.num_tags').append(page_tag);
+}
+
+$('.page_num').each(function(){
+	$(this).removeClass('page_current');
+	if(parseInt($(this).text()) == pageIndex){
+		$(this).addClass('page_current');
+	}
+})
+
+}
+
+var add_lastNumTag = function(){
+$('.num_tags').html('');
+if(pages <= 10){
+	add_firstNumTag();
+}else{
+	for(var i = (pages-9); i<= pages;i ++){
+		page_tag = '<a href="javascript:void(0)" class="page_num btn btn-default">'+ i +'</a>';
+		$('.num_tags').append(page_tag);
+	}
+}	
+
+}
+
+
+var add_middleNumTag = function(){
+$('.num_tags').html('');
+for(var i = pageIndex - 5; i< pageIndex + 5;i ++){
+	page_tag = '<a href=""javascript:void(0)"" class="page_num btn btn-default">'+ (i+1) +'</a>';
+	$('.num_tags').append(page_tag);
+}
+
+}
+
+loadDetailList(detailList,add_firstNumTag);
+
+$('.tags').on('click','a',function(){
+console.log(pageIndex);
+loadDetails(detailList);
+$('.page_num').each(function(){
+	$(this).removeClass('page_current');
+	if(parseInt($(this).text()) == pageIndex){
+		$(this).addClass('page_current');
+	}
+})
+
+});
+//定义"首页"tab[改变pageIndex参数的变化]
+$('.page_first').on('click',function(){
+pageIndex = 1;
+add_firstNumTag();
+});
+
+//定义"尾页"tab[改变pageIndex参数的变化]
+$('.page_last').on('click',function(){
+pageIndex = pages;
+add_lastNumTag();
+
+});
+
+//定义"向前"tab[改变pageIndex参数的变化]
+$('.page_previous').on('click',function(){
+if(pageIndex < 2){
+	pageIndex = 1;
+	return ;
+}else{
+ 	pageIndex --;
+}
+
+if(pages <= 10){
+	add_firstNumTag();
+}else{
+	//向左移动
+	if(pageIndex > 4){
+		if((pageIndex + 5) >= pages){
+			add_lastNumTag();
+		}else{
+			add_middleNumTag();
+		}
+	}else{
+		//向右移动
+		if(pageIndex > 1){
+			add_firstNumTag();
+		}
+	}
+}
+
+});
+//定义"向后"tab[改变pageIndex参数的变化]
+
+$('.page_next').on('click',function(){
+if(pageIndex > pages - 1){
+	pageIndex = pages;
+	return ;
+}else{
+ 	pageIndex ++;
+}
+
+if(pages <= 10){
+	add_firstNumTag();
+}else{
+	//向左移动
+	if(pageIndex > 4){
+		if((pageIndex + 5) >= pages){
+			add_lastNumTag();
+		}else{
+			add_middleNumTag();
+		}
+	}else{
+		//向右移动
+		if(pageIndex > 1){
+			add_firstNumTag();
+		}
+	}
+}
+
+});
+
+$('.num_tags').on('click','.page_num',function(){
+pageIndex = parseInt($(this).text());
+if(pages <= 10){
+	add_firstNumTag();
+}else{
+	//向左移动
+	if(pageIndex > 4){
+		if((pageIndex + 5) >= pages){
+			add_lastNumTag();
+		}else{
+			add_middleNumTag();
+		}
+	}else{
+		//向右移动
+		if(pageIndex > 1){
+			add_firstNumTag();
+		}
+	}
+}
+console.log(pageIndex);
+loadDetails(detailList);
+
+$('.page_num').each(function(){
+	$(this).removeClass('page_current');
+	if(parseInt($(this).text()) == pageIndex){
+		$(this).addClass('page_current');
+	}
+})
+
+});
+
+var fwb = $('#fwb');
+var editor = new wangEditor(fwb);
+editor.config.menus = [
+    
+    'undo',
+    'redo',
+    'eraser',
+    'fontfamily',
+    'fontsize',
+    'forecolor',
+    'bgcolor',
+    'bold',
+    'italic',
+    'underline',
+    'strikethrough',
+    'unorderlist',
+    'orderlist',
+    'alignleft',
+    'aligncenter',
+    'alignright',
+    'lineheight',
+    'quote',
+    'head',
+    'link',
+    'unlink',
+    'table',
+    'emotion',
+    'img',
+    'custom_video',
+    'source',
+    'insertcode',
+    'fullscreen'
+];
+
+// 关闭菜单栏fixed吸顶
+editor.config.menuFixed = false;
+editor.create();
+editor.$txt.html('<p class="placeholder">'+ i18n.competition.newDetail.boxDefaultContent +'</p>');
+var initClearFlag_mkd = true;
+var initClearFlag_fwb = true;
+$('#markdown')[0].onfocus = function(){
+	if(initClearFlag_mkd == true){
+		$(this).html('');
+		initClearFlag_mkd = false;
+	}
+}
+
+
+$('#fwb')[0].onfocus = function(){
+	if(initClearFlag_fwb == true){
+		$(this).html('');
+		initClearFlag_fwb = false;
+	}
+}
+
+$('#Markdown_block').hide();
+$('#fwb_block').show();
+$('#demo').on('change','input',function(){
+	var input_state = $(this).val();
+	if(input_state == 'RICHTEXT'){
+		$('#Markdown_block').hide();
+		$('#fwb_block').show();
+	}else{
+		$('#fwb_block').hide();
+		$('#Markdown_block').show();
+	}
+});
+
+function checkContent(info){
+	$('#promptInfo').html('<b style="color:red">'+ info +'</b>');
+	setTimeout(function(){
+   		$('#promptInfo').html('');
+   	},2000);
+}
+
+$('.huifu').on('click',function(){
+	
+	if(!isLogin){
+		window.location.href="/login.html" 
+	}	
+	
+});
+
+var docType ='',
+	mkd_body = '',
+	fwb_body = '';
+
+//回复(功能开始)
+$('#huifu_btn').on('click',function(){
+    docType = $('input[name="docType"]:checked').val();
+    mkd_body = $('#markdown').text();
+    fwb_body = $.trim(editor.$txt.html());
+    fwb_init_body = $.trim(editor.$txt.text());
+	
+	if(docType == 'MARKDOWN'){
+		if(mkd_body.length == 0){
+			checkContent(i18n.competition.newDetail.boxEmptiedPrompt);
+      		return ;
+		}else if($.trim(mkd_body) == i18n.competition.newDetail.boxDefaultContent){
+			checkContent(i18n.competition.newDetail.boxEnterPrompt);
+      		return ;
+		}else{
+			//此时编辑的为"makdown"的内容
+			if(mark){
+				sendInfo(mkd_body,loadDetailList);
+				$('#huifu_btn').attr('disabled','disabled');
+				mark = false;
+			}
+			
+		}
+	
+	}else if(fwb_init_body == i18n.competition.newDetail.boxDefaultContent){
+		checkContent(i18n.competition.newDetail.boxEnterPrompt);
+  		return false;
+	}else if(fwb_init_body.length == 0){
+		if(!fwb_body.match('src') && !fwb_body.match('http') && !fwb_body.match('td')){
+			checkContent(i18n.competition.newDetail.boxEmptiedPrompt);
+      		return false;
+		}else{
+			if(mark){
+				sendInfo(fwb_body,loadDetailList);
+				$('#huifu_btn').attr('disabled','disabled');
+				mark = false;
+			}
+			
+		}
+		 
+	}else{
+		//此时编辑的为"富文本"的内容
+      console.log('发布/富文本内容' + fwb_body);
+      if(mark){
+      	sendInfo(fwb_body,loadDetailList);
+      	$('#huifu_btn').attr('disabled','disabled');
+      	mark = false;
+      }
+      
+	}
+   
+});
+
+
+
+
+
+function sendInfo(body,handleData){
+	$.ajax({
+		method:"POST",
+  		url:ADD_COMMENTS_URL,
+  		dataType:'json',
+  		data:{
+			_tb_token_: $("*[name='_tb_token_']").val(),
+			docType:docType,
+			postsId:postsId,
+			body:body
+		}
+	}).done(function(data){
+		//根据返回的data去处理数据
+		handleData();
+		$('#huifu_btn').attr('disabled',false);
+		mark = true;
+		if(docType == 'MARKDOWN'){
+			initClearFlag_mkd = true;
+			$('#markdown').html(i18n.competition.newDetail.boxDefaultContent);			
+		}else{
+			initClearFlag_fwb = true;
+			$('#fwb').html('<p class="placeholder">'+ i18n.competition.newDetail.boxDefaultContent +'<p>');	
+		}
+	}).fail(function(e) {
+		$('#huifu_btn').attr('disabled',false);
+		mark = true;
+		return e;
+	});
+}
+//回复(功能结束)
+
+
+	function clickZan(){
+		if(!isLogin){
+			window.location.href="/login.html";
+			return false;	
+		}else{
+			var nowEle = $('#zan_block');
+			var sumEle = $('.zan_num');
+			var zan_sum = parseInt(sumEle.html());
+			var isUp = nowEle.attr('isupvote');
+			var postsId = nowEle.attr('postsid');
+			var sendData = {
+				_tb_token_: $("*[name='_tb_token_']").val(),
+				postsId:postsId
+			};
+			if(isUp == 'true'){
+				$.post('/race/gitlab/posts/upVote',sendData,function(data){
+					sumEle.html(zan_sum+1);
+					nowEle.attr('isupvote','false').css('background','#4788f0');
+				});
+			}else{
+				$.post('/race/gitlab/posts/cancelUpVote',sendData,function(data){
+					sumEle.html(zan_sum-1);
+					nowEle.attr('isupvote','true').css('background','#e6e6e6');
+				});
+			}
+
+		}
+	}
+
+
+
+
+
+
+})

@@ -1,0 +1,1191 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="fMRI,toolboxhexo," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="fMRI分析的各个阶段用到的工具包和画图工具。">
+<meta name="keywords" content="fMRI,toolboxhexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fMRI中常用的工具包">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="fMRI分析的各个阶段用到的工具包和画图工具。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_120405.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_111209.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_125514.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_130248.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_130835.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/1.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/QQ截图20170502132207.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/5.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/lh_aparc.jpeg">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/encode.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/8.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/caret.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/QQ截图20170502133729.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/QQ截图20170514155026.png">
+<meta property="og:updated_time" content="2017-07-22T14:48:15.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fMRI中常用的工具包">
+<meta name="twitter:description" content="fMRI分析的各个阶段用到的工具包和画图工具。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/2017-05-02_120405.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/"/>
+
+  <title> fMRI中常用的工具包 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                fMRI中常用的工具包
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-02T10:47:38+08:00" content="2017-05-02">
+              2017-05-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/认知神经科学/" itemprop="url" rel="index">
+                    <span itemprop="name">认知神经科学</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/02/认知神经科学专题/fMRI中常用的工具包/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/" class="leancloud_visitors" data-flag-title="fMRI中常用的工具包">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>fMRI分析的各个阶段用到的工具包和画图工具。 <a id="more"></a></p>
+<h2 id="实验设计">实验设计</h2>
+<h3 id="psychopy"><a href="http://www.psychopy.org/" target="_blank" rel="external">psychopy</a></h3>
+<p>PsychoPy is an open-source application allowing you run a wide range of neuroscience, psychology and psychophysics experiments. It’s a free, powerful alternative to Presentation™ or e-Prime™, written in Python (a free alternative to Matlab™ ).</p>
+<p>PsychoPy is unique in giving you a choice of interface: use the Builder interface to build rich, flexible experiments easily or use the Coder interface to write extremely powerful experiments in the widely-used Python programming language. The best of both worlds!</p>
+<p>一个用于刺激呈现的工具包，可以保住设计实验，处理图像和声音的呈现方式，有基于matlab的版本。</p>
+<h2 id="数据预处理和统计分析">数据预处理和统计分析</h2>
+<h3 id="spm"><a href="http://www.fil.ion.ucl.ac.uk/spm/" target="_blank" rel="external">SPM</a></h3>
+<div class="figure">
+<img src="2017-05-02_120405.png" alt="SPM">
+<p class="caption">SPM</p>
+</div>
+<p>基于matlab的工具包，可以完成fMRI原始数据格式的转换，时间层校正，头动校正，配准，分割，平滑等预处理操作。可以进行个体水平和组水平的统计分析。可以做DCM。除此之外，还能提供一些图像之间运算的小工具，例如图像之间的加减乘除。</p>
+<h3 id="afni"><a href="https://afni.nimh.nih.gov/" target="_blank" rel="external">AFNI</a></h3>
+<p>AFNI (Analysis of Functional NeuroImages) is a set of C programs for processing, analyzing, and displaying functional MRI (FMRI) data - a technique for mapping human brain activity. It runs on Unix+X11+Motif systems, including SGI, Solaris, Linux, and Mac OS X. It is available free (in C source code format, and some precompiled binaries) for research purposes.</p>
+<h3 id="fsl"><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki" target="_blank" rel="external">FSL</a></h3>
+<p>FSL is a comprehensive library of analysis tools for FMRI, MRI and DTI brain imaging data. It runs on Apple and PCs (both Linux, and Windows via a Virtual Machine), and is very easy to install. Most of the tools can be run both from the command line and as GUIs (“point-and-click” graphical user interfaces)</p>
+<h3 id="neurodebian"><a href="http://neuro.debian.net/index.html" target="_blank" rel="external">NeuroDebian</a></h3>
+<p>一个集成了大部分神经科学领域Linux系统下的工具的虚拟机镜像。里面包含的软件的列表可以参考：http://neuro.debian.net/pkgs.html</p>
+<h3 id="dpabi"><a href="http://rfmri.org/dpabi" target="_blank" rel="external">DPABI</a></h3>
+<p>a toolbox for Data Processing &amp; Analysis for Brain Imaging. 静息态脑网络的相关数据和工具：http://rfmri.org/。</p>
+<h3 id="nibabel"><a href="http://nipy.org/nibabel/" target="_blank" rel="external">NiBabel</a></h3>
+<p>提供读写神经影像数据格式的接口，基于python.</p>
+<h3 id="section"></h3>
+<h2 id="roi和mask制作和查看">ROI和Mask制作和查看</h2>
+<h3 id="freeroi"><a href="http://freeroi.brainactivityatlas.org/" target="_blank" rel="external">freeroi</a></h3>
+<p>FreeROI is a versatile image processing software developed for neuroimaging data. Its goal is to provide a user-friendly interface for neuroimaging researchers to visualize and analyze their data, especially in defining region of interest (ROI) for ROI analysis.</p>
+<h3 id="xjview"><a href="http://www.alivelearn.net/xjview/" target="_blank" rel="external">xjview</a></h3>
+<p>一个基于Matlab和SPM的用于查看激活的工具，可以Load不同的大脑地图从而实现显示激活的脑区的名称。还可以根据激活保存成Mask.</p>
+<h3 id="wfu_pickatlas"><a href="https://www.nitrc.org/projects/wfu_pickatlas/" target="_blank" rel="external">WFU_PickAtlas</a></h3>
+<p>基于Matlab和SPM的ROI制作工具。支持导入不同的大脑地图制作各个脑区的Mask。也支持以某个MNI坐标为中心，制作球形，方形的mask. <img src="2017-05-02_111209.png"></p>
+<h2 id="功能连接">功能连接</h2>
+<h3 id="conn"><a href="https://www.nitrc.org/projects/conn/" target="_blank" rel="external">CONN</a></h3>
+<p>一个用来做静息态和任务态功能核磁成像数据的功能连接(functional connectivity)的工具包，包括去噪，first_level,second_level分析，支持region-to-region, seed-to-region, voxel-to-voxel等水平的功能连接分析，结果的展示也很漂亮。 ### <a href="https://www.nitrc.org/projects/rest/" target="_blank" rel="external">REST</a> 主要功能是用来做静息态数据的功能连接，也提供了图像计算的一些方法，可以用来计算图像乘以激活之后的Mask。还提供了可视化图像的界面，可以用来查看图像。 ### <a href="http://fcp-indi.github.io/docs/user/index.html" target="_blank" rel="external">C-PAC</a> The Configurable Pipeline for the Analysis of Connectomes (C-PAC) is a configurable, open-source, Nipype-based, automated processing pipeline for resting state functional MRI (R-fMRI) data, for use by both novice and expert users ### wiki上处理功能连接的工具包的列表</p>
+<p>&lt;https://en.wikipedia.org/wiki/List_of_functional_connectivity_software &gt;</p>
+<h2 id="mvpa">MVPA</h2>
+<h3 id="mvpa-1"><a href="https://github.com/PrincetonUniversity/princeton-mvpa-toolbox" target="_blank" rel="external">MVPA</a></h3>
+<p>The MVPA Toolbox is a set of Matlab tools to facilitate multi-voxel pattern analysis of fMRI neuroimaging data. The aim is to create a set of open source functions in a widely-used language to facilitate exploration of multi-voxel pattern analysis techniques and to reduce the ‘startup costs’ for knowledgeable users eager to apply pattern classification algorithms to their imaging data. By developing the toolbox in the Matlab environment, users are able to take advantage of the vast array of existing functions. The data structures used and generated by the toolbox are designed to facilitate exploration and further script development.</p>
+<h3 id="pymvpa"><a href="http://www.pymvpa.org/" target="_blank" rel="external">pyMVPA</a></h3>
+<p>PyMVPA is a Python package intended to ease statistical learning analyses of large datasets. It offers an extensible framework with a high-level interface to a broad range of algorithms for classification, regression, feature selection, data import and export. It is designed to integrate well with related software packages, such as scikit-learn, shogun, MDP, etc. While it is not limited to the neuroimaging domain, it is eminently suited for such datasets. PyMVPA is free software and requires nothing but free-software to run.</p>
+<p>pyMVPA windows 安装包的地址：<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" class="uri" target="_blank" rel="external">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<h3 id="cosmomvpa"><a href="http://cosmomvpa.org/index.html" target="_blank" rel="external">CoSMoMVPA</a></h3>
+<p>A multi-modal, multi-variate pattern analysis (MVPA) toolbox in Matlab / GNU Octave for cognitive neuroscientists.</p>
+<h2 id="signalchange">SignalChange</h2>
+<h3 id="marsbar"><a href="http://marsbar.sourceforge.net/index.html" target="_blank" rel="external">marsbar</a></h3>
+<div class="figure">
+<img src="2017-05-02_125514.png">
+
+</div>
+<p>marsbar是基于Matlab的一个计算SignalChange的工具。里面定义了一种.mat的ROI格式，可以和.nii的ROI格式之间进行转换。里面提供了将一个多标签Mask分割成多个单独的mask的方法，当然，反过来也可以实现。</p>
+<h2 id="group-ica-分析">group ICA 分析</h2>
+<h3 id="gift"><a href="http://mialab.mrn.org/software/gift/" target="_blank" rel="external">gift</a></h3>
+<p>一个使用很广泛的用来做组水平的ICA的工具。</p>
+<h2 id="dcm">DCM</h2>
+<h3 id="tapas"><a href="https://www.tnu.ethz.ch/de/software/tapas.html" target="_blank" rel="external">TAPAS</a></h3>
+<p>大量平行DCM的计算。</p>
+<h2 id="绘图">绘图</h2>
+<h3 id="origin"><a href="http://www.originlab.com" target="_blank" rel="external">Origin</a></h3>
+<p>Origin是由OriginLab公司开发的一个科学绘图、数据分析软件，支持在Microsoft Windows下运行。Origin支持各种各样的2D/3D图形。Origin中的数据分析功能包括统计，信号处理，曲线拟合以及峰值分析。Origin中的曲线拟合是采用基于Levernberg-Marquardt算法（LMA）的非线性最小二乘法拟合。Origin强大的数据导入功能，支持多种格式的数据，包括ASCII , Excel, NI TDM, DIADem, NetCDF, SPC，等等。图形输出格式多样，例如JPEG，GIF，EPS，TIFF等。内置的查询工具可通过ADO访问数据库数据。 <img src="2017-05-02_130248.png"></p>
+<h3 id="excel">EXCEL</h3>
+<p>各种条形图，柱状图，扇形图都可以用EXCEL来画。</p>
+<h3 id="matlab">Matlab</h3>
+<p>Matlab可以绘制各种2D，3D图形。很多基于Matlab的工具包画出的图形都是基于Matlab的画图功能。但是想用Matlab画出好看的图需要直接编写代码。</p>
+<h3 id="matplotlib"><a href="https://matplotlib.org/index.html" target="_blank" rel="external">Matplotlib</a></h3>
+<p>Matplotlib is a Python 2D plotting library which produces publication quality figures in a variety of hardcopy formats and interactive environments across platforms. Matplotlib can be used in Python scripts, the Python and IPython shell, the jupyter notebook, web application servers, and four graphical user interface toolkits.</p>
+<div class="figure">
+<img src="2017-05-02_130835.png">
+
+</div>
+<p>以上几个都是通用的绘图工具，适用于绘制各种图形。在认知神经科学的绘图中，经常需要以大脑为背景绘制图像。下面介绍几个实现了在大脑皮层或者大脑的展开层绘制图像的工具。</p>
+<h3 id="brat"><a href="https://www.nitrc.org/projects/brat/" target="_blank" rel="external">BRAT</a></h3>
+<p>Brainnetome fMRI toolkit (brat) refers to the construction and assessment of brain network used to evaluated brain network architecture about fMRI imaging data. These ideas have been instantiated in software that is called Brainnetome fRMI toolkit(brat). The brat package has been designed for the analysis of brain network based on spm (http://www.fil.ion.ucl.ac.uk/spm/). The images can from different cohorts, or time-series from the same subject. The current release is designed for the analysis of fMRI, EEG. It includes the proprecessing steps, functional connectivity analysis, network analysis and network view etc.</p>
+<p>使用它可以很方便的绘制出类似下面这样的图：</p>
+<div class="figure">
+<img src="1.png">
+
+</div>
+<div class="figure">
+<img src="2.png">
+
+</div>
+<h3 id="brainnet-viewer"><a href="https://www.nitrc.org/projects/bnv/" target="_blank" rel="external">BrainNet Viewer</a></h3>
+<p>BrainNet Viewer is a brain network visualization tool, which can help researchers to visualize structural and functional connectivity patterns from different levels in a quick, easy, and flexible way. 一个类似上面的那样可以绘制脑区位置和大脑功能连接的工具，比上面的工具好用，选项多一些，配置更方便。</p>
+<h3 id="pycortex"><a href="https://github.com/gallantlab/pycortex" target="_blank" rel="external">pycortex</a></h3>
+<p>一个基于python的绘制大脑展开皮层的工具。绘制的图形类似下面这样：</p>
+<div class="figure">
+<img src="QQ截图20170502132207.png">
+
+</div>
+<h3 id="freesurfer"><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferWiki" target="_blank" rel="external">FreeSurfer</a></h3>
+<p>一个绘制皮层图像的工具，包含一些分析的方法。是由麻省总医院（Massachusetts General Hospital）的Bruce Fischl和同事开发的处理MRI解剖图像的软件包。虽然它实际上不是fMRI分析工具，但是因为它可以很容易地自动生成皮层表面模型和解剖分割图，因此近几年也越来越流行。这些模型可以用来进行基于皮层表面的被试间配准，这通常比常规的被试间的三维大脑配准更精确(见第4章)。它也可以导入FSL或者SPM处理过的统计结果，将它们投射在重建的皮层表面，这样可以进行基于皮层表面的组分析.产生的图像类似下面这样：</p>
+<div class="figure">
+<img src="5.png">
+
+</div>
+<div class="figure">
+<img src="lh_aparc.jpeg">
+
+</div>
+<div class="figure">
+<img src="encode.png">
+
+</div>
+<div class="figure">
+<img src="8.png">
+
+</div>
+<h3 id="caret"><a href="http://brainvis.wustl.edu/wiki/index.php/Caret:Download" target="_blank" rel="external">caret</a></h3>
+<p>类似freesurfer，可以绘制类似下面的图形，可以看到，这个更好看一些。</p>
+<div class="figure">
+<img src="caret.png">
+
+</div>
+<h3 id="circos"><a href="http://circos.ca/" target="_blank" rel="external">circos</a></h3>
+<p>一个常用来可视化基因组的工具包，可以用来画各种环状图形。</p>
+<div class="figure">
+<img src="QQ截图20170502133729.png">
+
+</div>
+<h3 id="brainbrowser"><a href="https://brainbrowser.cbrain.mcgill.ca" target="_blank" rel="external">BrainBrowser</a></h3>
+<p>一个大脑的浏览器，各种视角看大脑。</p>
+<h3 id="cbrain"><a href="http://mcin-cnim.ca/neuroimagingtechnologies/cbrain/" target="_blank" rel="external">cbrain</a></h3>
+<p>一个基于浏览器的脑影像分析工具集合。</p>
+<h3 id="pysurfer"><a href="https://pysurfer.github.io/" target="_blank" rel="external">pysurfer</a></h3>
+<p>PySurfer is a Python library for visualizing cortical surface representations of neuroimaging data. The package is primarily intended for use with Freesurfer, but it can plot data that are drawn from a variety of sources. PySurfer extends Mayavi’s powerful rendering engine with a high-level interface for working with MRI and MEG data.</p>
+<div class="figure">
+<img src="QQ截图20170514155026.png">
+
+</div>
+<h3 id="纤维束绘制工具">纤维束绘制工具</h3>
+<p><a href="http://www.med.unc.edu/psych/research/niral/download" class="uri" target="_blank" rel="external">http://www.med.unc.edu/psych/research/niral/download</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/fMRI/" rel="tag">#fMRI</a>
+          
+            <a href="/hexoblog/tags/toolboxhexo/" rel="tag">#toolboxhexo</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/05/02/算法专题/算法专题_一维数组/" rel="next" title="算法专题_一维数组">
+                <i class="fa fa-chevron-left"></i> 算法专题_一维数组
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/05/04/工具的使用/JetBrainsCLion的使用01-入门/" rel="prev" title="JetBrainsCLion的使用01-入门">
+                JetBrainsCLion的使用01-入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验设计"><span class="nav-number">1.</span> <span class="nav-text">实验设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#psychopy"><span class="nav-number">1.1.</span> <span class="nav-text">psychopy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理和统计分析"><span class="nav-number">2.</span> <span class="nav-text">数据预处理和统计分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spm"><span class="nav-number">2.1.</span> <span class="nav-text">SPM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#afni"><span class="nav-number">2.2.</span> <span class="nav-text">AFNI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fsl"><span class="nav-number">2.3.</span> <span class="nav-text">FSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#neurodebian"><span class="nav-number">2.4.</span> <span class="nav-text">NeuroDebian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dpabi"><span class="nav-number">2.5.</span> <span class="nav-text">DPABI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nibabel"><span class="nav-number">2.6.</span> <span class="nav-text">NiBabel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section"><span class="nav-number">2.7.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roi和mask制作和查看"><span class="nav-number">3.</span> <span class="nav-text">ROI和Mask制作和查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#freeroi"><span class="nav-number">3.1.</span> <span class="nav-text">freeroi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xjview"><span class="nav-number">3.2.</span> <span class="nav-text">xjview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wfu_pickatlas"><span class="nav-number">3.3.</span> <span class="nav-text">WFU_PickAtlas</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能连接"><span class="nav-number">4.</span> <span class="nav-text">功能连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#conn"><span class="nav-number">4.1.</span> <span class="nav-text">CONN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvpa"><span class="nav-number">5.</span> <span class="nav-text">MVPA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mvpa-1"><span class="nav-number">5.1.</span> <span class="nav-text">MVPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pymvpa"><span class="nav-number">5.2.</span> <span class="nav-text">pyMVPA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cosmomvpa"><span class="nav-number">5.3.</span> <span class="nav-text">CoSMoMVPA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#signalchange"><span class="nav-number">6.</span> <span class="nav-text">SignalChange</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#marsbar"><span class="nav-number">6.1.</span> <span class="nav-text">marsbar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#group-ica-分析"><span class="nav-number">7.</span> <span class="nav-text">group ICA 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gift"><span class="nav-number">7.1.</span> <span class="nav-text">gift</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dcm"><span class="nav-number">8.</span> <span class="nav-text">DCM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tapas"><span class="nav-number">8.1.</span> <span class="nav-text">TAPAS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘图"><span class="nav-number">9.</span> <span class="nav-text">绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#origin"><span class="nav-number">9.1.</span> <span class="nav-text">Origin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#excel"><span class="nav-number">9.2.</span> <span class="nav-text">EXCEL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matlab"><span class="nav-number">9.3.</span> <span class="nav-text">Matlab</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matplotlib"><span class="nav-number">9.4.</span> <span class="nav-text">Matplotlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brat"><span class="nav-number">9.5.</span> <span class="nav-text">BRAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brainnet-viewer"><span class="nav-number">9.6.</span> <span class="nav-text">BrainNet Viewer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pycortex"><span class="nav-number">9.7.</span> <span class="nav-text">pycortex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#freesurfer"><span class="nav-number">9.8.</span> <span class="nav-text">FreeSurfer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#caret"><span class="nav-number">9.9.</span> <span class="nav-text">caret</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#circos"><span class="nav-number">9.10.</span> <span class="nav-text">circos</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brainbrowser"><span class="nav-number">9.11.</span> <span class="nav-text">BrainBrowser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cbrain"><span class="nav-number">9.12.</span> <span class="nav-text">cbrain</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pysurfer"><span class="nav-number">9.13.</span> <span class="nav-text">pysurfer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纤维束绘制工具"><span class="nav-number">9.14.</span> <span class="nav-text">纤维束绘制工具</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/05/02/认知神经科学专题/fMRI中常用的工具包/';
+      var disqus_title = "fMRI中常用的工具包";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/05/02/认知神经科学专题/fMRI中常用的工具包/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

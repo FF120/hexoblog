@@ -1,0 +1,1075 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="fMRI," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一些数据处理当中用的到的功能函数。">
+<meta name="keywords" content="fMRI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPM预处理中的常用操作">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/03/20/认知神经科学专题/SPM预处理中的常用操作/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="一些数据处理当中用的到的功能函数。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-22T14:48:11.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SPM预处理中的常用操作">
+<meta name="twitter:description" content="一些数据处理当中用的到的功能函数。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/03/20/认知神经科学专题/SPM预处理中的常用操作/"/>
+
+  <title> SPM预处理中的常用操作 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SPM预处理中的常用操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-20T20:59:07+08:00" content="2017-03-20">
+              2017-03-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/认知神经科学/" itemprop="url" rel="index">
+                    <span itemprop="name">认知神经科学</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/03/20/认知神经科学专题/SPM预处理中的常用操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/20/认知神经科学专题/SPM预处理中的常用操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/03/20/认知神经科学专题/SPM预处理中的常用操作/" class="leancloud_visitors" data-flag-title="SPM预处理中的常用操作">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一些数据处理当中用的到的功能函数。 <a id="more"></a></p>
+<h2 id="比较多幅图像是否配准">比较多幅图像是否配准</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">check_img</span><span class="params">(imgs)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：比较多幅图像</span></div><div class="line"><span class="comment">% 调用：check_img(imgs)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   imgs: cell类型的图像</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   c1_img = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160713001\t1_mprage_sag_p2_0026\run1\c1s20160713001-193508-00001-00176-1.img';</span></div><div class="line"><span class="comment">%   c2_img = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160713001\t1_mprage_sag_p2_0026\run1\c2s20160713001-193508-00001-00176-1.img';</span></div><div class="line"><span class="comment">%   c3_img = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160713001\t1_mprage_sag_p2_0026\run1\c3s20160713001-193508-00001-00176-1.img';</span></div><div class="line"><span class="comment">%   func_img = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160713001\ep2d_bold_moco_p2_rest_0006\f20160713001-190315-00238-00238-1.img';</span></div><div class="line"><span class="comment">%   imgs = &#123;c1_img,c2_img,c3_img,func_img&#125;;</span></div><div class="line"><span class="comment">%   check_img(imgs);</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">spm_jobman(<span class="string">'initcfg'</span>)</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.checkreg.data = imgs;</div><div class="line">spm_jobman(<span class="string">'run'</span>,matlabbatch);</div></pre></td></tr></table></figure>
+<h2 id="批量复制文件夹结构">批量复制文件夹结构</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy_structure</span><span class="params">(origin_path,destination_path,fileFilter,varargin)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能： 复制目录结构 或者 复制文件</span></div><div class="line"><span class="comment">% 调用1：copy_structure(origin_path,destination_path,filter)</span></div><div class="line"><span class="comment">% 调用2：copy_structure(origin_path,destination_path,fileFilter,subExpIDFilter)</span></div><div class="line"><span class="comment">% 调用3：copy_structure(origin_path,destination_path,fileFilter,subExpIDFilter，runExpIDFilter)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   origin_path : 要复制的目录结构的绝对路径</span></div><div class="line"><span class="comment">%   destination_path : 新文件夹绝对路径</span></div><div class="line"><span class="comment">%   subExpIDFilter ：子一级目录通配符</span></div><div class="line"><span class="comment">%   runExpIDFilter : 子二级目录通配符</span></div><div class="line"><span class="comment">%   fileFilter: 过滤器，决定拷贝哪些文件</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   copy_structure(origin_path,destination_path,'s4w*')</span></div><div class="line"><span class="comment">%   copy_structure(origin_path,destination_path,'s4w*','20160916001*')</span></div><div class="line"><span class="comment">%   copy_structure(origin_path,destination_path,'s4w*','20160916001*','ep2d_bold_moco_p2_rest_0006*')</span></div><div class="line"><span class="comment">% 说明： subExpIDFilter默认值为'2016*';runExpIDFilter 默认值为 'ep2d*'</span></div><div class="line"><span class="comment">% --------------------------------------------------------------------------</span></div><div class="line"><span class="keyword">if</span> nargin &lt; <span class="number">4</span></div><div class="line">   subExpIDFilter = <span class="string">'2016*'</span>;<span class="comment">% 被试文件夹通配符 </span></div><div class="line"><span class="keyword">else</span></div><div class="line">    subExpIDFilter = varargin&#123;<span class="number">1</span>&#125;;</div><div class="line"><span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> nargin &lt; <span class="number">5</span></div><div class="line">    runExpIDFilter = <span class="string">'ep2d*'</span>;<span class="comment">% RUN文件夹通配符</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    runExpIDFilter = varargin&#123;<span class="number">2</span>&#125;;</div><div class="line"><span class="keyword">end</span></div><div class="line"><span class="comment">%fileFilter = 'w*';</span></div><div class="line">cd(origin_path);</div><div class="line">subExpID=dir(subExpIDFilter); </div><div class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="built_in">size</span>(subExpID,<span class="number">1</span>)</div><div class="line">    mkdir([destination_path,subExpID(i).name]);</div><div class="line">    cd([origin_path,subExpID(i).name]);</div><div class="line">    runExpID=dir(runExpIDFilter); </div><div class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:<span class="built_in">size</span>(runExpID,<span class="number">1</span>)</div><div class="line">        mkdir([destination_path,subExpID(i).name,<span class="string">'\',runExpID(j).name]);</span></div><div class="line">        cd([origin_path,subExpID(i).name,'\<span class="string">',runExpID(j).name]);</span></div><div class="line">        if nargin &gt; 2</div><div class="line">            copyfile(fileFilter,[destination_path,subExpID(i).name,'\<span class="string">',runExpID(j).name],'</span>f<span class="string">');</span></div><div class="line">        end</div><div class="line">    end</div><div class="line">end</div></pre></td></tr></table></figure>
+<h3 id="从多标签mask生成单标签mask">从多标签mask生成单标签mask</h3>
+<p>注意本函数依赖marsbar, 需要将marsbar工具包setpath之后才能使用。 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">create_masks_from_multiple_labels_img</span><span class="params">()</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能： 从多标签图像创建多个Mask</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   multiple_label_img_path ：多标签图像路径</span></div><div class="line"><span class="comment">%   multiple_label_path : 标签路径，名称为ROI，包含ID，Nom_C,Nom_L,ID是标签，整数，剩下的是名称</span></div><div class="line"><span class="comment">%   save_path ： 生成Mask的保存路径</span></div><div class="line"><span class="comment">%   P ： 提供重新采样的参数，需要随便一张被试的图像，Mask会按照该图像的规格重新采样</span></div><div class="line"></div><div class="line">aal = <span class="string">'C:\mazcx\matlabtoolbox\spm8\toolbox\wfu_pickatlas\MNI_atlas_templates\TD_label_extended_modified.img'</span>;</div><div class="line">aal_label = <span class="string">'C:\mazcx\matlabtoolbox\spm8\toolbox\wfu_pickatlas\MNI_atlas_templates\TD_label_extended_modified_List.mat'</span>;</div><div class="line"></div><div class="line"></div><div class="line">multiple_label_img_path = aal;</div><div class="line">multiple_label_path = aal_label;</div><div class="line">save_path = <span class="string">'D:\FMRI_ROOT\YANTAI\DESIGN\MASK\TDLabels\';</span></div><div class="line"></div><div class="line">P = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\<span class="number">20160911002</span>\ep2d_bold_moco_p2_rest_0006\wraf20160911002<span class="number">-182754</span><span class="number">-00008</span><span class="number">-00008</span><span class="number">-1.</span>img';</div><div class="line">roi_space = spm_vol(P);</div><div class="line"><span class="comment">% ROI names</span></div><div class="line">load(multiple_label_path);</div><div class="line">marsbar(<span class="string">'on'</span>);</div><div class="line"><span class="comment">% Make ROIs</span></div><div class="line">vol = spm_vol(multiple_label_img_path);</div><div class="line"><span class="keyword">for</span> r = <span class="number">1</span>:<span class="built_in">length</span>(ROI)</div><div class="line">  nom = ROI(r).Nom_L;</div><div class="line">  func = sprintf(<span class="string">'img == %d'</span>, ROI(r).ID); </div><div class="line">  o = maroi_image(struct(<span class="string">'vol'</span>, vol, <span class="string">'binarize'</span>,<span class="number">1</span>,...</div><div class="line">			 <span class="string">'func'</span>, func, <span class="string">'descrip'</span>, nom, ...</div><div class="line">			 <span class="string">'label'</span>, nom));</div><div class="line">  cd(save_path);</div><div class="line">  <span class="comment">%saveroi(maroi_matrix(o), fullfile(roi_path,['MNI_' nom '_roi.mat']));</span></div><div class="line">  mars_rois2img(maroi_matrix(o),[<span class="string">'MNI_'</span> nom <span class="string">'.img'</span>],roi_space);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure></p>
+<h2 id="mask乘以激活之后再做成mask就是每个被试不同的mask">mask乘以激活之后再做成mask,就是每个被试不同的mask</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">create_mask_use_T</span><span class="params">(input_img,output_img,f)</span></span></div><div class="line"><span class="comment">% 制作的mask乘以相应的激活之后再做成Mask</span></div><div class="line"><span class="comment">% STG_mask_path = 'D:\FMRI_ROOT\YANTAI\DESIGN\MASK\NiftiPairs_Resliced_STG.mn.img';</span></div><div class="line"><span class="comment">% spmT_path = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level\20160911002\spmT_0017.img';</span></div><div class="line"><span class="comment">% input_img = &#123;STG_mask_path; spmT_path&#125;; % 一个mask , 一个spmT图像</span></div><div class="line"><span class="comment">% output_img = 'd:\aaa.img';</span></div><div class="line"><span class="comment">%------------</span></div><div class="line">P = input_img;</div><div class="line">Q = output_img;</div><div class="line"><span class="comment">%f = 'i1.*(i2&gt;3.0987)';</span></div><div class="line">dmtx = <span class="number">0</span>;</div><div class="line">mask = <span class="number">0</span>;</div><div class="line">type = <span class="number">4</span>;</div><div class="line">hold = <span class="number">0</span>;</div><div class="line">flags = &#123;dmtx,mask,type,hold&#125;;</div><div class="line">[Q,Vo] = spm_imcalc_extend(P,Q,f,flags);</div></pre></td></tr></table></figure>
+<h2 id="将同一个被试不同run的头动文件合并在一起">将同一个被试不同RUN的头动文件合并在一起</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">% 将多个rp*头动文件，合成一个头动文件</span></div><div class="line">pre_processing = <span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\';</span></div><div class="line">cd(pre_processing);</div><div class="line">subjects = dir('<span class="number">2016</span>*<span class="string">');</span></div><div class="line">for i = 1: size(subjects,1)</div><div class="line">   cd([pre_processing,subjects(i).name]);</div><div class="line">   SubRunID = dir('ep2d*<span class="string">');</span></div><div class="line">   rps = ones(272*4,6);</div><div class="line">   for j = 1:size(SubRunID,1)</div><div class="line">       cd([pre_processing,subjects(i).name,'\<span class="string">',SubRunID(j).name]);</span></div><div class="line">       file = dir('rp*<span class="string">');</span></div><div class="line">       filename = file(1).name;</div><div class="line">       a = load(filename);</div><div class="line">       rps(272*(j-1)+1:272*j,1:6) = a;</div><div class="line">   end</div><div class="line">    cd([pre_processing,subjects(i).name]);</div><div class="line">    save('rp_all.txt',<span class="string">'rps'</span>,<span class="string">'-ascii'</span>);</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h2 id="提取图像某个点的值并绘制时间序列曲线">提取图像某个点的值并绘制时间序列曲线</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Y</span> = <span class="title">extract_time_series</span><span class="params">(V,XYZ)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：提取图像某个点的值并绘制时间序列曲线</span></div><div class="line"><span class="comment">% 调用：Y = plot_time_series(V,XYZ)</span></div><div class="line"><span class="comment">% 参数： </span></div><div class="line"><span class="comment">%   XYZ ：三维坐标，图像中的点</span></div><div class="line"><span class="comment">%   V : 存放图像路径的cell</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   XYZ = [13;48;2];</span></div><div class="line"><span class="comment">%   V = &#123;'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\af20160911002-182750-00006-00006-1.img',</span></div><div class="line"><span class="comment">%    'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\af20160911002-182750-00006-00006-1.img'&#125;;</span></div><div class="line"><span class="comment">%   Y = plot_time_series(V,XYZ)</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">Y = spm_get_data(V,XYZ);</div></pre></td></tr></table></figure>
+<h2 id="使用xjview批量找到激活的峰值并保存">使用xjview批量找到激活的峰值并保存</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">spmT_filepath = <span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level\20160911002\spmT_0020.hdr'</span>;</div><div class="line">xjview(spmT_filepath);</div><div class="line"><span class="comment">%显示出激活图像</span></div><div class="line"><span class="comment">% 找到峰值</span></div><div class="line">h = spm_mip_ui(<span class="string">'FindMIPax'</span>);</div><div class="line"><span class="comment">% loc     - String defining jump: 'dntmv' - don't move</span></div><div class="line"><span class="comment">%                                 'nrvox' - nearest suprathreshold voxel</span></div><div class="line"><span class="comment">%                                 'nrmax' - nearest local maxima</span></div><div class="line"><span class="comment">%                                 'glmax' - global maxima</span></div><div class="line">loc = <span class="string">'glmax'</span>;</div><div class="line">xyz = spm_mip_ui(<span class="string">'Jump'</span>,h,loc);</div></pre></td></tr></table></figure>
+<h2 id="求若干个图像的平均图像">求若干个图像的平均图像</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">mean_img</span><span class="params">(input_img,output_img)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：求若干个图像的平均图像</span></div><div class="line"><span class="comment">% 调用：mean_img(input_img,output_img)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   input_img : cell类型的输入图像，绝对路径</span></div><div class="line"><span class="comment">%   output_img : 输出图像的绝对路径</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   input_img = &#123; 'd:\fmri_root\YANTAI\ANALYSIS\mean_smooth4\DW10\s4wraf20161104002-181316-00074-00074-1.img,1'</span></div><div class="line"><span class="comment">%                 'd:\fmri_root\YANTAI\ANALYSIS\mean_smooth4\DW11\s4wraf20161104002-181208-00040-00040-1.img,1'</span></div><div class="line"><span class="comment">%                 'd:\fmri_root\YANTAI\ANALYSIS\mean_smooth4\DW20\s4wraf20161104002-181822-00227-00227-1.img,1'</span></div><div class="line"><span class="comment">%                 'd:\fmri_root\YANTAI\ANALYSIS\mean_smooth4\DW21\s4wraf20161104002-181640-00176-00176-1.img,1'&#125;;</span></div><div class="line"><span class="comment">%   output_img = 'd:\out.img';</span></div><div class="line"><span class="comment">% 	mean_img(input_img,output_img)</span></div><div class="line"><span class="comment">% 说明：修改matlabbatch&#123;1&#125;.spm.util.imcalc.expression可以完成不同的计算任务</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">[path,name,exit] = fileparts(output_img) ;</div><div class="line">spm_jobman(<span class="string">'initcfg'</span>)</div><div class="line"><span class="comment">%-----------------------------------------------------------------------</span></div><div class="line"><span class="comment">% Job configuration created by cfg_util (rev $Rev: 4252 $)</span></div><div class="line"><span class="comment">%-----------------------------------------------------------------------</span></div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.input = input_img;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.output = [name,exit];</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.outdir = &#123;path&#125;;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.expression = <span class="string">'(i1+i2+i3+i4)/4'</span>;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.options.dmtx = <span class="number">0</span>;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.options.mask = <span class="number">0</span>;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.options.interp = <span class="number">1</span>;</div><div class="line">matlabbatch&#123;<span class="number">1</span>&#125;.spm.util.imcalc.options.dtype = <span class="number">4</span>;</div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line">spm_jobman(<span class="string">'run'</span>,matlabbatch);</div><div class="line"><span class="built_in">disp</span>(<span class="string">'mean_img successful !'</span>);</div><div class="line">clear matlabbatch;</div></pre></td></tr></table></figure>
+<h2 id="求若干个图像的平均图像一种速度更快的实现方式">求若干个图像的平均图像(一种速度更快的实现方式)</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Q</span> = <span class="title">mean_img2</span><span class="params">(input_img,output_img)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：计算四个图像的平均值</span></div><div class="line"><span class="comment">% 调用：Q = mean_img2(input_img,output_img)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   input_img: cell类型的输入图像的绝对路径</span></div><div class="line"><span class="comment">%   output_img: 输出图像的绝对路径</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">% input_img = &#123;'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\s4wraf20160911002-182750-00006-00006-1.img'</span></div><div class="line"><span class="comment">%                 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\s4wraf20160911002-182752-00007-00007-1.img'</span></div><div class="line"><span class="comment">%                 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\s4wraf20160911002-182754-00008-00008-1.img'</span></div><div class="line"><span class="comment">%                 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\s4wraf20160911002-182756-00009-00009-1.img'&#125;;</span></div><div class="line"><span class="comment">% output_img = 'd:\out.img';</span></div><div class="line"><span class="comment">% Q = mean_img2(input_img,output_img)</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">P = input_img;</div><div class="line">Q = output_img;</div><div class="line">f = <span class="string">'(i1+i2+i3+i4)/4'</span>;</div><div class="line">dmtx = <span class="number">0</span>;</div><div class="line">mask = <span class="number">0</span>;</div><div class="line">type = <span class="number">4</span>;</div><div class="line">hold = <span class="number">0</span>;</div><div class="line">flags = &#123;dmtx,mask,type,hold&#125;;</div><div class="line"></div><div class="line">[Q,Vo] = spm_imcalc_extend(P,Q,f,flags);</div></pre></td></tr></table></figure>
+<h2 id="绘制一个run的时间序列">绘制一个RUN的时间序列</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Y</span> = <span class="title">plot_time_series_run</span><span class="params">(XYZ,run_dir,file_filter)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能 ： 绘制一个RUN的时间序列</span></div><div class="line"><span class="comment">% 调用：Y = plot_time_series_run(run_dir,file_filter)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   XYZ : 图像中的某个点</span></div><div class="line"><span class="comment">%   run_dir : run文件夹路径</span></div><div class="line"><span class="comment">%   file_filter : 文件过滤器，e.g.w*.img</span></div><div class="line"><span class="comment">%   Y：提取的数据</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">V = cell(<span class="number">272</span>,<span class="number">1</span>);</div><div class="line">cd(run_dir);</div><div class="line">files = dir(file_filter);</div><div class="line"><span class="keyword">for</span> k = <span class="number">1</span>:<span class="built_in">size</span>(files,<span class="number">1</span>)</div><div class="line">    V&#123;k&#125; = [run_dir,<span class="string">'\',files(k).name];</span></div><div class="line">end</div><div class="line">Y = spm_get_data(V,XYZ);</div><div class="line">plot(Y);</div></pre></td></tr></table></figure>
+<h2 id="绘制被试的头动图像">绘制被试的头动图像</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">plothm</span><span class="params">(file_path,save_name)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：根据头动文件画头动图</span></div><div class="line"><span class="comment">% 调用：plothm(file_path,save_name)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   file_path : rp*头动文件绝对路径</span></div><div class="line"><span class="comment">%   save_name : 生成图像的名称</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   file_path = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160716002\ep2d_bold_moco_p2_rest_0016\rp_af20160716002-183602-00006-00006-1.txt';</span></div><div class="line"><span class="comment">%   save_name = 'd:\realign_run1.png'</span></div><div class="line"><span class="comment">% 	plothm(file_path,save_name)</span></div><div class="line"><span class="comment">% 说明：需要事先打开SPM的Graph窗口；save_name如果只有名称，则保存在Matlab当前工作目录下，如果提供了绝对路径，则保存为绝对路径指定的地方。</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">Params = load(file_path);</div><div class="line">fg=spm_figure(<span class="string">'FindWin'</span>,<span class="string">'Graphics'</span>);</div><div class="line"><span class="keyword">if</span> ~<span class="built_in">isempty</span>(fg),</div><div class="line">    <span class="comment">% display results</span></div><div class="line">    <span class="comment">% translation and rotation over time series</span></div><div class="line">    <span class="comment">%-------------------------------------------------------------------</span></div><div class="line">    spm_figure(<span class="string">'Clear'</span>,<span class="string">'Graphics'</span>);</div><div class="line">    ax=axes(<span class="string">'Position'</span>,[<span class="number">0.1</span> <span class="number">0.65</span> <span class="number">0.8</span> <span class="number">0.2</span>],<span class="string">'Parent'</span>,fg,<span class="string">'Visible'</span>,<span class="string">'off'</span>);</div><div class="line">    set(get(ax,<span class="string">'Title'</span>),<span class="string">'String'</span>,<span class="string">'Image realignment'</span>,<span class="string">'FontSize'</span>,<span class="number">16</span>,<span class="string">'FontWeight'</span>,<span class="string">'Bold'</span>,<span class="string">'Visible'</span>,<span class="string">'on'</span>);</div><div class="line">    ax=axes(<span class="string">'Position'</span>,[<span class="number">0.1</span> <span class="number">0.35</span> <span class="number">0.8</span> <span class="number">0.2</span>],<span class="string">'Parent'</span>,fg,<span class="string">'XGrid'</span>,<span class="string">'on'</span>,<span class="string">'YGrid'</span>,<span class="string">'on'</span>);</div><div class="line">    plot(Params(:,<span class="number">1</span>:<span class="number">3</span>),<span class="string">'Parent'</span>,ax)</div><div class="line">    s = [<span class="string">'x translation'</span>;<span class="string">'y translation'</span>;<span class="string">'z translation'</span>];</div><div class="line">    <span class="comment">%text([2 2 2], Params(2, 1:3), s, 'Fontsize',10,'Parent',ax)</span></div><div class="line">    legend(ax, s, <span class="number">0</span>)</div><div class="line">    set(get(ax,<span class="string">'Title'</span>),<span class="string">'String'</span>,<span class="string">'translation'</span>,<span class="string">'FontSize'</span>,<span class="number">16</span>,<span class="string">'FontWeight'</span>,<span class="string">'Bold'</span>);</div><div class="line">    set(get(ax,<span class="string">'Xlabel'</span>),<span class="string">'String'</span>,<span class="string">'image'</span>);</div><div class="line">    set(get(ax,<span class="string">'Ylabel'</span>),<span class="string">'String'</span>,<span class="string">'mm'</span>);</div><div class="line"></div><div class="line"></div><div class="line">    ax=axes(<span class="string">'Position'</span>,[<span class="number">0.1</span> <span class="number">0.05</span> <span class="number">0.8</span> <span class="number">0.2</span>],<span class="string">'Parent'</span>,fg,<span class="string">'XGrid'</span>,<span class="string">'on'</span>,<span class="string">'YGrid'</span>,<span class="string">'on'</span>);</div><div class="line">    plot(Params(:,<span class="number">4</span>:<span class="number">6</span>)*<span class="number">180</span>/<span class="built_in">pi</span>,<span class="string">'Parent'</span>,ax)</div><div class="line">    s = [<span class="string">'pitch'</span>;<span class="string">'roll '</span>;<span class="string">'yaw  '</span>];</div><div class="line">    <span class="comment">%text([2 2 2], Params(2, 4:6)*180/pi, s, 'Fontsize',10,'Parent',ax)</span></div><div class="line">    legend(ax, s, <span class="number">0</span>)</div><div class="line">    set(get(ax,<span class="string">'Title'</span>),<span class="string">'String'</span>,<span class="string">'rotation'</span>,<span class="string">'FontSize'</span>,<span class="number">16</span>,<span class="string">'FontWeight'</span>,<span class="string">'Bold'</span>);</div><div class="line">    set(get(ax,<span class="string">'Xlabel'</span>),<span class="string">'String'</span>,<span class="string">'image'</span>);</div><div class="line">    set(get(ax,<span class="string">'Ylabel'</span>),<span class="string">'String'</span>,<span class="string">'degrees'</span>);</div><div class="line"></div><div class="line">    <span class="comment">% print realigment parameters</span></div><div class="line">    spm_print(save_name);</div><div class="line">    print(fg,save_name,<span class="string">'-dpng'</span>);<span class="comment">% 打印出PNG图片，还可以输出其他的格式，参考Matlab的print函数。</span></div><div class="line"><span class="keyword">end</span></div><div class="line"><span class="keyword">return</span>;</div></pre></td></tr></table></figure>
+<h2 id="批量保存xjview中的slice_view图像">批量保存xjview中的slice_view图像</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">save_slice_view</span><span class="params">(file_path,save_path)</span></span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能：保存激活图像的slice_view图像</span></div><div class="line"><span class="comment">% 调用：save_slice_view(file_path,save_path)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   file_path : spmT图像</span></div><div class="line"><span class="comment">%   save_path : 保存的绝对路径，包含文件名</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   file_path = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level\20160911002\spmT_0020.hdr';</span></div><div class="line"><span class="comment">%   save_path = 'd:\aaa.png';</span></div><div class="line"><span class="comment">%   save_slice_view(file_path,save_path)</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"></div><div class="line"><span class="comment">%file_path = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level\20160911002\spmT_0020.hdr';</span></div><div class="line">my_xjview(file_path);</div><div class="line">hObject = spm_mip_ui(<span class="string">'FindMIPax'</span>);</div><div class="line">eventdata = [];</div><div class="line">handles = guidata(hObject);</div><div class="line"><span class="keyword">global</span> sliceview</div><div class="line"></div><div class="line"><span class="keyword">if</span>(~isfield(sliceview, <span class="string">'fig'</span>) || ~ishandle(sliceview.fig))</div><div class="line">    sliceview.viewtype = <span class="string">'t'</span>;    </div><div class="line">    sliceview.row = <span class="number">6</span>;</div><div class="line">    sliceview.col = <span class="number">8</span>;</div><div class="line">    sliceview.spacing = <span class="number">4</span>;</div><div class="line">    sliceview.page = <span class="number">1</span>;</div><div class="line">    sliceview.data = &#123;&#123;&#125;,&#123;&#125;,&#123;&#125;&#125;; <span class="comment">% t,s,c</span></div><div class="line">    sliceview.slices = &#123;[],[],[]&#125;;<span class="comment">% t,s,c</span></div><div class="line">    sliceview.colormap = <span class="string">''</span>;</div><div class="line">    sliceview.fig = figure(<span class="string">'color'</span>,<span class="string">'k'</span>, <span class="string">'unit'</span>,<span class="string">'normalized'</span>,<span class="string">'position'</span>,[<span class="number">0.1</span> <span class="number">0.1</span> <span class="number">.6</span> <span class="number">.8</span>],<span class="string">'toolbar'</span>,<span class="string">'none'</span>, <span class="string">'name'</span>, <span class="string">'xjView slice view'</span>, <span class="string">'NumberTitle'</span>,<span class="string">'off'</span>);</div><div class="line">    sliceview.ax = axes(<span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="string">'DrawMode'</span>,<span class="string">'fast'</span>,<span class="string">'Parent'</span>,sliceview.fig,...</div><div class="line">    <span class="string">'YDir'</span>,<span class="string">'normal'</span>,<span class="string">'Ydir'</span>,<span class="string">'normal'</span>,<span class="string">'XTick'</span>,[],<span class="string">'YTick'</span>,[], <span class="string">'position'</span>, [<span class="number">0.15</span> <span class="number">0.05</span> <span class="number">.8</span> <span class="number">.9</span>]);</div><div class="line">    <span class="comment">%handles.sliceview.d  = image([],'Tag','Transverse','Parent',handles.sliceview.ax);</span></div><div class="line">    set(sliceview.ax,<span class="string">'XTick'</span>,[],<span class="string">'YTick'</span>,[]);</div><div class="line">    axis equal</div><div class="line">    set(sliceview.ax,<span class="string">'color'</span>,<span class="string">'k'</span>);</div><div class="line">    <span class="comment">%setcolormap(colormp)</span></div><div class="line">    width = <span class="number">0.05</span>;</div><div class="line">    height = <span class="number">0.025</span>;</div><div class="line">    step = <span class="number">0.025</span>;</div><div class="line">    labeloffset = step/<span class="number">2</span>;</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">slicegraph = figure(sliceview.fig);</div><div class="line"></div><div class="line">viewtype =    sliceview.viewtype;   </div><div class="line">row =         sliceview.row;</div><div class="line">col =         sliceview.col;</div><div class="line">spacing =     sliceview.spacing;</div><div class="line">page =        sliceview.page;</div><div class="line">slice_fig = sliceview.fig;</div><div class="line">ax = sliceview.ax;</div><div class="line"><span class="comment">%d = handles.sliceview.d;</span></div><div class="line"></div><div class="line">[slicedata, colormp, slices] = cuixu_getSliceViewData(viewtype,row,col, spacing, page);</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(slices)</div><div class="line">    <span class="keyword">return</span>;</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> ii=<span class="number">1</span>:<span class="built_in">length</span>(slices)</div><div class="line">    <span class="keyword">if</span>(viewtype == <span class="string">'s'</span>)</div><div class="line">        postmp = <span class="built_in">find</span>(slices(ii) - sliceview.slices&#123;<span class="number">2</span>&#125; == <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">isempty</span>(postmp))</div><div class="line">            sliceview.data&#123;<span class="number">2</span>&#125;&#123;end+<span class="number">1</span>&#125; = slicedata&#123;ii&#125;;</div><div class="line">            sliceview.slices&#123;<span class="number">2</span>&#125;(<span class="keyword">end</span>+<span class="number">1</span>) = slices(ii);</div><div class="line">        <span class="keyword">end</span>   </div><div class="line">    <span class="keyword">elseif</span>(viewtype == <span class="string">'t'</span>)</div><div class="line">        postmp = <span class="built_in">find</span>(slices(ii) - sliceview.slices&#123;<span class="number">1</span>&#125; == <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">isempty</span>(postmp))</div><div class="line">            sliceview.data&#123;<span class="number">1</span>&#125;&#123;end+<span class="number">1</span>&#125; = slicedata&#123;ii&#125;;</div><div class="line">            sliceview.slices&#123;<span class="number">1</span>&#125;(<span class="keyword">end</span>+<span class="number">1</span>) = slices(ii);</div><div class="line">        <span class="keyword">end</span>    </div><div class="line">    <span class="keyword">elseif</span>(viewtype == <span class="string">'c'</span>)</div><div class="line">        postmp = <span class="built_in">find</span>(slices(ii) - sliceview.slices&#123;<span class="number">3</span>&#125; == <span class="number">0</span>);</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">isempty</span>(postmp))</div><div class="line">            sliceview.data&#123;<span class="number">3</span>&#125;&#123;end+<span class="number">1</span>&#125; = slicedata&#123;ii&#125;;</div><div class="line">            sliceview.slices&#123;<span class="number">3</span>&#125;(<span class="keyword">end</span>+<span class="number">1</span>) = slices(ii);</div><div class="line">        <span class="keyword">end</span>   </div><div class="line">    <span class="keyword">end</span>  </div><div class="line">    </div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">%slice_fig = figure('color','k', 'unit','normalized','position',[0.1 0.1 .6 .8],'toolbar','none');</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="built_in">length</span>(<span class="built_in">size</span>(slicedata&#123;<span class="number">1</span>&#125;)) == <span class="number">3</span>)</div><div class="line">    [nx, ny, nz] = <span class="built_in">size</span>(slicedata&#123;<span class="number">1</span>&#125;);</div><div class="line">    slicedatafinal = <span class="built_in">zeros</span>(nx*row, ny*col, nz );</div><div class="line">    <span class="keyword">for</span> ii=<span class="number">1</span>:<span class="built_in">length</span>(slicedata)</div><div class="line">        slicedatafinal(nx*(<span class="built_in">floor</span>((ii<span class="number">-1</span>)/col))+<span class="number">1</span>:nx*(<span class="number">1</span>+<span class="built_in">floor</span>((ii<span class="number">-1</span>)/col)), ny*(<span class="built_in">mod</span>(ii<span class="number">-1</span>,col))+<span class="number">1</span>:ny*(<span class="built_in">mod</span>(ii<span class="number">-1</span>,col)+<span class="number">1</span>), :) = slicedata&#123;ii&#125;;</div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    [nx, ny] = <span class="built_in">size</span>(slicedata&#123;<span class="number">1</span>&#125;);</div><div class="line">    slicedatafinal = <span class="built_in">zeros</span>(nx*row, ny*col );</div><div class="line">    <span class="keyword">for</span> ii=<span class="number">1</span>:<span class="built_in">length</span>(slicedata)</div><div class="line">        slicedatafinal(nx*(<span class="built_in">floor</span>((ii<span class="number">-1</span>)/col))+<span class="number">1</span>:nx*(<span class="number">1</span>+<span class="built_in">floor</span>((ii<span class="number">-1</span>)/col)), ny*(<span class="built_in">mod</span>(ii<span class="number">-1</span>,col))+<span class="number">1</span>:ny*(<span class="built_in">mod</span>(ii<span class="number">-1</span>,col)+<span class="number">1</span>)) = slicedata&#123;ii&#125;;</div><div class="line">    <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">try</span></div><div class="line">    delete(handles.sliceview.d)</div><div class="line"><span class="keyword">catch</span></div><div class="line">    [];</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">handles.sliceview.d  = image(slicedatafinal,<span class="string">'Tag'</span>,<span class="string">'Transverse'</span>,<span class="string">'Parent'</span>,sliceview.ax);</div><div class="line"></div><div class="line"><span class="comment">% put slice positions</span></div><div class="line"><span class="keyword">for</span> ii=<span class="number">1</span>:<span class="built_in">length</span>(slicedata)</div><div class="line">    <span class="comment">%text(nx*(floor((ii-1)/col))+1:nx*(1+floor((ii-1)/col)), ny*(mod(ii-1,col))+1:ny*(mod(ii-1,col)+1), num2str(slices(ii)), 'color', 'w');</span></div><div class="line">    text(ny*(<span class="built_in">mod</span>(ii<span class="number">-1</span>,col))+<span class="number">1</span>, nx*(<span class="built_in">floor</span>((ii<span class="number">-1</span>)/col))+<span class="number">1</span>+<span class="number">20</span>, num2str(slices(ii)), <span class="string">'color'</span>, <span class="string">'w'</span>);</div><div class="line"><span class="keyword">end</span></div><div class="line">set(sliceview.ax,<span class="string">'XTick'</span>,[],<span class="string">'YTick'</span>,[]);</div><div class="line">axis(sliceview.ax, <span class="string">'equal'</span>);</div><div class="line">set(sliceview.ax,<span class="string">'color'</span>,<span class="string">'k'</span>);</div><div class="line">guidata(hObject, handles);</div><div class="line"></div><div class="line"><span class="comment">%print(handles.figure,'bbb','-dpng');  % 保存主窗口图像</span></div><div class="line">print(slicegraph,save_path,<span class="string">'-dpng'</span>);  <span class="comment">% 保存slice_view图像</span></div><div class="line">close(slicegraph);</div><div class="line">close(handles.figure);</div><div class="line">clc;</div></pre></td></tr></table></figure>
+<h2 id="获得图像的头信息">获得图像的头信息</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">P = &#123;<span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\af20160911002-182750-00006-00006-1.img'</span>,</div><div class="line">    <span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\20160911002\ep2d_bold_moco_p2_rest_0006\af20160911002-182750-00006-00006-1.img'</span>&#125;;</div><div class="line">header = spm_vol(P);</div></pre></td></tr></table></figure>
+<h2 id="获得图像某个坐标的值">获得图像某个坐标的值</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">% 获得图像某个坐标的值</span></div><div class="line">V = &#123;<span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level\20160911002\beta_0001.img'</span>&#125;;</div><div class="line">XYZ = [<span class="number">13</span>;<span class="number">48</span>;<span class="number">2</span>];</div><div class="line">Y = spm_get_data(V,XYZ);</div></pre></td></tr></table></figure>
+<h2 id="批量做图像的平滑处理">批量做图像的平滑处理</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">smooth</span><span class="params">(filter,pres)</span></span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line"><span class="comment">% 功能： 平滑图像</span></div><div class="line"><span class="comment">% 调用：smooth(filter,pres)</span></div><div class="line"><span class="comment">% 参数：</span></div><div class="line"><span class="comment">%   filter : 控制处理的被试数量，例如'20161001*';</span></div><div class="line"><span class="comment">%   pres : 生成的平滑之后的图像的前缀，例如's';</span></div><div class="line"><span class="comment">% 示例：</span></div><div class="line"><span class="comment">%   filter = '20161003*';</span></div><div class="line"><span class="comment">%   pres = 's';</span></div><div class="line"><span class="comment">%   smooth(filter,pres);</span></div><div class="line"><span class="comment">% 说明：平滑之后的图像与输入图像在同一文件夹，前缀不同</span></div><div class="line"><span class="comment">% -------------------------------------------------------------------------</span></div><div class="line">clc;</div><div class="line">warning(<span class="string">'off'</span>);</div><div class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></div><div class="line"><span class="comment">%需要修改的变量，修改此处可以处理多个被试的数据</span></div><div class="line"><span class="comment">%filter = '2016*';</span></div><div class="line"><span class="comment">% 输入： wraf*开头的图像文件</span></div><div class="line"><span class="comment">% 输出： 平滑之后的文件(与输入文件在同一文件夹中，前缀不一样)</span></div><div class="line"><span class="comment">%-------------------------------</span></div><div class="line"><span class="comment">% 配置参数：</span></div><div class="line"><span class="comment">% filter : 控制处理的被试数量</span></div><div class="line"><span class="comment">% pres : 输出图像的前缀</span></div><div class="line"><span class="comment">% pre_processing_path ： wraf*开头的图像文件的绝对路径</span></div><div class="line"><span class="comment">% run_num ： 每个RUN的文件数量(删除TR之后的数量)</span></div><div class="line"><span class="comment">% runExpID : RUN文件夹名称，这里是'ep2d*'</span></div><div class="line"><span class="comment">% filenames = dir('wraf*.img'); 输入图像以wraf开头</span></div><div class="line"><span class="comment">% matlabbatch&#123;1&#125;.spm.spatial.smooth.fwhm = [4 4 4]; 控制平滑核大小</span></div><div class="line"><span class="comment">% matlabbatch&#123;1&#125;.spm.spatial.smooth.prefix = 's4';输出文件的前缀</span></div><div class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></div><div class="line"><span class="comment">%预处理文件夹，整个预处理过程保存在这里</span></div><div class="line">pre_processing_path = &#123;<span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\'&#125;;</span></div><div class="line">%删除空TR后每个run文件的数量</div><div class="line">run_num = 272;</div><div class="line">%开始处理    </div><div class="line">cd(pre_processing_path&#123;1&#125;);</div><div class="line">subExpID = dir(filter); %====================================</div><div class="line">for i=1:size(subExpID,1)</div><div class="line">    cd([pre_processing_path&#123;1&#125;,subExpID(i).name]);</div><div class="line">    </div><div class="line">	diary smooth_output.txt; % 重定向控制台输出到文件</div><div class="line">	tic;  %开始计时   </div><div class="line">    %2.获得run的功能像文件</div><div class="line">    cd([pre_processing_path&#123;1&#125;,subExpID(i).name]);</div><div class="line">    runExpID=dir('ep2d*<span class="string">');</span></div><div class="line">    for j=1:size(runExpID,1)</div><div class="line">        cd ([pre_processing_path&#123;1&#125;,subExpID(i).name,'\<span class="string">',runExpID(j).name]);</span></div><div class="line">        filenames = dir('wraf*.img<span class="string">');</span></div><div class="line">        funcFilenames = cell(run_num,1);%每个run的文件集合</div><div class="line">        for k=1:size(filenames,1)</div><div class="line">            funcFilenames&#123;k&#125; = [pre_processing_path&#123;1&#125;,subExpID(i).name,'\<span class="string">',runExpID(j).name,'</span>\<span class="string">',filenames(k).name,'</span>,<span class="number">1</span><span class="string">'];</span></div><div class="line">        end</div><div class="line">         </div><div class="line">        funcFilenames = &#123;funcFilenames&#125;;</div><div class="line">        </div><div class="line">        %%================================batch-begin===================================================%%</div><div class="line">        spm_jobman('initcfg<span class="string">')</span></div><div class="line">        </div><div class="line">        matlabbatch&#123;1&#125;.spm.spatial.smooth.data = funcFilenames&#123;1&#125;;</div><div class="line">        matlabbatch&#123;1&#125;.spm.spatial.smooth.fwhm = [4 4 4];</div><div class="line">        matlabbatch&#123;1&#125;.spm.spatial.smooth.dtype = 0;</div><div class="line">        matlabbatch&#123;1&#125;.spm.spatial.smooth.im = 0;</div><div class="line">        matlabbatch&#123;1&#125;.spm.spatial.smooth.prefix = pres;</div><div class="line">        %%================================batch-end===================================================%%</div><div class="line">        spm_jobman('run<span class="string">',matlabbatch);</span></div><div class="line">        disp('smooth successful !<span class="string">');</span></div><div class="line">        clear matlabbatch</div><div class="line">    end</div><div class="line">	toc</div><div class="line">	diary off ;</div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="图像计算函数的拓展针对fmri图像">图像计算函数的拓展(针对fMRI图像)</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="params">[Q,Vo]</span> = <span class="title">spm_imcalc_extend</span><span class="params">(P,Q,f,flags,varargin)</span></span></div><div class="line"><span class="comment">% Perform algebraic functions on images</span></div><div class="line"><span class="comment">% FORMAT Q = spm_imcalc_ui(P,Q,f,flags)</span></div><div class="line"><span class="comment">% P             - matrix of input image filenames</span></div><div class="line"><span class="comment">%                 [user prompted to select files if arg missing or empty]</span></div><div class="line"><span class="comment">% Q             - name of output image</span></div><div class="line"><span class="comment">%                 [user prompted to enter filename if arg missing or empty]</span></div><div class="line"><span class="comment">% f             - expression to be evaluated</span></div><div class="line"><span class="comment">%                 [user prompted to enter expression if arg missing or empty]</span></div><div class="line"><span class="comment">% flags         - cell vector of flags: &#123;dmtx,mask,type,hold&#125;</span></div><div class="line"><span class="comment">% dmtx          - Read images into data matrix?</span></div><div class="line"><span class="comment">%                 [defaults (missing or empty) to 0 - no]</span></div><div class="line"><span class="comment">% mask          - implicit zero mask?</span></div><div class="line"><span class="comment">%                 [defaults (missing or empty) to 0]</span></div><div class="line"><span class="comment">% type          - data type for output image (see spm_type)</span></div><div class="line"><span class="comment">%                 [defaults (missing or empty) to 4 - 16 bit signed shorts]</span></div><div class="line"><span class="comment">% hold          - interpolation hold (see spm_slice_vol)</span></div><div class="line"><span class="comment">%                 [defaults (missing or empty) to 0 - nearest neighbour]</span></div><div class="line"><span class="comment">% Q (output)    - full pathname of image written</span></div><div class="line"><span class="comment">% Vo            - structure containing information on output image (see spm_vol)</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">%_______________________________________________________________________</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% spm_imcalc_ui uses spm_imcalc as an engine to perform user-specified</span></div><div class="line"><span class="comment">% algebraic manipulations on a set of images, with the result being</span></div><div class="line"><span class="comment">% written out as an image. The user is prompted to supply images to</span></div><div class="line"><span class="comment">% work on, a filename for the output image, and the expression to</span></div><div class="line"><span class="comment">% evaluate. The expression should be a standard matlab expression,</span></div><div class="line"><span class="comment">% within which the images should be referred to as i1, i2, i3,... etc.</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% If the dmtx flag is set, then images are read into a data matrix X</span></div><div class="line"><span class="comment">% (rather than into seperate variables i1, i2, i3,...). The data matrix</span></div><div class="line"><span class="comment">% should be referred to as X, and contains images in rows.</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% Computation is plane by plane, so in data-matrix mode, X is a NxK</span></div><div class="line"><span class="comment">% matrix, where N is the number of input images [prod(size(Vi))], and K</span></div><div class="line"><span class="comment">% is the number of voxels per plane [prod(Vi(1).dim(1:2))].</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% For data types without a representation of NaN, implicit zero masking</span></div><div class="line"><span class="comment">% assummes that all zero voxels are to be treated as missing, and</span></div><div class="line"><span class="comment">% treats them as NaN. NaN's are written as zero (by spm_write_plane),</span></div><div class="line"><span class="comment">% for data types without a representation of NaN.</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% With images of different sizes and orientations, the size and</span></div><div class="line"><span class="comment">% orientation of the first is used for the output image. A warning is</span></div><div class="line"><span class="comment">% given in this situation. Images are sampled into this orientation</span></div><div class="line"><span class="comment">% using the interpolation specified by the hold parameter.  [default -</span></div><div class="line"><span class="comment">% nearest neighbour]</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% The image Q is written to current working directory unless a valid</span></div><div class="line"><span class="comment">% full pathname is given.</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% Example expressions (f):</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">%        i) Mean of six images (select six images)</span></div><div class="line"><span class="comment">%           f = '(i1+i2+i3+i4+i5+i6)/6'</span></div><div class="line"><span class="comment">%       ii) Make a binary mask image at threshold of 100</span></div><div class="line"><span class="comment">%           f = 'i1&gt;100'</span></div><div class="line"><span class="comment">%      iii) Make a mask from one image and apply to another</span></div><div class="line"><span class="comment">%           f = 'i2.*(i1&gt;100)'</span></div><div class="line"><span class="comment">%                 - here the first image is used to make the mask, which is</span></div><div class="line"><span class="comment">%                   applied to the second image</span></div><div class="line"><span class="comment">%       iv) Sum of n images</span></div><div class="line"><span class="comment">%           f = 'i1 + i2 + i3 + i4 + i5 + ...'</span></div><div class="line"><span class="comment">%        v) Sum of n images (when reading data into a data-matrix - use dmtx arg)</span></div><div class="line"><span class="comment">%           f = 'sum(X)'</span></div><div class="line"><span class="comment">% </span></div><div class="line"><span class="comment">% Parameters can be passed as arguments to override internal defaults</span></div><div class="line"><span class="comment">% (for hold, mask &amp; type), or to pre-specify images (P), output</span></div><div class="line"><span class="comment">% filename (Q), or expression (f). Pass empty matrices for arguments</span></div><div class="line"><span class="comment">% not to be set.</span></div><div class="line"><span class="comment">% E.g.  Q = spm_imcalc_ui(&#123;&#125;,'test','',&#123;[],[],[],1&#125;)</span></div><div class="line"><span class="comment">%       ... pre-specifies the output filename as 'test.img' in the current</span></div><div class="line"><span class="comment">% working directory, and sets the interpolation hold to tri-linear.</span></div><div class="line"><span class="comment">%</span></div><div class="line"><span class="comment">% Further, if calling spm_imcalc directly, additional variables for use in</span></div><div class="line"><span class="comment">% the computation can be passed at the end of the argument list. These</span></div><div class="line"><span class="comment">% should be referred to by the names of the arguments passed in the</span></div><div class="line"><span class="comment">% expression to be evaluated. E.g. if c is a 1xn vector of weights, then</span></div><div class="line"><span class="comment">% for n images, using the (dmtx) data-matrix version, the weighted sum can</span></div><div class="line"><span class="comment">% be computed using:</span></div><div class="line"><span class="comment">%       Vi= spm_vol(spm_select(inf,'image'));</span></div><div class="line"><span class="comment">%       Vo= Vi(1);</span></div><div class="line"><span class="comment">%       Vo.fname = 'output.img';</span></div><div class="line"><span class="comment">%       Vo.pinfo(1:2) = Inf;</span></div><div class="line"><span class="comment">%       Q = spm_imcalc(Vi,Vo,'c*X',&#123;1&#125;,c)</span></div><div class="line"><span class="comment">% Here we've pre-specified the expression and passed the vector c as an</span></div><div class="line"><span class="comment">% additional variable (you'll be prompted to select the n images).</span></div><div class="line"><span class="comment">%__________________________________________________________________________</span></div><div class="line"><span class="comment">% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging</span></div><div class="line"></div><div class="line"><span class="comment">% John Ashburner &amp; Andrew Holmes</span></div><div class="line"><span class="comment">% $Id: spm_imcalc_ui.m 3691 2010-01-20 17:08:30Z guillaume $</span></div><div class="line"></div><div class="line"><span class="comment">%-GUI setup</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line">SVNid = <span class="string">'$Rev: 3691 $'</span>;</div><div class="line"><span class="comment">%[Finter,Fgraph,CmdLine] = spm('FnUIsetup','ImCalc',0);</span></div><div class="line">spm(<span class="string">'FnBanner'</span>,mfilename,SVNid);</div><div class="line"><span class="comment">%-Condition arguments</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line"><span class="keyword">if</span> nargin&lt;<span class="number">4</span>, flags=&#123;&#125;; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> nargin&lt;<span class="number">3</span>, f=<span class="string">''</span>; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> nargin&lt;<span class="number">2</span>, Q=<span class="string">''</span>; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> nargin&lt;<span class="number">1</span>, P=&#123;&#125;; <span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment">%if isempty(P), P = %spm_select(Inf,'image','Select images to work on'); end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(P), error(<span class="string">'no input images specified'</span>), <span class="keyword">end</span></div><div class="line"><span class="comment">%if isempty(Q), Q = %spm_input('Output filename',1,'s'); end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(f), f = spm_input(<span class="string">'Evaluated Function'</span>,<span class="number">2</span>,<span class="string">'s'</span>); <span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="built_in">length</span>(flags)&lt;<span class="number">4</span>, hold=[]; <span class="keyword">else</span> hold=flags&#123;<span class="number">4</span>&#125;; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(hold), hold=<span class="number">0</span>; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">length</span>(flags)&lt;<span class="number">3</span>, type=[]; <span class="keyword">else</span> type=flags&#123;<span class="number">3</span>&#125;; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(type), type=<span class="number">4</span>; <span class="keyword">end</span>, <span class="keyword">if</span> ischar(type), type=spm_type(type); <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">length</span>(flags)&lt;<span class="number">2</span>, mask=[]; <span class="keyword">else</span> mask=flags&#123;<span class="number">2</span>&#125;; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(mask), mask=<span class="number">0</span>; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">length</span>(flags)&lt;<span class="number">1</span>, dmtx=[]; <span class="keyword">else</span> dmtx=flags&#123;<span class="number">1</span>&#125;; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(dmtx), dmtx=<span class="number">0</span>; <span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment">%spm('FigName','ImCalc: working',Finter,CmdLine);</span></div><div class="line"><span class="comment">%spm('Pointer','Watch')</span></div><div class="line"></div><div class="line"><span class="comment">%-Map input files</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line">Vi = spm_vol(char(P));</div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(Vi), error(<span class="string">'no input images specified'</span>), <span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment">%-Check for consistency of image dimensions and orientation / voxel size</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line"><span class="keyword">if</span> <span class="built_in">length</span>(Vi)&gt;<span class="number">1</span> &amp;&amp; any(any(diff(<span class="built_in">cat</span>(<span class="number">1</span>,Vi.dim),<span class="number">1</span>,<span class="number">1</span>),<span class="number">1</span>))</div><div class="line">    warning([<span class="string">'images don''t all have same dimensions'</span>,...</div><div class="line">        <span class="string">' - using those of 1st image'</span>]);</div><div class="line"><span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> any(any(any(diff(<span class="built_in">cat</span>(<span class="number">3</span>,Vi.mat),<span class="number">1</span>,<span class="number">3</span>),<span class="number">3</span>)))</div><div class="line">    warning([<span class="string">'images don''t all have same orientation &amp; voxel size'</span>,...</div><div class="line">        <span class="string">' - using 1st image'</span>]);</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line"><span class="comment">%-Work out filename for output image</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line">[p n e] = spm_fileparts(Q);</div><div class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(p), p = pwd; <span class="keyword">end</span></div><div class="line"><span class="keyword">if</span> ~exist(p,<span class="string">'dir'</span>)</div><div class="line">    warning(<span class="string">'Invalid directory: writing to current directory'</span>)</div><div class="line">    p = pwd;</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">Vo = struct(<span class="string">'fname'</span>,   fullfile(p, [n, e]),...</div><div class="line">            <span class="string">'dim'</span>,     Vi(<span class="number">1</span>).dim(<span class="number">1</span>:<span class="number">3</span>),...</div><div class="line">            <span class="string">'dt'</span>,      [type spm_platform(<span class="string">'bigend'</span>)],...</div><div class="line">            <span class="string">'mat'</span>,     Vi(<span class="number">1</span>).mat,...</div><div class="line">            <span class="string">'descrip'</span>, <span class="string">'spm - algebra'</span>);</div><div class="line"></div><div class="line"><span class="comment">%-Call spm_imcalc to handle computations</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line">args = &#123;dmtx,mask,hold&#125;;</div><div class="line">Vo   = spm_imcalc(Vi,Vo,f,args);</div><div class="line"></div><div class="line"><span class="comment">%-End</span></div><div class="line"><span class="comment">%--------------------------------------------------------------------------</span></div><div class="line"><span class="comment">%spm('Pointer');</span></div><div class="line"><span class="comment">%spm('FigName','ImCalc: done',Finter,CmdLine);</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/fMRI/" rel="tag">#fMRI</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/03/20/认知神经科学专题/多被试多RUN批量预处理(SPM)/" rel="next" title="多被试多RUN批量预处理(SPM)">
+                <i class="fa fa-chevron-left"></i> 多被试多RUN批量预处理(SPM)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/03/20/认知神经科学专题/动态因果模型(DCM)的批量定义和估计/" rel="prev" title="动态因果模型(DCM)的批量定义和估计">
+                动态因果模型(DCM)的批量定义和估计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#比较多幅图像是否配准"><span class="nav-number">1.</span> <span class="nav-text">比较多幅图像是否配准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量复制文件夹结构"><span class="nav-number">2.</span> <span class="nav-text">批量复制文件夹结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从多标签mask生成单标签mask"><span class="nav-number">2.1.</span> <span class="nav-text">从多标签mask生成单标签mask</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mask乘以激活之后再做成mask就是每个被试不同的mask"><span class="nav-number">3.</span> <span class="nav-text">mask乘以激活之后再做成mask,就是每个被试不同的mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将同一个被试不同run的头动文件合并在一起"><span class="nav-number">4.</span> <span class="nav-text">将同一个被试不同RUN的头动文件合并在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提取图像某个点的值并绘制时间序列曲线"><span class="nav-number">5.</span> <span class="nav-text">提取图像某个点的值并绘制时间序列曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用xjview批量找到激活的峰值并保存"><span class="nav-number">6.</span> <span class="nav-text">使用xjview批量找到激活的峰值并保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求若干个图像的平均图像"><span class="nav-number">7.</span> <span class="nav-text">求若干个图像的平均图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求若干个图像的平均图像一种速度更快的实现方式"><span class="nav-number">8.</span> <span class="nav-text">求若干个图像的平均图像(一种速度更快的实现方式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制一个run的时间序列"><span class="nav-number">9.</span> <span class="nav-text">绘制一个RUN的时间序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制被试的头动图像"><span class="nav-number">10.</span> <span class="nav-text">绘制被试的头动图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量保存xjview中的slice_view图像"><span class="nav-number">11.</span> <span class="nav-text">批量保存xjview中的slice_view图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获得图像的头信息"><span class="nav-number">12.</span> <span class="nav-text">获得图像的头信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获得图像某个坐标的值"><span class="nav-number">13.</span> <span class="nav-text">获得图像某个坐标的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量做图像的平滑处理"><span class="nav-number">14.</span> <span class="nav-text">批量做图像的平滑处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像计算函数的拓展针对fmri图像"><span class="nav-number">15.</span> <span class="nav-text">图像计算函数的拓展(针对fMRI图像)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/03/20/认知神经科学专题/SPM预处理中的常用操作/';
+      var disqus_title = "SPM预处理中的常用操作";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/03/20/认知神经科学专题/SPM预处理中的常用操作/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

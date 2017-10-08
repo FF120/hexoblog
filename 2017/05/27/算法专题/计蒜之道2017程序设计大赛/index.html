@@ -1,0 +1,1093 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/hexoblog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/hexoblog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/hexoblog/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ACM," />
+
+
+
+
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="FEI's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/hexoblog/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="记录计蒜之道竞赛题目的相关解题方案。">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计蒜之道2017程序设计大赛">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="记录计蒜之道竞赛题目的相关解题方案。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/2017-05-27_223022.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/2017-05-27_224751.png">
+<meta property="og:updated_time" content="2017-07-22T14:48:07.989Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计蒜之道2017程序设计大赛">
+<meta name="twitter:description" content="记录计蒜之道竞赛题目的相关解题方案。">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/2017-05-27_223022.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: undefined,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/"/>
+
+  <title> 计蒜之道2017程序设计大赛 | FEI's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?96ab3af3e1554c3b821faa94a0193eb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">﻿<div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/hexoblog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">FEI's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Talents come from diligence, and knowledge is gained by accumulation.</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/hexoblog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/hexoblog/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/hexoblog/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/hexoblog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/hexoblog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+        
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                计蒜之道2017程序设计大赛
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-27T22:27:35+08:00" content="2017-05-27">
+              2017-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/hexoblog/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/27/算法专题/计蒜之道2017程序设计大赛/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/" class="leancloud_visitors" data-flag-title="计蒜之道2017程序设计大赛">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录计蒜之道竞赛题目的相关解题方案。</p>
+<a id="more"></a>
+<h2 id="计蒜之道-初赛-第一场">2017 计蒜之道 初赛 第一场</h2>
+<h3 id="阿里的新游戏">阿里的新游戏</h3>
+<p><strong>题目要求</strong></p>
+<p>题库链接：<a href="https://nanti.jisuanke.com/t/15499" class="uri" target="_blank" rel="external">https://nanti.jisuanke.com/t/15499</a></p>
+<p><strong>题目分析</strong></p>
+<p>仔细分析能够成三的坐标，发现非常有规律。可以按照这个规律遍历成三的坐标，一旦成三的坐标上都有小红的棋子在，结果就加1.</p>
+<p>小红棋子的坐标我们用一个二维数组H来存储，H[i][j]=1表示在棋盘的x,y位置有小红的棋子。那么我们必须找出x,y和i,j之间的映射关系。这个是一个简单的坐标变换问题，直接给出变换关系如下：</p>
+<p><span class="math display">\[
+i = -y+3 \\
+j = x+3
+\]</span></p>
+<p>接下来就可以从行和列的角度分别遍历成三的坐标，检查是否成三了。完整的代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> n,m;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m;</div><div class="line">    <span class="keyword">int</span> hong[<span class="number">9</span>][<span class="number">9</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">int</span> a,b;</div><div class="line">        <span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b;</div><div class="line">        <span class="keyword">int</span> x = -b+<span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> y = a+<span class="number">3</span>;</div><div class="line">        hong[x][y] = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">-3</span>;x&lt;=<span class="number">3</span>;x++)&#123;</div><div class="line">        <span class="keyword">int</span> i1 = -x+<span class="number">3</span>,i2=x+<span class="number">3</span>,i3=<span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> j = x+<span class="number">3</span>;</div><div class="line">        <span class="keyword">if</span>(x!=<span class="number">0</span>)&#123;</div><div class="line">            (hong[i1][j]==<span class="number">1</span> &amp;&amp; hong[i2][j]==<span class="number">1</span> &amp;&amp; hong[i3][j]==<span class="number">1</span>)?num++:num;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> ii1=<span class="number">-1</span>+<span class="number">3</span>,ii2=<span class="number">-2</span>+<span class="number">3</span>,ii3=<span class="number">-3</span>+<span class="number">3</span>;</div><div class="line">            (hong[ii1][j]==<span class="number">1</span> &amp;&amp; hong[ii2][j]==<span class="number">1</span> &amp;&amp; hong[ii3][j]==<span class="number">1</span>)?num++:num;</div><div class="line">            ii3=<span class="number">3</span>+<span class="number">3</span>, ii1= <span class="number">1</span> + <span class="number">3</span>, ii2= <span class="number">2</span> + <span class="number">3</span>;</div><div class="line">            (hong[ii1][j]==<span class="number">1</span> &amp;&amp; hong[ii2][j]==<span class="number">1</span> &amp;&amp; hong[ii3][j]==<span class="number">1</span>)?num++:num;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> y=<span class="number">-3</span>;y&lt;=<span class="number">3</span>;y++)&#123;</div><div class="line">        <span class="keyword">int</span> i = -y+<span class="number">3</span>;</div><div class="line">        <span class="keyword">int</span> j1 = -y+<span class="number">3</span>,j2=y+<span class="number">3</span>,j3=<span class="number">3</span>;</div><div class="line">        <span class="keyword">if</span>(y!=<span class="number">0</span>)&#123;</div><div class="line">            (hong[i][j1]==<span class="number">1</span> &amp;&amp; hong[i][j2]==<span class="number">1</span> &amp;&amp; hong[i][j3]==<span class="number">1</span>)?num++:num;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(y==<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> jj1=<span class="number">-3</span>+<span class="number">3</span>,jj2=<span class="number">-2</span>+<span class="number">3</span>,jj3=<span class="number">-1</span>+<span class="number">3</span>;</div><div class="line">            (hong[i][jj1]==<span class="number">1</span> &amp;&amp; hong[i][jj2]==<span class="number">1</span> &amp;&amp; hong[i][jj3]==<span class="number">1</span>)?num++:num;</div><div class="line">            jj1=<span class="number">3</span>+<span class="number">3</span>,jj2=<span class="number">2</span>+<span class="number">3</span>,jj3=<span class="number">1</span>+<span class="number">3</span>;</div><div class="line">            (hong[i][jj1]==<span class="number">1</span> &amp;&amp; hong[i][jj2]==<span class="number">1</span> &amp;&amp; hong[i][jj3]==<span class="number">1</span>)?num++:num;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;num&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="阿里天池的新任务">阿里天池的新任务</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; OGetNext(<span class="built_in">string</span> p)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> pLen = p.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; next(pLen,<span class="number">0</span>);</div><div class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">int</span> k = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span> (j &lt; pLen - <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//p[k]表示前缀，p[j]表示后缀</span></div><div class="line">        <span class="keyword">if</span> (k == <span class="number">-1</span> || p[j] == p[k])</div><div class="line">        &#123;</div><div class="line">            ++j;</div><div class="line">            ++k;</div><div class="line">            <span class="comment">//较之前next数组求法，改动在下面4行</span></div><div class="line">            <span class="keyword">if</span> (p[j] != p[k])</div><div class="line">                next[j] = k;   <span class="comment">//之前只有这一行</span></div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="comment">//因为不能出现p[j] = p[ next[j ]]，所以当出现时需要继续递归，k = next[k] = next[next[k]]</span></div><div class="line">                next[j] = next[k];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            k = next[k];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> next;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">KmpSearch</span><span class="params">(<span class="built_in">string</span> &amp;s, <span class="built_in">string</span> &amp;p)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> sLen = s.size();</div><div class="line">    <span class="keyword">int</span> pLen = p.size();</div><div class="line">    <span class="keyword">auto</span> next = OGetNext(p);</div><div class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(i&lt;sLen)&#123;</div><div class="line">        <span class="keyword">while</span> (i &lt; sLen &amp;&amp; j &lt; pLen)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//①如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++</span></div><div class="line">            <span class="keyword">if</span> (j == <span class="number">-1</span> || s[i] == p[j])</div><div class="line">            &#123;</div><div class="line">                i++;</div><div class="line">                j++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                <span class="comment">//②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]</span></div><div class="line">                <span class="comment">//next[j]即为j所对应的next值</span></div><div class="line">                j = next[j];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (j == pLen)&#123;</div><div class="line">            count++;</div><div class="line">            j=<span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> count;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> n,a,b,L,R;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;a&gt;&gt;b&gt;&gt;L&gt;&gt;R;</div><div class="line">    <span class="built_in">string</span> t;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;t;</div><div class="line">    <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(n,<span class="string">' '</span>)</span></span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</div><div class="line">        <span class="keyword">int</span> wi = (i*a+b)%n;</div><div class="line">        <span class="keyword">if</span>((wi&lt;L||wi&gt;R)&amp;&amp;wi%<span class="number">2</span>==<span class="number">0</span>)&#123;</div><div class="line">            s[i] = <span class="string">'G'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>((wi&lt;L||wi&gt;R)&amp;&amp;wi%<span class="number">2</span>==<span class="number">1</span>)&#123;</div><div class="line">            s[i] = <span class="string">'C'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>((wi&gt;=L&amp;&amp;wi&lt;=R)&amp;&amp;wi%<span class="number">2</span>==<span class="number">0</span>)&#123;</div><div class="line">            s[i]=<span class="string">'A'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>((wi&gt;=L&amp;&amp;wi&lt;=R)&amp;&amp;wi%<span class="number">2</span>==<span class="number">1</span>)&#123;</div><div class="line">            s[i]=<span class="string">'T'</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;KmpSearch(s,t)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="计蒜之道-初赛-第二场">2017 计蒜之道 初赛 第二场</h2>
+<h3 id="百度的年会游戏">百度的年会游戏</h3>
+<p><strong>题目要求</strong></p>
+<p><a href="https://nanti.jisuanke.com/t/15503" class="uri" target="_blank" rel="external">https://nanti.jisuanke.com/t/15503</a></p>
+<p><strong>题目分析</strong></p>
+<p>建立合适的坐标系，把人和第几个木块对应到建立的坐标系上，只要坐标的转换过程不出错。题目很容易解决。可以暴力遍历每一种组合，看是否能够赢。毕竟解的空间很小，完全不用考虑时间复杂度的问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> num1,num2,num3,num4,k,d;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;num1&gt;&gt;num2&gt;&gt;num3&gt;&gt;num4&gt;&gt;k&gt;&gt;d;</div><div class="line">    <span class="keyword">int</span> total = num1+num2+num3+num4;</div><div class="line">    <span class="comment">// 0 表示普通的，1表示获胜的木块</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; zh(total,<span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span>(k==<span class="number">1</span>)&#123;</div><div class="line">        zh[d<span class="number">-1</span>] = <span class="number">1</span>;</div><div class="line">        zh[d] = <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(k==<span class="number">2</span>)&#123;</div><div class="line">        zh[num1+num4+num3+d<span class="number">-1</span>] = <span class="number">1</span>;</div><div class="line">        zh[num1+num4+num3+d] = <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(k==<span class="number">3</span>)&#123;</div><div class="line">        zh[num1+num4+d<span class="number">-1</span>] = <span class="number">1</span>;</div><div class="line">        zh[num1+num4+d] = <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        zh[num1+d<span class="number">-1</span>] = <span class="number">1</span>;</div><div class="line">        zh[num1+d] = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">1</span>;x&lt;=<span class="number">6</span>;x++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y=x;y&lt;=<span class="number">6</span>;y++)&#123;</div><div class="line">            <span class="comment">// 从谁的面前开始数</span></div><div class="line">            <span class="keyword">int</span> people = (x+y)%<span class="number">4</span>==<span class="number">0</span> ? <span class="number">4</span> : (x+y)%<span class="number">4</span>;</div><div class="line">            <span class="comment">//数多少个开始拿</span></div><div class="line">            <span class="keyword">int</span> kth = min(x,y)+<span class="number">1</span>;</div><div class="line">            <span class="comment">//判断能不能获胜</span></div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="计蒜之道-初赛-第三场">2017 计蒜之道 初赛 第三场</h2>
+<h3 id="腾讯课堂的物理实验">腾讯课堂的物理实验</h3>
+<p><strong>题目要求</strong></p>
+<div class="figure">
+<img src="2017-05-27_223022.png">
+
+</div>
+<p>题库链接：<a href="https://nanti.jisuanke.com/t/15546" class="uri" target="_blank" rel="external">https://nanti.jisuanke.com/t/15546</a></p>
+<p><strong>题目分析</strong></p>
+<p>光滑跑道，两个小球都是匀速运动，碰撞之后向反方向运动，各自的速度不变(依然保持<code>1m/s</code>),所以可以看作两个小球不受干扰的各自在跑道上运动，运动到跑道的边缘返回(因为题目中只是求解两个小球的距离，并不要求区分哪个小球是A, 哪个是B.)</p>
+<p>我们把0时刻A所在的位置定位坐标原点，B所在的位置的坐标就是<code>L</code>,只要求解出T时刻A的坐标x1和B的坐标x2，就能轻松得到二者的距离为<code>|x1-x2|</code>. T时刻A走过的路程是T，此时它的坐标应该是<code>x=(T/L)%2==0 ? T%L : L-(T%L)</code>,T时刻B走过的路程要分情况讨论，当<code>T&lt;=t</code>的时候，B在L处，此时y=L;当<code>T&gt;t</code>时，B运动的时间是<code>T-t</code>,路程也是<code>T-t</code>,此时它的坐标是<code>y=((T-t)/L%2==0) ? L-(T-t)%L : (T-t)%L</code>.</p>
+<p>完整的解题代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> L,t,T;</div><div class="line">    <span class="built_in">cin</span>&gt;&gt;L&gt;&gt;t&gt;&gt;T;</div><div class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,y=L,dis=<span class="number">0</span>;</div><div class="line">    x=(T/L)%<span class="number">2</span>==<span class="number">0</span> ? T%L : L-(T%L);</div><div class="line">    <span class="keyword">if</span>(T&gt;t)&#123;</div><div class="line">        y=((T-t)/L%<span class="number">2</span>==<span class="number">0</span>) ? L-(T-t)%L : (T-t)%L;</div><div class="line">    &#125;</div><div class="line">    dis = <span class="built_in">abs</span>(x-y);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;dis&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="腾讯狼人杀">腾讯狼人杀</h3>
+<p><strong>题目要求</strong></p>
+<div class="figure">
+<img src="2017-05-27_224751.png">
+
+</div>
+<p>题库链接：<a href="https://nanti.jisuanke.com/t/15547" class="uri" target="_blank" rel="external">https://nanti.jisuanke.com/t/15547</a></p>
+<p><strong>题目分析</strong></p>
+<p>最终要 求的是 <span class="math inline">\(value = \dfrac {\sum w_i} {k(2n-k)}\)</span> 的最大值，所以要确定的是k的值，选几个人，还有就是都选哪些人。这些确定了就可以计算答案了。这个题目给出了简单，中等，困难三个难度等级。按照一般的套路，简单的问题是可以暴力求解的。所以，我们首先试着用遍历的方式求解该题目的简单版本。</p>
+<p>如果暂时不考虑最后一个限制条件，那么这就是一个全排列问题。假设m=3，有3条记录。那么所有的情况是：(1),(2),(3),(1,2),(1,3),(2,3),(1,2,3), 共有6种情况，计算这6种情况下对应的value,取最大的输出就可以。</p>
+<p>枚举所有的情况是找一个集合的子集的问题，集合元素是m的时候，它的所有子集是 <span class="math inline">\(2^m\)</span>,这里空集没有意义，所以要枚举的情况有 <span class="math inline">\(2^m-1\)</span> 种。枚举一个集合的所有子集的问题可以使用<strong>位操作</strong>加快速度，对于每个枚举出来的项，首先判断是否满足限制条件，不满足的直接舍弃。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.png" alt="FF120 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.png" alt="FF120 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/hexoblog/tags/ACM/" rel="tag">#ACM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoblog/2017/05/22/机器学习专题/机器学习_损失函数/" rel="next" title="机器学习_损失函数">
+                <i class="fa fa-chevron-left"></i> 机器学习_损失函数
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexoblog/2017/05/28/算法专题/算法专题_字符串匹配/" rel="prev" title="算法专题_字符串匹配">
+                算法专题_字符串匹配 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/hexoblog/images/avatar.png"
+               alt="FF120" />
+          <p class="site-author-name" itemprop="name">FF120</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/hexoblog/archives">
+              <span class="site-state-item-count">145</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/hexoblog/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/hexoblog/tags">
+                <span class="site-state-item-count">97</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/hexoblog/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/FF120" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.csdn.net/g120406191" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/146890476/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/fei-fei-53-15" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.guokr.com/i/1312738597/" target="_blank" title="果壳">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  果壳
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/7644a0b8b5cd/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情连接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://macshuo.com/" title="MacTalk" target="_blank">MacTalk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="Title" target="_blank">Title</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计蒜之道-初赛-第一场"><span class="nav-number">1.</span> <span class="nav-text">2017 计蒜之道 初赛 第一场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阿里的新游戏"><span class="nav-number">1.1.</span> <span class="nav-text">阿里的新游戏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阿里天池的新任务"><span class="nav-number">1.2.</span> <span class="nav-text">阿里天池的新任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计蒜之道-初赛-第二场"><span class="nav-number">2.</span> <span class="nav-text">2017 计蒜之道 初赛 第二场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#百度的年会游戏"><span class="nav-number">2.1.</span> <span class="nav-text">百度的年会游戏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计蒜之道-初赛-第三场"><span class="nav-number">3.</span> <span class="nav-text">2017 计蒜之道 初赛 第三场</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯课堂的物理实验"><span class="nav-number">3.1.</span> <span class="nav-text">腾讯课堂的物理实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯狼人杀"><span class="nav-number">3.2.</span> <span class="nav-text">腾讯狼人杀</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FF120</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/hexoblog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/hexoblog/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/hexoblog/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/hexoblog/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/hexoblog/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'hexo-blog-ff120';
+      var disqus_identifier = '2017/05/27/算法专题/计蒜之道2017程序设计大赛/';
+      var disqus_title = "计蒜之道2017程序设计大赛";
+      var disqus_url = 'http://ff120.github.io/hexoblog/2017/05/27/算法专题/计蒜之道2017程序设计大赛/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/hexoblog/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qQKKAmAQKH2WT2lUiJvg97p0-gzGzoHsz", "jLEU2dLc2X0wl44U6Qbn5WjX");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

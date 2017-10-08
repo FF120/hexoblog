@@ -12,8 +12,8 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://ff120.coding.me/
-root: /
+url: http://ff120.github.io/hexoblog
+root: /hexoblog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -100,8 +100,8 @@ deploy:
    branch: coding-pages
    message: 
  - type: git
-   repo: https://ff120:g120406191@github.com/FF120/ff120.github.io.git
-   branch: master
+   repo: https://ff120:g120406191@github.com/FF120/hexoblog.git
+   branch: gh-pages
    message:
    
 search:

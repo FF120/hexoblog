@@ -95,14 +95,14 @@ avatar: /images/avatar.png
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
+ #- type: git
+  # repo: https://ff120:120406191@git.coding.net/FF120/FF120.git 
+  # branch: coding-pages
+  # message: 
  - type: git
-   repo: https://ff120:120406191@git.coding.net/FF120/FF120.git 
-   branch: coding-pages
-   message: 
-# - type: git
- #  repo: https://ff120:g120406191@github.com/FF120/hexoblog.git
- #  branch: gh-pages
-  # message:
+   repo: https://ff120:g120406191@github.com/FF120/hexoblog.git
+   branch: gh-pages
+   message: come from auto deploy
    
 search:
   path: search.xml

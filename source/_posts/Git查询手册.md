@@ -90,13 +90,33 @@ Git 分成三个区域，工作区，暂存区，版本库
 
 ### `git log`
 
+`git log -g -2 HEAD` : 查看最近HEAD指向的两次提交
+
+
 ### `git add`
 
 ### `git checkout`
 
+有两种主要的用法，切换分支 和 检出文件
+
+检出文件：
+
+- `git checkout -- filename` : 从暂存区检出filename到工作区，工作区未提交的内容会丢失
+- `git checkout -- '.'` :用暂存区覆盖工作区
+
+
+
+
+
+
 ### `git reset`
 
-该命令的本质是修改HEAD指向的提交ID，可以使用不同的参数指定对暂存区和工作区的影响。
+reset就是重置的意思，该命令的本质是修改HEAD指向的提交ID，可以使用不同的参数指定对暂存区和工作区的影响。
+
+- `git reset` : 其对应的完成形式应该是`git reset --mixed HEAD`, 含义是用HEAD指向的内容覆盖暂存区内容，
+它是`git add .`的逆操作。
+
+- `git reset -- filename` : 其完整形式是`git reset -- filename HEAD`, 含义是用HEAD指向的文件filename的内容覆盖暂存区内容，它是`git add filename`的逆操作。
 
 - `git reset --mixed` : 工作区内容不变，暂存区和版本库重置；
 

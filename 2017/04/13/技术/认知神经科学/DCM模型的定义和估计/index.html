@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>DCM模型的定义和估计 | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="DCM">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="DCM，中文名称动态因果模型，是一种用来研究脑区之间因果关系的一种模型。它从神经元水平建模，一般使用双线性模型表达神经元的响应。可以用来验证哪个模型与实验的数据最匹配。">
+<meta name="keywords" content="DCM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DCM模型的定义和估计">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="DCM，中文名称动态因果模型，是一种用来研究脑区之间因果关系的一种模型。它从神经元水平建模，一般使用双线性模型表达神经元的响应。可以用来验证哪个模型与实验的数据最匹配。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:54:59.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DCM模型的定义和估计">
+<meta name="twitter:description" content="DCM，中文名称动态因果模型，是一种用来研究脑区之间因果关系的一种模型。它从神经元水平建模，一般使用双线性模型表达神经元的响应。可以用来验证哪个模型与实验的数据最匹配。">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file active"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/认知神经科学/DCM模型的定义和估计" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/认知神经科学/">认知神经科学</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/DCM/">DCM</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">
+            <time datetime="2017-04-13T11:30:53.000Z" itemprop="datePublished">2017-04-13</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/认知神经科学/DCM模型的定义和估计.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/认知神经科学/DCM模型的定义和估计.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/认知神经科学/DCM模型的定义和估计.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            DCM模型的定义和估计
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dcm模型的定义"><span class="toc-number">1.</span> <span class="toc-text">DCM模型的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dcm模型的估计"><span class="toc-number">2.</span> <span class="toc-text">DCM模型的估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dcm模型的贝叶斯选择"><span class="toc-number">3.</span> <span class="toc-text">DCM模型的贝叶斯选择</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>DCM，中文名称动态因果模型，是一种用来研究脑区之间因果关系的一种模型。它从神经元水平建模，一般使用双线性模型表达神经元的响应。可以用来验证哪个模型与实验的数据最匹配。 <a id="more"></a> ## VOI抽取 DCM模型的定义需要得到感兴趣脑区的VOI，所以VOI的抽取是DCM模型定义的第一步。</p>
+<h2 id="dcm模型的定义">DCM模型的定义</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DCM</span> = <span class="title">create_dcm</span><span class="params">(subject_path,VOIs,Input_a,Input_b,Input_c,name)</span></span></span><br><span class="line"><span class="comment">%功能： 定义DCM模型，需要先做完抽取VOI，在FirstLevel文件夹下面VOI_开头的文件；</span></span><br><span class="line"><span class="comment">%subject_path : First_Level 被试目录， eg.D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level_dcm_w_whole\20160716002\</span></span><br><span class="line"><span class="comment">%condition_name : SPM.mat 设计矩阵中定义的条件，这里用来给生成的DCM命名。</span></span><br><span class="line"><span class="comment">%---------------------------------------------------------------</span></span><br><span class="line"><span class="comment">%-配置----------------------------------------------------------</span></span><br><span class="line"><span class="comment">%Input_a : DCM模型矩阵，需要更改模型的时候，修改这个矩阵</span></span><br><span class="line"><span class="comment">%Input_b : 调节输入</span></span><br><span class="line"><span class="comment">%Input_c : 外界输入</span></span><br><span class="line"><span class="comment">%-配置结束------------------------------------------------------</span></span><br><span class="line"><span class="comment">%subject_path = 'D:\FMRI_ROOT\YANTAI2\ANALYSIS\first_level_dcm_4class\CB\20161215002\';</span></span><br><span class="line">cd(subject_path);</span><br><span class="line">spmmatfile = [subject_path,<span class="string">'SPM.mat'</span>];</span><br><span class="line"><span class="comment">%name ='FULL'; % 生成的DCM模型的名称；</span></span><br><span class="line">condition_mask = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>];</span><br><span class="line">TE = <span class="number">0.04</span>; <span class="comment">%  TE</span></span><br><span class="line"><span class="comment">%Input_a = [1,1,1;1,1,1;1,1,1]; % 定义DCM模型的连接矩阵</span></span><br><span class="line"><span class="comment">%Input_b = [0,0,0;0,0,0;0,0,0]; % 定义调节参数</span></span><br><span class="line"><span class="comment">%Input_c = [1,1,1,1;0,0,0,0;0,0,0,0]; % 定义输入参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 获得VOI</span></span><br><span class="line"><span class="comment">%------------------------------------------------</span></span><br><span class="line"><span class="comment">%VOIs=&#123;'D:\FMRI_ROOT\YANTAI2\ANALYSIS\first_level_dcm_4class\CB\20161215002\VOI_LMGN_1.mat';</span></span><br><span class="line"> <span class="comment">%   'D:\FMRI_ROOT\YANTAI2\ANALYSIS\first_level_dcm_4class\CB\20161215002\VOI_LA1_1.mat';</span></span><br><span class="line">  <span class="comment">%  'D:\FMRI_ROOT\YANTAI2\ANALYSIS\first_level_dcm_4class\CB\20161215002\VOI_LV1_1.mat'&#125;;</span></span><br><span class="line"><span class="comment">%-------------------------------------------------</span></span><br><span class="line">DCM = spm_dcm_specify_extend(spmmatfile,name,VOIs,condition_mask,TE,Input_a,Input_b,Input_c);</span><br><span class="line">clear name;</span><br><span class="line">clear VOIs;</span><br><span class="line">clear condition_mask;</span><br><span class="line"><span class="comment">%spm_dcm_estimate(DCM);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DCM</span> = <span class="title">spm_dcm_specify_extend</span><span class="params">(spmmatfile,name,VOIs,condition_mask,TE,Input_a,Input_b,Input_c)</span></span></span><br><span class="line"><span class="comment">% Specify inputs of a DCM</span></span><br><span class="line"><span class="comment">% FORMAT [DCM] = spm_dcm_specify</span></span><br><span class="line"><span class="comment">%</span></span><br><span class="line"><span class="comment">% DCM  - the DCM structure (see spm_dcm_ui)</span></span><br><span class="line"><span class="comment">%__________________________________________________________________________</span></span><br><span class="line"><span class="comment">% Copyright (C) 2008 Wellcome Trust Centre for Neuroimaging</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Karl Friston</span></span><br><span class="line"><span class="comment">% $Id: spm_dcm_specify.m 4185 2011-02-01 18:46:18Z guillaume $</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Interactive window</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">Finter = spm_figure(<span class="string">'GetWin'</span>,<span class="string">'Interactive'</span>);</span><br><span class="line">bcolor = get(Finter,<span class="string">'color'</span>);</span><br><span class="line">WS     = spm(<span class="string">'WinScale'</span>);</span><br><span class="line">dx     = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">spm_input(<span class="string">'Specify DCM:...  '</span>,<span class="number">1</span>,<span class="string">'d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Get design and directory</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">%[spmmatfile, sts] = spm_select(1,'^SPM\.mat$','Select SPM.mat');</span></span><br><span class="line"><span class="comment">%spmmatfile = 'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level_dcm_w_whole\20160716002\SPM.mat';</span></span><br><span class="line">sts = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> ~sts, DCM = []; <span class="keyword">return</span>; <span class="keyword">end</span></span><br><span class="line">swd = spm_str_manip(spmmatfile,<span class="string">'H'</span>);</span><br><span class="line"><span class="keyword">try</span></span><br><span class="line">    load(fullfile(swd,<span class="string">'SPM.mat'</span>))</span><br><span class="line"><span class="keyword">catch</span></span><br><span class="line">    error([<span class="string">'Cannot read '</span> fullfile(swd,<span class="string">'SPM.mat'</span>)]);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Name</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">%name  = spm_input('name for DCM_???.mat','+1','s');</span></span><br><span class="line"><span class="comment">%name = 'HG_DCM';</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Outputs</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Get cell array of region structures</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">% VOI1_path = 'd:\fmri_root\yantai\aNALYSIS\first_level_dcm_w_whole\20160716002\VOI_HG_DW_1.mat';</span></span><br><span class="line"><span class="comment">% VOI2_path = 'd:\fmri_root\yantai\aNALYSIS\first_level_dcm_w_whole\20160716002\VOI_MFG_DW_1.mat';</span></span><br><span class="line"><span class="comment">% VOI3_path = 'd:\fmri_root\yantai\aNALYSIS\first_level_dcm_w_whole\20160716002\VOI_STG_DW_1.mat';</span></span><br><span class="line"><span class="comment">% VOIs = &#123;VOI1_path;VOI2_path;VOI3_path&#125;;</span></span><br><span class="line"><span class="comment">%P     = cellstr(spm_select([1 8],'^VOI.*\.mat$',&#123;'select VOIs'&#125;,'',swd));</span></span><br><span class="line">P = VOIs;</span><br><span class="line">m     = <span class="built_in">numel</span>(P);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    p     = load(P&#123;<span class="built_in">i</span>&#125;,<span class="string">'xY'</span>);</span><br><span class="line">    xY(<span class="built_in">i</span>) = p.xY;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Inputs</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Get (nc) 'causes' or inputs U</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">spm_input(<span class="string">'Input specification:...  '</span>,<span class="number">1</span>,<span class="string">'d'</span>);</span><br><span class="line">Sess   = SPM.Sess(xY(<span class="number">1</span>).Sess);</span><br><span class="line"><span class="comment">%condition_mask = [1,0,0,0]; % 閰嶇疆鍖呭惈鍝釜鏉′欢锛屼笉鍖呭惈鍝釜鏉′欢锛?</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(Sess.U)</span><br><span class="line">    <span class="comment">% spontaneous activity, i.e. no stimuli</span></span><br><span class="line">    nc = <span class="number">0</span>;</span><br><span class="line">    U = [];</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="comment">% with stimuli</span></span><br><span class="line">    U.dt   = Sess.U(<span class="number">1</span>).dt;</span><br><span class="line">    u      = <span class="built_in">length</span>(Sess.U);</span><br><span class="line">    U.name = &#123;&#125;;</span><br><span class="line">    U.u    = [];</span><br><span class="line">    <span class="keyword">for</span>  <span class="built_in">i</span> = <span class="number">1</span>:u  <span class="comment">%i 鏄潯浠剁殑缂栧彿  1锛?JX锛? 2锛?DW   3锛?RL 4锛?ZR</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:<span class="built_in">length</span>(Sess.U(<span class="built_in">i</span>).name)</span><br><span class="line">            str = [<span class="string">'include '</span> Sess.U(<span class="built_in">i</span>).name&#123;<span class="built_in">j</span>&#125; <span class="string">'?'</span>];  <span class="comment">% include JX</span></span><br><span class="line">            <span class="keyword">if</span> condition_mask(<span class="built_in">i</span>)<span class="comment">%spm_input(str,'+1','y/n',[1 0],1)   include JX20 ,yes 1 ; no 0;</span></span><br><span class="line">                U.u             = [U.u Sess.U(<span class="built_in">i</span>).u(<span class="number">33</span>:<span class="keyword">end</span>,<span class="built_in">j</span>)];</span><br><span class="line">                U.name&#123;<span class="keyword">end</span> + <span class="number">1</span>&#125; = Sess.U(<span class="built_in">i</span>).name&#123;<span class="built_in">j</span>&#125;;</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    nc     = <span class="built_in">size</span>(U.u,<span class="number">2</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Timings</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line">spm_input(<span class="string">'Timing information:...  '</span>,<span class="number">-1</span>,<span class="string">'d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">%-Slice timings</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">RT     = SPM.xY.RT;</span><br><span class="line"><span class="comment">%delays = spm_input('Slice timings [s]','+1','r', repmat(RT,1,m),m,[0 RT]);</span></span><br><span class="line">delays = <span class="built_in">repmat</span>(RT,<span class="number">1</span>,m)';</span><br><span class="line"><span class="comment">%-Echo time (TE) of data acquisition</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">%TE    = 0.04;  %==================================================================鑷繁杈撳叆TE鐨勫?====================</span></span><br><span class="line">TE_ok = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> ~TE_ok</span><br><span class="line">    <span class="comment">%TE = spm_input('Echo time, TE [s]', '+1', 'r', TE);</span></span><br><span class="line">    <span class="keyword">if</span> ~TE || (TE &lt; <span class="number">0</span>) || (TE &gt; <span class="number">0.1</span>)</span><br><span class="line">        str = &#123; <span class="string">'Extreme value for TE or TE undefined.'</span>,...</span><br><span class="line">            <span class="string">'Please re-enter TE (in seconds!)'</span>&#125;;</span><br><span class="line">        spm_input(str,<span class="string">'+1'</span>,<span class="string">'bd'</span>,<span class="string">'OK'</span>,[<span class="number">1</span>],<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        TE_ok = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Model options</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="keyword">if</span> nc                                                     <span class="comment">% there are inputs</span></span><br><span class="line">    spm_input(<span class="string">'Model options:...  '</span>,<span class="number">-1</span>,<span class="string">'d'</span>);</span><br><span class="line">    <span class="comment">%options.nonlinear  = spm_input('modulatory effects','+1','b',&#123;'bilinear','nonlinear'&#125;,[0 1],1);</span></span><br><span class="line">    options.nonlinear = <span class="number">0</span>; <span class="comment">%modulatory effects :  0: bilinear  , 1: nonlinear</span></span><br><span class="line">	<span class="comment">%options.two_state  = spm_input('states per region', '+1','b',&#123;'one','two'&#125;,[0 1],1);</span></span><br><span class="line">	options.two_state = <span class="number">0</span> ; <span class="comment">% states per region ; 0: one  ; 1 : two</span></span><br><span class="line">    <span class="comment">%options.stochastic = spm_input('stochastic effects','+1','b',&#123;'no','yes'&#125;,[0 1],1);</span></span><br><span class="line">	options.stochastic = <span class="number">0</span> ; <span class="comment">%stochastic effects; 0 : no ; 1 : yes,</span></span><br><span class="line">    <span class="comment">%options.centre     = spm_input('centre input',      '+1','b',&#123;'no','yes'&#125;,[0 1],1);</span></span><br><span class="line">	options.centre = <span class="number">0</span> ; <span class="comment">% centre input ; 0 : no 1: yes;</span></span><br><span class="line">    options.endogenous = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    options.nonlinear  = <span class="number">0</span>;</span><br><span class="line">    options.two_state  = <span class="number">0</span>;</span><br><span class="line">    options.stochastic = <span class="number">1</span>;</span><br><span class="line">    options.centre     = <span class="number">1</span>;</span><br><span class="line">    options.endogenous = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Graph connections</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line">a     = <span class="built_in">zeros</span>(m,m);</span><br><span class="line"><span class="keyword">if</span> options.endogenous</span><br><span class="line">    b     = <span class="built_in">zeros</span>(m,m,<span class="number">1</span>);</span><br><span class="line">    c     = <span class="built_in">zeros</span>(m,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    b     = <span class="built_in">zeros</span>(m,m,nc);</span><br><span class="line">    c     = <span class="built_in">zeros</span>(m,nc);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">d     = <span class="built_in">zeros</span>(m,m,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">%-Intrinsic connections (A matrix)</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Buttons and labels</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">spm_input(<span class="string">'Specify intrinsic connections from'</span>,<span class="number">1</span>,<span class="string">'d'</span>)</span><br><span class="line">spm_input(<span class="string">'to'</span>,<span class="number">3</span>,<span class="string">'d'</span>)</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    str    = sprintf(<span class="string">'%s %i'</span>,xY(<span class="built_in">i</span>).name,<span class="built_in">i</span>);</span><br><span class="line">    h1(<span class="built_in">i</span>)  = uicontrol(Finter,<span class="string">'String'</span>,str,...</span><br><span class="line">        <span class="string">'Style'</span>,<span class="string">'text'</span>,...</span><br><span class="line">        <span class="string">'FontSize'</span>,<span class="number">10</span>,...</span><br><span class="line">        <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">        <span class="string">'HorizontalAlignment'</span>,<span class="string">'right'</span>,...</span><br><span class="line">        <span class="string">'Position'</span>,[<span class="number">080</span> <span class="number">350</span>-dx*<span class="built_in">i</span> <span class="number">080</span> <span class="number">020</span>].*WS);</span><br><span class="line">    h2(<span class="built_in">i</span>)  = uicontrol(Finter,<span class="string">'String'</span>,sprintf(<span class="string">'%i'</span>,<span class="built_in">i</span>),...</span><br><span class="line">        <span class="string">'Style'</span>,<span class="string">'text'</span>,...</span><br><span class="line">        <span class="string">'FontSize'</span>,<span class="number">10</span>,...</span><br><span class="line">        <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">        <span class="string">'Position'</span>,[<span class="number">180</span>+dx*<span class="built_in">i</span> <span class="number">350</span> <span class="number">010</span> <span class="number">020</span>].*WS);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:m</span><br><span class="line">        h3(<span class="built_in">i</span>,<span class="built_in">j</span>) = uicontrol(Finter,...</span><br><span class="line">            <span class="string">'Position'</span>,[<span class="number">180</span>+dx*<span class="built_in">j</span> <span class="number">350</span>-dx*<span class="built_in">i</span> <span class="number">020</span> <span class="number">020</span>].*WS,...</span><br><span class="line">            <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">            <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>);</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">i</span> == <span class="built_in">j</span></span><br><span class="line">            set(h3(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'Value'</span>,<span class="number">1</span>,...</span><br><span class="line">                <span class="string">'enable'</span>,<span class="string">'off'</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            set(h3(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'enable'</span>,<span class="string">'on'</span>,<span class="string">'TooltipString'</span>, ...</span><br><span class="line">                sprintf(<span class="string">'from %s to %s'</span>,xY(<span class="built_in">j</span>).name,xY(<span class="built_in">i</span>).name));</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">if</span> nc &amp;&amp; <span class="built_in">i</span>~=<span class="built_in">j</span></span><br><span class="line">            set(h3(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'Value'</span>,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            set(h3(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'Value'</span>,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">uicontrol(Finter,<span class="string">'String'</span>,<span class="string">'done'</span>,<span class="string">'Position'</span>, [<span class="number">300</span> <span class="number">100</span> <span class="number">060</span> <span class="number">020</span>].*WS,...</span><br><span class="line">    <span class="string">'Callback'</span>, <span class="string">'uiresume(gcbf)'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">%uiwait(Finter);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Get a  a 灏辨槸DCM妯″瀷鐨勮繛鎺ョ煩闃?</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">%for i = 1:m</span></span><br><span class="line"><span class="comment">%    for j = 1:m</span></span><br><span class="line"><span class="comment">%       a(i,j) = get(h3(i,j),'Value');</span></span><br><span class="line"><span class="comment">%   end</span></span><br><span class="line"><span class="comment">%end</span></span><br><span class="line"><span class="comment">%a = [1,1,1;1,1,1;1,1,1];  %=========================================================瀹氫箟鐨凞CM妯″瀷锛屾澶勬湁涓変釜鑺傜偣锛屾墍浠ユ槸3*3鐨勭煩闃碉紱</span></span><br><span class="line">a = Input_a;</span><br><span class="line">delete(findobj(get(Finter,<span class="string">'Children'</span>),<span class="string">'flat'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">%-Effects of causes (B and C matrices)</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line">uicontrol(Finter,<span class="string">'String'</span>,<span class="string">'done'</span>,<span class="string">'Position'</span>, [<span class="number">300</span> <span class="number">100</span> <span class="number">060</span> <span class="number">020</span>].*WS,...</span><br><span class="line">    <span class="string">'Callback'</span>, <span class="string">'uiresume(gcbf)'</span>);</span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>:nc</span><br><span class="line"></span><br><span class="line">    <span class="comment">%-Buttons and labels</span></span><br><span class="line">    <span class="comment">%----------------------------------------------------------------------</span></span><br><span class="line">    str   = sprintf(...</span><br><span class="line">        <span class="string">'Effects of %-12s on regions... and connections'</span>,...</span><br><span class="line">        U.name&#123;k&#125;);</span><br><span class="line">    spm_input(str,<span class="number">1</span>,<span class="string">'d'</span>);      <span class="comment">% Effects of JX           on regions... and connections</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">        h1(<span class="built_in">i</span>)  = uicontrol(Finter,<span class="string">'String'</span>,xY(<span class="built_in">i</span>).name,...</span><br><span class="line">            <span class="string">'Style'</span>,<span class="string">'text'</span>,...</span><br><span class="line">            <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">            <span class="string">'FontSize'</span>,<span class="number">10</span>,...</span><br><span class="line">            <span class="string">'Position'</span>,[<span class="number">080</span> <span class="number">350</span>-dx*<span class="built_in">i</span> <span class="number">080</span> <span class="number">020</span>].*WS);</span><br><span class="line">        h2(<span class="built_in">i</span>)  = uicontrol(Finter,...</span><br><span class="line">            <span class="string">'Position'</span>,[<span class="number">160</span> <span class="number">360</span>-dx*<span class="built_in">i</span> <span class="number">020</span> <span class="number">020</span>].*WS,...</span><br><span class="line">            <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">            <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:m</span><br><span class="line">            <span class="keyword">if</span> a(<span class="built_in">i</span>,<span class="built_in">j</span>) == <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">% Allow modulation of intrinsic connections</span></span><br><span class="line">                <span class="comment">%----------------------------------------------------------</span></span><br><span class="line">                h3(<span class="built_in">i</span>,<span class="built_in">j</span>) = uicontrol(Finter,...</span><br><span class="line">                    <span class="string">'Position'</span>,[<span class="number">220</span>+dx*<span class="built_in">j</span> <span class="number">360</span>-dx*<span class="built_in">i</span> <span class="number">020</span> <span class="number">020</span>].*WS,...</span><br><span class="line">                    <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">                    <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>);</span><br><span class="line">                set(h3(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'TooltipString'</span>, ...</span><br><span class="line">                    sprintf(<span class="string">'from %s to %s'</span>,xY(<span class="built_in">j</span>).name,xY(<span class="built_in">i</span>).name));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">%uiwait(Finter);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">%-Get c   灏辨槸宸﹁竟鐨勭涓?垪锛屼唬琛ㄨ緭鍏ュ姞鍦ㄩ偅涓剳鍖轰笂锛? * 1</span></span><br><span class="line">    <span class="comment">%----------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">%for i = 1:m</span></span><br><span class="line">        <span class="comment">%c(i,k)   = get(h2(i),'Value');</span></span><br><span class="line">    <span class="comment">%end</span></span><br><span class="line">	<span class="comment">%c = [1,0,0];</span></span><br><span class="line">    c = Input_c;</span><br><span class="line">    <span class="comment">%-Get b allowing any 2nd order effects   3*3 鐨勭煩闃碉紝浠ｈ〃璋冭妭鍙橀噺鍦ㄥ摢鏉＄嚎涓娿?杩欓噷鏈変笁涓尯鍩燂紝鎵?互鏄?*3</span></span><br><span class="line">    <span class="comment">%----------------------------------------------------------------------</span></span><br><span class="line">    <span class="comment">% for i = 1:m</span></span><br><span class="line">        <span class="comment">% for j = 1:m</span></span><br><span class="line">            <span class="comment">% if a(i,j)==1</span></span><br><span class="line">                <span class="comment">% b(i,j,k) = get(h3(i,j),'Value');</span></span><br><span class="line">            <span class="comment">% end</span></span><br><span class="line">        <span class="comment">% end</span></span><br><span class="line">    <span class="comment">% end</span></span><br><span class="line">	<span class="comment">%b = [0,0,0;0,0,0;0,0,0];</span></span><br><span class="line">    b = Input_b;</span><br><span class="line">    delete([h1(:); h2(:); h3(a==<span class="number">1</span>)])</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">delete(findobj(get(Finter,<span class="string">'Children'</span>),<span class="string">'flat'</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Effects of nonlinear modulations (D matrices)</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="keyword">if</span> options.nonlinear</span><br><span class="line">    uicontrol(Finter,<span class="string">'String'</span>,<span class="string">'done'</span>,<span class="string">'Position'</span>, [<span class="number">300</span> <span class="number">100</span> <span class="number">060</span> <span class="number">020</span>].*WS,...</span><br><span class="line">        <span class="string">'Callback'</span>, <span class="string">'uiresume(gcbf)'</span>);</span><br><span class="line">    <span class="keyword">for</span> k = <span class="number">1</span>:m</span><br><span class="line"></span><br><span class="line">        <span class="comment">%-Buttons and labels</span></span><br><span class="line">        <span class="comment">%------------------------------------------------------------------</span></span><br><span class="line">        str = sprintf(<span class="string">'Effects of %-12s activity on connections'</span>,xY(k).name);</span><br><span class="line">        spm_input(str,<span class="number">1</span>,<span class="string">'d'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:m</span><br><span class="line">                <span class="keyword">if</span> a(<span class="built_in">i</span>,<span class="built_in">j</span>)==<span class="number">1</span></span><br><span class="line"></span><br><span class="line">                    <span class="comment">% Allow modulation of intrinsic connections</span></span><br><span class="line">                    <span class="comment">%------------------------------------------------------</span></span><br><span class="line">                    h4(<span class="built_in">i</span>,<span class="built_in">j</span>) = uicontrol(Finter,...</span><br><span class="line">                        <span class="string">'Position'</span>,[<span class="number">220</span>+dx*<span class="built_in">j</span> <span class="number">360</span>-dx*<span class="built_in">i</span> <span class="number">020</span> <span class="number">020</span>].*WS,...</span><br><span class="line">                        <span class="string">'BackgroundColor'</span>,bcolor,...</span><br><span class="line">                        <span class="string">'Style'</span>,<span class="string">'radiobutton'</span>);</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">        uiwait(Finter);</span><br><span class="line"></span><br><span class="line">        <span class="comment">%-Get d allowing any 2nd order effects</span></span><br><span class="line">        <span class="comment">%------------------------------------------------------------------</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:m</span><br><span class="line">            <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:m</span><br><span class="line">                <span class="keyword">if</span> a(<span class="built_in">i</span>,<span class="built_in">j</span>)==<span class="number">1</span></span><br><span class="line">                    d(<span class="built_in">i</span>,<span class="built_in">j</span>,k) = get(h4(<span class="built_in">i</span>,<span class="built_in">j</span>),<span class="string">'Value'</span>);</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        delete(h4(a==<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">delete(findobj(get(Finter,<span class="string">'Children'</span>),<span class="string">'flat'</span>));</span><br><span class="line">spm_input(<span class="string">'Thank you'</span>,<span class="number">1</span>,<span class="string">'d'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% Response</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Response variables &amp; confounds (NB: the data have been whitened)</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">n     = <span class="built_in">length</span>(xY);                      <span class="comment">% number of regions</span></span><br><span class="line">v     = <span class="built_in">length</span>(xY(<span class="number">1</span>).u);                 <span class="comment">% number of time points</span></span><br><span class="line">Y.dt  = SPM.xY.RT;</span><br><span class="line">Y.X0  = xY(<span class="number">1</span>).X0;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n</span><br><span class="line">    Y.y(:,<span class="built_in">i</span>)  = xY(<span class="built_in">i</span>).u;</span><br><span class="line">    Y.name&#123;<span class="built_in">i</span>&#125; = xY(<span class="built_in">i</span>).name;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Error precision components (one for each region) - i.i.d. (because of W)</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">Y.Q        = spm_Ce(<span class="built_in">ones</span>(<span class="number">1</span>,n)*v);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"><span class="comment">% DCM structure</span></span><br><span class="line"><span class="comment">%==========================================================================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Endogenous input specification</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">isempty</span>(U)</span><br><span class="line">    U.u    = <span class="built_in">zeros</span>(v,<span class="number">1</span>);</span><br><span class="line">    U.name = &#123;<span class="string">'null'</span>&#125;;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%-Store all variables in DCM structure</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">DCM.a       = a;</span><br><span class="line">DCM.b       = b;</span><br><span class="line">DCM.c       = c;</span><br><span class="line">DCM.d       = d;</span><br><span class="line">DCM.U       = U;</span><br><span class="line">DCM.Y       = Y;</span><br><span class="line">DCM.xY      = xY;</span><br><span class="line">DCM.v       = v;</span><br><span class="line">DCM.n       = n;</span><br><span class="line">DCM.TE      = TE;</span><br><span class="line">DCM.delays  = delays;</span><br><span class="line">DCM.options = options;</span><br><span class="line"></span><br><span class="line"><span class="comment">%-Save</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line"><span class="keyword">if</span> spm_check_version(<span class="string">'matlab'</span>,<span class="string">'7'</span>) &gt;= <span class="number">0</span></span><br><span class="line">    save(fullfile(swd,[<span class="string">'DCM_'</span> name <span class="string">'.mat'</span>]),<span class="string">'-V6'</span>,<span class="string">'DCM'</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    save(fullfile(swd,[<span class="string">'DCM_'</span> name <span class="string">'.mat'</span>]),<span class="string">'DCM'</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="dcm模型的估计">DCM模型的估计</h2>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">% 估计DCM模型</span></span><br><span class="line">first_level_path = <span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\first_level_dcm_w_whole\';</span></span><br><span class="line"><span class="string">cd(first_level_path);</span></span><br><span class="line"><span class="string">dir_path = dir('</span><span class="number">2016</span>*<span class="string">');</span></span><br><span class="line"><span class="string">for i = 1: size(dir_path,1)</span></span><br><span class="line"><span class="string">    subject_path = [first_level_path,dir_path(i).name];</span></span><br><span class="line"><span class="string">    cd(subject_path);</span></span><br><span class="line"><span class="string">    dcm_models_path = dir('</span>DCM*<span class="string">');</span></span><br><span class="line"><span class="string">    for j = 1:size(dcm_models_path,1)</span></span><br><span class="line"><span class="string">       dcm_model_path =  [subject_path,'</span>\<span class="string">',dcm_models_path(j).name];</span></span><br><span class="line"><span class="string">       spm_dcm_estimate(dcm_model_path);</span></span><br><span class="line"><span class="string">    end</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>
+<h2 id="dcm模型的贝叶斯选择">DCM模型的贝叶斯选择</h2>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    XJVIEW的使用技巧
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">使用SPM做Second_Level分析</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

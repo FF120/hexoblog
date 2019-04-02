@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>算法专题_栈和队列 | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="ACM">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="栈是一种实现了后进先出的规则的数据结构。C++里面有实现stack.使用的时候include &amp;lt;stack&amp;gt;,支持的操作有push(),pop(),top();需要注意的是，pop的作用是弹出栈顶元素，而不会返回栈顶元素，实现返回栈顶元素并弹出的操作应该是int a = s.top(); s.pop();. 队列是一种先进先出的数据结构。C++里面有两种实现， 一种是普通的队列que">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_栈和队列">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="栈是一种实现了后进先出的规则的数据结构。C++里面有实现stack.使用的时候include &amp;lt;stack&amp;gt;,支持的操作有push(),pop(),top();需要注意的是，pop的作用是弹出栈顶元素，而不会返回栈顶元素，实现返回栈顶元素并弹出的操作应该是int a = s.top(); s.pop();. 队列是一种先进先出的数据结构。C++里面有两种实现， 一种是普通的队列que">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:54:56.806Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_栈和队列">
+<meta name="twitter:description" content="栈是一种实现了后进先出的规则的数据结构。C++里面有实现stack.使用的时候include &amp;lt;stack&amp;gt;,支持的操作有push(),pop(),top();需要注意的是，pop的作用是弹出栈顶元素，而不会返回栈顶元素，实现返回栈顶元素并弹出的操作应该是int a = s.top(); s.pop();. 队列是一种先进先出的数据结构。C++里面有两种实现， 一种是普通的队列que">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file active"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/数据结构和算法/算法专题_栈和队列" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/数据结构和算法/">数据结构和算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/ACM/">ACM</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">
+            <time datetime="2017-04-12T02:07:18.000Z" itemprop="datePublished">2017-04-12</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/数据结构和算法/算法专题_栈和队列.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/数据结构和算法/算法专题_栈和队列.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/数据结构和算法/算法专题_栈和队列.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法专题_栈和队列
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#有效的括号序列"><span class="toc-number">1.</span> <span class="toc-text">有效的括号序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逆波兰表达式求值"><span class="toc-number">2.</span> <span class="toc-text">逆波兰表达式求值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中缀表达式转换成后缀表达式"><span class="toc-number">3.</span> <span class="toc-text">中缀表达式转换成后缀表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#中缀表达式求值"><span class="toc-number">4.</span> <span class="toc-text">中缀表达式求值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表达树构造"><span class="toc-number">5.</span> <span class="toc-text">表达树构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简易的正则表达式解析"><span class="toc-number">6.</span> <span class="toc-text">简易的正则表达式解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带有getmin的栈"><span class="toc-number">7.</span> <span class="toc-text">带有getMin()的栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序列"><span class="toc-number">8.</span> <span class="toc-text">132序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用栈实现队列"><span class="toc-number">9.</span> <span class="toc-text">用栈实现队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用一个栈排序另外一个栈"><span class="toc-number">10.</span> <span class="toc-text">用一个栈排序另外一个栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈的压入弹出序列"><span class="toc-number">11.</span> <span class="toc-text">栈的压入、弹出序列</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>栈是一种实现了后进先出的规则的数据结构。C++里面有实现<code>stack</code>.使用的时候<code>include &lt;stack&gt;</code>,支持的操作有<code>push(),pop(),top()</code>;需要注意的是，<code>pop</code>的作用是弹出栈顶元素，而不会返回栈顶元素，实现返回栈顶元素并弹出的操作应该是<code>int a = s.top(); s.pop();</code>.</p>
+<p>队列是一种先进先出的数据结构。C++里面有两种实现， 一种是普通的队列<code>queue</code>,使用的时候<code>include&lt;queue&gt;</code>,支持的操作和栈类似，<code>push(),pop(),top()</code>分别实现数据的入队，出队和读取队列的头部元素。<code>deque</code>实现了双端队列，支持从两端入队和出队.使用的时候<code>include&lt;deque&gt;</code>。</p>
+<a id="more"></a>
+<h3 id="有效的括号序列">有效的括号序列</h3>
+<p><a href="http://lintcode.com/zh-cn/problem/valid-parentheses/" target="_blank" rel="noopener">有效的括号序列</a></p>
+<p>使用栈存储所有的左括号，一旦遇到右括号就与栈顶的元素比较，如果匹配，弹出栈顶元素，继续，如果不匹配，直接返回false.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isValidParentheses</span><span class="params">(<span class="built_in">string</span>&amp; s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 括号匹配问题</span></span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; cc;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">char</span>&gt; m;</span><br><span class="line">    m[<span class="string">'('</span>] = <span class="string">')'</span>;</span><br><span class="line">    m[<span class="string">'['</span>] = <span class="string">']'</span>;</span><br><span class="line">    m[<span class="string">'&#123;'</span>] = <span class="string">'&#125;'</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.size();++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">'('</span> || s[i] == <span class="string">'['</span>|| s[i]==<span class="string">'&#123;'</span>)&#123;</span><br><span class="line">            cc.push(s[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">')'</span> || s[i] == <span class="string">']'</span> || s[i] == <span class="string">'&#125;'</span>)&#123;</span><br><span class="line">            <span class="keyword">char</span> tmp = cc.top();</span><br><span class="line">            <span class="keyword">if</span>(m[tmp] != s[i])&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            cc.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cc.empty()) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="逆波兰表达式求值">逆波兰表达式求值</h3>
+<p>求逆波兰表达式的值。在逆波兰表达法中，其有效的运算符号包括 +, -, *, / 。每个运算对象可以是整数，也可以是另一个逆波兰计数表达。</p>
+<p><a href="http://lintcode.com/zh-cn/problem/evaluate-reverse-polish-notation/" target="_blank" rel="noopener">逆波兰表达式求值</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运算符只考虑了加减乘除</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">compute</span><span class="params">(T first, T second,<span class="built_in">string</span> op)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">"+"</span>) <span class="keyword">return</span> first + second;</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">"-"</span>) <span class="keyword">return</span> first - second;</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">"*"</span>) <span class="keyword">return</span> first * second;</span><br><span class="line">    <span class="keyword">if</span>(op == <span class="string">"/"</span> &amp;&amp; second != <span class="number">0</span>) <span class="keyword">return</span> first / second;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1000</span>; <span class="comment">// 说明输入的数据有问题</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;tokens)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span> &gt; s;</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; op = &#123;<span class="string">"+"</span>,<span class="string">"-"</span>,<span class="string">"*"</span>,<span class="string">"/"</span>&#125;; <span class="comment">// 都是双目运算符，处理逻辑是相同的</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>;i&lt;tokens.size();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(op.count(tokens[i]) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> first=<span class="number">0</span>,second=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(!s.empty())&#123; first = s.top() ; s.pop(); &#125;</span><br><span class="line">            <span class="keyword">if</span>(!s.empty())&#123; second = s.top() ; s.pop(); &#125;</span><br><span class="line">            s.push(compute(second,first,tokens[i]));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            s.push(stoi(tokens[i]));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="中缀表达式转换成后缀表达式">中缀表达式转换成后缀表达式</h3>
+<p>利用栈将中缀表达式转换成后缀表达式的步骤(逆波兰表达式)：</p>
+<ol style="list-style-type: decimal">
+<li>初始化栈cc为空用来存放运算符，初始化string s为空用来存储转换之后的逆波兰表达式；</li>
+<li>从头到尾扫描中缀表达式，遇到数字直接输出到s.</li>
+<li>遇到运算符，如果当前的栈cc为空，则直接入栈；如果遇到的是左括号，直接入栈；如果遇到的运算符的优先级低于栈顶的元素，直接入栈；</li>
+<li>如果遇到的运算符的优先级小于等于当前栈顶的元素，那么持续输出栈顶元素，直到栈顶元素的运算优先级小于当前元素 或者 栈为空 为止。循环退出后将当前运算符入栈。</li>
+<li>如果遇到的是右括号，持续输出栈顶元素，直到遇到左括号，左括号弹出，但不输出到s.</li>
+</ol>
+<p><a href="http://lintcode.com/zh-cn/problem/convert-expression-to-reverse-polish-notation/#" target="_blank" rel="noopener">将表达式转换为逆波兰表达式</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(<span class="built_in">string</span> &amp;s)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 1. 空字符串不是数字</span></span><br><span class="line">    <span class="keyword">if</span>(s.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(s.size() == <span class="number">1</span> &amp;&amp; s[<span class="number">0</span>] == <span class="string">'-'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>;i&lt;s.length();i++)&#123;</span><br><span class="line">        <span class="comment">// 2. 如果第二个字符及以后的不是0--9，不是数字，直接返回false</span></span><br><span class="line">        <span class="keyword">if</span>( (i&gt;<span class="number">0</span> &amp;&amp; (s[i]&lt;<span class="string">'0'</span>||s[i]&gt;<span class="string">'9'</span>)) ) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// 3. 如果第一个字符不是0--9，也不是-，则不是数字，直接返回false.</span></span><br><span class="line">        <span class="keyword">if</span>(i==<span class="number">0</span>&amp;&amp;(s[i]!=<span class="string">'-'</span>)&amp;&amp;(s[i]&lt;<span class="string">'0'</span>||s[i]&gt;<span class="string">'9'</span>) ) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; convertToRPN(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;expression) &#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; ans;</span><br><span class="line">    <span class="keyword">if</span>(expression.empty()) <span class="keyword">return</span> ans;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 操作符</span></span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="built_in">string</span>&gt; s;</span><br><span class="line">    <span class="comment">// 操作符的优先级</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; kv; </span><br><span class="line">    kv[<span class="string">"+"</span>] = <span class="number">3</span>; kv[<span class="string">"-"</span>] = <span class="number">3</span>; </span><br><span class="line">    kv[<span class="string">"*"</span>] = <span class="number">4</span>; kv[<span class="string">"/"</span>] = <span class="number">4</span>; </span><br><span class="line">    kv[<span class="string">"("</span>] = <span class="number">2</span>; kv[<span class="string">")"</span>] = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> i=<span class="number">0</span>;i&lt;expression.size();i++)&#123;</span><br><span class="line">        <span class="comment">// 1. 如果是数字，直接输出</span></span><br><span class="line">        <span class="keyword">if</span>(isNumber(expression[i]))&#123;</span><br><span class="line">            ans.push_back(expression[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2. 如果是符号+,-,*,/,(,),需要按照优先级顺序处理</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(kv[expression[i]] &gt;= <span class="number">2</span> &amp;&amp; kv[expression[i]] &lt;= <span class="number">6</span>)&#123;</span><br><span class="line">            <span class="comment">// 2.1 如果栈为空，或者是左括号，直接入栈</span></span><br><span class="line">            <span class="keyword">if</span>(s.empty() || kv[expression[i]]==<span class="number">2</span> )&#123;</span><br><span class="line">                s.push(expression[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 2.2 如果遇到的是右括号，持续输出栈中的元素，直到遇到左括号为止</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(kv[expression[i]] == <span class="number">6</span>)&#123;</span><br><span class="line">                <span class="keyword">while</span>(!s.empty() &amp;&amp; s.top() != <span class="string">"("</span>)&#123;</span><br><span class="line">                    ans.push_back(s.top()); s.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(!s.empty()) s.pop(); <span class="comment">// 弹出左括号</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 如果是+,-,*,/，就要比较和当前栈顶元素的优先级了，如果比栈顶运算符的优先级低，可以直接入栈，</span></span><br><span class="line">            <span class="comment">// 如果高，需要弹出栈顶元素，直到栈顶的运算符低于当前的运算符或者栈为空为止</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(kv[expression[i]]==<span class="number">3</span> || kv[expression[i]]==<span class="number">4</span>)&#123;</span><br><span class="line">                 <span class="comment">// 2.3 如果当前的运算符优先级高于栈顶的，直接入栈</span></span><br><span class="line">                 <span class="keyword">if</span>(kv[expression[i]] &gt; kv[s.top()])&#123;</span><br><span class="line">                     s.push(expression[i]);</span><br><span class="line">                 &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                     <span class="keyword">while</span>(!s.empty() &amp;&amp; kv[expression[i]] &lt;= kv[s.top()])&#123;</span><br><span class="line">                         ans.push_back(s.top()); s.pop();</span><br><span class="line">                     &#125;</span><br><span class="line">                     s.push(expression[i]);</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 把栈中的操作符输出</span></span><br><span class="line">    <span class="keyword">while</span>(!s.empty())&#123;</span><br><span class="line">        ans.push_back(s.top()); s.pop(); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="中缀表达式求值">中缀表达式求值</h3>
+<p>先转换成后缀表达式，再求值。</p>
+<p><a href="http://lintcode.com/zh-cn/problem/expression-evaluation/" target="_blank" rel="noopener">表达式求值</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">evaluateExpression</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; expression)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; r = convert(expression);</span><br><span class="line">    <span class="keyword">if</span>(r.empty()) <span class="keyword">return</span>  <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> evalRPN(r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="表达树构造">表达树构造</h3>
+<p>表达树是一个二叉树的结构，用于衡量特定的表达。所有表达树的叶子都有一个数字字符串值。而所有表达树的非叶子都有另一个操作字符串值。</p>
+<p>给定一个表达数组，请构造该表达的表达树，并返回该表达树的根。</p>
+<p><a href="http://lintcode.com/zh-cn/problem/expression-tree-build/#" target="_blank" rel="noopener">表达树构造</a></p>
+<p>思路： 可以利用以前做过的题目，将本题分解成几个子问题。通过分析我们发现，中缀表达式是表达树的中序遍历，后缀表达式是表达树的后序遍历，通过中缀表达式我们可以得到后缀表达式，这个在之前已经做过。而通过二叉树的中序遍历序列和后序遍历序列也可以很容易的重建出该二叉树。所以该问题分解为这样几个子问题：</p>
+<ol style="list-style-type: decimal">
+<li>求后缀表达式</li>
+<li>根据中序遍历和后序遍历序列重建二叉树</li>
+</ol>
+<p>需要注意的是，本题中以数字和运算符作为节点的值，这并不能保证节点值的唯一，而重建二叉树的时候要求节点值唯一。这里我们采用定义新结构的方法使得每个节点都是唯一的。具体见代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">uniqueNode</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> description;</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">    uniqueNode():description(<span class="string">""</span>), id(<span class="number">0</span>)&#123;&#125;</span><br><span class="line">    uniqueNode(<span class="built_in">string</span> s, <span class="keyword">int</span> i) : description(s), id(i)&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Definition of ExpressionTreeNode:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExpressionTreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">string</span> symbol;</span><br><span class="line">    ExpressionTreeNode *left, *right;</span><br><span class="line">    ExpressionTreeNode(<span class="built_in">string</span> symbol) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;symbol = symbol;</span><br><span class="line">        <span class="keyword">this</span>-&gt;left = <span class="keyword">this</span>-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//后序遍历和中序遍历重建二叉树</span></span><br><span class="line"><span class="function">ExpressionTreeNode* <span class="title">buildTree</span><span class="params">(<span class="built_in">vector</span>&lt;uniqueNode&gt;&amp; inorder, <span class="built_in">vector</span>&lt;uniqueNode&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (inorder.empty() || postorder.empty()) &#123; <span class="keyword">return</span> <span class="literal">nullptr</span>; &#125;</span><br><span class="line">    ExpressionTreeNode *node = <span class="keyword">new</span> ExpressionTreeNode(postorder[postorder.size()<span class="number">-1</span>].description);<span class="comment">// 先建立根节点</span></span><br><span class="line">    <span class="keyword">int</span> len = inorder.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; inorder.size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (inorder[i].id == postorder[postorder.size()<span class="number">-1</span>].id) &#123;</span><br><span class="line">            <span class="comment">// 找到了中序遍历的根节点，则左面的全部是左子树，右面的全部是右子树。</span></span><br><span class="line">            <span class="built_in">vector</span>&lt;uniqueNode&gt; left_post(i);</span><br><span class="line">            <span class="built_in">vector</span>&lt;uniqueNode&gt; left_vin(i);</span><br><span class="line">            <span class="built_in">vector</span>&lt;uniqueNode&gt; right_post(len - <span class="number">1</span> - i);</span><br><span class="line">            <span class="built_in">vector</span>&lt;uniqueNode&gt; right_vin(len - <span class="number">1</span> - i);</span><br><span class="line">            copy(inorder.begin(), inorder.begin() + i, left_vin.begin());</span><br><span class="line">            copy(inorder.begin() + i + <span class="number">1</span>, inorder.end(), right_vin.begin());</span><br><span class="line">            copy(postorder.begin(), postorder.begin() + i, left_post.begin());</span><br><span class="line">            copy(postorder.begin() + i, postorder.end()<span class="number">-1</span>, right_post.begin());</span><br><span class="line">            node-&gt;left = buildTree(left_vin,left_post);</span><br><span class="line">            node-&gt;right = buildTree(right_vin,right_post);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">isnumber</span><span class="params">(<span class="built_in">string</span> &amp;s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> a : s)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a &gt; <span class="string">'9'</span> || a &lt; <span class="string">'0'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 中缀表达式 -&gt; 后缀表达式</span></span><br><span class="line"><span class="comment"> * @param expression</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">vector</span>&lt;uniqueNode&gt; convert(<span class="built_in">vector</span>&lt;uniqueNode&gt; expression) &#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;uniqueNode&gt; re;</span><br><span class="line">    <span class="built_in">stack</span>&lt;uniqueNode&gt; cc;</span><br><span class="line">    <span class="comment">// 设置运算符的优先级</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; p;</span><br><span class="line">    p[<span class="string">"+"</span>] = <span class="number">3</span>;</span><br><span class="line">    p[<span class="string">"-"</span>] = <span class="number">3</span>;</span><br><span class="line">    p[<span class="string">"*"</span>] = <span class="number">4</span>;</span><br><span class="line">    p[<span class="string">"/"</span>] = <span class="number">4</span>;</span><br><span class="line">    p[<span class="string">"("</span>] = <span class="number">2</span>;</span><br><span class="line">    p[<span class="string">")"</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; expression.size();i++)&#123;</span><br><span class="line">        <span class="comment">// 遇到数字直接入栈</span></span><br><span class="line">        <span class="keyword">if</span>(isnumber(expression[i].description))&#123;</span><br><span class="line">            re.push_back(expression[i]);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 遇到操作符</span></span><br><span class="line">        <span class="keyword">if</span>(p[expression[i].description] &gt;= <span class="number">1</span> &amp;&amp; p[expression[i].description] &lt;= <span class="number">4</span>)&#123;</span><br><span class="line">            <span class="comment">//栈为空或者遇到左括号，直接入栈</span></span><br><span class="line">            <span class="keyword">if</span>(cc.empty() || p[expression[i].description] == <span class="number">2</span> || p[expression[i].description] &gt; p[cc.top().description])&#123;</span><br><span class="line">                cc.push(expression[i]);</span><br><span class="line">            &#125;</span><br><span class="line">                <span class="comment">//遇到右括号，弹出栈中左括号之前的所有运算符号，输出，最后左括号弹出，不输出</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p[expression[i].description] == <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">while</span>(cc.top().description != <span class="string">"("</span>)&#123;</span><br><span class="line">                    <span class="keyword">auto</span> tmp = cc.top();</span><br><span class="line">                    re.push_back(tmp);</span><br><span class="line">                    cc.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                cc.pop(); <span class="comment">// 弹出左括号</span></span><br><span class="line">            &#125;</span><br><span class="line">                <span class="comment">//当前运算符的优先级小于等于栈顶运算符的优先级，应该先计算栈顶的运算符，所以弹出栈顶的运算符，输出，把当前的运算符入栈</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p[expression[i].description] &lt;= p[cc.top().description])&#123;</span><br><span class="line">                <span class="comment">// 弹出栈中优先级高于当前运算符的运算符</span></span><br><span class="line">                <span class="keyword">while</span>(!cc.empty() &amp;&amp; p[expression[i].description] &lt;= p[cc.top().description])&#123;</span><br><span class="line">                    re.push_back(cc.top());</span><br><span class="line">                    cc.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 当栈为空 或者 遇到运算符的运算顺序低于当前运算符的时候，循环退出</span></span><br><span class="line">                cc.push(expression[i]);</span><br><span class="line">                <span class="comment">//当前运算符的优先级大于栈顶运算符的优先级，直接入栈</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"error 1."</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!cc.empty())&#123;</span><br><span class="line">        re.push_back(cc.top());</span><br><span class="line">        cc.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ExpressionTreeNode* <span class="title">build</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;expression)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;uniqueNode&gt; v;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; expression.size(); ++i) &#123;</span><br><span class="line">        v.push_back(uniqueNode(expression[i],i+<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">auto</span> last = convert(v);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; v.size(); ++j) &#123;</span><br><span class="line">        <span class="keyword">if</span>(v[j].description == <span class="string">"("</span> || v[j].description == <span class="string">")"</span>)&#123;</span><br><span class="line">            v.erase(v.begin()+j);</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">auto</span> head = buildTree(v,last);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表达树的特殊结构决定了我们只根据后缀表达式也能构造出来一棵表达树(注意：只根据后序遍历序列是不能构造一棵二叉树的，因为答案不唯一。)，具体的做法是模拟后缀表达式的计算顺序。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Definition of ExpressionTreeNode:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExpressionTreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">string</span> symbol;</span><br><span class="line">    ExpressionTreeNode *left, *right;</span><br><span class="line">    ExpressionTreeNode(<span class="built_in">string</span> symbol) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;symbol = symbol;</span><br><span class="line">        <span class="keyword">this</span>-&gt;left = <span class="keyword">this</span>-&gt;right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isnumber</span><span class="params">(<span class="built_in">string</span> &amp;s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i] &lt; <span class="string">'0'</span> || s[i] &gt; <span class="string">'9'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isoperator</span><span class="params">(<span class="built_in">string</span> &amp;s)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s == <span class="string">"+"</span> || s == <span class="string">"-"</span> || s == <span class="string">"*"</span> || s == <span class="string">"/"</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; convert(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; expression) &#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; re;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="built_in">string</span>&gt; cc;</span><br><span class="line">    <span class="comment">// 设置运算符的优先级</span></span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; p;</span><br><span class="line">    p[<span class="string">"+"</span>] = <span class="number">3</span>;</span><br><span class="line">    p[<span class="string">"-"</span>] = <span class="number">3</span>;</span><br><span class="line">    p[<span class="string">"*"</span>] = <span class="number">4</span>;</span><br><span class="line">    p[<span class="string">"/"</span>] = <span class="number">4</span>;</span><br><span class="line">    p[<span class="string">"("</span>] = <span class="number">2</span>;</span><br><span class="line">    p[<span class="string">")"</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt; expression.size();i++)&#123;</span><br><span class="line">        <span class="comment">// 遇到数字直接入栈</span></span><br><span class="line">        <span class="keyword">if</span>(isnumber(expression[i]))&#123;</span><br><span class="line">            re.push_back(expression[i]);</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 遇到操作符</span></span><br><span class="line">        <span class="keyword">if</span>(p[expression[i]] &gt;= <span class="number">1</span> &amp;&amp; p[expression[i]] &lt;= <span class="number">4</span>)&#123;</span><br><span class="line">            <span class="comment">//栈为空或者遇到左括号，直接入栈</span></span><br><span class="line">            <span class="keyword">if</span>(cc.empty() || p[expression[i]] == <span class="number">2</span> || p[expression[i]] &gt; p[cc.top()])&#123;</span><br><span class="line">                cc.push(expression[i]);</span><br><span class="line">            &#125;</span><br><span class="line">                <span class="comment">//遇到右括号，弹出栈中左括号之前的所有运算符号，输出，最后左括号弹出，不输出</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p[expression[i]] == <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">while</span>(cc.top() != <span class="string">"("</span>)&#123;</span><br><span class="line">                    <span class="built_in">string</span> tmp = cc.top();</span><br><span class="line">                    re.push_back(tmp);</span><br><span class="line">                    cc.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                cc.pop(); <span class="comment">// 弹出左括号</span></span><br><span class="line">            &#125;</span><br><span class="line">                <span class="comment">//当前运算符的优先级小于等于栈顶运算符的优先级，应该先计算栈顶的运算符，所以弹出栈顶的运算符，输出，把当前的运算符入栈</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(p[expression[i]] &lt;= p[cc.top()])&#123;</span><br><span class="line">                <span class="comment">// 弹出栈中优先级高于当前运算符的运算符</span></span><br><span class="line">                <span class="keyword">while</span>(!cc.empty() &amp;&amp; p[expression[i]] &lt;= p[cc.top()])&#123;</span><br><span class="line">                    re.push_back(cc.top());</span><br><span class="line">                    cc.pop();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 当栈为空 或者 遇到运算符的运算顺序低于当前运算符的时候，循环退出</span></span><br><span class="line">                cc.push(expression[i]);</span><br><span class="line">                <span class="comment">//当前运算符的优先级大于栈顶运算符的优先级，直接入栈</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"error 1."</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(!cc.empty())&#123;</span><br><span class="line">        re.push_back(cc.top());</span><br><span class="line">        cc.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ExpressionTreeNode* <span class="title">build</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;expression)</span> </span>&#123;</span><br><span class="line">    expression = convert(expression);</span><br><span class="line">    <span class="keyword">if</span>(expression.empty())</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="built_in">stack</span>&lt;ExpressionTreeNode*&gt; cc;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; expression.size(); ++i) &#123;</span><br><span class="line">        <span class="keyword">if</span>(isnumber(expression[i]))&#123;</span><br><span class="line">            ExpressionTreeNode *node = <span class="keyword">new</span> ExpressionTreeNode(expression[i]);</span><br><span class="line">            cc.push(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(isoperator(expression[i]))&#123;</span><br><span class="line">            ExpressionTreeNode *node = <span class="keyword">new</span> ExpressionTreeNode(expression[i]);</span><br><span class="line">            ExpressionTreeNode *right = cc.top();</span><br><span class="line">            cc.pop();</span><br><span class="line">            ExpressionTreeNode *left = cc.top();</span><br><span class="line">            cc.pop();</span><br><span class="line">            node-&gt;left = left;</span><br><span class="line">            node-&gt;right = right;</span><br><span class="line">            cc.push(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cc.top();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="简易的正则表达式解析">简易的正则表达式解析</h3>
+<blockquote>
+<ul>
+<li>s = abc3[a], return abcaaa</li>
+<li>s = 3[abc], return abcabcabc</li>
+<li>s = 4[ac]dy, return acacacacdy</li>
+<li>s = 3[2[ad]3[pf]]xyz, return adadpfpfpfadadpfpfpfadadpfpfpfxyz</li>
+</ul>
+</blockquote>
+<p><a href="http://lintcode.com/zh-cn/problem/expression-expand/" target="_blank" rel="noopener">Expression Expand</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">expressionExpand</span><span class="params">(<span class="built_in">string</span>&amp; s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> finished = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); ++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i]  == <span class="string">'['</span> || s[i] == <span class="string">']'</span>)&#123;</span><br><span class="line">            finished = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(finished) <span class="keyword">return</span> s;</span><br><span class="line">    <span class="keyword">int</span> left, right,pre_left;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">'['</span>)&#123;</span><br><span class="line">            left = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="string">']'</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = left<span class="number">-1</span>; j &gt;= <span class="number">0</span>;--j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(s[j]&gt;=<span class="string">'0'</span> &amp;&amp; s[j]&lt;=<span class="string">'9'</span>)&#123;</span><br><span class="line">                    pre_left = j;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">string</span> num = s.substr(pre_left,left-pre_left);</span><br><span class="line">            <span class="keyword">int</span> count = stoi(num);</span><br><span class="line">            <span class="built_in">string</span> cycle = s.substr(left+<span class="number">1</span>,i-left<span class="number">-1</span>);</span><br><span class="line">            <span class="built_in">string</span> cycle_with_count = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">while</span>(count--)&#123;</span><br><span class="line">                cycle_with_count += cycle;</span><br><span class="line">            &#125;</span><br><span class="line">            s.erase(pre_left,i-pre_left+<span class="number">1</span>);</span><br><span class="line">            s.insert(pre_left,cycle_with_count);</span><br><span class="line">            <span class="keyword">return</span> expressionExpand(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> expressionExpand(s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="带有getmin的栈">带有getMin()的栈</h3>
+<p>实现一个可以在O(1)时间内得到最小值的栈结构。支持<code>pop(),push(),top(),getMin()</code>四种操作。</p>
+<p><a href="http://lintcode.com/zh-cn/problem/min-stack/" target="_blank" rel="noopener">带最小值操作的栈</a></p>
+<p><strong>思路</strong> 使用两个栈来模拟这个栈，一个栈用来保存实际的数据，一个栈用来保存对应数据的最小值。每次入栈和出栈操作的时候，判断最小值有没有发生变化，如果没有发生变化，直接弹出数据，如果发生了变化，更新存储最大值最小值的栈。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StackWithGetMin2</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; data;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; min_data;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">        data.push(val);</span><br><span class="line">        <span class="keyword">if</span>(!min_data.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(min_data.top()&gt;=val)&#123;</span><br><span class="line">                min_data.push(val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">           min_data.push(val);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> v = data.top();</span><br><span class="line">        <span class="keyword">if</span>(v &gt; min_data.top())&#123;</span><br><span class="line">            data.pop();</span><br><span class="line">            <span class="keyword">return</span> v;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            data.pop();</span><br><span class="line">            min_data.pop();</span><br><span class="line">            <span class="keyword">return</span> v;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(min_data.empty)&#123;<span class="keyword">throw</span> <span class="keyword">new</span> exception;&#125;</span><br><span class="line">      <span class="keyword">else</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> min_data.top();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="序列">132序列</h3>
+<p>Given a sequence of n integers a1, a2, …, an, a 132 pattern is a subsequence ai, aj, ak such that i &lt; j &lt; k and ai &lt; ak &lt; aj. Design an algorithm that takes a list of n numbers as input and checks whether there is a 132 pattern in the list.</p>
+<p>n will be less than 20,000.</p>
+<p><a href="http://lintcode.com/zh-cn/problem/132-pattern/#" target="_blank" rel="noopener">pattern</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">find132pattern</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> third = INT32_MIN;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] &lt; third) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">while</span> (!s.empty() &amp;&amp; nums[i] &gt; s.top()) &#123;</span><br><span class="line">                third = s.top(); s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        s.push(nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="用栈实现队列">用栈实现队列</h3>
+<p><a href="">用栈实现队列</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stack1;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; stack2;</span><br><span class="line"></span><br><span class="line">    MyQueue() &#123;</span><br><span class="line">        <span class="comment">// do intialization if necessary</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> element)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        stack1.push(element);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">if</span>(stack2.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack1.empty())&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(!stack1.empty())&#123;</span><br><span class="line">                <span class="keyword">int</span> a = stack1.top();</span><br><span class="line">                stack1.pop();</span><br><span class="line">                stack2.push(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> a = stack2.top();</span><br><span class="line">        stack2.pop();</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">if</span>(stack2.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack1.empty())&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span>(!stack1.empty())&#123;</span><br><span class="line">                <span class="keyword">int</span> a = stack1.top();</span><br><span class="line">                stack1.pop();</span><br><span class="line">                stack2.push(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> a = stack2.top();</span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="用一个栈排序另外一个栈">用一个栈排序另外一个栈</h3>
+<p>要求排序好的数据就在原来的栈里面。</p>
+<p><strong>思路</strong> 设存放数据的栈是<code>s</code>, 辅助排序的栈是<code>help</code>,一个临时变量<code>v</code>用来暂存从栈里面出来的数据。我们只要确保把<code>s</code>中的数有序的入栈<code>help</code>,然后在反向从<code>help</code>压入<code>s</code>就能得到需要的结果。如果要求从大到小排序，即<code>s</code>栈顶的元素是最大的，那么<code>help</code>中就应该是从小到大排序,栈顶的元素是最小的。每次从<code>s</code>向<code>help</code>移动数据的时候，都要和<code>help</code>的栈顶比较，如果小于栈顶的元素，直接入栈，如果大于栈顶的元素，把栈顶元素入栈到<code>s</code>,直到<code>v</code>中的数小于<code>help</code>的栈顶元素，才将<code>v</code>入栈到<code>help</code>,其实这有点向汉诺塔问题，循环利用两个栈做中转，只不过更加简单。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sortStack</span><span class="params">(<span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s)</span></span>&#123;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; help;</span><br><span class="line">    help.push( s.top() );</span><br><span class="line">    s.pop();</span><br><span class="line">    <span class="keyword">auto</span> v = s.top();</span><br><span class="line">    <span class="keyword">if</span>(help.top()&gt;v)&#123;</span><br><span class="line">        help.push(v);</span><br><span class="line">        s.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(help.top()&lt;=v)&#123;</span><br><span class="line">            <span class="keyword">auto</span> temp = help.top();</span><br><span class="line">            help.pop();</span><br><span class="line">            s.push(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        help.push(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="栈的压入弹出序列">栈的压入、弹出序列</h3>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列<code>1,2,3,4,5</code>是某栈的压入顺序，序列<code>4,5,3,2,1</code>是该压栈序列对应的一个弹出序列,<code>4,3,5,1,2</code>就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<p><strong>思路</strong> 设压入序列是<code>pushV</code>,弹出序列是<code>popV</code>,从<code>pushV</code>中找到第一个和<code>popV</code>首元素相同的元素，假设是<code>a</code>,可以知道<code>a</code>必定是压入栈之后就被弹出来了。假设用一个临时的栈<code>s1</code>保<code>a</code>之前入栈的元素和<code>a</code>,那么此时<code>popV</code>和<code>s1</code>的栈顶元素应该是一致的。 接下来，遍历<code>popV</code>中的元素，与<code>s1</code>中的元素比较，如果相等，弹出该元素,<code>popV</code>的指针加1,继续下一次比较.如果不相等,就把<code>pushV</code>中<code>a</code>后面的元素继续入栈到<code>s1</code>,<code>popV</code>的指针不动，继续比较<code>popV</code>和当前<code>s1</code>的栈顶元素是不是相等。按照这样的规则处理，直到指针走到尽头，看<code>s1</code>中的元素是否非空，如果是空的，<code>popV</code>就是<code>pushV</code>的弹出序列。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsPopOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pushV,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; popV)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(pushV.size() != popV.size()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s1;</span><br><span class="line">       <span class="comment">//找到第一个相同的元素</span></span><br><span class="line">       <span class="keyword">size_t</span> i = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">while</span>(pushV[i] != popV[<span class="number">0</span>] &amp;&amp; i&lt;pushV.size())&#123;</span><br><span class="line">           s1.push(pushV[i]);</span><br><span class="line">           i++;</span><br><span class="line">       &#125;</span><br><span class="line">       s1.push(pushV[i]); <span class="comment">//此时是s1栈顶和popV的第一个元素相同；</span></span><br><span class="line">       i++;<span class="comment">//i指向下一元素；</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">size_t</span> j=<span class="number">0</span>;j&lt;=popV.size();j++)&#123;</span><br><span class="line">           <span class="keyword">if</span>( j&lt;popV.size() &amp;&amp; popV[j] == s1.top() )&#123;</span><br><span class="line">              s1.pop();</span><br><span class="line">           &#125;<span class="keyword">else</span> <span class="keyword">if</span>(i&lt;pushV.size())&#123;</span><br><span class="line">               s1.push(pushV[i]);</span><br><span class="line">               j--;</span><br><span class="line">               i++;</span><br><span class="line">           &#125;<span class="keyword">else</span> <span class="keyword">if</span>( j== popV.size() &amp;&amp; s1.empty())&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    Hexo的使用05-Atom编辑器
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">本地代码集锦</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

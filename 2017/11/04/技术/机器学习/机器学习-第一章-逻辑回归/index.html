@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>机器学习-第一章-逻辑回归 | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="ML">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="【逻辑回归】">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习-第一章-逻辑回归">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="【逻辑回归】">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/softmax.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/hox.png">
+<meta property="og:image" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/hox2.png">
+<meta property="og:updated_time" content="2019-03-28T00:54:57.537Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习-第一章-逻辑回归">
+<meta name="twitter:description" content="【逻辑回归】">
+<meta name="twitter:image" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/softmax.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file active"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/机器学习/机器学习-第一章-逻辑回归" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/机器学习/">机器学习</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/ML/">ML</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">
+            <time datetime="2017-11-04T01:04:05.000Z" itemprop="datePublished">2017-11-04</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/机器学习/机器学习-第一章-逻辑回归.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/机器学习/机器学习-第一章-逻辑回归.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/机器学习/机器学习-第一章-逻辑回归.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            机器学习-第一章-逻辑回归
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">1.</span> <span class="toc-text">模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#策略"><span class="toc-number">2.</span> <span class="toc-text">策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法"><span class="toc-number">3.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降法"><span class="toc-number">3.1.</span> <span class="toc-text">梯度下降法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#梯度下降法算法调优"><span class="toc-number">3.2.</span> <span class="toc-text">梯度下降法算法调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#牛顿法"><span class="toc-number">3.3.</span> <span class="toc-text">牛顿法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拟牛顿法"><span class="toc-number">3.4.</span> <span class="toc-text">拟牛顿法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对模型的理解"><span class="toc-number">4.</span> <span class="toc-text">对模型的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写算法python"><span class="toc-number">5.</span> <span class="toc-text">编写算法（Python）</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>【逻辑回归】</p>
+<a id="more"></a>
+<h2 id="模型">模型</h2>
+<p>令 <span class="math inline">\(\theta = (w_1,w_2,...,w_n,b)\)</span>, <span class="math inline">\(x = (x_1,x_2,...,x_n,1)\)</span>,则有： <span class="math display">\[
+\theta^T \cdot x = w_1x_1+x_2x_2+...+w_nx_n+b
+\]</span></p>
+<p>逻辑回归要训练得到的函数模型是：</p>
+<p><span class="math display">\[
+h_\theta(x) = f(\theta^T \cdot x)
+\]</span></p>
+<p>其中<code>f</code>是下面的函数：</p>
+<p><span class="math display">\[
+f(z) = \frac 1 {1+e^{-z}}
+\]</span></p>
+<p>函数<code>f</code>的图像如下图所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Plot[<span class="number">1.0</span> / (<span class="number">1</span> + E^(-x)), &#123;x, <span class="number">-10</span>, <span class="number">10</span>&#125;]</span><br></pre></td></tr></table></figure>
+<div class="figure">
+<img src="softmax.png" alt="f(z)">
+<p class="caption">f(z)</p>
+</div>
+<p><span class="math inline">\(h_\theta(x)\)</span> 的结果是<code>(0,1)</code>，含义是类别为正类别的概率; <span class="math inline">\(\theta\)</span>的含义是模型的参数.</p>
+<p>算法的目标是在已知<span class="math inline">\((x_1,x_2,...x_n)\)</span> 和对应的 <span class="math inline">\(y\)</span> 的若干个样本的情况下，求解出<span class="math inline">\((w_1,w_2,...,w_n,b)\)</span>这些参数，使得损失函数最小。</p>
+<blockquote>
+<p>Wolfram Mathematica 是一个专业的科学计算软件，使用它可以非常方便的绘制出函数的图形。<code>Plot[1.0 / (1 + E^(-x)), {x, -10, 10}]</code>就是绘制出上面的函数图形的命令。</p>
+</blockquote>
+<h2 id="策略">策略</h2>
+<p>逻辑回归使用的损失函数是：</p>
+<p><span class="math display">\[
+cost(h_\theta(x),y) = \begin{cases}
+                      -log(h_\theta(x)) &amp; \text{if y = 1} \\
+                      -log(1-h_\theta(x)) &amp;  \text{if y = 0}
+                      \end{cases}
+\]</span></p>
+<p>其中，<span class="math inline">\(h_\theta(x)\)</span>就是模型预测的结果，<span class="math inline">\(y\)</span>是实际的标签，取值是<span class="math inline">\(0，1\)</span>.</p>
+<p>当<span class="math inline">\(y=1\)</span>时，<span class="math inline">\(h_\theta(x)\)</span>接近1的时候，损失函数<span class="math inline">\(-log(h_\theta(x))\)</span>接近0，而当<span class="math inline">\(h_\theta(x)\)</span>接近0的时候，损失函数是接近正无穷的。其对应的关系如下图所示：</p>
+<div class="figure">
+<img src="hox.png">
+
+</div>
+<p>当<span class="math inline">\(y = 0\)</span>时，<span class="math inline">\(h_\theta(x)\)</span>接近0的时候，损失函数<span class="math inline">\(-log(1-h_\theta(x))\)</span>接近0，而当<span class="math inline">\(h_\theta(x)\)</span>接近1的时候，损失函数<span class="math inline">\(-log(1-h_\theta(x))\)</span>接近正无穷。其对应的关系如下图所示：</p>
+<div class="figure">
+<img src="hox2.png">
+
+</div>
+<p>分段函数不利于表达，把上面的<code>cost</code>函数写成统一的格式如下：</p>
+<p><span class="math display">\[
+cost(h_\theta(x),y) = - ( y \times log(h_\theta(x))  +  (1-y) \times log(1-h_\theta(x)) )
+\]</span></p>
+<p>对于一个有<code>m</code>个样本的训练集，训练集上的损失为：</p>
+<p><span class="math display">\[
+J(\theta) = - \frac 1 m \sum_{i=1}^{m} (y^{(i)} \times log(h_\theta(x^{(i)})) + (1-y^{(i)}) \times log(1-h_\theta(x^{(i)})))
+\]</span></p>
+<p>其中，<span class="math inline">\(i\)</span>表示训练集中的第<span class="math inline">\(i\)</span>个样本，<span class="math inline">\(x\)</span>表示特征向量<span class="math inline">\((x_1,x_2,...,x_n,x_{n+1})\)</span>, <span class="math inline">\(y\)</span> 表示实际的标签，取值<span class="math inline">\(0,1\)</span>。</p>
+<h2 id="算法">算法</h2>
+<p>找到一种算法，在已经知道<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>的情况下，求解出能够使得<span class="math inline">\(J(\theta)\)</span>最小的<span class="math inline">\(\theta\)</span>的值，具体的就是<span class="math inline">\((w_1,w_2,...,w_n,b)\)</span>的值。</p>
+<h3 id="梯度下降法">梯度下降法</h3>
+<p><strong>梯度</strong>， 函数对每一个参数求偏导数，偏导数组合成向量，向量的方向就是梯度的方向，函数在梯度的方向上升最快，在梯度的反方向下降最快。</p>
+<p>使用梯度下降法求解参数的步骤：</p>
+<ol style="list-style-type: decimal">
+<li>初始化参数。</li>
+</ol>
+<p>首先给参数一个初始值<span class="math inline">\(\theta = \theta^0\)</span>, 定义一个步长<span class="math inline">\(\alpha\)</span>,就是每次要在梯度的方向上移动的距离; 定义一个终止条件<span class="math inline">\(\epsilon\)</span>，确定算法在什么条件下终止。（一般是看参数更新前后两者的差值，小于某一个很小的数字，就可以结束算法）</p>
+<ol start="2" style="list-style-type: decimal">
+<li>计算梯度：</li>
+</ol>
+<p><span class="math display">\[
+\frac \partial {\partial\theta_j} J(\theta_1,\theta_2,...,\theta_{n+1})) = \frac 1 m   \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})x
+\]</span></p>
+<p>其中，<span class="math inline">\(j \in (1,n+1)\)</span> 表示第<code>j</code>个参数， <span class="math inline">\(i \in (1,m)\)</span> 表示第<code>m</code>个样本。</p>
+<blockquote>
+<p>这里涉及到函数的求导，先来复习一下函数的链式求导法则： <span class="math display">\[
+\frac {dx} {dy} = \frac {dx} {dz} \times \frac {dz} {dy}
+\]</span> 举个例子： sigmoid 函数的导数是： <span class="math display">\[
+y = f(z) = \frac 1 {1 + e^{-z}}
+\]</span> 它的导数可以很容易的求出来，还可以把它表示成y的乘积的形式。 <span class="math display">\[
+\frac {dy} {dz} = \frac {e^{-z}} {1+e^{-z}} = y(1-y)
+\]</span></p>
+</blockquote>
+<p>现在来求损失函数的对每一个参数<span class="math inline">\(\theta_i\)</span>的导数：</p>
+<p><span class="math display">\[
+\frac {\partial cos(h_\theta,y)} {\partial \theta} = (h_\theta(x) - y) \cdot x
+\]</span></p>
+<p>假设一共有<code>m</code>个训练样本,<span class="math inline">\(i \in (1,m)\)</span>, 一共有<code>n+1</code>个参数，<span class="math inline">\(j \in (1,n+1)\)</span>, 则每个参数的导数如下：</p>
+<p><span class="math display">\[
+\frac {\partial cos(h_\theta(x),y)}  {\theta_j}   =  \frac 1 m   \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}))  x_j^{(i)}
+\]</span></p>
+<p>根据上面的公式，初始化<span class="math inline">\(\theta^0\)</span>之后，可以利用整个训练集的数据<span class="math inline">\((x^{(i)},y^{(i)}),i \in (1,m)\)</span>, 计算出一个梯度向量<span class="math inline">\((\Delta \theta_1,\Delta \theta_2,...,\Delta \theta_{n+1})\)</span>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>更新参数</li>
+</ol>
+<p><span class="math display">\[
+\theta^{i+1} = \theta^i + \alpha \Delta \theta^i
+\]</span></p>
+<p>其中，<span class="math inline">\(\theta^i\)</span>表示第<span class="math inline">\(i\)</span>次迭代的时候的参数取值，<span class="math inline">\(\Delta \theta^i\)</span>表示第二步计算出来的梯度，<span class="math inline">\(\alpha\)</span>表示 <strong>学习率</strong>，是控制梯度下降的每步大小的一个超参数，需要自己设置。</p>
+<ol start="4" style="list-style-type: decimal">
+<li>比较更新前后的参数的变化</li>
+</ol>
+<p><span class="math display">\[
+\epsilon = \sum_{i=1}^{n+1} ( \theta^{i+1} - \theta^{i} )
+\]</span></p>
+<p>如果<span class="math inline">\(\epsilon\)</span>的值小于预先确定的结束条件，算法结束，最后的<span class="math inline">\(\theta\)</span>就是要求解的参数，如果<span class="math inline">\(\epsilon\)</span>大于结束条件，则转到第三步继续迭代，直到满足结束条件为止。</p>
+<blockquote>
+<p>梯度下降的几种策略： 上面的例子中，每一次参数的更新，我们是使用训练集中的所有样本计算的梯度，这样做每次计算出来的梯度比较准确，但是当训练集合非常大的时候，每次的计算开销就很大。 <span class="math display">\[
+\frac {\partial cos(h_\theta(x),y)}  {\theta_j}   =  \frac 1 m   \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}))  x_j^{(i)}
+\]</span> 可以看出，求解的方法是每个样本计算出一个梯度，然后求和取平均值作为最后的梯度。</p>
+<p><strong>随机梯度下降法</strong></p>
+<p>随机梯度下降法就是把上面的式子中的求和符号去掉，每次只使用一个样本计算梯度，计算出来就更新一次参数，然后再在更新之后的参数上，利用下一个样本计算梯度，这样每次更新的速度都很快，但是只是利用一个样本计算出来的梯度可能根本就不是函数上升最快的方向，所以收敛的速度不一定快。</p>
+<p><strong>批量梯度下降法</strong></p>
+<p>这种方法就综合上面两种方法的利弊提出的，每次使用若干个（一般是10个）样本计算梯度，计算完就更新参数，然后在更新的参数的基础上利用另外的10个样本计算下一个梯度方向，直到算法结束。</p>
+</blockquote>
+<h3 id="梯度下降法算法调优">梯度下降法算法调优</h3>
+<p>通过梯度下降法的求解过程，我们知道要设置三个重要的参数，一个是<span class="math inline">\(\theta^0\)</span>, 初始参数的值；一个是<span class="math inline">\(\alpha\)</span>,学习率；一个是算法停止条件，<span class="math inline">\(\epsilon\)</span>.</p>
+<p>如果要优化的函数是凸函数（只有一个极值点），<span class="math inline">\(\theta^0\)</span> 的值不会影响最终的结果，但是会影响算法结束的速度；如果优化的函数有多个极值点，<span class="math inline">\(\theta^0\)</span> 的初始值会影响最后的结果。这个时候，一个解决的办法是随机选择多次初始点，分别计算出极值点，选择极值点最小的那个初始点作为算法的初始点。 理论上如果选择足够多的初始点(并且是随机选择)，一定可以找到真正的极值点。</p>
+<p><span class="math inline">\(\alpha\)</span> 的选择也十分重要，如果过小，算法迭代次数过多，会结束的非常慢；如果过大，很可能会越过极值点，找不到正确的结果。</p>
+<p><span class="math inline">\(\epsilon\)</span> 的选择影响算法的终止条件，如果过大，可能还没有达到极值点就结束了，如果过小，可能导致算法运行时间过长。</p>
+<p>除此之外，使用梯度下降法时候，特征一般要归一化处理，这是因为，如果不同的维度取值范围差异很大的话，算法的迭代效率就很差，归一化的方法是计算数据的均值和方差，然后每个特征减去均值之后除以标准差</p>
+<p>使用随机梯度下降的时候，如果数据集不是线性可分的(存在噪声的情况)，可能会造成梯度来回波动的情况，可以下面的方式优化：</p>
+<blockquote>
+<ul>
+<li>在每次迭代时，调整更新步长<span class="math inline">\(\alpha\)</span>的值。随着迭代的进行，<span class="math inline">\(\alpha\)</span>越来越小，这会缓解系数的高频波动（也就是每次迭代系数改变得太大，跳的跨度太大）。当然了，为了避免<span class="math inline">\(\alpha\)</span>随着迭代不断减小到接近于0（这时候，系数几乎没有调整，那么迭代也没有意义了），我们约束<span class="math inline">\(\alpha\)</span>一定大于一个稍微大点的常数项.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>每次迭代，改变样本的优化顺序。也就是随机选择样本来更新回归系数。这样做可以减少周期性的波动，因为样本顺序的改变，使得每次迭代不再形成周期性。</li>
+</ul>
+</blockquote>
+<h3 id="牛顿法">牛顿法</h3>
+<h3 id="拟牛顿法">拟牛顿法</h3>
+<h2 id="对模型的理解">对模型的理解</h2>
+<p>理解一个模型的含义有时候会很有帮助，但不是所有的模型都有确切的含义，幸运的是，逻辑回归模型有一些很好的解释便于理解实际含义。</p>
+<p><strong>对数几率</strong></p>
+<p>在逻辑回归模型中，<span class="math inline">\(\theta^T \cdot x\)</span>的值是有含义的。假设一件事发生的概率是<span class="math inline">\(P\)</span>,不发生的概率是<span class="math inline">\(1-P\)</span>,定义一件事发生的<strong>几率</strong> 为发生的概率和不发生的概率的比值：<span class="math inline">\(p / (1-p)\)</span>. 定义一件事发生的对数几率是：<span class="math inline">\(log(p / (1-p))\)</span>.</p>
+<p>逻辑回归的输出<span class="math inline">\(h_\theta(x)\)</span>可以看作分类为1的概率：</p>
+<p><span class="math display">\[
+P(Y=1|X) = h_\theta(x) = \frac 1 {1 + e^{-\theta^T \cdot x}}
+\]</span></p>
+<p>记A表示分类结果是1这一时间，则A的对数几率是：</p>
+<p><span class="math display">\[
+logit(A) = log(\frac {h_\theta(x)} {1-h_\theta(x)}) = \theta^T = w_1 x_1+ x_2 x_2 + ... + w_n x_n + b
+\]</span></p>
+<p><span class="math inline">\(\theta^T \cdot x\)</span> 的含义其实是事件A发生的对数几率，取对数并不影响函数原来的极值点，可以认为是原来的含义。所以可以认为<span class="math inline">\(\theta^T \cdot x\)</span> 度量了事件A发生的几率。 而原来的<span class="math inline">\(h_\theta(x)\)</span> 表示的事件A发生的概率。</p>
+<p><strong>最大似然</strong></p>
+<p>最大似然的思想是： 选择使得已经发生的事件概率取得最大值的 那些参数。 例如<span class="math inline">\(\theta\)</span>表示箱子的编号，1号箱子里面有1个红球，9个白球，2号箱子里面有1个白球，9个红球；如果任意选择一个箱子，任意取一个球，发现取得的是红球，那么根据最大似然的原理<span class="math inline">\(\theta = 2\)</span>,因为如果是2号箱子，取得红球的概率是0.9， 如果是1号箱子，取得红球的概率是0.1.</p>
+<p>把训练集中的出现的样本作为一次实验，那么出现这种实验结果的概率是：</p>
+<p><span class="math display">\[
+P(Y=1|X)^{y_i} (1-P(Y=0|X))^{1-y_i}
+\]</span></p>
+<p>所有的<code>m</code>个样本出现的概率是每一个样本出现的概率的乘积：</p>
+<p><span class="math display">\[
+L(\theta) = \prod_{i=1}^m (h_\theta(x))^{y_i} (1-h_\theta(x))^{1-y_i}
+\]</span></p>
+<p>用最大似然的观点，逻辑回归转化成求<span class="math inline">\(L(\theta)\)</span>最大的时候，<span class="math inline">\(\theta\)</span>的值。求解该函数的极大值，就是求解负函数的极小值。对<span class="math inline">\(\theta\)</span>求导之后会发现，最优化函数和上面提到的用损失函数表示的是一样的。所以求解的方法依然是梯度下降法。</p>
+<h2 id="编写算法python">编写算法（Python）</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Created on Sat Nov 04 20:47:47 2017</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: FF120</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> math <span class="keyword">as</span> mm</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LogisticRegression</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    theta : 初始的参数选择(n+1_features),最后一个参数是截距b</span></span><br><span class="line"><span class="string">    alpha : 学习率</span></span><br><span class="line"><span class="string">    epsilon : 终止条件</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,theta,alpha,epsilon)</span>:</span></span><br><span class="line">        self.theta = theta</span><br><span class="line">        self.alpha = alpha</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.0</span> / (<span class="number">1</span> + mm.exp(-z))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_theta</span><span class="params">(self,X,y)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        使用所有训练数据完成一次参数的更新过程</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        返回值</span></span><br><span class="line"><span class="string">        epsilon: 本次更新的梯度和上次的差异</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        m,n = X.shape</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n+<span class="number">1</span>): <span class="comment"># 第j个参数的偏移</span></span><br><span class="line">            delta_theta = np.zeros((<span class="number">1</span>,n+<span class="number">1</span>))</span><br><span class="line">            <span class="keyword">for</span> i,line_x,line_y <span class="keyword">in</span> enumerate(zip(X,y)):</span><br><span class="line">                line_x = np.array(list(line_x) + [<span class="number">1</span>]) <span class="comment"># 添加x_n+1</span></span><br><span class="line">                theta = np.array(self.theta)</span><br><span class="line">                delta_theta[i] += self.sigmoid(np.dot(theta.T,line_x) - line_y) * (line_x[j])</span><br><span class="line">                </span><br><span class="line">            delta_theta = delta_theta*(<span class="number">1.0</span> / m)</span><br><span class="line">            epsilon = np.sum(np.absolute(self.alpha *delta_theta))</span><br><span class="line">            self.theta = self.theta + self.alpha * delta_theta</span><br><span class="line">            <span class="keyword">return</span> epsilon</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fix</span><span class="params">(self,X,y)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        X : (n_samples,n_featues) 训练集合</span></span><br><span class="line"><span class="string">        y : (n_samples,) 训练集对应的标签</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            epsilon = self.update_theta(X,y)</span><br><span class="line">            <span class="keyword">if</span> epsilon &lt; self.epsilon:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self,X)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        X : (n_samples.n_features) 训练集合</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> X.shape[<span class="number">0</span>] == <span class="number">1</span>:</span><br><span class="line">            y = self.sigmoid( np.dot(self.theta.T,X) )</span><br><span class="line">            <span class="keyword">if</span> y &gt;= <span class="number">0.5</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> y &lt; <span class="number">0.5</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    机器学习-第二章-决策树
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">机器学习-绪论-基本概念</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

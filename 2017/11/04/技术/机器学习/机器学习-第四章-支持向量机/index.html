@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>机器学习-第四章-支持向量机 | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="ML">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="【支持向量机】【函数间隔】【几何间隔】【KTT】">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习-第四章-支持向量机">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="【支持向量机】【函数间隔】【几何间隔】【KTT】">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:54:57.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习-第四章-支持向量机">
+<meta name="twitter:description" content="【支持向量机】【函数间隔】【几何间隔】【KTT】">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file active"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/机器学习/机器学习-第四章-支持向量机" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/机器学习/">机器学习</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/ML/">ML</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">
+            <time datetime="2017-11-04T01:05:10.000Z" itemprop="datePublished">2017-11-04</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/机器学习/机器学习-第四章-支持向量机.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/机器学习/机器学习-第四章-支持向量机.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/机器学习/机器学习-第四章-支持向量机.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            机器学习-第四章-支持向量机
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#模型"><span class="toc-number">1.</span> <span class="toc-text">模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#策略"><span class="toc-number">2.</span> <span class="toc-text">策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数间隔"><span class="toc-number">2.1.</span> <span class="toc-text">函数间隔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#几何间隔"><span class="toc-number">2.2.</span> <span class="toc-text">几何间隔</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法"><span class="toc-number">3.</span> <span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#拉格朗日函数"><span class="toc-number">3.1.</span> <span class="toc-text">拉格朗日函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对偶问题"><span class="toc-number">3.2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解原问题"><span class="toc-number">3.3.</span> <span class="toc-text">求解原问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解支持向量机参数的一般步骤"><span class="toc-number">3.4.</span> <span class="toc-text">求解支持向量机参数的一般步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个具体的例子"><span class="toc-number">3.5.</span> <span class="toc-text">一个具体的例子</span></a></li></ol></li></ol>
+                </div>
+            
+        
+        
+            <p>【支持向量机】【函数间隔】【几何间隔】【KTT】</p>
+<a id="more"></a>
+<h2 id="模型">模型</h2>
+<p>令 <span class="math inline">\(\theta = (w_1,w_2,...,w_n,b)\)</span>, <span class="math inline">\(x = (x_1,x_2,...,x_n,1)\)</span>,则有： <span class="math display">\[
+\theta^T \cdot x = w_1x_1+x_2x_2+...+w_nx_n+b
+\]</span></p>
+<p>支持向量机要得到的分类决策函数是：</p>
+<p><span class="math display">\[
+h_\theta(x) = sign(\theta^T \cdot x)
+\]</span></p>
+<p>其中，<span class="math inline">\(sign(x)\)</span>的定义是：</p>
+<p><span class="math display">\[
+sign(x) = \begin{cases}
+          1, &amp; x&gt;=0 \\
+          0, &amp; x &lt; 0 \\
+          \end{cases}
+\]</span></p>
+<p>当<span class="math inline">\(\theta^T &gt;= 0\)</span> 的时候，分类成正类，当<span class="math inline">\(\theta^T &lt; 0\)</span>的时候，分类成负类。支持向量机就是通过给定的训练数据求解出<span class="math inline">\(\theta\)</span>.</p>
+<h2 id="策略">策略</h2>
+<h3 id="函数间隔">函数间隔</h3>
+<p><span class="math inline">\(\theta^T \cdot x = 0\)</span> 可以确定一个超平面(n维空间中，n-1维的叫做超平面)，<span class="math inline">\(\theta^T \cdot x &gt; 0\)</span> 的时候，我们定义类别的标签是<code>1</code>, <span class="math inline">\(\theta^T \cdot x &lt; 0\)</span> 的时候，我们定义类别的标签是<code>-1</code>. 这样，<span class="math inline">\(\theta^T \cdot x\)</span>的符号和标签<code>y</code>的符号是一致的。 $ y(\theta^T x ) &gt; 0 $ 表示分类正确， $y(\theta^T x)&lt;0 $ 表示分类错误. 而<span class="math inline">\(|\theta^T \cdot x|\)</span>表示的是点<code>x</code>到分类超平面的距离，可以认为距离越远，分类的可信度越高。</p>
+<p>点<span class="math inline">\((x_i,y_i)\)</span>函数间隔的定义为：</p>
+<p><span class="math display">\[
+\hat \gamma_i = y_i(\theta^T \cdot x_i)
+\]</span></p>
+<p>训练集合中所有样本的函数间隔定义为所有样本的函数间隔最小的那一个。</p>
+<h3 id="几何间隔">几何间隔</h3>
+<p><span class="math inline">\(\theta^T \cdot x = wx+b\)</span>, 其中<span class="math inline">\(w = (w_1,w_2,...,w_n)\)</span>. 函数间隔有一个问题，就是成比例的改变<span class="math inline">\(w\)</span>和<span class="math inline">\(b\)</span>的值，函数间隔的大小就会成比例的变化。所以函数间隔并不适合用来求极值点。 改进的方法是限制<span class="math inline">\(w\)</span>的取值，是<span class="math inline">\(||w|| = 1\)</span>, 这样函数间隔就变成了几何间隔。</p>
+<p>样本<span class="math inline">\((x_i,y_i)\)</span>到分类超平面<span class="math inline">\(wx+b=0\)</span>的几何间隔是：</p>
+<p><span class="math display">\[
+\gamma_i = y_i(\frac w {||w||} \cdot x_i + \frac b {||w||})
+\]</span></p>
+<p>训练集的几何间隔取 训练集合中所有的样本点到分类超平面几何间隔的最小值。</p>
+<p><strong>优化目标</strong></p>
+<p>支持向量机的优化目标就是找到使得 几何间隔最大化的参数取值。这是一个约束优化问题，目标是<span class="math inline">\(max(\gamma)\)</span>, 约束条件是<span class="math inline">\(\gamma_i &gt;= \gamma\)</span>, 含义是在保证某个点的几何间隔都大于等于<span class="math inline">\(\gamma\)</span>的情况下，求最大的<span class="math inline">\(\gamma\)</span>.</p>
+<p>在约束条件两边都乘以一个<span class="math inline">\(||w||\)</span>, 等式的性质不变，现在约束变成 <span class="math inline">\(y_i(w \cdot x_i + b) &gt;= \hat \gamma\)</span>, 因为 <span class="math inline">\(\gamma = \frac {\hat \gamma} \gamma\)</span>, 最优化的目标变为： <span class="math inline">\(\frac {\hat \gamma} {||w||}\)</span>, <span class="math inline">\(\hat \gamma\)</span>的取值是不影响最后的结果的，前面介绍过了，函数间隔会根据<span class="math inline">\(w\)</span>和<span class="math inline">\(b\)</span>的取值等比例的缩放，所以这里我们令<span class="math inline">\(\hat \gamma = 1\)</span>, 最优化问题可以写成下面的形式：</p>
+<p><span class="math display">\[
+min \quad \frac 1 2 {||w||^2} \\
+s.t. \quad y_i(w \cdot x_i + b)-1 &gt;= 0, \quad \text{i=1,2,...,n}
+\]</span></p>
+<blockquote>
+<p>最大化 <span class="math inline">\(\frac 1 {||w||}\)</span> 等价于 最小化<span class="math inline">\(\frac 1 2 {||w||^2}\)</span></p>
+</blockquote>
+<p>支持向量机就是求解上面的最优化问题，来求得参数<span class="math inline">\(\theta\)</span>，然后构造分类超平面为未知的数据分类的。</p>
+<h2 id="方法">方法</h2>
+<h3 id="拉格朗日函数">拉格朗日函数</h3>
+<p>凸优化问题的一般形式</p>
+<p><span class="math display">\[
+min \quad f(x) \\
+s.t. \quad c_i(x) &lt;= 0, \quad i = 1,2,...,k \\
+           h_j(x) = 0, \quad j = 1,2,...,l
+\]</span></p>
+<p>其中，<span class="math inline">\(f(x)\)</span>和<span class="math inline">\(c_i(x)\)</span> 都是 <span class="math inline">\(R^n\)</span>上的连续可微的凸函数，<span class="math inline">\(h_j(x)\)</span> 是 <span class="math inline">\(R^n\)</span>上的仿射函数。</p>
+<blockquote>
+<p><span class="math inline">\(f(x)\)</span>是仿射函数的含义是满足条件：<span class="math inline">\(f(x) = ax+b\)</span>,其中<span class="math inline">\(a \in R^n\)</span>,<span class="math inline">\(b \in R\)</span>,<span class="math inline">\(x \in R^n\)</span>.</p>
+</blockquote>
+<p>拉格朗日函数是在 约束优化问题中 用来把约束条件添加到目标函数中的一种手段，广义的拉格朗日函数的定义是：</p>
+<p><span class="math display">\[
+L(x,\alpha,\beta) = f(x) + \sum_{i=1}^k \alpha_i c_i(x) + \sum_{j=1}^l \beta_j h_j(x) \quad \alpha_i &gt;= 0
+\]</span></p>
+<p>其中，<span class="math inline">\(f(x)\)</span>是原来约束优化问题的目标函数，<span class="math inline">\(c_i(x)\)</span>和<span class="math inline">\(h_j(x)\)</span>是约束条件中的函数.</p>
+<p>定义函数：</p>
+<p><span class="math display">\[
+P(x) = \mathop{max} \limits_{\alpha,\beta} L(x,\alpha,\beta)
+\]</span></p>
+<p>其中，<span class="math inline">\(P(x)\)</span>表示在把<span class="math inline">\(x\)</span>看作常数，<span class="math inline">\(\alpha,\beta\)</span>看作变量的情况下，求<span class="math inline">\(L(x,\alpha,\beta)\)</span>的最大值；</p>
+<p>现在来分析函数<span class="math inline">\(P(x)\)</span>, 如果<span class="math inline">\(x\)</span>满足原来最优化问题的约束条件，即<span class="math inline">\(c_i(x) &lt;= 0\)</span>, <span class="math inline">\(h_j(x) = 0\)</span>, 那么 <span class="math inline">\(P(x) = \mathop{max} \limits_{\alpha,\beta} ( f(x) + \sum_{i=1}^k \alpha_i c_i(x))\)</span>, 这个时候的最大值的结果就是<span class="math inline">\(P(x) = f(x)\)</span>, <span class="math inline">\(\alpha_i = 0\)</span>. 除此之外，<span class="math inline">\(\alpha_i\)</span>取任何大于0的值最后的结果都会减小。</p>
+<p>如果<span class="math inline">\(x\)</span>不满足约束条件，即 <span class="math inline">\(c_i(x) &gt; 0\)</span> 或者 <span class="math inline">\(h_j(x) \neq 0\)</span>, 这个时候总能找到满足的 <span class="math inline">\(\alpha\)</span> 或 <span class="math inline">\(\beta\)</span> ,使得 <span class="math inline">\(P(x) = +\infty\)</span> . 例如，如果<span class="math inline">\(c_i(x) &gt; 0\)</span>, 只需要让<span class="math inline">\(\alpha_i\)</span>足够大，就能保证结果足够大，如果<span class="math inline">\(h_j(x) \neq 0\)</span>, 只需要让<span class="math inline">\(\beta_j\)</span>足够大就能保证结果趋近 <span class="math inline">\(+\infty\)</span> .</p>
+<p>综上，<span class="math inline">\(P(x)\)</span>是一个满足下述条件的函数：</p>
+<p><span class="math display">\[
+P(x) = \begin{cases}
+        f(x) &amp; \text{x 满足约束条件} \\
+        +\infty &amp; \text{x 不满足约束条件}
+       \end{cases}
+\]</span></p>
+<p>那么， <span class="math inline">\(min P(x)\)</span> 表示求<span class="math inline">\(P(x)\)</span>的最小值，其含义就是求在满足约束条件的情况下，<span class="math inline">\(f(x)\)</span>的最小值。所以原来的约束最优化问题，在引入拉格朗日函数之后，可以变成下面的无约束优化问题，它与原来的问题等价：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_x   \quad \mathop{max} \limits_{\alpha,\beta} ( f(x) + \sum_{i=1}^k \alpha_i c_i(x) + \sum_{j=1}^l \beta_j h_j(x))  \quad \alpha_i &gt;= 0
+\]</span></p>
+<h3 id="对偶问题">对偶问题</h3>
+<p>如果原始问题是：</p>
+<p><span class="math display">\[
+p^*  =  \mathop{min} \limits_x   \quad \mathop{max} \limits_{\alpha,\beta} ( f(x) + \sum_{i=1}^k \alpha_i c_i(x) + \sum_{j=1}^l \beta_j h_j(x))  \quad \alpha_i &gt;= 0
+\]</span></p>
+<p>则它的对偶问题是：</p>
+<p><span class="math display">\[
+d^* =   \mathop{max} \limits_{\alpha,\beta}  \quad  \mathop{min} \limits_x   ( f(x) + \sum_{i=1}^k \alpha_i c_i(x) + \sum_{j=1}^l \beta_j h_j(x))  \quad \alpha_i &gt;= 0
+\]</span></p>
+<p>原问题是先固定的把<span class="math inline">\(x\)</span>看作常数，求解<span class="math inline">\(\alpha,\beta\)</span>, 再把<span class="math inline">\(\alpha,\beta\)</span>看作常数，求解<span class="math inline">\(x\)</span>; 而对偶问题正好反了过来，是先把<span class="math inline">\(\alpha,\beta\)</span>看作常数，求解出<span class="math inline">\(x\)</span>,再把<span class="math inline">\(x\)</span>看作常数，求解出<span class="math inline">\(\alpha,\beta\)</span></p>
+<p>如果<span class="math inline">\(p^*\)</span>表示原始问题的最优解，而<span class="math inline">\(d^*\)</span>表示对偶问题的最优解，则有<span class="math inline">\(d^* &lt;= p^*\)</span>. 原问题的解是大于等于对偶问题的最优解的，如果想通过解对偶问题来解原来的问题，需要满足如下的KKT条件，才能保证原问题和对偶问题的解相同：</p>
+<p><span class="math display">\[
+\triangledown_x L(x,\alpha,\beta) = 0 \\
+\triangledown_{\alpha} L(x,\alpha,\beta) = 0 \\
+\triangledown_{\beta} L(x,\alpha,\beta) = 0 \\
+\alpha_ic_i(x) = 0,i=1,2,...,k \\
+c_i(x) &lt;=0, i = 1,2,...,k \\
+\alpha_i &gt;= 0, i=1,2,...,k \\
+h_j(x) = 0, j=1,2,...,l
+\]</span></p>
+<p>其中， <span class="math inline">\(x,\alpha,\beta\)</span>,分别代表原始问题和最优问题的解。如果满足上述的约束条件，则原始问题和对偶问题有相同的解。 前三个条件是对<span class="math inline">\(x,\alpha,\beta\)</span>的偏导数为0， 后三个条件是原来问题的约束条件，只有中间的条件是新的约束条件 <span class="math inline">\(\alpha_i c_i(x) = 0\)</span>, 这意味着如果<span class="math inline">\(\alpha_i &gt; 0\)</span>, 那么<span class="math inline">\(c_i(x) = 0\)</span>，否则约束条件就无法得到满足。</p>
+<h3 id="求解原问题">求解原问题</h3>
+<p>支持向量机的优化目标是：</p>
+<p><span class="math display">\[
+min \quad \frac 1 2 {||w||^2} \\
+s.t. \quad y_i(w \cdot x_i + b)-1 &gt;= 0, \quad \text{i=1,2,...,n}
+\]</span></p>
+<p>把约束条件加入优化函数，改写成拉格朗日函数如下：</p>
+<p><span class="math display">\[
+L(w,\alpha) = \frac 1 2 {||w||^2} - ( \sum_{k=1}^m \alpha_i (y_i(w \cdot x_i + b)-1) )
+\]</span></p>
+<p>因为没有等式约束条件，所以这里没有<span class="math inline">\(\beta\)</span>, 还有这里是<span class="math inline">\(-\)</span>号，因为凸优化的标准约束是小于等于的形式，而这里却是大于等于的形式。</p>
+<p>所以原来的优化问题可以转化成求解下面的问题：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_w \quad \mathop{max} \limits_{\alpha} L(w,\alpha)
+\]</span></p>
+<p>它的对偶问题是:</p>
+<p><span class="math display">\[
+\mathop{max} \limits_{\alpha} \quad \mathop{min} \limits_w  L(w,\alpha)
+\]</span></p>
+<p>首先要求解<span class="math inline">\(\mathop{min} \limits_w L(w,\alpha)\)</span>, 这个时候<span class="math inline">\(w,b\)</span>是变量，<span class="math inline">\(\alpha\)</span>看作常量，求解函数 <span class="math inline">\(\frac 1 2 {||w||^2} - ( \sum_{k=1}^m \alpha_i (y_i(w \cdot x_i + b)-1) )\)</span> 的最小值。</p>
+<blockquote>
+<p>多元函数的极值点必在驻点（偏导数为0的点）和偏导数不存在的点中。</p>
+</blockquote>
+<p>要求极值点，首先对每个变量(<span class="math inline">\(w,b\)</span>)求偏导数，令其等于0：</p>
+<p><span class="math display">\[
+\triangledown_w L(w,b,\alpha) = w - \sum_{i=1}^m \alpha_i y_i x_i = 0 \\
+\triangledown_b L(w,b,\alpha) = \sum_{i=1}^m \alpha_i y_i = 0
+\]</span></p>
+<p>把得到的等式带入原来的式子<span class="math inline">\(L(w,b,\alpha)\)</span>中化简,去掉<span class="math inline">\(w,b\)</span>,得到只有<span class="math inline">\(x,y,\alpha\)</span>的表达式：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_{w,b}  L(w,b,\alpha)  = - \frac 1 2 \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i y_j(x_i \cdot  x_j) + \sum_{i=1}^m \alpha_i
+\]</span></p>
+<p>上式中，<span class="math inline">\(w,b\)</span>已经确定了，得到了一个极小值，下一步是求极大值<span class="math inline">\(\mathop{max} \limits_{\alpha} \quad \mathop{min} \limits_{w,b} L(w,b,\alpha)\)</span>, 具体的式子带入，转化成求如下的约束优化问题：</p>
+<p><span class="math display">\[
+\mathop{max} \limits_{\alpha}  \quad - \frac 1 2 \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i y_j(x_i \cdot  x_j) + \sum_{i=1}^m \alpha_i \\
+s.t. \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
+    \alpha_i &gt;= 0, \quad i=1,2,...,m
+\]</span></p>
+<p>把求解最大化问题转化成求解最小化问题：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_{\alpha}  \quad  \frac 1 2 \sum_{i=1}^m \sum_{j=1}^m \alpha_i \alpha_j y_i y_j(x_i \cdot  x_j) - \sum_{i=1}^m \alpha_i \\
+s.t. \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
+    \alpha_i &gt;= 0, \quad i=1,2,...,m
+\]</span></p>
+<p>设该问题的解是<span class="math inline">\(\alpha^*\)</span>, 则原来问题的解是<span class="math inline">\(w^*,b^*\)</span>, KKT条件成立，可以导出三者之间的关系为：</p>
+<p><span class="math display">\[
+w^* = \sum_{i=1}^m \alpha^* y_i x_i \\
+b^* = y_i - \sum_{i=1}^m \alpha^* y_i (x_i \cdot x_j)
+\]</span></p>
+<h3 id="求解支持向量机参数的一般步骤">求解支持向量机参数的一般步骤</h3>
+<p>输入：训练集<span class="math inline">\((x_i,y_i)\)</span>, 训练集合有样本<code>m</code>个，特征数量<code>n</code>个。</p>
+<p>输出：分类决策函数</p>
+<p><strong>最大间隔法</strong></p>
+<ol style="list-style-type: decimal">
+<li>构造并求解约束最优化问题：</li>
+</ol>
+<p><span class="math display">\[
+\mathop{min} \limits_{w,b} \quad \frac 1 2 {||w||^2} \\
+s.t. \quad  y_i(w \cdot x_i + b) - 1 &gt;= 0, \quad i=1,2,...,m
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>求解该问题得到问题的解<span class="math inline">\(w^*,b^*\)</span></p></li>
+<li><p>构造分类平面 <span class="math inline">\(w^* \cdot x + b^* = 0\)</span></p></li>
+</ol>
+<p><strong>对偶学习算法</strong></p>
+<ol style="list-style-type: decimal">
+<li>构造并求解约束最优化问题：</li>
+</ol>
+<p><span class="math display">\[
+\mathop{min} \limits_{\alpha} \quad \frac 1 2 \sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) - \sum_{i=1}^n \\
+s.t. \quad \sum_{i=1}^m \alpha_i y_i = 0 \\
+    \alpha_i &gt;= 0, \quad i=1,2,...,m
+\]</span></p>
+<p>求解上面的最优化问题得到 <span class="math inline">\(\alpha^*\)</span>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>计算 <span class="math inline">\(w^*\)</span> 和 <span class="math inline">\(b^*\)</span> :</li>
+</ol>
+<p><span class="math display">\[
+w^* = \sum_{i=1}^n \alpha^* y_i x_i \\
+b^* = y_i - \sum_{i=1}^n \alpha^*_i y_i (x_i \cdot x_j)
+\]</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>根据第二步求解的参数构造分类决策函数：</li>
+</ol>
+<p><span class="math display">\[
+w^* \cdot x + b^* = 0
+\]</span></p>
+<h3 id="一个具体的例子">一个具体的例子</h3>
+<p>有三个训练样本，每个样本有两个特征，<span class="math inline">\(x_1 = (3,3), x_2 = (4,3), x_3 = (1,1)\)</span>, 求支持向量机的分类超平面。其中<span class="math inline">\(x_1,x_2\)</span>是正样本，<span class="math inline">\(x_3\)</span>是负样本。</p>
+<ol style="list-style-type: decimal">
+<li>用最大间隔法求解</li>
+</ol>
+<p>根据数据构造约束最优化问题：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_{w,b} \quad \frac 1 2 (w_1^2+w_2^2) \\
+s.t. \quad 3w_1 + 3w_2 + b &gt;= 1 \\
+           4w_1 + 4w_2 + b &gt;= 1 \\
+           -w_1 - w_2 - b &gt;= 1
+\]</span></p>
+<p>求解此最优化问题得到结果：<span class="math inline">\(w_1 = w_2 = \frac 1 2, b = -2\)</span>, 最后的分类超平面是:</p>
+<p><span class="math display">\[
+\frac 1 2 x^{(1)} + \frac 1 2 x^{(2)} - 2 = 0
+\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>用对偶学习算法求解：</li>
+</ol>
+<p>根据数据构造约束最优化问题：</p>
+<p><span class="math display">\[
+\mathop{min} \limits_{\alpha} \quad \frac 1 2 (18\alpha_1^2 + 25\alpha_2^2 + 2\alpha_3^2 + 42 \alpha_1 \alpha_2 - 12 \alpha_1 \alpha_3 - 14 \alpha_2 \alpha_3) - (\alpha_1 + \alpha_2 + \alpha_3)  \\
+s.t. \quad \alpha_1 + \alpha_2 - \alpha_3 = 0 \\
+           \alpha_i &gt;= 0, \quad i=1,2,3
+\]</span></p>
+<p>求解最优化问题得到结果：<span class="math inline">\(\alpha_1 = \frac 1 4, \alpha_2 = 0, \alpha_3 = \frac 1 4\)</span>.</p>
+<p>则可以得到 <span class="math inline">\(w_1^* = = w_2^* = \frac 1 2\)</span>, <span class="math inline">\(b^* = -2\)</span>.</p>
+<p>最后的分类超平面为：</p>
+<p><span class="math display">\[
+\frac 1 2 x^{(1)} + \frac 1 2 x^{(2)} - 2 = 0
+\]</span></p>
+<p>比较最大间隔算法和对偶学习算法可以看出，对偶学习算法更容易求解，因为其约束条件变得更少，更容易得到不同变量之间的转换关系。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    机器学习-第五章-最近邻
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">机器学习-第三章-朴素贝叶斯</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>深度学习_使用keras实现autoencoder | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="keras,autoencoder">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+<meta name="keywords" content="keras,autoencoder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习_使用keras实现autoencoder">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:54:58.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习_使用keras实现autoencoder">
+<meta name="twitter:description" content="autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个\(f(x)=x\)的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file active"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/机器学习/深度学习/深度学习_使用keras实现autoencoder" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/机器学习/">机器学习</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/机器学习/深度学习/">深度学习</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/autoencoder/">autoencoder</a>, <a class="tag-link" href="/hexoblog/tags/keras/">keras</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">
+            <time datetime="2017-04-20T08:31:16.000Z" itemprop="datePublished">2017-04-20</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            深度学习_使用keras实现autoencoder
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多层的编码解码机"><span class="toc-number">1.</span> <span class="toc-text">多层的编码解码机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卷积神经网络的autoencoder"><span class="toc-number">2.</span> <span class="toc-text">卷积神经网络的autoencoder</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>autoencoder是利用神经网络来自动提取有意义的特征的一种方法，它的基本思想是这样的： 输入和输出层拥有一样的神经元的数目，都等于数据的输入维数。中间拥有若干个隐含层，隐含层的神经元的数目要小于输入维数。使用输入作为输出训练整个神经网络，最后会得到一个<span class="math inline">\(f(x)=x\)</span>的等式。观察训练好的神经网络，最后的输出是经过比输入的数据的维数更少的数据得到的，所以，中间隐含层的数据表示就是原来输入数据的某种抽象，因为压缩了数据的维数，所以是一种降维的方法。当然，也可以使输入输出的维数远远小于中间隐含层的维数，这样会得到低维数据的高维表示。 <a id="more"></a> 参考资料：https://blog.keras.io/building-autoencoders-in-keras.html</p>
+<p>keras是一个抽象层次较高的深度学习框架，它以theano和tensorflow作为后端实现，使用她可以很方便的实现多种不同的autoencoder. ## 最简单的单层编码解码机 我们使用手写数字识别的数据构造一个简单的自动编码机。目的是给数据降维。我们构造一个三层的神经网络，输入层包含<code>28*28 = 784</code> 个神经元，中间的隐含层包含<code>4*4 = 16</code> 个神经元,输出层包含<code>28*28 = 784</code> 个神经元。然后把手写数字识别的数据去掉标签，后者说是把标签设置为自己的输入，然后训练该神经网络，就会得到一个把<code>28*28</code>的灰度图像映射到<code>4*4</code>的灰度图像的映射，通过后面两层神经网络，我们可以根据<code>4*4</code>的数据恢复原来的<code>28*28</code>的图像，如果恢复的图像的质量还不错，就能够说明神经网络自动学习到的压缩方法确实是很不错的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model</span><span class="params">(model,name)</span>:</span></span><br><span class="line">    <span class="comment">## fit完成之后，保存整个模型的配置</span></span><br><span class="line">    root_path = <span class="string">r'd:\deeplearning'</span></span><br><span class="line">    model_config = model.get_config()</span><br><span class="line">    model_weight = model.get_weights()</span><br><span class="line"></span><br><span class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</span><br><span class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</span><br><span class="line">    pickle.dump(model_config, open(config_save_path, <span class="string">'wb'</span>))</span><br><span class="line">    pickle.dump(model_weight, open(weight_save_path, <span class="string">'wb'</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_model</span><span class="params">(name)</span>:</span></span><br><span class="line">    root_path = <span class="string">r'd:\deeplearning'</span></span><br><span class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</span><br><span class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</span><br><span class="line">    model_config = pickle.load(open(config_save_path, <span class="string">'rb'</span>))</span><br><span class="line">    model_weight = pickle.load(open(weight_save_path, <span class="string">'rb'</span>))</span><br><span class="line">    model = Model.from_config(model_config)</span><br><span class="line">    model.set_weights(model_weight)</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 加载数据</span></span><br><span class="line">(x_train, _), (x_test, _) = mnist.load_data()</span><br><span class="line"><span class="comment"># 把数据缩放到 0 -- 1</span></span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[<span class="number">1</span>:])))</span><br><span class="line">x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[<span class="number">1</span>:])))</span><br><span class="line">print(x_train.shape)</span><br><span class="line">print(x_test.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="comment"># this is the size of our encoded representations</span></span><br><span class="line"><span class="comment"># 将784维的数据压缩到32维</span></span><br><span class="line">encoding_dim = <span class="number">16</span>  <span class="comment"># 32 floats -&gt; compression of factor 24.5, assuming the input is 784 floats</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># this is our input placeholder</span></span><br><span class="line">input_img = Input(shape=(<span class="number">784</span>,))</span><br><span class="line"><span class="comment"># "encoded" is the encoded representation of the input</span></span><br><span class="line"><span class="comment"># 新建了一个32个网络节点，激活函数使用relu的层，注意在此层前面应该是输入层，拥有784个神经元的节点。</span></span><br><span class="line"><span class="comment">#encoded = Dense(encoding_dim, activation='relu')(input_img)</span></span><br><span class="line"><span class="comment"># 在压缩层添加稀疏的限制。在没有任何限制，只用节点的数目限制的时候，结果和PCA的结果十分类似</span></span><br><span class="line"><span class="comment"># 但是当加入稀疏优化之后，就不一样了</span></span><br><span class="line">encoded = Dense(encoding_dim, activation=<span class="string">'relu'</span>,activity_regularizer=regularizers.l1(<span class="number">10e-5</span>))(input_img)</span><br><span class="line"><span class="comment"># "decoded" is the lossy reconstruction of the input</span></span><br><span class="line"><span class="comment"># 在encoded的后面，新建了一个拥有784个节点的神经网络层，作为解码层。</span></span><br><span class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(encoded)</span><br><span class="line"></span><br><span class="line"><span class="comment"># this model maps an input to its reconstruction</span></span><br><span class="line">autoencoder = Model(input_img, decoded)</span><br><span class="line"><span class="comment"># 现在autoencoder是这样的一个神经网络，输入包含784个节点，紧接着是32个节点的第一个隐含层，然后是784个节点的输出层。</span></span><br><span class="line"></span><br><span class="line">encoder = Model(input_img, encoded)</span><br><span class="line"><span class="comment"># encoder 以784个节点作为输入层，以32个节点作为输出层，没有中间的隐含层，这就是一个最简单的感知机的模型。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># create a placeholder for an encoded (32-dimensional) input</span></span><br><span class="line">encoded_input = Input(shape=(encoding_dim,))</span><br><span class="line"><span class="comment"># retrieve the last layer of the autoencoder model</span></span><br><span class="line"><span class="comment"># 找到上面创建的神经网络的最后一层，也就是输出层。</span></span><br><span class="line">decoder_layer = autoencoder.layers[<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># create the decoder model</span></span><br><span class="line">decoder = Model(encoded_input, decoder_layer(encoded_input))</span><br><span class="line"><span class="comment"># 现在decoder 是以32个维度输入，以784个维度输出的简单的神经网络，需要注意的是，encoder和decorder都是上面定义的autoencoder神经网络的</span></span><br><span class="line"><span class="comment"># 的一部分，只是用了新的变量名称把其中的一部分网络提取出来了。所以，对应的网络参数是一样的，因为本来指代的就是同一个网络的不同部分。</span></span><br><span class="line"></span><br><span class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">##x训练过程，注意到这里并不是没有标签，而是把子集的输入作为了输出，所以这不是无监督学习。而是有监督学习</span></span><br><span class="line"><span class="comment">## 这里通常叫做自监督学习。</span></span><br><span class="line">autoencoder.fit(x_train, x_train,</span><br><span class="line">                epochs=<span class="number">50</span>,</span><br><span class="line">                batch_size=<span class="number">256</span>,</span><br><span class="line">                shuffle=<span class="literal">True</span>,</span><br><span class="line">                validation_data=(x_test, x_test))</span><br><span class="line"></span><br><span class="line">save_model(autoencoder,<span class="string">'autoencoder'</span>)</span><br><span class="line">save_model(encoder,<span class="string">'encoder'</span>)</span><br><span class="line">save_model(decoder,<span class="string">'decoder'</span>)</span><br><span class="line"><span class="comment">## 加载保存的模型</span></span><br><span class="line">autoencoder = load_model(<span class="string">"autoencoder"</span>)</span><br><span class="line">encoder = load_model(<span class="string">"encoder"</span>)</span><br><span class="line">decoder = load_model(<span class="string">"decoder"</span>)</span><br><span class="line"><span class="comment">## 这样，保存的模型包括结构和参数就都回来了。</span></span><br><span class="line"><span class="comment"># encode and decode some digits</span></span><br><span class="line"><span class="comment"># note that we take them from the *test* set</span></span><br><span class="line">encoded_imgs = encoder.predict(x_test) <span class="comment"># 会利用上面训练好的网络，输出32维的数据</span></span><br><span class="line">decoded_imgs = decoder.predict(encoded_imgs) <span class="comment"># 会利用训练好的网络，输出784维的数据。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># use Matplotlib (don't ask)</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># 设置显示前多少个数据</span></span><br><span class="line">n = <span class="number">12</span>  <span class="comment"># how many digits we will display</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="comment"># display original</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span>)</span><br><span class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># display reconstruction</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span> + n)</span><br><span class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="多层的编码解码机">多层的编码解码机</h2>
+<p>单层神经网络的处理能力是有限的，无论编码还是解码，我们都可以使用多个层来提高映射，或者说数据表征空间转换的能力。下面我们建立一个多层的神经网络，让每层的神经元的数量逐渐减少再逐渐增大，这样可以实现一个分层的数据压缩，数据降维。 我们建立的神经网络的形式是这样的(<code>784--&gt;128--&gt;64--&gt;32--&gt;64--&gt;128--&gt;784</code>),包含输入层，输出层在内，一共有7层。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Created on Thu Apr 20 11:30:40 2017</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: FF120</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model</span><span class="params">(model,name)</span>:</span></span><br><span class="line">    <span class="comment">## fit完成之后，保存整个模型的配置</span></span><br><span class="line">    root_path = <span class="string">r'd:\deeplearning'</span></span><br><span class="line">    model_config = model.get_config()</span><br><span class="line">    model_weight = model.get_weights()</span><br><span class="line"></span><br><span class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</span><br><span class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</span><br><span class="line">    pickle.dump(model_config, open(config_save_path, <span class="string">'wb'</span>))</span><br><span class="line">    pickle.dump(model_weight, open(weight_save_path, <span class="string">'wb'</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_model</span><span class="params">(name)</span>:</span></span><br><span class="line">    root_path = <span class="string">r'd:\deeplearning'</span></span><br><span class="line">    config_save_path = os.path.join(root_path,name+<span class="string">"_config.txt"</span>)</span><br><span class="line">    weight_save_path = os.path.join(root_path,name+<span class="string">"_weights.txt"</span>)</span><br><span class="line">    model_config = pickle.load(open(config_save_path, <span class="string">'rb'</span>))</span><br><span class="line">    model_weight = pickle.load(open(weight_save_path, <span class="string">'rb'</span>))</span><br><span class="line">    model = Model.from_config(model_config)</span><br><span class="line">    model.set_weights(model_weight)</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 加载数据</span></span><br><span class="line">(x_train, _), (x_test, _) = mnist.load_data()</span><br><span class="line"><span class="comment"># 把数据缩放到 0 -- 1</span></span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[<span class="number">1</span>:])))</span><br><span class="line">x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[<span class="number">1</span>:])))</span><br><span class="line">print(x_train.shape)</span><br><span class="line">print(x_test.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line">encoding_dim = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># this is our input placeholder</span></span><br><span class="line">input_img = Input(shape=(<span class="number">784</span>,))</span><br><span class="line"></span><br><span class="line">encoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(input_img)</span><br><span class="line">encoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</span><br><span class="line">encoded = Dense(encoding_dim, activation=<span class="string">'relu'</span>)(encoded)</span><br><span class="line"></span><br><span class="line">decoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</span><br><span class="line">decoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(decoded)</span><br><span class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(decoded)</span><br><span class="line"></span><br><span class="line">autoencoder = Model(input_img, decoded)</span><br><span class="line"></span><br><span class="line">encoder = Model(input_img, encoded)</span><br><span class="line"></span><br><span class="line">encoded_input = Input(shape=(<span class="number">32</span>,))</span><br><span class="line">decoder_layer1 = autoencoder.layers[<span class="number">-3</span>](encoded_input)</span><br><span class="line">decoder_layer2 = autoencoder.layers[<span class="number">-2</span>](decoder_layer1)</span><br><span class="line">decoder_layer3 = autoencoder.layers[<span class="number">-1</span>](decoder_layer2)</span><br><span class="line">decoder = Model(encoded_input, decoder_layer3)</span><br><span class="line"></span><br><span class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</span><br><span class="line"></span><br><span class="line">autoencoder.fit(x_train, x_train,</span><br><span class="line">                epochs=<span class="number">50</span>,</span><br><span class="line">                batch_size=<span class="number">256</span>,</span><br><span class="line">                shuffle=<span class="literal">True</span>,</span><br><span class="line">                validation_data=(x_test, x_test))</span><br><span class="line"></span><br><span class="line">save_model(autoencoder,<span class="string">'autoencoder'</span>)</span><br><span class="line">save_model(encoder,<span class="string">'encoder'</span>)</span><br><span class="line">save_model(decoder,<span class="string">'decoder'</span>)</span><br><span class="line"><span class="comment">## 加载保存的模型</span></span><br><span class="line">autoencoder = load_model(<span class="string">"autoencoder"</span>)</span><br><span class="line">encoder = load_model(<span class="string">"encoder"</span>)</span><br><span class="line">decoder = load_model(<span class="string">"decoder"</span>)</span><br><span class="line">encoded_imgs = encoder.predict(x_test)</span><br><span class="line">decoded_imgs = decoder.predict(encoded_imgs)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">n = <span class="number">10</span>  <span class="comment"># how many digits we will display</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="comment"># display original</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span>)</span><br><span class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># display reconstruction</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + <span class="number">1</span> + n)</span><br><span class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码以中间神经元数目最少的作为分割，前面的作为编码机，后面的作为解码机，前后正好是对称的。当然，这并不是必须的，你也可以让中间的任何一层作为分割，前面作为编码机，后面的作为解码机。这样会实现不同的压缩表示层级。</p>
+<p>我们把中间层向前推进一层，再看结果： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">input_img = Input(shape=(<span class="number">784</span>,))</span><br><span class="line"></span><br><span class="line">encoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(input_img)</span><br><span class="line">encoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(encoded)</span><br><span class="line"></span><br><span class="line">decoded = Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>)(encoded)</span><br><span class="line">decoded = Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>)(decoded)</span><br><span class="line">decoded = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(decoded)</span><br><span class="line">decoded = Dense(<span class="number">784</span>, activation=<span class="string">'sigmoid'</span>)(decoded)</span><br><span class="line"></span><br><span class="line">autoencoder = Model(input_img, decoded)</span><br><span class="line"></span><br><span class="line">encoder = Model(input_img, encoded)</span><br><span class="line"></span><br><span class="line">encoded_input = Input(shape=(<span class="number">64</span>,))</span><br><span class="line">decoder_layer0 = autoencoder.layers[<span class="number">-4</span>](encoded_input)</span><br><span class="line">decoder_layer1 = autoencoder.layers[<span class="number">-3</span>](decoder_layer0)</span><br><span class="line">decoder_layer2 = autoencoder.layers[<span class="number">-2</span>](decoder_layer1)</span><br><span class="line">decoder_layer3 = autoencoder.layers[<span class="number">-1</span>](decoder_layer2)</span><br><span class="line">decoder = Model(encoded_input, decoder_layer3)</span><br></pre></td></tr></table></figure></p>
+<h2 id="卷积神经网络的autoencoder">卷积神经网络的autoencoder</h2>
+<p>处理图像的时候，使用卷积神经网络通常可以有更好的效果。所以，我们尝试使用卷积神经网络做autoencoder,看看数据压缩的效果如何。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Input, Dense, Conv2D, MaxPooling2D, UpSampling2D</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> keras.callbacks <span class="keyword">import</span> TensorBoard</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">(x_train, _), (x_test, _) = mnist.load_data()</span><br><span class="line"></span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255.</span></span><br><span class="line">x_train = np.reshape(x_train, (len(x_train), <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></span><br><span class="line">x_test = np.reshape(x_test, (len(x_test), <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 28*28的图像，只有1个通道，黑白图像</span></span><br><span class="line">input_img = Input(shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  <span class="comment"># adapt this if using `channels_first` image data format</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个卷积核是3*3的层</span></span><br><span class="line">x = Conv2D(<span class="number">16</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(input_img)</span><br><span class="line"><span class="comment"># 定义一个pooling层，取2*2区域内的最大值</span></span><br><span class="line">x = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</span><br><span class="line"><span class="comment"># 定义一个3*3的核</span></span><br><span class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">x = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</span><br><span class="line"><span class="comment"># 定义一个pooling层，取2*2区域内的最大值</span></span><br><span class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line"></span><br><span class="line">encoded = MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>), padding=<span class="string">'same'</span>)(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># at this point the representation is (4, 4, 8) i.e. 128-dimensional</span></span><br><span class="line"></span><br><span class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(encoded)</span><br><span class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</span><br><span class="line">x = Conv2D(<span class="number">8</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</span><br><span class="line">x = Conv2D(<span class="number">16</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'relu'</span>)(x)</span><br><span class="line">x = UpSampling2D((<span class="number">2</span>, <span class="number">2</span>))(x)</span><br><span class="line">decoded = Conv2D(<span class="number">1</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">'sigmoid'</span>, padding=<span class="string">'same'</span>)(x)</span><br><span class="line"></span><br><span class="line">autoencoder = Model(input_img, decoded)</span><br><span class="line">autoencoder.compile(optimizer=<span class="string">'adadelta'</span>, loss=<span class="string">'binary_crossentropy'</span>)</span><br><span class="line"></span><br><span class="line">autoencoder.fit(x_train, x_train,</span><br><span class="line">                epochs=<span class="number">1</span>,</span><br><span class="line">                batch_size=<span class="number">128</span>,</span><br><span class="line">                shuffle=<span class="literal">True</span>,</span><br><span class="line">                validation_data=(x_test, x_test),</span><br><span class="line">                callbacks=[TensorBoard(log_dir=<span class="string">'d:/log'</span>)])</span><br><span class="line"></span><br><span class="line">decoded_imgs = autoencoder.predict(x_test)</span><br><span class="line"></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">4</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="comment"># display original</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i)</span><br><span class="line">    plt.imshow(x_test[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># display reconstruction</span></span><br><span class="line">    ax = plt.subplot(<span class="number">2</span>, n, i + n)</span><br><span class="line">    plt.imshow(decoded_imgs[i].reshape(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">    plt.gray()</span><br><span class="line">    ax.get_xaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">    ax.get_yaxis().set_visible(<span class="literal">False</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> plot_model</span><br><span class="line">plot_model(autoencoder, to_file=<span class="string">'model.png'</span>)</span><br></pre></td></tr></table></figure>
+<p>上面的代码建立了一个这样的模型： <code>input--&gt;Conv2D--&gt;MaxPooling2D--&gt;Conv2D--&gt;MaxPooling2D--&gt;Conv2D--&gt;MaxPooling2D(encoded)--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D--&gt;UpSampling2D--&gt;Conv2D(decoded)</code> 一共有14层网络。使用下面的语句可以打印出这些结构： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> plot_model</span><br><span class="line">plot_model(autoencoder, to_file=<span class="string">'model.png'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>1<a href="model.png"></a></p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    深度学习_卷积神经网络
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">深度学习_Keras使用技巧</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>多被试多RUN批量预处理(SPM) | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="fMIRI">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="使用SPM处理多个被试多个RUN的数据。代码涉及到的文件夹结构如下：">
+<meta name="keywords" content="fMIRI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多被试多RUN批量预处理(SPM)">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="使用SPM处理多个被试多个RUN的数据。代码涉及到的文件夹结构如下：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:55:00.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多被试多RUN批量预处理(SPM)">
+<meta name="twitter:description" content="使用SPM处理多个被试多个RUN的数据。代码涉及到的文件夹结构如下：">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file active"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/认知神经科学/多被试多RUN批量预处理(SPM)" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/认知神经科学/">认知神经科学</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/fMIRI/">fMIRI</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">
+            <time datetime="2017-03-20T12:50:00.000Z" itemprop="datePublished">2017-03-20</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/认知神经科学/多被试多RUN批量预处理(SPM).md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/认知神经科学/多被试多RUN批量预处理(SPM).md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/认知神经科学/多被试多RUN批量预处理(SPM).md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            多被试多RUN批量预处理(SPM)
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    
+                </div>
+            
+        
+        
+            <p>使用SPM处理多个被试多个RUN的数据。代码涉及到的文件夹结构如下： <a id="more"></a></p>
+<p>├─20160911002 被试文件夹 │ ├─ep2d_bold_moco_p2_rest_0006 第一个RUN │ ├─ep2d_bold_moco_p2_rest_0011 第二个RUN │ ├─ep2d_bold_moco_p2_rest_0016 第三个RUN │ ├─ep2d_bold_moco_p2_rest_0021 第四个RUN │ └─t1_mprage_sag_p2_0026 被试的结构像 │ ├─run1 │ ├─run2 │ ├─run3 │ └─run4 ├─20160916001 │ ├─ep2d_bold_moco_p2_rest_0006 │ ├─ep2d_bold_moco_p2_rest_0011 │ ├─ep2d_bold_moco_p2_rest_0016 │ ├─ep2d_bold_moco_p2_rest_0021 │ └─t1_mprage_sag_p2_0026 │ ├─run1 │ ├─run2 │ ├─run3 │ └─run4</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pre_processing</span><span class="params">(filter)</span></span></span><br><span class="line"><span class="comment">% -------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">% 功能： 数据预处理，包括 1.slice timing; 2. realign； 3.配准；4.分割；5.标准化；6.平滑</span></span><br><span class="line"><span class="comment">% 调用： pre_processing(filter)</span></span><br><span class="line"><span class="comment">% 参数：</span></span><br><span class="line"><span class="comment">%   filter:控制处理的被试，例如'20161001*'    </span></span><br><span class="line"><span class="comment">% 示例：</span></span><br><span class="line"><span class="comment">%   filter = ‘20161001*’;</span></span><br><span class="line"><span class="comment">%   pre_processing(filter);</span></span><br><span class="line"><span class="comment">% 说明：输入图像需要满足预定的文件夹结构，该结构为使用SPM8 Batch进行格式转换默认生成的结构</span></span><br><span class="line"><span class="comment">%--------------------------------------------------------------------------</span></span><br><span class="line">clc;</span><br><span class="line">warning(<span class="string">'off'</span>);</span><br><span class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line"><span class="comment">%需要修改的变量，修改此处可以处理多个被试的数据</span></span><br><span class="line"><span class="comment">%filter = '20161024002*';</span></span><br><span class="line"><span class="comment">% 输入： 经过格式转换之后的img,hdr图像</span></span><br><span class="line"><span class="comment">% 输出： 预处理之后的图像和预处理的结果文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% 配置参数：</span></span><br><span class="line"><span class="comment">% filter : 控制处理的被试数量</span></span><br><span class="line"><span class="comment">% img_hdr_path ：img,hdr文件存放的绝对路径</span></span><br><span class="line"><span class="comment">% pre_processing_path ： wraf*开头的图像文件的绝对路径</span></span><br><span class="line"><span class="comment">% delete_filenameID ：预处理开始之前需要删除的TR。</span></span><br><span class="line"><span class="comment">% run_num ： 每个RUN的文件数量(删除TR之后的数量)</span></span><br><span class="line"><span class="comment">% innerMatlab_path ： SPM8工具箱中灰质，白质，脑脊液文件的路径，这个在分割的时候会用到，在不同电脑间移植的时候需要修改。</span></span><br><span class="line"><span class="comment">% runExpID : RUN文件夹名称，这里是'ep2d*'</span></span><br><span class="line"><span class="comment">% filenames = dir('wraf*.img'); 输入图像以wraf开头</span></span><br><span class="line"><span class="comment">% matlabbatch&#123;1&#125;.spm.spatial.smooth.fwhm = [4 4 4]; 控制平滑核大小</span></span><br><span class="line"><span class="comment">% matlabbatch&#123;1&#125;.spm.spatial.smooth.prefix = 's4';输出文件的前缀</span></span><br><span class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line"><span class="comment">%转换完格式的文件存放的文件夹</span></span><br><span class="line">img_hdr_path = &#123;<span class="string">'D:\FMRI_ROOT\YANTAI\ANALYSIS\img_hdr\'&#125;;</span></span><br><span class="line"><span class="string">%预处理文件夹，整个预处理过程保存在这里</span></span><br><span class="line"><span class="string">pre_processing_path = &#123;'</span>D:\FMRI_ROOT\YANTAI\ANALYSIS\pre_processing\<span class="string">'&#125;;</span></span><br><span class="line"><span class="string">%要删除掉的TR</span></span><br><span class="line"><span class="string">delete_filenameID = &#123;'</span>*<span class="number">-00001</span><span class="number">-00001</span>-*<span class="string">','</span>*<span class="number">-00002</span><span class="number">-00002</span>-*<span class="string">','</span>*<span class="number">-00003</span><span class="number">-00003</span>-*<span class="string">','</span>*<span class="number">-00004</span><span class="number">-00004</span>-*<span class="string">','</span>*<span class="number">-00005</span><span class="number">-00005</span>-*<span class="string">'&#125;;</span></span><br><span class="line"><span class="string">%删除空TR后每个run文件的数量</span></span><br><span class="line"><span class="string">run_num = 272;</span></span><br><span class="line"><span class="string">%内部路径，根据SPM8安装路径修改</span></span><br><span class="line"><span class="string">innerMatlab_path = &#123;</span></span><br><span class="line"><span class="string">                   '</span>C:\mazcx\matlabtoolbox\spm8\tpm\csf.nii,<span class="number">1</span>'</span><br><span class="line">                   <span class="string">'C:\mazcx\matlabtoolbox\spm8\tpm\grey.nii,1'</span></span><br><span class="line">                   <span class="string">'C:\mazcx\matlabtoolbox\spm8\tpm\white.nii,1'</span></span><br><span class="line">                    &#125;;</span><br><span class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line"><span class="comment">%预处理部分，主要内容：</span></span><br><span class="line"><span class="comment">%1. 将格式转换后的文件复制一份到预处理文件夹</span></span><br><span class="line"><span class="comment">%2. 删除掉多余的TR，只剩下需要的TR</span></span><br><span class="line"><span class="comment">%3. 在结构像文件中新建4个run，把结构像复制到每个run下,配准的时候每个run都是用自己对应run的结构像</span></span><br><span class="line"><span class="comment">%4. 以每个run为单位，运行预处理的batch文件</span></span><br><span class="line"><span class="comment">%5. 控制处理的文件夹主要需要修改的变量：</span></span><br><span class="line"><span class="comment">%  把代码中带=============注释的改成被试文件夹名称</span></span><br><span class="line"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%将数据拷贝到预处理文件夹</span></span><br><span class="line">cd(img_hdr_path&#123;<span class="number">1</span>&#125;);</span><br><span class="line">copyfile(filter,pre_processing_path&#123;<span class="number">1</span>&#125;); <span class="comment">%====================</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%删除多余的TR</span></span><br><span class="line">cd(pre_processing_path&#123;<span class="number">1</span>&#125;);</span><br><span class="line">subExpID=dir (filter);     <span class="comment">%被试文件夹==================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="built_in">size</span>(subExpID,<span class="number">1</span>)</span><br><span class="line">     cd ([pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name]);</span><br><span class="line">     runExpID = dir(<span class="string">'ep2d*'</span>); <span class="comment">%run 文件夹++++++++++++++++++++++++</span></span><br><span class="line">     <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:<span class="built_in">size</span>(runExpID,<span class="number">1</span>)</span><br><span class="line">         cd ([pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',runExpID(j).name]);</span></span><br><span class="line"><span class="string">         for k = 1:size(delete_filenameID,2)</span></span><br><span class="line"><span class="string">             delete(cell2mat(delete_filenameID(k)));</span></span><br><span class="line"><span class="string">         end</span></span><br><span class="line"><span class="string">     end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">%复制4个run的结构像</span></span><br><span class="line"><span class="string">cd(pre_processing_path&#123;1&#125;);</span></span><br><span class="line"><span class="string">subExpID = dir(filter);   %=========================</span></span><br><span class="line"><span class="string">for i=1:size(subExpID,1)</span></span><br><span class="line"><span class="string">    cd([pre_processing_path&#123;1&#125;,subExpID(i).name]);</span></span><br><span class="line"><span class="string">    t1ExpID = dir('</span>t1*<span class="string">');</span></span><br><span class="line"><span class="string">    cd(t1ExpID.name);</span></span><br><span class="line"><span class="string">    mkdir('</span>run1');</span><br><span class="line">    copyfile(<span class="string">'s*'</span>,[pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',t1ExpID.name,'</span>\run1\<span class="string">']);</span></span><br><span class="line"><span class="string">    mkdir('</span>run2');</span><br><span class="line">    copyfile(<span class="string">'s*'</span>,[pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',t1ExpID.name,'</span>\run2\<span class="string">']);</span></span><br><span class="line"><span class="string">    mkdir('</span>run3');</span><br><span class="line">    copyfile(<span class="string">'s*'</span>,[pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',t1ExpID.name,'</span>\run3\<span class="string">']);</span></span><br><span class="line"><span class="string">    mkdir('</span>run4');</span><br><span class="line">    copyfile(<span class="string">'s*'</span>,[pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',t1ExpID.name,'</span>\run4\<span class="string">']);</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">%开始预处理    </span></span><br><span class="line"><span class="string">cd(pre_processing_path&#123;1&#125;);</span></span><br><span class="line"><span class="string">subExpID = dir(filter); %====================================</span></span><br><span class="line"><span class="string">for i=1:size(subExpID,1)</span></span><br><span class="line"><span class="string">    cd([pre_processing_path&#123;1&#125;,subExpID(i).name]);</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">	diary pre_processing_output.txt; % 重定向控制台输出到文件</span></span><br><span class="line"><span class="string">	tic;  %开始计时   </span></span><br><span class="line"><span class="string">    %1. 获得4个结构像文件</span></span><br><span class="line"><span class="string">    t1ExpID = dir('</span>t1*<span class="string">');</span></span><br><span class="line"><span class="string">    cd([pre_processing_path&#123;1&#125;,subExpID(i).name,'</span>\<span class="string">',t1ExpID(1).name]);%切换到t1像</span></span><br><span class="line"><span class="string">    runID = dir('</span>run*<span class="string">');</span></span><br><span class="line"><span class="string">    data3D_filenames=cell(4,1);%4个run的结构像文件</span></span><br><span class="line"><span class="string">    for j=1:size(runID,1)</span></span><br><span class="line"><span class="string">        cd([pre_processing_path&#123;1&#125;,subExpID(i).name,'</span>\<span class="string">',t1ExpID(1).name,'</span>\<span class="string">',runID(j).name])</span></span><br><span class="line"><span class="string">        filenames = dir('</span>s*.img');</span><br><span class="line">        data3D_filenames&#123;<span class="built_in">j</span>&#125; = [pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',t1ExpID(1).name,'</span>\<span class="string">',runID(j).name,'</span>\<span class="string">',filenames(1).name,'</span>,<span class="number">1</span>'];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">%2.获得run的功能像文件</span></span><br><span class="line">    cd([pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name]);</span><br><span class="line">    runExpID=dir(<span class="string">'ep2d*'</span>);</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:<span class="built_in">size</span>(runExpID,<span class="number">1</span>)</span><br><span class="line">        cd ([pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',runExpID(j).name]);</span></span><br><span class="line"><span class="string">        filenames = dir('</span>f*.img');</span><br><span class="line">        funcFilenames = cell(run_num,<span class="number">1</span>);<span class="comment">%每个run的文件集合</span></span><br><span class="line">        <span class="keyword">for</span> k=<span class="number">1</span>:<span class="built_in">size</span>(filenames,<span class="number">1</span>)</span><br><span class="line">            funcFilenames&#123;k&#125; = [pre_processing_path&#123;<span class="number">1</span>&#125;,subExpID(<span class="built_in">i</span>).name,<span class="string">'\',runExpID(j).name,'</span>\<span class="string">',filenames(k).name,'</span>,<span class="number">1</span>'];</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">         </span><br><span class="line">        funcFilenames = &#123;funcFilenames&#125;;</span><br><span class="line">        data3D_filename = &#123; data3D_filenames&#123;<span class="built_in">j</span>&#125; &#125;;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">%%================================batch-begin===================================================%%</span></span><br><span class="line">        spm_jobman(<span class="string">'initcfg'</span>)</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.scans = funcFilenames;</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.nslices = <span class="number">33</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.tr = <span class="number">2</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.ta = <span class="number">1.93939393939394</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.so = [<span class="number">1</span> <span class="number">3</span> <span class="number">5</span> <span class="number">7</span> <span class="number">9</span> <span class="number">11</span> <span class="number">13</span> <span class="number">15</span> <span class="number">17</span> <span class="number">19</span> <span class="number">21</span> <span class="number">23</span> <span class="number">25</span> <span class="number">27</span> <span class="number">29</span> <span class="number">31</span> <span class="number">33</span> <span class="number">2</span> <span class="number">4</span> <span class="number">6</span> <span class="number">8</span> <span class="number">10</span> <span class="number">12</span> <span class="number">14</span> <span class="number">16</span> <span class="number">18</span> <span class="number">20</span> <span class="number">22</span> <span class="number">24</span> <span class="number">26</span> <span class="number">28</span> <span class="number">30</span> <span class="number">32</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.refslice = <span class="number">33</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">1</span>&#125;.spm.temporal.st.prefix = <span class="string">'a'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>) = cfg_dep;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).tname = <span class="string">'Session'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).name = <span class="string">'filter'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).value = <span class="string">'image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).name = <span class="string">'strtype'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).value = <span class="string">'e'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).sname = <span class="string">'Slice Timing: Slice Timing Corr. Images (Sess 1)'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).src_exbranch = substruct(<span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.data&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).src_output = substruct(<span class="string">'()'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'files'</span>);</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.quality = <span class="number">0.9</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.sep = <span class="number">4</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.fwhm = <span class="number">5</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.rtm = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.interp = <span class="number">2</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.wrap = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.eoptions.weight = <span class="string">''</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.roptions.which = [<span class="number">2</span> <span class="number">1</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.roptions.interp = <span class="number">4</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.roptions.wrap = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.roptions.mask = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">2</span>&#125;.spm.spatial.realign.estwrite.roptions.prefix = <span class="string">'r'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>) = cfg_dep;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).tname = <span class="string">'Reference Image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).name = <span class="string">'filter'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).value = <span class="string">'image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).name = <span class="string">'strtype'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).value = <span class="string">'e'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).sname = <span class="string">'Realign: Estimate &amp; Reslice: Mean Image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).src_exbranch = substruct(<span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">2</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.ref(<span class="number">1</span>).src_output = substruct(<span class="string">'.'</span>,<span class="string">'rmean'</span>);</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.source = data3D_filename; <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.other = &#123;<span class="string">''</span>&#125;;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.eoptions.cost_fun = <span class="string">'nmi'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.eoptions.sep = [<span class="number">4</span> <span class="number">2</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.eoptions.tol = [<span class="number">0.02</span> <span class="number">0.02</span> <span class="number">0.02</span> <span class="number">0.001</span> <span class="number">0.001</span> <span class="number">0.001</span> <span class="number">0.01</span> <span class="number">0.01</span> <span class="number">0.01</span> <span class="number">0.001</span> <span class="number">0.001</span> <span class="number">0.001</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">3</span>&#125;.spm.spatial.coreg.estimate.eoptions.fwhm = [<span class="number">7</span> <span class="number">7</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.data = data3D_filename ; <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.output.GM = [<span class="number">0</span> <span class="number">0</span> <span class="number">1</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.output.WM = [<span class="number">0</span> <span class="number">0</span> <span class="number">1</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.output.CSF = [<span class="number">0</span> <span class="number">0</span> <span class="number">1</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.output.biascor = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.output.cleanup = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.tpm = innerMatlab_path; <span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.ngaus = [<span class="number">2</span></span><br><span class="line">                                                         <span class="number">2</span></span><br><span class="line">                                                         <span class="number">2</span></span><br><span class="line">                                                         <span class="number">4</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.regtype = <span class="string">'mni'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.warpreg = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.warpco = <span class="number">25</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.biasreg = <span class="number">0.0001</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.biasfwhm = <span class="number">60</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.samp = <span class="number">3</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">4</span>&#125;.spm.spatial.preproc.opts.msk = &#123;<span class="string">''</span>&#125;;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>) = cfg_dep;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).tname = <span class="string">'Parameter File'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).name = <span class="string">'filter'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).value = <span class="string">'mat'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).name = <span class="string">'strtype'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).value = <span class="string">'e'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).sname = <span class="string">'Segment: Norm Params Subj-&gt;MNI'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).src_exbranch = substruct(<span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">4</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.matname(<span class="number">1</span>).src_output = substruct(<span class="string">'()'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'snfile'</span>, <span class="string">'()'</span>,&#123;<span class="string">':'</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>) = cfg_dep;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).tname = <span class="string">'Images to Write'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).name = <span class="string">'filter'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).value = <span class="string">'image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).name = <span class="string">'strtype'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).value = <span class="string">'e'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).sname = <span class="string">'Realign: Estimate &amp; Reslice: Resliced Images (Sess 1)'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).src_exbranch = substruct(<span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">2</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.subj.resample(<span class="number">1</span>).src_output = substruct(<span class="string">'.'</span>,<span class="string">'sess'</span>, <span class="string">'()'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'rfiles'</span>);</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.preserve = <span class="number">0</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.bb = [<span class="number">-90</span> <span class="number">-126</span> <span class="number">-72</span></span><br><span class="line">                                                                  <span class="number">90</span> <span class="number">90</span> <span class="number">108</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.vox = [<span class="number">3</span> <span class="number">3</span> <span class="number">3</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.interp = <span class="number">1</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.wrap = [<span class="number">0</span> <span class="number">0</span> <span class="number">0</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">5</span>&#125;.spm.spatial.normalise.write.roptions.prefix = <span class="string">'w'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>) = cfg_dep;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).tname = <span class="string">'Images to Smooth'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).name = <span class="string">'filter'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">1</span>).value = <span class="string">'image'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).name = <span class="string">'strtype'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).tgt_spec&#123;<span class="number">1</span>&#125;(<span class="number">2</span>).value = <span class="string">'e'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).sname = <span class="string">'Normalise: Write: Normalised Images (Subj 1)'</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).src_exbranch = substruct(<span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">5</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'val'</span>, <span class="string">'&#123;&#125;'</span>,&#123;<span class="number">1</span>&#125;);</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.data(<span class="number">1</span>).src_output = substruct(<span class="string">'()'</span>,&#123;<span class="number">1</span>&#125;, <span class="string">'.'</span>,<span class="string">'files'</span>);</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.fwhm = [<span class="number">6</span> <span class="number">6</span> <span class="number">6</span>];</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.dtype = <span class="number">0</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.im = <span class="number">0</span>;</span><br><span class="line">        matlabbatch&#123;<span class="number">6</span>&#125;.spm.spatial.smooth.prefix = <span class="string">'s'</span>;</span><br><span class="line">        <span class="comment">%%================================batch-end===================================================%%</span></span><br><span class="line">        spm_jobman(<span class="string">'run'</span>,matlabbatch);</span><br><span class="line">        <span class="built_in">disp</span>(<span class="string">'pre_processing successful !'</span>);</span><br><span class="line">        clear matlabbatch</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	toc</span><br><span class="line">	diary off ;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    SPM预处理中的常用操作
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">认知神经科学系列目录</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>

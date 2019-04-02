@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>算法专题_链表2 | FEI&#39;s Blog</title>
+    
+    
+        <meta name="keywords" content="ACM">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="【翻转链表】【删除重复元素】【判断有环】【合并链表】【复杂链表的复制】【…】">
+<meta name="keywords" content="ACM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法专题_链表2">
+<meta property="og:url" content="http://ff120.github.io/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/index.html">
+<meta property="og:site_name" content="FEI&#39;s Blog">
+<meta property="og:description" content="【翻转链表】【删除重复元素】【判断有环】【合并链表】【复杂链表的复制】【…】">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-28T00:54:57.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法专题_链表2">
+<meta name="twitter:description" content="【翻转链表】【删除重复元素】【判断有环】【合并链表】【复杂链表的复制】【…】">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="FEI&#39;s Blog" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/hexoblog/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/hexoblog/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/hexoblog/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/hexoblog/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/hexoblog/css/style.css">
+    <script src="/hexoblog/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/hexoblog/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/hexoblog/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/hexoblog/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">FEI&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/hexoblog/">首页</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/categories">分类</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/hexoblog/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/hexoblog/',
+        CONTENT_URL: '/hexoblog/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/hexoblog/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/categories">分类</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/hexoblog/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>Catégories</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-down fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            心理学
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            记忆魔法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2019/04/03/心理学/记忆魔法/代码记忆法/">代码记忆法</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            技术
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Web开发
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_How-to-install-Laravel-framework/">How to install Laravel framework</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_laravel-4-note-01/">laravel 4 note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Make-phpStorm-friendly-to-laravel/">Make phpStorm friendly to laravel</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_sublime-Text-tricks/">sublime Text tricks</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-01/">think php note 01</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-02/">think php note 02</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_think-php-note-03/">think php note 03</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP编译less文件-lessphp的使用/">PHP编译less文件-lessphp的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Lavarel-后台组件frozenode的使用/">Lavarel 后台组件frozenode的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux常用命令/">Linux常用命令</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_Linux主机之间同步文件/">Linux主机之间同步文件</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PHP基本操作/">PHP基本操作</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_短信验证码的实现/">短信验证码的实现</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_配置Apache支持使用HTTPS/">配置Apache支持使用HTTPS</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_使用Selenium测试UI/">测试_使用Selenium测试UI</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/后台开发_PhpStorm常用快捷键/">PhpStorm常用快捷键</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_微信发送消息PHP-SDK/">微信发送消息PHP SDK</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_获取地理位置/">微信获取地理位置 </a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/微信开发_发送模板消息的代码/">微信发送模板消息的代码</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-定位元素的几种方式/">测试_Selenium定位元素的几种方式</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Selenium-Action/">测试_Selenium Action</a></li>  <li class="file"><a href="/hexoblog/2016/06/11/技术/Web开发/测试_Apache-JMeter的使用/">测试_Apache JMeter的使用</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/Web开发/后台开发_Apache-配置虚拟主机/">Apache 配置虚拟主机</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_改进PHP的var-dump-方法使之适应显示从数据库中查出来的数据/">改进PHP的var_dump()方法使之适应显示从数据库中查出来的数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/23/技术/Web开发/后台开发_PHP读写XLS/">PHP读写XLS</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_jQuery-EasyUI-学习笔记/">JQuery EasyUI 学习笔记</a></li>  <li class="file"><a href="/hexoblog/2016/06/30/技术/Web开发/前端_bootsharp学习笔记/">Bootsharp学习笔记</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            专业术语
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/专业术语/术语/">英语</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            大数据
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/23/技术/大数据/大数据_Spark环境下的Kmeans-Python实现/">Spark环境下的Kmeans-Python实现</a></li>  <li class="file"><a href="/hexoblog/2017/10/06/技术/大数据/大数据基础框架/">大数据基础框架</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            工具
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            AutoHotKey
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/12/02/技术/工具/AutoHotKey/AutoHotKey非常有用的脚本/">AutoHotKey非常有用的脚本</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Git
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/Git/GIT的使用01-基本功能/">GIT的使用01-基本功能</a></li>  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/Git/Git查询手册/">Git 手册</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Hexo
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/Hexo/Hexo的使用02-同步/">Hexo的使用02-同步</a></li>  <li class="file"><a href="/hexoblog/2016/06/13/技术/工具/Hexo/Hexo的使用01-搭建/">Hexo的使用01-搭建</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用05-Atom编辑器/">Hexo的使用05-Atom编辑器</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/工具/Hexo/Hexo的使用04-数学公式/">Hexo的使用04-数学公式</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Hexo/Hexo的使用03-迁移/">Hexo的使用03-迁移</a></li>  <li class="file"><a href="/hexoblog/2017/07/17/技术/工具/Hexo/Hexo的使用06-使用gist存储代码片段/">Hexo中使用gist存储代码片段</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Visio
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/Visio/VISIO的使用01-基础入门/">VISIO的使用01-基础入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            图片处理
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/05/技术/工具/图片处理/图片处理02-一寸照片/">图片处理02-一寸照片</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/工具/图片处理/图片处理01-合并多张图片/">图片处理01-合并多张图片</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            正则表达式
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2018/07/29/技术/工具/正则表达式/正则表达式/">正则表达式</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程IDE
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            Anaconda
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/18/技术/工具/编程IDE/Anaconda/Anaconda的使用01-基础/">Anaconda的使用01-基础</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            JetBrainsCLion
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/05/04/技术/工具/编程IDE/JetBrainsCLion/JetBrainsCLion的使用01-入门/">JetBrainsCLion的使用01-入门</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            VSCode
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/07/24/技术/工具/编程IDE/VSCode/Visual-Studio-Code使用技巧/">Visual Studio Code使用技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            网络软件
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows全局代理软件Proxifier/">Windows全局代理软件Proxifier</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/工具/网络软件/Windows手工修改路由表/">Windows手工修改路由表</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            数据库
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/11/技术/数据库/数据库_Redis入门/">Redis入门</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/数据库/数据库_使用Database-Configuration-Assist-工具创建oracle数据库/">使用Database Configuration Assist 工具创建oracle数据库</a></li>  <li class="file"><a href="/hexoblog/2017/11/02/技术/数据库/SQL/">SQL</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            数据结构和算法
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_二维数组/">算法专题_二维数组</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_矩阵和图/">矩阵和用矩阵表示的图的相关问题</a></li>  <li class="file"><a href="/hexoblog/2017/03/21/技术/数据结构和算法/算法专题_位运算/">算法专题_位运算</a></li>  <li class="file"><a href="/hexoblog/2017/03/23/技术/数据结构和算法/算法专题_链表/">算法专题_链表</a></li>  <li class="file"><a href="/hexoblog/2017/04/05/技术/数据结构和算法/算法专题_动态规划/">算法专题_动态规划</a></li>  <li class="file"><a href="/hexoblog/2017/04/06/技术/数据结构和算法/算法专题_图/">算法专题_图问题</a></li>  <li class="file"><a href="/hexoblog/2017/04/08/技术/数据结构和算法/做过的算法题汇总表/">做过的算法题汇总表</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_二叉树/">算法专题_二叉树</a></li>  <li class="file"><a href="/hexoblog/2017/04/09/技术/数据结构和算法/算法专题_通用树结构/">算法专题_通用树结构</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_大数据和空间限制/">算法专题_大数据和空间限制</a></li>  <li class="file"><a href="/hexoblog/2017/04/10/技术/数据结构和算法/算法专题_排列组合/">算法专题_排列组合</a></li>  <li class="file"><a href="/hexoblog/2017/04/11/技术/数据结构和算法/本地代码集锦/">本地代码集锦</a></li>  <li class="file"><a href="/hexoblog/2017/04/12/技术/数据结构和算法/算法专题_栈和队列/">算法专题_栈和队列</a></li>  <li class="file"><a href="/hexoblog/2017/04/16/技术/数据结构和算法/算法专题_排序算法/">算法专题_排序算法</a></li>  <li class="file"><a href="/hexoblog/2017/04/17/技术/数据结构和算法/算法专题_算法总结/">算法专题_算法总结</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/数据结构和算法/算法专题_一维数组/">算法专题_一维数组</a></li>  <li class="file"><a href="/hexoblog/2017/05/05/技术/数据结构和算法/算法专题_图之网络流/">算法专题_图之网络流</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_图之最短路径/">算法专题_图之最短路径</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_最小生成树/">算法专题_最小生成树</a></li>  <li class="file"><a href="/hexoblog/2017/05/06/技术/数据结构和算法/算法专题_霍夫曼编码/">算法专题_霍夫曼编码(哈夫曼编码)</a></li>  <li class="file"><a href="/hexoblog/2017/05/07/技术/数据结构和算法/Kickstart-Round-B-2017/">Kickstart Round B 2017</a></li>  <li class="file"><a href="/hexoblog/2017/05/08/技术/数据结构和算法/算法专题_模运算/">算法专题_模运算</a></li>  <li class="file"><a href="/hexoblog/2017/05/09/技术/数据结构和算法/算法专题_素数问题/">算法专题_素数问题</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/数据结构和算法/算法专题_计算几何/">算法专题_计算几何</a></li>  <li class="file"><a href="/hexoblog/2017/05/27/技术/数据结构和算法/计蒜之道2017程序设计大赛/">计蒜之道2017程序设计大赛</a></li>  <li class="file"><a href="/hexoblog/2017/05/28/技术/数据结构和算法/算法专题_字符串匹配/">算法专题_字符串匹配</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/四等分数组/">四等分数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/数据结构和算法/矩阵的遍历/">矩阵的遍历</a></li>  <li class="file"><a href="/hexoblog/2017/07/20/技术/数据结构和算法/N皇后问题/">N皇后问题</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_线段树/">算法专题_线段树</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_树状数组/">算法专题_树状数组</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/数据结构和算法/算法专题_并查集/">算法专题_并查集</a></li>  <li class="file active"><a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">算法专题_链表2</a></li>  <li class="file"><a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/">算法专题_二叉堆</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_快速排序/">算法专题_快速排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/07/技术/数据结构和算法/算法专题_归并排序/">算法专题_归并排序</a></li>  <li class="file"><a href="/hexoblog/2017/08/13/技术/数据结构和算法/算法专题-hihocoder/">算法专题_hihocoder</a></li>  <li class="file"><a href="/hexoblog/2017/08/17/技术/数据结构和算法/算法专题-贪心法/">算法专题_贪心法</a></li>  <li class="file"><a href="/hexoblog/2017/08/18/技术/数据结构和算法/阿里在线测评-兔子繁殖问题/">阿里笔试</a></li>  <li class="file"><a href="/hexoblog/2017/08/22/技术/数据结构和算法/今日头条-在线编程题/">今日头条_在线编程题</a></li>  <li class="file"><a href="/hexoblog/2017/08/23/技术/数据结构和算法/算法专题-字典树-Trie树/">算法专题_字典树(Trie树)</a></li>  <li class="file"><a href="/hexoblog/2017/09/23/技术/数据结构和算法/算法专题_二叉树2/">算法专题_二叉树2</a></li>  <li class="file"><a href="/hexoblog/2017/09/27/技术/数据结构和算法/手写代码-其他/">手写代码-其他</a></li>  <li class="file"><a href="/hexoblog/2017/10/03/技术/数据结构和算法/算法专题-常见题目/">算法专题_常见题目</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            机器学习
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            深度学习
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/深度学习/深度学习_Theano使用技巧/">深度学习_Theano使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_基本概念/">深度学习_基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/04/18/技术/机器学习/深度学习/深度学习_利用神经网络识别手写数字/">深度学习__利用神经网络识别手写数字</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_反向传播算法及简单实例/">深度学习_反向传播算法及简单实例</a></li>  <li class="file"><a href="/hexoblog/2017/04/19/技术/机器学习/深度学习/深度学习_Keras使用技巧/">深度学习_Keras使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_使用keras实现autoencoder/">深度学习_使用keras实现autoencoder</a></li>  <li class="file"><a href="/hexoblog/2017/04/20/技术/机器学习/深度学习/深度学习_卷积神经网络/">深度学习_卷积神经网络</a></li>  <li class="file"><a href="/hexoblog/2017/04/27/技术/机器学习/深度学习/深度学习_使用autoencoder自动提取特征/">深度学习_使用autoencoder自动提取特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_递归神经网络(RNN)/">深度学习_递归神经网络(RNN)</a></li>  <li class="file"><a href="/hexoblog/2017/05/10/技术/机器学习/深度学习/深度学习_限制波尔茨曼向量机(RBM)/">深度学习_限制波尔茨曼向量机(RBM)</a></li>  <li class="file"><a href="/hexoblog/2017/05/12/技术/机器学习/深度学习/深度学习_TensorFlow使用技巧/">深度学习_TensorFlow使用技巧</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_Scikit-Learn-ManyClassifier/">同时使用多个分类器(Scikit-Learn)</a></li>  <li class="file"><a href="/hexoblog/2016/06/16/技术/机器学习/机器学习_范数/">机器学习_范数</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_学习路线/">机器学习_学习路线</a></li>  <li class="file"><a href="/hexoblog/2016/06/20/技术/机器学习/机器学习_手写数字识别/">机器学习_手写数字识别</a></li>  <li class="file"><a href="/hexoblog/2016/07/11/技术/机器学习/机器学习_Matplolib使用技巧/">机器学习_Matplolib使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/03/22/技术/机器学习/机器学习_人脸识别/">机器学习_人脸识别</a></li>  <li class="file"><a href="/hexoblog/2017/05/04/技术/机器学习/机器学习_Matlab使用技巧/">机器学习_Matlab使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/机器学习/机器学习_时间序列预测分析算法/">机器学习_时间序列预测分析算法</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/机器学习/机器学习_Scikit-Learn使用技巧/">深度学习_Scikit-Learn机器学习算法的使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_时间序列预测の广告效果预测/">机器学习_时间序列预测の广告效果预测</a></li>  <li class="file"><a href="/hexoblog/2017/05/15/技术/机器学习/机器学习_算法汇总/">机器学习_算法汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/17/技术/机器学习/机器学习_Pandas使用技巧/">深度学习_Pandas使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_感知机/">机器学习_感知机</a></li>  <li class="file"><a href="/hexoblog/2017/05/19/技术/机器学习/机器学习_逻辑回归/">机器学习_逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/05/22/技术/机器学习/机器学习_损失函数/">机器学习_损失函数</a></li>  <li class="file"><a href="/hexoblog/2017/06/03/技术/机器学习/机器学习_分类器性能的度量/">机器学习_分类器性能的度量</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Scipy使用技巧/">机器学习_Scipy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/06/15/技术/机器学习/机器学习_Python使用技巧/">深度学习_Python使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/07/23/技术/机器学习/机器学习-Numpy使用技巧/">机器学习_Numpy使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/10/15/技术/机器学习/KNN-with-C/">KNN with C++</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-绪论-基本概念/">机器学习-绪论-基本概念</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第一章-逻辑回归/">机器学习-第一章-逻辑回归</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第二章-决策树/">机器学习-第二章-决策树</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第三章-朴素贝叶斯/">机器学习-第三章-朴素贝叶斯</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第四章-支持向量机/">机器学习-第四章-支持向量机</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第五章-最近邻/">机器学习-第五章-最近邻</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第六章-kmeans/">机器学习-第六章-kmeans</a></li>  <li class="file"><a href="/hexoblog/2017/11/04/技术/机器学习/机器学习-第七章-感知机/">机器学习-第七章-感知机</a></li>  </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            编程语言
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            C++
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/04/07/技术/编程语言/C++/C++语言技巧/">C++语言技巧</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机基础
+                        </a>
+                         <ul class="unstyled" id="tree"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            计算机网络
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/计算机基础/计算机网络/网络_校园网多终端上网方案/">校园网多终端上网方案</a></li>  <li class="file"><a href="/hexoblog/2017/07/12/技术/计算机基础/计算机网络/计算机网络/">计算机网络</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            认知神经科学
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/文献检索方法/">文献检索方法</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/参考文献书写格式/">参考文献书写格式</a></li>  <li class="file"><a href="/hexoblog/2016/06/12/技术/认知神经科学/使用Python处理fMRI数据/">使用Python处理fMRI数据</a></li>  <li class="file"><a href="/hexoblog/2016/06/22/技术/认知神经科学/中英文对照/">中英文对照</a></li>  <li class="file"><a href="/hexoblog/2017/01/03/技术/认知神经科学/circos入门教程/">circos入门教程</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于视频的车牌识别和流量统计/">基于视频的车牌识别和流量统计</a></li>  <li class="file"><a href="/hexoblog/2017/03/08/技术/认知神经科学/基于贝叶斯网络和隐性知识的AU识别研究/">基于贝叶斯网络和隐性知识的AU识别研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/基于连接的脑信息解码研究/">基于连接信息的脑信息解码研究</a></li>  <li class="file"><a href="/hexoblog/2017/03/09/技术/认知神经科学/认知神经科学系列目录/">认知神经科学系列目录</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/多被试多RUN批量预处理(SPM)/">多被试多RUN批量预处理(SPM)</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/SPM预处理中的常用操作/">SPM预处理中的常用操作</a></li>  <li class="file"><a href="/hexoblog/2017/03/20/技术/认知神经科学/动态因果模型(DCM)的批量定义和估计/">动态因果模型(DCM)的批量定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/使用SPM做Second-Level分析/">使用SPM做Second_Level分析</a></li>  <li class="file"><a href="/hexoblog/2017/04/13/技术/认知神经科学/DCM模型的定义和估计/">DCM模型的定义和估计</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/XJVIEW的使用技巧/">XJVIEW的使用技巧</a></li>  <li class="file"><a href="/hexoblog/2017/04/14/技术/认知神经科学/SPM中函数的修改和使用/">SPM中函数的修改和使用</a></li>  <li class="file"><a href="/hexoblog/2017/05/02/技术/认知神经科学/fMRI中常用的工具包/">fMRI中常用的工具包</a></li>  <li class="file"><a href="/hexoblog/2017/05/11/技术/认知神经科学/使用3D卷积神经神经网络提取脑成像数据的特征/">使用3D卷积神经神经网络提取脑成像数据的特征</a></li>  <li class="file"><a href="/hexoblog/2017/05/14/技术/认知神经科学/fMRI相关的资源汇总/">fMRI相关的资源汇总</a></li>  <li class="file"><a href="/hexoblog/2017/05/30/技术/认知神经科学/fMRI相关问题汇总/">fMRI相关问题汇总</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder"></i>
+                            &nbsp;
+                            收藏夹
+                        </a>
+                         <ul class="unstyled" id="tree">  <li class="file"><a href="/hexoblog/2017/03/22/收藏夹/博客集锦/">博客收藏</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-技术/数据结构和算法/算法专题_链表2" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/hexoblog/categories/技术/">技术</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/hexoblog/categories/技术/数据结构和算法/">数据结构和算法</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/hexoblog/tags/ACM/">ACM</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/hexoblog/2017/07/26/技术/数据结构和算法/算法专题_链表2/">
+            <time datetime="2017-07-26T10:46:20.000Z" itemprop="datePublished">2017-07-26</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/raw/master/source/_posts/技术/数据结构和算法/算法专题_链表2.md"> Source </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/edit/master/source/_posts/技术/数据结构和算法/算法专题_链表2.md"> Edit </a>
+                            </div>
+                            <div class="article-meta-button">
+                                <a href="https://github.com/FF120/hexoblog/commits/master/source/_posts/技术/数据结构和算法/算法专题_链表2.md"> History </a>
+                            </div>
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法专题_链表2
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">Catalogue</strong>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#反转链表"><span class="toc-number">1.</span> <span class="toc-text">反转链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#局部翻转链表"><span class="toc-number">2.</span> <span class="toc-text">局部翻转链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k组翻转链表"><span class="toc-number">3.</span> <span class="toc-text">K组翻转链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除链表中倒数第n个节点"><span class="toc-number">4.</span> <span class="toc-text">删除链表中倒数第n个节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断链表是否有环"><span class="toc-number">5.</span> <span class="toc-text">判断链表是否有环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断链表是否相交"><span class="toc-number">6.</span> <span class="toc-text">判断链表是否相交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#合并k个排序的链表"><span class="toc-number">7.</span> <span class="toc-text">合并K个排序的链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带随机指针链表的复制复杂链表的复制"><span class="toc-number">8.</span> <span class="toc-text">带随机指针链表的复制|复杂链表的复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除链表元素"><span class="toc-number">9.</span> <span class="toc-text">删除链表元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在o1时间复杂度删除链表节点"><span class="toc-number">10.</span> <span class="toc-text">在O(1)时间复杂度删除链表节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除排序链表中的重复元素"><span class="toc-number">11.</span> <span class="toc-text">删除排序链表中的重复元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除排序链表中的重复元素2"><span class="toc-number">12.</span> <span class="toc-text">删除排序链表中的重复元素2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除单向链表中倒数第k个节点"><span class="toc-number">13.</span> <span class="toc-text">删除单向链表中倒数第K个节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查找链表的中间节点"><span class="toc-number">14.</span> <span class="toc-text">查找链表的中间节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入排序使用单链表实现"><span class="toc-number">15.</span> <span class="toc-text">插入排序（使用单链表实现）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速排序单链表实现"><span class="toc-number">16.</span> <span class="toc-text">快速排序(单链表实现)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交换链表当中两个节点"><span class="toc-number">17.</span> <span class="toc-text">交换链表当中两个节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两两交换链表中的节点"><span class="toc-number">18.</span> <span class="toc-text">两两交换链表中的节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#旋转链表"><span class="toc-number">19.</span> <span class="toc-text">旋转链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#首尾交错重排链表"><span class="toc-number">20.</span> <span class="toc-text">首尾交错重排链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回文链表"><span class="toc-number">21.</span> <span class="toc-text">回文链表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链表求和"><span class="toc-number">22.</span> <span class="toc-text">链表求和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链表求和-ii"><span class="toc-number">23.</span> <span class="toc-text">链表求和 II</span></a></li></ol>
+                </div>
+            
+        
+        
+            <p>【翻转链表】【删除重复元素】【判断有环】【合并链表】【复杂链表的复制】【…】</p>
+<a id="more"></a>
+<h3 id="反转链表"><a href="http://lintcode.com/zh-cn/problem/reverse-linked-list/" target="_blank" rel="noopener">反转链表</a></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 1. 如果是空链表，或者只有一个元素，直接返回头节点</span></span><br><span class="line"><span class="comment">* 2. pre --&gt; head, iter --&gt; head-&gt;next, pre-&gt;next = nullptr;</span></span><br><span class="line"><span class="comment">* pre 指向第一个元素，iter指向第二个节点(可能为空，为空说明到达了链表的结尾)，断开前两个节点之间的连接</span></span><br><span class="line"><span class="comment">* 3. while(iter!=nullptr) 转换pre iter指向的节点的连接。</span></span><br><span class="line"><span class="comment">* 首先用一个新的节点变量存储iter的下一个节点信息，node = iter-&gt;next</span></span><br><span class="line"><span class="comment">* iter-&gt;next = pre;</span></span><br><span class="line"><span class="comment">* pre = iter;</span></span><br><span class="line"><span class="comment">* iter = node;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">ListNode *<span class="title">reverse</span><span class="params">(ListNode *head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!head || !head-&gt;next) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode* pre = head;</span><br><span class="line">    ListNode* iter = head-&gt;next;</span><br><span class="line">    pre-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">while</span>(iter)&#123;</span><br><span class="line">        ListNode* next = iter-&gt;next;</span><br><span class="line">        iter-&gt;next = pre;</span><br><span class="line">        pre = iter;</span><br><span class="line">        iter = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="局部翻转链表"><a href="http://lintcode.com/zh-cn/problem/reverse-linked-list-ii/" target="_blank" rel="noopener">局部翻转链表</a></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode * <span class="title">reverseBetween</span><span class="params">(ListNode * head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 翻转从m到n之间的链表，连接在原来的链表上</span></span><br><span class="line">    <span class="keyword">if</span>(!head || !head-&gt;next || m &lt;=<span class="number">0</span> || n &lt;=<span class="number">0</span> || m &gt;= n) <span class="keyword">return</span> head;</span><br><span class="line">    <span class="comment">// 1. 增加一个头节点</span></span><br><span class="line">    ListNode* g = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    g-&gt;next = head;</span><br><span class="line">    head = g;</span><br><span class="line"></span><br><span class="line">    ListNode* pre_start = head;</span><br><span class="line">    ListNode* end_next = head;</span><br><span class="line">    <span class="comment">// 1. 找到第m个节点的前一个节点</span></span><br><span class="line">    m = m - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(pre_start &amp;&amp; m--)&#123;</span><br><span class="line">        pre_start = pre_start-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 找到第n个节点的后一个节点</span></span><br><span class="line">    n = n + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(end_next &amp;&amp; n--)&#123;</span><br><span class="line">        end_next = end_next-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(m &gt;<span class="number">0</span> || n&gt;<span class="number">0</span>) <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 翻转m 到 n之间的链表</span></span><br><span class="line">    ListNode* stmp = pre_start-&gt;next;</span><br><span class="line">    ListNode* start = pre_start-&gt;next;</span><br><span class="line">    ListNode* end = start-&gt;next;</span><br><span class="line">    start-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">while</span>(end != end_next)&#123;</span><br><span class="line">        ListNode* tmp = end-&gt;next;</span><br><span class="line">        end-&gt;next = start;</span><br><span class="line">        start = end;</span><br><span class="line">        end = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 4. 连接到原来的链表上</span></span><br><span class="line">    pre_start-&gt;next = start;</span><br><span class="line">    stmp-&gt;next = end;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="k组翻转链表"><a href="http://lintcode.com/zh-cn/problem/reverse-nodes-in-k-group/" target="_blank" rel="noopener">K组翻转链表</a></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">reverseKGroup</span><span class="params">(ListNode *head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 每K个节点翻转一下链表</span></span><br><span class="line">    <span class="keyword">if</span>(!head || k &lt;= <span class="number">1</span>) <span class="keyword">return</span> head;</span><br><span class="line">    <span class="comment">// 增加一个头节点</span></span><br><span class="line">    ListNode* g = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    g-&gt;next = head;</span><br><span class="line">    head = g;</span><br><span class="line"></span><br><span class="line">    ListNode* pre_start = head;</span><br><span class="line">    ListNode* end_next = head;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="comment">// 1. 找到第K个节点的下一个节点</span></span><br><span class="line">        <span class="keyword">int</span> cc = k + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(end_next &amp;&amp; cc--)&#123;</span><br><span class="line">            end_next = end_next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(cc &gt; <span class="number">0</span>) <span class="keyword">break</span>; <span class="comment">// 不足K个节点的部分不翻转</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 翻转K个节点</span></span><br><span class="line">        ListNode* start = pre_start-&gt;next;</span><br><span class="line">        ListNode* stmp = pre_start-&gt;next;</span><br><span class="line">        ListNode* end = start-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(end &amp;&amp; end != end_next)&#123;</span><br><span class="line">            ListNode* tmp = end-&gt;next;</span><br><span class="line">            end-&gt;next = start;</span><br><span class="line">            start = end;</span><br><span class="line">            end = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//3. 连接到原来的链表</span></span><br><span class="line">        pre_start-&gt;next = start;</span><br><span class="line">        stmp-&gt;next = end_next;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 维护pre_start, end_start在正确的位置上，执行下一次循环</span></span><br><span class="line">        pre_start = end_next = stmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除链表中倒数第n个节点"><a href="http://lintcode.com/zh-cn/problem/remove-nth-node-from-end-of-list/#" target="_blank" rel="noopener">删除链表中倒数第n个节点</a></h3>
+<p>使用两个指针，遍历一遍链表就能解决；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*  删除倒数第K个节点，我们需要找到倒数第K+1个节点</span></span><br><span class="line"><span class="comment">* 1. 设链表的长度是n, 1&lt;=k&lt;=n</span></span><br><span class="line"><span class="comment">* 2. 用两个间隔是K的指针，当第二个指针指向链表的null元素的时候，第一个指针指向导数第K+1个节点</span></span><br><span class="line"><span class="comment">* 3. 在链表的第一个节点的前面添加一个节点guard; first --&gt; guard</span></span><br><span class="line"><span class="comment">* 4. second = guard-&gt;next; second向后移动K步，如果在K大于0的时候循环结束，表示没有导数第K个元素，返回原来的链表</span></span><br><span class="line"><span class="comment">* 循环退出的时候，first 和second间隔K个节点，此时同时移动first second, second到达链表结尾的时候，first指向导数第K+1个节点，</span></span><br><span class="line"><span class="comment">* 5. 删除节点： first-&gt;next = first-&gt;next-&gt;next;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">ListNode *<span class="title">removeNthFromEnd</span><span class="params">(ListNode *head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode *g = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    g-&gt;next = head;</span><br><span class="line">    head = g;</span><br><span class="line">    ListNode* first = g;</span><br><span class="line">    ListNode* second = g-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(second &amp;&amp; n--)&#123;</span><br><span class="line">        second = second -&gt; next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(n &gt; <span class="number">0</span>) <span class="keyword">return</span> head-&gt;next; <span class="comment">// n超过了链表的长度</span></span><br><span class="line">    <span class="keyword">while</span>(second)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    first-&gt;next = first-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判断链表是否有环"><a href="http://lintcode.com/zh-cn/problem/linked-list-cycle/" target="_blank" rel="noopener">判断链表是否有环</a></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 1. head=null 或者 head-&gt;next = null，肯定无环</span></span><br><span class="line"><span class="comment">* 2. first = second = head;</span></span><br><span class="line"><span class="comment">* 3. do&#123;&#125;while();  first == second时候循环结束，说明链表有环；</span></span><br><span class="line"><span class="comment">* 4. 一旦找到环，把first = head, 然后一步一步的移动first second, 再次相遇的地方就是环的入口。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!head || !head-&gt;next) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    ListNode* first = head;</span><br><span class="line">    ListNode* second = head;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next-&gt;next;</span><br><span class="line">    &#125;<span class="keyword">while</span>(first &amp;&amp; second &amp;&amp; second-&gt;next &amp;&amp; second != first);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!first || !second || !second-&gt;next) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 找到入口节点</span></span><br><span class="line">    first = head;</span><br><span class="line">    <span class="keyword">while</span>(first != second)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判断链表是否相交"><a href="http://lintcode.com/zh-cn/problem/intersection-of-two-linked-lists/" target="_blank" rel="noopener">判断链表是否相交</a></h3>
+<p>两种思路： 一种先遍历一遍两个链表，得出每个链表的长度，将尾部对其，判断</p>
+<p>另外一种，将一个链表的尾部连接到其头结点，从另外一个链表的头节点开始遍历，转换成判断链表是否有环的问题。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">hasCycle</span><span class="params">(ListNode *head,ListNode* &amp;enter)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!head || !head-&gt;next || !head-&gt;next-&gt;next) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    ListNode* first = head;</span><br><span class="line">    ListNode* second = head;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next-&gt;next;</span><br><span class="line">    &#125;<span class="keyword">while</span>(first &amp;&amp; second &amp;&amp; second-&gt;next &amp;&amp; first != second);</span><br><span class="line">    <span class="keyword">if</span>(!first || !second || !second-&gt;next) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 找到入口节点</span></span><br><span class="line">    first = head;</span><br><span class="line">    <span class="keyword">while</span>(first != second)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    enter = first;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!headA || !headB) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode* iterA = headA;</span><br><span class="line">    <span class="keyword">while</span>(iterA-&gt;next !=<span class="literal">nullptr</span>)&#123;</span><br><span class="line">        iterA = iterA-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    iterA-&gt;next = headA;</span><br><span class="line">    ListNode* enter;</span><br><span class="line">    hasCycle(headB,enter);</span><br><span class="line">    <span class="keyword">return</span> enter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="合并k个排序的链表"><a href="http://lintcode.com/zh-cn/problem/merge-k-sorted-lists/" target="_blank" rel="noopener">合并K个排序的链表</a></h3>
+<ol style="list-style-type: decimal">
+<li><p>第一方法，用一个数组保存K个链表的头指针，每次都比较K个元素的大小，选出最小的元素，链接到新的链表的结尾，然后该链表向下一个节点移动一位。</p></li>
+<li><p>利用上面的思路，每次都要从K个元素中选择最小的元素，可以使用一个K个元素的最小堆实现，降低时间复杂度。</p></li>
+<li><p>利用归并的思想，两两合并；</p></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一种方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 每次找出最小值的方式</span></span><br><span class="line"> <span class="function">ListNode *<span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode *&gt; &amp;lists)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    ListNode* guard = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    ListNode* head = guard;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// current 指向K个链表的头指针</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;ListNode*&gt; currents;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> link : lists)&#123;</span><br><span class="line">        <span class="keyword">if</span>(link != <span class="literal">nullptr</span>)</span><br><span class="line">            currents.push_back(link);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!currents.empty())&#123;</span><br><span class="line">        <span class="keyword">int</span> minV = INT32_MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; currents.size();++i)&#123;</span><br><span class="line">            <span class="comment">// 去掉已经为空的链表</span></span><br><span class="line">            <span class="keyword">if</span>(currents[i] == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">                currents.erase(currents.begin()+i);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(currents[i]-&gt;val &lt; minV)&#123;</span><br><span class="line">                index = i;</span><br><span class="line">                minV = currents[i]-&gt;val;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        guard-&gt;next = currents[index];</span><br><span class="line">        guard = guard-&gt;next;</span><br><span class="line">        <span class="keyword">if</span>(currents[index]-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">            currents[index] = currents[index]-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            currents.erase(currents.begin()+index);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二种方法， 最小堆</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第二种方法， 最小堆</span></span><br><span class="line"><span class="function">ListNode *<span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode *&gt; &amp;lists)</span> </span>&#123;</span><br><span class="line">    priority_queue&lt;ListNode*,<span class="built_in">vector</span>&lt;ListNode*&gt;,bigger&gt; minHeap;</span><br><span class="line">    <span class="keyword">if</span>(lists.empty()) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;lists.size();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(lists[i]) minHeap.push(lists[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode *head = <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *iter = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">while</span>(!minHeap.empty())&#123;</span><br><span class="line">        <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">            head = minHeap.top();</span><br><span class="line">            iter = head;</span><br><span class="line">            <span class="keyword">if</span>(minHeap.top()-&gt;next)&#123;</span><br><span class="line">                minHeap.push(minHeap.top()-&gt;next);</span><br><span class="line">            &#125;</span><br><span class="line">            minHeap.pop();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            iter-&gt;next = minHeap.top();</span><br><span class="line">            iter = iter-&gt;next;</span><br><span class="line">            <span class="keyword">if</span>(minHeap.top()-&gt;next)&#123;</span><br><span class="line">                minHeap.push(minHeap.top()-&gt;next);</span><br><span class="line">            &#125;</span><br><span class="line">            minHeap.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第三种方法,归并排序的方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第三种方法,归并排序的方式</span></span><br><span class="line"><span class="comment">// 通过调用合并两个排序链表的方式实现</span></span><br><span class="line"><span class="function">ListNode *<span class="title">mergeTwoLists</span><span class="params">(ListNode *l1, ListNode *l2)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    ListNode* guard = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    ListNode* head = guard;</span><br><span class="line">    <span class="keyword">while</span>(l1 &amp;&amp; l2)&#123;</span><br><span class="line">        <span class="keyword">if</span>(l1-&gt;val &gt; l2-&gt;val)&#123;</span><br><span class="line">            guard-&gt;next = l2;</span><br><span class="line">            guard = guard-&gt;next;</span><br><span class="line">            l2 = l2-&gt;next;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            guard-&gt;next = l1;</span><br><span class="line">            guard = guard-&gt;next;</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(l1)&#123;</span><br><span class="line">        guard-&gt;next = l1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(l2)&#123;</span><br><span class="line">        guard-&gt;next = l2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode *<span class="title">mergeKLists</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;ListNode *&gt; &amp;lists)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(lists.empty()) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span>(lists.size() == <span class="number">1</span>) <span class="keyword">return</span> lists[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span>(lists.size() == <span class="number">2</span>) <span class="keyword">return</span> mergeTwoLists(lists[<span class="number">0</span>],lists[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">size_t</span> n = lists.size();</span><br><span class="line">    <span class="built_in">vector</span>&lt;ListNode*&gt; left((n+<span class="number">1</span>)/<span class="number">2</span>),right(n-(n+<span class="number">1</span>)/<span class="number">2</span>);</span><br><span class="line">    copy(lists.begin(),lists.begin()+(n+<span class="number">1</span>)/<span class="number">2</span>,left.begin());</span><br><span class="line">    copy(lists.begin()+(n+<span class="number">1</span>)/<span class="number">2</span>,lists.end(),right.begin());</span><br><span class="line">    <span class="keyword">return</span> mergeTwoLists(mergeKLists(left),mergeKLists(right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面采用的是自顶向下的递归归并的方式，下面采用非递归的自底向上的方法来实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 简单的实现一个数据的归并求和</span></span><br><span class="line"><span class="comment">// 自底向上归并</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;v)</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> end = v.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(end &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span>(end == <span class="number">0</span>) <span class="keyword">return</span> v[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">while</span>(end &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=end;i+=<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span> &lt;= end)&#123;</span><br><span class="line">                v[index] = add(v[i],v[i+<span class="number">1</span>]);</span><br><span class="line">                index++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                v[index] = v[i];</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        end = index - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> v[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">mergeKLists</span><span class="params">(<span class="built_in">vector</span>&lt;ListNode *&gt; &amp;lists)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(lists.empty()) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span>(lists.size() == <span class="number">1</span>) <span class="keyword">return</span> lists[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">if</span>(lists.size() == <span class="number">2</span>) <span class="keyword">return</span> mergeTwoLists(lists[<span class="number">0</span>],lists[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">size_t</span> end = lists.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(end &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=end;i+=<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span> &lt;= end)&#123;</span><br><span class="line">                lists[index] = mergeTwoLists(lists[i],lists[i+<span class="number">1</span>]);</span><br><span class="line">                index++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                lists[index] = lists[i];</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        end = index - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lists[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="带随机指针链表的复制复杂链表的复制"><a href="http://lintcode.com/zh-cn/problem/copy-list-with-random-pointer/" target="_blank" rel="noopener">带随机指针链表的复制|复杂链表的复制</a></h3>
+<p>使用O（1）的额外空间完成链表的复制，基本思路是把拷贝的新节点链接在原来节点的后面，设置完随机指针之后再断开与原来旧链表的连接。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RandomListNode *<span class="title">copyRandomList</span><span class="params">(RandomListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="keyword">if</span>(!head) <span class="keyword">return</span> head;</span><br><span class="line">    RandomListNode* iter = head;</span><br><span class="line">    <span class="comment">// 1. 复制每个节点连接在原来节点的后面</span></span><br><span class="line">    <span class="keyword">while</span>(iter)&#123;</span><br><span class="line">        RandomListNode* node = <span class="keyword">new</span> RandomListNode(iter-&gt;label);</span><br><span class="line">        node-&gt;next = iter-&gt;next;</span><br><span class="line">        iter-&gt;next = node;</span><br><span class="line">        iter = node-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 2. 设置随机指针</span></span><br><span class="line">    RandomListNode* newHead = head-&gt;next;</span><br><span class="line">    head-&gt;next-&gt;random = head-&gt;random==<span class="literal">nullptr</span> ? <span class="literal">nullptr</span> : head-&gt;random-&gt;next;</span><br><span class="line">    iter = newHead-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(iter)&#123;</span><br><span class="line">        RandomListNode* next = iter-&gt;next-&gt;next;</span><br><span class="line">        iter-&gt;next-&gt;random = iter-&gt;random == <span class="literal">nullptr</span> ? <span class="literal">nullptr</span> : iter-&gt;random-&gt;next;</span><br><span class="line">        iter = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 3. 断开和旧链表的连接</span></span><br><span class="line">    iter = newHead;</span><br><span class="line">    <span class="keyword">while</span>(iter-&gt;next)&#123;</span><br><span class="line">        iter-&gt;next = iter-&gt;next-&gt;next;</span><br><span class="line">        iter = iter-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除链表元素"><a href="http://lintcode.com/zh-cn/problem/remove-linked-list-elements/" target="_blank" rel="noopener">删除链表元素</a></h3>
+<p>删除链表节点为某个值的所有元素。(某个值可能有多个，也可能全部都是)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">removeElements</span><span class="params">(ListNode *head, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// Write your code here</span></span><br><span class="line">       ListNode *guard=<span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">       guard-&gt;next = head;</span><br><span class="line">       head = guard;</span><br><span class="line"></span><br><span class="line">       ListNode *pre = guard;</span><br><span class="line">       ListNode *tmp = guard-&gt;next;</span><br><span class="line">       <span class="keyword">while</span>(tmp)&#123;</span><br><span class="line">           <span class="keyword">if</span>(tmp-&gt;val == val)&#123;</span><br><span class="line">               pre-&gt;next = tmp-&gt;next;</span><br><span class="line">               tmp = tmp-&gt;next;</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               pre = tmp;</span><br><span class="line">               tmp = tmp -&gt; next;</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>不使用哨兵的方法，在要求不使用额外空间的时候可以用这种方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">removeElements</span><span class="params">(ListNode *head, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// Write your code here</span></span><br><span class="line">       <span class="comment">// 删除链表中等于给定值val的所有节点</span></span><br><span class="line">       <span class="keyword">while</span>(head &amp;&amp; head-&gt;val == val)&#123;</span><br><span class="line">           head = head-&gt;next;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(head == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">       ListNode *pre = head;</span><br><span class="line">       ListNode *c = head-&gt;next; <span class="comment">// 头结点已经不可能==val了，因为前面已经删除了</span></span><br><span class="line">       <span class="keyword">while</span>(c)&#123;</span><br><span class="line">           <span class="keyword">if</span>(c-&gt;val == val)&#123;</span><br><span class="line">               pre-&gt;next = c-&gt;next;</span><br><span class="line">               c-&gt;next= <span class="literal">nullptr</span>;</span><br><span class="line">               c = pre-&gt;next;</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               pre = c;</span><br><span class="line">               c = c-&gt;next;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="在o1时间复杂度删除链表节点"><a href="http://lintcode.com/zh-cn/problem/delete-node-in-the-middle-of-singly-linked-list/" target="_blank" rel="noopener">在O(1)时间复杂度删除链表节点</a></h3>
+<p>思路：给出要删除的节点，是不可能在O(1)的时间内删除该节点的，因为想要删除该节点，必须找到它前面的节点，这个操作只能从头遍历(在没有指向前面的指针的情况下)，复杂度不可能是O(1). 但是可以把要删除的节点后面的节点的值赋给要删除的节点，再删除要删除的节点后面的节点，这样’看起来’好像删除了当前的节点。实际上在计算机内存中真正的变化是要删除的节点的值变成了它后面节点的值.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(ListNode *node)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        node-&gt;val = node-&gt;next-&gt;val;</span><br><span class="line">        node-&gt;next = node-&gt;next-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除排序链表中的重复元素"><a href="http://lintcode.com/zh-cn/problem/remove-duplicates-from-sorted-list/" target="_blank" rel="noopener">删除排序链表中的重复元素</a></h3>
+<p>给定一个排序链表，删除所有重复的元素每个重复元素只留下一个。</p>
+<p>遇到不同的元素的时候再删除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">deleteDuplicates</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">        ListNode *pre = head;</span><br><span class="line">        ListNode *current = head-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(current)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pre-&gt;val == current-&gt;val)&#123;</span><br><span class="line">                current = current-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pre-&gt;next = current;</span><br><span class="line">                pre = current;</span><br><span class="line">                current = current-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 链表结尾有重复元素的情况</span></span><br><span class="line">        pre-&gt;next = current;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一旦遇到相同的元素就删除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">deleteDuplicates</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 给定一个排序链表，删除所有重复的元素每个元素只留下一个。</span></span><br><span class="line">        <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">        <span class="keyword">if</span>(head-&gt;next-&gt;next == <span class="literal">nullptr</span> &amp;&amp; head-&gt;val == head-&gt;next-&gt;val) <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">        ListNode *pre = head;</span><br><span class="line">        ListNode *c = head-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(c)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pre-&gt;val == c-&gt;val)&#123;</span><br><span class="line">                pre-&gt;next = c-&gt;next;</span><br><span class="line">                c = c-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pre = pre-&gt;next;</span><br><span class="line">                c = c-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除排序链表中的重复元素2"><a href="http://lintcode.com/zh-cn/problem/remove-duplicates-from-sorted-list-ii/" target="_blank" rel="noopener">删除排序链表中的重复元素2</a></h3>
+<p>给定一个排序链表，删除所有重复的元素只留下原链表中没有重复的元素。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode * <span class="title">deleteDuplicates</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//给定一个排序链表，删除所有重复的元素只留下原链表中没有重复的元素。</span></span><br><span class="line">       ListNode *guard = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">       guard-&gt;next = head;</span><br><span class="line">       head = guard;</span><br><span class="line"></span><br><span class="line">       ListNode *pre = guard;</span><br><span class="line">       ListNode *start = guard-&gt;next;</span><br><span class="line">       ListNode *end = guard-&gt;next;</span><br><span class="line">       <span class="keyword">while</span>(end)&#123;</span><br><span class="line">           <span class="keyword">while</span>(end &amp;&amp; start-&gt;val == end-&gt;val)&#123;</span><br><span class="line">               end = end-&gt;next;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span>(start-&gt;next == end)&#123;</span><br><span class="line">               pre = start;</span><br><span class="line">               start = end;</span><br><span class="line">           &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               pre-&gt;next = end;</span><br><span class="line">               start = end;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不使用哨兵节点的方案</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode * <span class="title">deleteDuplicates</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//给定一个排序链表，删除所有重复的元素只留下原链表中没有重复的元素。</span></span><br><span class="line">    ListNode *pre = head;</span><br><span class="line">    ListNode *start = head;</span><br><span class="line">    ListNode *end = head;</span><br><span class="line">    <span class="keyword">while</span>(end)&#123;</span><br><span class="line">        <span class="keyword">while</span>(end &amp;&amp; start-&gt;val == end-&gt;val)&#123;</span><br><span class="line">            end = end-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(start-&gt;next == end)&#123;</span><br><span class="line">            pre = start;</span><br><span class="line">            start = end;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(pre == start &amp;&amp; pre == head)&#123;</span><br><span class="line">                head = end;</span><br><span class="line">                pre = end;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>    pre-&gt;next = end;</span><br><span class="line">            start = end;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除单向链表中倒数第k个节点">删除单向链表中倒数第K个节点</h3>
+<p>例如：<code>head--&gt;1--&gt;2--&gt;3--&gt;4--&gt;5--&gt;6</code> K=2 返回：<code>head--&gt;1--&gt;2--&gt;3--&gt;4--&gt;6</code></p>
+<p>思路一： 先遍历一遍链表，统计链表有多少个元素。然后就可以知道倒数第K个元素就是 正数第n-k+1个元素，从head开始移动指针，移动n-k次就是要删除的节点。 删除一个节点，只需要把原来指向这个元素的指针指向它后面的元素就可以了。所以我们要做的 操作就是从head开始，移动n-k-1次，找到要删除的节点前面的节点a,然后执行a-&gt;next = a-&gt;next-&gt;next</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">removeNthFromEnd</span><span class="params">(ListNode *head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">    ListNode *tmp = head;</span><br><span class="line">    <span class="keyword">while</span>(tmp)&#123;</span><br><span class="line">        len ++;</span><br><span class="line">        tmp = tmp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(len &lt; n) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">if</span>(len == n) <span class="keyword">return</span> head-&gt;next;</span><br><span class="line"></span><br><span class="line">    tmp = head;</span><br><span class="line">    <span class="keyword">int</span> count = len + <span class="number">1</span> - n  ;<span class="comment">// 正数第count个节点</span></span><br><span class="line">    count = count - <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(count--)&#123;</span><br><span class="line">        tmp = tmp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    tmp-&gt;next = tmp-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思路二：使用两个间隔K个元素的指针遍历一遍链表，当前面的指针走到尾节点的时候，后面的节点指向的就是倒数第K个节点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">removeNthFromEnd</span><span class="params">(ListNode *head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *first = head;</span><br><span class="line">    ListNode *second = head;</span><br><span class="line">    <span class="keyword">int</span> count = n + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(first &amp;&amp; count--)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(first == <span class="literal">nullptr</span>) <span class="keyword">return</span> head-&gt;next; <span class="comment">// 删除第一个节点</span></span><br><span class="line">    <span class="keyword">if</span>(count &gt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>; <span class="comment">// 没有导数第n个节点</span></span><br><span class="line">    <span class="keyword">while</span>(first)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    second-&gt;next = second-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="查找链表的中间节点">查找链表的中间节点</h3>
+<p>思路： 设置两个指针同时指向头部，一个指针每次移动两步，一个指针每次移动一步，这样在快的指针走到尽头的时候，慢的指针恰好走到了中部。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 找到链表的中间节点并返回</span></span><br><span class="line"><span class="comment"> * @param head</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">ListNode* <span class="title">findMiddle</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode *first = head, *second = head;</span><br><span class="line">    <span class="keyword">while</span>(second-&gt;next &amp;&amp; second-&gt;next-&gt;next)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入排序使用单链表实现">插入排序（使用单链表实现）</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">insertionSortList</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用链表实现插入排序</span></span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">    ListNode *guard = <span class="keyword">new</span> ListNode(INT32_MIN);</span><br><span class="line">    guard-&gt;next = head;</span><br><span class="line">    head = guard;</span><br><span class="line"></span><br><span class="line">    ListNode *sorted = guard;</span><br><span class="line">    ListNode *ends = guard-&gt;next;</span><br><span class="line">    ListNode *unsorted = ends-&gt;next;</span><br><span class="line">    ends-&gt;next = <span class="literal">nullptr</span>; <span class="comment">// 链表断开</span></span><br><span class="line">    <span class="keyword">while</span>(unsorted)&#123;</span><br><span class="line">        <span class="comment">// 找到插入的位置</span></span><br><span class="line">        <span class="keyword">while</span>(sorted != ends)&#123;</span><br><span class="line">            <span class="keyword">if</span>(unsorted-&gt;val &gt;= sorted-&gt;val &amp;&amp; unsorted-&gt;val &lt; sorted-&gt;next-&gt;val)&#123;</span><br><span class="line">                <span class="comment">// 插入到iter1后面</span></span><br><span class="line">                ListNode *tmp = unsorted;</span><br><span class="line">                unsorted = unsorted-&gt;next;</span><br><span class="line">                tmp-&gt;next = sorted-&gt;next;</span><br><span class="line">                sorted-&gt;next = tmp;</span><br><span class="line">                sorted = guard;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sorted = sorted-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(sorted == ends &amp;&amp; unsorted-&gt;val &gt;= ends-&gt;val)&#123;</span><br><span class="line">            ends-&gt;next = unsorted;</span><br><span class="line">            unsorted = unsorted-&gt;next;</span><br><span class="line">            ends = ends-&gt;next;</span><br><span class="line">            ends-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">            sorted = guard;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序单链表实现">快速排序(单链表实现)</h3>
+<p>快速排序一般的思想是首尾两个指针相向运动，但是单链表没有向前的指针，这要求我们换一种思路。如何从前往后遍历找到支点的位置。假设支点的值是value. 我们需要遍历一遍链表，使得所有小于value的值都在前面，所有大于value的值都在后面，这个时候就找到的value应该在的位置。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单链表实现快排</span></span><br></pre></td></tr></table></figure>
+<h3 id="交换链表当中两个节点"><a href="http://lintcode.com/zh-cn/problem/swap-two-nodes-in-linked-list/" target="_blank" rel="noopener">交换链表当中两个节点</a></h3>
+<p>给你一个链表以及两个权值v1和v2，交换链表中权值为v1和v2的这两个节点。保证链表中节点权值各不相同，如果没有找到对应节点，那么什么也不用做。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">swapNodes</span><span class="params">(ListNode* head, <span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Write your code here</span></span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add a guard</span></span><br><span class="line">    ListNode *guard = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    guard-&gt;next = head;</span><br><span class="line">    head = guard;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//search the value</span></span><br><span class="line">    ListNode *pre_v1=<span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *pre_v2=<span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *pre_tmp=guard;</span><br><span class="line">    ListNode *tmp=pre_tmp-&gt;next;</span><br><span class="line">    <span class="keyword">while</span>(tmp)&#123;</span><br><span class="line">        <span class="keyword">if</span>(tmp-&gt;val==v1)&#123;</span><br><span class="line">            pre_v1 = pre_tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(tmp-&gt;val==v2)&#123;</span><br><span class="line">            pre_v2 = pre_tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        pre_tmp = tmp;</span><br><span class="line">        tmp = tmp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// not find v1 or v2</span></span><br><span class="line">    <span class="keyword">if</span>(pre_v1==<span class="literal">nullptr</span> || pre_v2==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// swap the two nodes</span></span><br><span class="line">    ListNode *v1s = pre_v1-&gt;next;</span><br><span class="line">    ListNode *v2s = pre_v2-&gt;next;</span><br><span class="line">    ListNode *next_v1 = v1s-&gt;next;</span><br><span class="line">    ListNode *next_v2 = v2s-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pre_v1 == v2s)&#123;</span><br><span class="line">        pre_v2-&gt;next = v1s;</span><br><span class="line">        v1s-&gt;next = v2s;</span><br><span class="line">        v2s-&gt;next = next_v1;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pre_v2 == v1s)&#123;</span><br><span class="line">        pre_v1-&gt;next = v2s;</span><br><span class="line">        v2s-&gt;next = v1s;</span><br><span class="line">        v1s-&gt;next = next_v2;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        v1s-&gt;next = next_v2;</span><br><span class="line">        v2s-&gt;next = next_v1;</span><br><span class="line">        pre_v1-&gt;next = v2s;</span><br><span class="line">        pre_v2-&gt;next = v1s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="两两交换链表中的节点"><a href="http://lintcode.com/zh-cn/problem/swap-nodes-in-pairs/" target="_blank" rel="noopener">两两交换链表中的节点</a></h3>
+<p>给一个链表，两两交换其中的节点，然后返回交换后的链表。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">swapPairs</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Write your code here</span></span><br><span class="line">        <span class="keyword">if</span>(head==<span class="literal">nullptr</span> || head-&gt;next==<span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">        ListNode *guard = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        guard-&gt;next = head;</span><br><span class="line">        head = guard;</span><br><span class="line"></span><br><span class="line">        ListNode *pres1 = guard;</span><br><span class="line">        ListNode *s1 = guard-&gt;next;</span><br><span class="line">        ListNode *s2 = guard-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(s1!=<span class="literal">nullptr</span> &amp;&amp; s2!=<span class="literal">nullptr</span>)&#123;</span><br><span class="line">            pres1-&gt;next = s2;</span><br><span class="line">            s1-&gt;next = s2-&gt;next;</span><br><span class="line">            s2-&gt;next = s1;</span><br><span class="line">            <span class="keyword">if</span>(s1-&gt;next==<span class="literal">nullptr</span> || s1-&gt;next-&gt;next==<span class="literal">nullptr</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                pres1 = s1;</span><br><span class="line">                s1 = s1-&gt;next;</span><br><span class="line">                s2 = s2-&gt;next-&gt;next-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="旋转链表"><a href="http://lintcode.com/zh-cn/problem/rotate-list/" target="_blank" rel="noopener">旋转链表</a></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">rotateRight</span><span class="params">(ListNode *head, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//给定一个链表，旋转链表，使得每个节点向右移动k个位置，其中k是一个非负数</span></span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span> || k &lt;= <span class="number">0</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode *end = head;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(end-&gt;next)&#123;</span><br><span class="line">        end = end-&gt;next;</span><br><span class="line">        len++;</span><br><span class="line">    &#125;</span><br><span class="line">    k = k % len;</span><br><span class="line">    <span class="keyword">if</span>(k == <span class="number">0</span>) <span class="keyword">return</span> head;</span><br><span class="line">    <span class="keyword">int</span> index = (len - <span class="number">1</span> - k) % len;</span><br><span class="line">    ListNode *tmp = head;</span><br><span class="line">    <span class="keyword">while</span>(tmp &amp;&amp; index --)&#123;</span><br><span class="line">        tmp = tmp-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(index == <span class="number">-1</span>)&#123;</span><br><span class="line">        end-&gt;next = head;</span><br><span class="line">        head = tmp-&gt;next;</span><br><span class="line">        tmp-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="首尾交错重排链表"><a href="http://lintcode.com/zh-cn/problem/reorder-list/" target="_blank" rel="noopener">首尾交错重排链表</a></h3>
+<p>给定一个单链表L: L0→L1→…→Ln-1→Ln,重新排列后为：L0→Ln→L1→Ln-1→L2→Ln-2→…必须在不改变节点值的情况下进行原地操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 找到链表的中间节点并返回</span></span><br><span class="line"><span class="comment"> * @param head</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">ListNode* <span class="title">findMiddle</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode *first = head, *second = head;</span><br><span class="line">    <span class="keyword">while</span>(second-&gt;next &amp;&amp; second-&gt;next-&gt;next)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> first;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 反转链表</span></span><br><span class="line"><span class="comment"> * @param head</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">ListNode *<span class="title">reverse</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// write your code here</span></span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">nullptr</span> || head-&gt;next==<span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">    ListNode *iter =head;</span><br><span class="line">    ListNode *next_iter = head-&gt;next;</span><br><span class="line">    iter-&gt;next=<span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">while</span>(next_iter)&#123;</span><br><span class="line">        ListNode *tmp = next_iter-&gt;next;</span><br><span class="line">        next_iter-&gt;next = iter;</span><br><span class="line">        iter = next_iter;</span><br><span class="line">        next_iter = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    head = iter;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 交叉合并两个链表</span></span><br><span class="line"><span class="comment"> * @param l1</span></span><br><span class="line"><span class="comment"> * @param l2</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">ListNode *<span class="title">mergeTwoLists</span><span class="params">(ListNode *l1, ListNode *l2)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果其中一个链表为空，直接返回另外一个链表就是结果</span></span><br><span class="line">    <span class="keyword">if</span>(l1 == <span class="literal">nullptr</span>) <span class="keyword">return</span> l2;</span><br><span class="line">    <span class="keyword">if</span>(l2 == <span class="literal">nullptr</span>) <span class="keyword">return</span> l1;</span><br><span class="line">    ListNode *head = l1;</span><br><span class="line">    l1 = l1-&gt;next;</span><br><span class="line">    ListNode *iter = head;</span><br><span class="line">    <span class="keyword">bool</span> odd = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(l1 != <span class="literal">nullptr</span> || l2 != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!odd)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l2)&#123;</span><br><span class="line">                iter-&gt;next = l2;</span><br><span class="line">                l2 = l2-&gt;next;</span><br><span class="line">                iter = iter-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(odd)&#123;</span><br><span class="line">            <span class="keyword">if</span>(l1)&#123;</span><br><span class="line">                iter-&gt;next = l1;</span><br><span class="line">                l1 = l1-&gt;next;</span><br><span class="line">                iter = iter-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        odd = !odd;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">reorderList</span><span class="params">(ListNode *head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">    <span class="comment">// 给定一个单链表L: L0→L1→…→Ln-1→Ln,重新排列后为：L0→Ln→L1→Ln-1→L2→Ln-2→…必须在不改变节点值的情况下进行原地操作</span></span><br><span class="line">    <span class="comment">// 找到中间节点， 反转后半段，然后交叉拼接起来，可以确保不适用额外的空间</span></span><br><span class="line">    ListNode* middle = findMiddle(head);</span><br><span class="line">    ListNode* head2 = reverse(middle-&gt;next);</span><br><span class="line">    middle-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    head = mergeTwoLists(head,head2);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="回文链表"><a href="http://lintcode.com/zh-cn/problem/palindrome-linked-list/" target="_blank" rel="noopener">回文链表</a></h3>
+<p>判断一个链表中的值是否是回文</p>
+<p>找到中间节点，把后面的链表反转，然后与前面的逐个节点比较，如果完全一样或者只有最后一个节点不一样，则是回文的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Write your code here</span></span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    ListNode *middle = findMiddle(head);</span><br><span class="line">    ListNode *head2 = reverse(middle-&gt;next);</span><br><span class="line">    middle-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *iter1 = head, *iter2 = head2;</span><br><span class="line">    <span class="keyword">while</span>(iter1 &amp;&amp; iter2)&#123;</span><br><span class="line">        <span class="keyword">if</span>(iter1-&gt;val != iter2-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        iter1 = iter1-&gt;next;</span><br><span class="line">        iter2 = iter2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(iter1 &amp;&amp; iter1-&gt;next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(iter2 &amp;&amp; iter2-&gt;next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(iter1 == <span class="literal">nullptr</span> &amp;&amp; iter2 == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="链表求和"><a href="http://lintcode.com/zh-cn/problem/add-two-numbers/" target="_blank" rel="noopener">链表求和</a></h3>
+<p>你有两个用链表代表的整数，其中每个节点包含一个数字。数字存储按照在原来整数中相反的顺序，使得第一个数字位于链表的开头。写出一个函数将两个整数相加，用链表形式返回和。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">addLists</span><span class="params">(ListNode *l1, ListNode *l2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l1 == <span class="literal">nullptr</span>) <span class="keyword">return</span> l2;</span><br><span class="line">    <span class="keyword">if</span>(l2 == <span class="literal">nullptr</span>) <span class="keyword">return</span> l1;</span><br><span class="line">    <span class="comment">// 链表求和</span></span><br><span class="line">    <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">    ListNode *head = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    ListNode *iter = head;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line">    <span class="keyword">while</span>(l1 != <span class="literal">nullptr</span> &amp;&amp; l2 != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        number = (l1-&gt;val + l2-&gt;val + carry ) % <span class="number">10</span> ;</span><br><span class="line">        carry = (l1-&gt;val + l2-&gt;val + carry ) / <span class="number">10</span> ;</span><br><span class="line">        ListNode *node = <span class="keyword">new</span> ListNode(number);</span><br><span class="line">        iter-&gt;next = node;</span><br><span class="line">        iter = iter-&gt;next;</span><br><span class="line">        l1 = l1-&gt;next;</span><br><span class="line">        l2 = l2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(l1)&#123;</span><br><span class="line">        number = (l1-&gt;val + carry) % <span class="number">10</span>;</span><br><span class="line">        carry = (l1-&gt;val + carry) / <span class="number">10</span>;</span><br><span class="line">        ListNode *node = <span class="keyword">new</span> ListNode(number);</span><br><span class="line">        iter-&gt;next = node;</span><br><span class="line">        iter = iter-&gt;next;</span><br><span class="line">        l1 = l1-&gt;next;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(l2)&#123;</span><br><span class="line">        number = (l2-&gt;val + carry) % <span class="number">10</span>;</span><br><span class="line">        carry = (l2-&gt;val + carry) / <span class="number">10</span>;</span><br><span class="line">        ListNode *node = <span class="keyword">new</span> ListNode(number);</span><br><span class="line">        iter-&gt;next = node;</span><br><span class="line">        iter = iter-&gt;next;</span><br><span class="line">        l2 = l2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(carry)&#123;</span><br><span class="line">        ListNode *node = <span class="keyword">new</span> ListNode(carry);</span><br><span class="line">        iter-&gt;next = node;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="链表求和-ii"><a href="http://lintcode.com/zh-cn/problem/add-two-numbers-ii/#" target="_blank" rel="noopener">链表求和 II</a></h3>
+<p>假定用一个链表表示两个数，其中每个节点仅包含一个数字。假设这两个数的数字顺序排列，请设计一种方法将两个数相加，并将其结果表现为链表的形式。</p>
+<p>先翻转链表，求和，在翻转回去。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">addLists2</span><span class="params">(ListNode *l1, ListNode *l2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> reverse(addLists(reverse(l1),reverse(l2)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/hexoblog/2017/08/06/技术/数据结构和算法/算法专题_二叉堆/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus récent</strong>
+            <div class="article-nav-title">
+                
+                    算法专题_二叉堆
+                
+            </div>
+        </a>
+    
+    
+        <a href="/hexoblog/2017/07/24/技术/专业术语/术语/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">英语</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            FF120 &copy; 2019 
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme - <a href="https://github.com/zthxxx/hexo-theme-Wikitten">wikitten</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/hexoblog/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/hexoblog/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/hexoblog/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/hexoblog/js/main.js"></script>
+
+    </div>
+</body>
+</html>
